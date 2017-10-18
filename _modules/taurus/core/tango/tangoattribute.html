@@ -228,10 +228,8 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="n">numerical</span> <span class="o">=</span> <span class="p">(</span><span class="n">PyTango</span><span class="o">.</span><span class="n">is_numerical_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">_tango_data_type</span><span class="p">,</span>
-                                              <span class="n">inc_array</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">or</span>
-                     <span class="n">p</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevUChar</span>
-                     <span class="p">)</span>
+        <span class="n">numerical</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_numerical_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">_tango_data_type</span><span class="p">,</span>
+                                              <span class="n">inc_array</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">has_failed</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="o">.</span><span class="n">get_err_stack</span><span class="p">())</span>
@@ -453,10 +451,6 @@
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
     <span class="c1"># PyTango connection</span>
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
-
-<div class="viewcode-block" id="TangoAttribute.isNumeric"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.isNumeric">[docs]</a>    <span class="k">def</span> <span class="nf">isNumeric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc_array</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="n">tgtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tango_data_type</span>
-        <span class="k">return</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_numerical_type</span><span class="p">(</span><span class="n">tgtype</span><span class="p">,</span> <span class="n">inc_array</span><span class="o">=</span><span class="n">inc_array</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TangoAttribute.isInteger"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.isInteger">[docs]</a>    <span class="k">def</span> <span class="nf">isInteger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc_array</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">tgtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tango_data_type</span>
@@ -1043,7 +1037,11 @@
             <span class="c1">###############################################################</span>
             <span class="c1"># changed in taurus4: range, alarm and warning now return</span>
             <span class="c1"># quantities if appropriate</span>
-            <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit_from_tango</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isNumeric</span><span class="p">():</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit_from_tango</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="n">UR</span><span class="o">.</span><span class="n">parse_units</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_numerical_type</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">data_type</span><span class="p">,</span> <span class="n">inc_array</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
                 <span class="n">Q_</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">quantity_from_tango_str</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
                              <span class="n">dtype</span><span class="o">=</span><span class="n">i</span><span class="o">.</span><span class="n">data_type</span><span class="p">)</span>
