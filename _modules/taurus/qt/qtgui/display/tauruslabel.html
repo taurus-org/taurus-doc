@@ -369,6 +369,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultPrefix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultSuffix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bgRole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultBgRole</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fgRole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultFgRole</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultModelIndex</span>
@@ -388,6 +389,11 @@
         <span class="c1"># creation of a controller object</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">controllerUpdate</span><span class="p">()</span>
+
+        <span class="c1"># register configurable properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getPermanentText</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setPermanentText</span><span class="p">,</span> <span class="s2">&quot;permanentText&quot;</span>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_calculate_controller_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ctrl_map</span> <span class="o">=</span> <span class="n">_CONTROLLER_MAP</span>
@@ -536,6 +542,13 @@
 <div class="viewcode-block" id="TaurusLabel.resetSuffixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.resetSuffixText">[docs]</a>    <span class="k">def</span> <span class="nf">resetSuffixText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSuffixText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultSuffix</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TaurusLabel.getPermanentText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.getPermanentText">[docs]</a>    <span class="k">def</span> <span class="nf">getPermanentText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span></div>
+
+<div class="viewcode-block" id="TaurusLabel.setPermanentText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.setPermanentText">[docs]</a>    <span class="k">def</span> <span class="nf">setPermanentText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span> <span class="o">=</span> <span class="n">text</span></div>
+
 <div class="viewcode-block" id="TaurusLabel.setAutoTrim"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.setAutoTrim">[docs]</a>    <span class="k">def</span> <span class="nf">setAutoTrim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trim</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_autoTrim</span> <span class="o">=</span> <span class="n">trim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">controllerUpdate</span><span class="p">()</span></div>
@@ -560,6 +573,11 @@
 
 <div class="viewcode-block" id="TaurusLabel.resetAutoTrim"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.resetAutoTrim">[docs]</a>    <span class="k">def</span> <span class="nf">resetAutoTrim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAutoTrim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultAutoTrim</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusLabel.displayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span>
+        <span class="k">return</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="TaurusLabel.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>

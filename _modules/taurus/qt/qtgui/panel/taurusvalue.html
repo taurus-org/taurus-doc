@@ -245,11 +245,11 @@
             <span class="n">TaurusLabel</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">devName</span><span class="p">)</span></div>
 
-    <span class="n">_BCK_COMPAT_TAGS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;&lt;attr_name&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{attr.name}</span><span class="s1">&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;&lt;attr_fullname&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{attr.fullname}</span><span class="s1">&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;&lt;dev_alias&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{dev.name}</span><span class="s1">&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;&lt;dev_name&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{dev_name}</span><span class="s1">&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;&lt;dev_fullname&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{dev.fullname}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="n">_BCK_COMPAT_TAGS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;&lt;attr_name&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;&lt;attr_fullname&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;fullname&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;&lt;dev_alias&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;parentObj.name&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;&lt;dev_name&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;parentObj.name&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;&lt;dev_fullname&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;parentObj.fullname&#39;</span><span class="p">,</span>
                         <span class="p">}</span>
 
 <div class="viewcode-block" id="DefaultLabelWidget.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_DefaultLabelWidget.html#taurus.qt.qtgui.panel.DefaultLabelWidget.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fragmentName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -260,9 +260,7 @@
             <span class="n">new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_BCK_COMPAT_TAGS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="s1">&#39;{attr.</span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span> <span class="n">old</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="n">old</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="n">new</span><span class="p">)</span>
             <span class="n">fragmentName</span> <span class="o">=</span> <span class="n">fragmentName</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
-        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
-        <span class="n">dev</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">fragmentName</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dev</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">TaurusLabel</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">fragmentName</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DefaultLabelWidget.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_DefaultLabelWidget.html#taurus.qt.qtgui.panel.DefaultLabelWidget.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="mi">18</span><span class="p">)</span></div>
@@ -485,7 +483,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_allowWrite</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_minimumHeight</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_labelConfig</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{attr.label}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labelConfig</span> <span class="o">=</span> <span class="s1">&#39;label&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labelText</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -493,6 +492,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">getLabelConfig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setLabelConfig</span><span class="p">,</span> <span class="s1">&#39;labelConfig&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getLabelText</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setLabelText</span><span class="p">,</span> <span class="s1">&#39;labelText&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isCompact</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCompact</span><span class="p">,</span> <span class="s1">&#39;compact&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusValue.setVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setVisible">[docs]</a>    <span class="k">def</span> <span class="nf">setVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible</span><span class="p">):</span>
@@ -936,7 +937,10 @@
 
             <span class="c1"># set the model for the subwidget</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labelWidget</span><span class="p">,</span> <span class="s1">&#39;setModel&#39;</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullModelName</span><span class="p">())</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullModelName</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labelText</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setPermanentText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labelText</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValue.updateReadWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.updateReadWidget">[docs]</a>    <span class="k">def</span> <span class="nf">updateReadWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># get the class for the widget and replace it if necessary</span>
@@ -1353,12 +1357,33 @@
 
     <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusValue.setLabelConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setLabelConfig">[docs]</a>    <span class="k">def</span> <span class="nf">setLabelConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets fragment configuration to the label widget.</span>
+
+<span class="sd">        :param config: fragment</span>
+<span class="sd">        :type config: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># backwards compatibility: this method used to work for setting</span>
+        <span class="c1"># an arbitrary text to the label widget</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getModelFragmentObj</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Use setLabelText for setting an arbitrary label text&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLabelText</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_labelConfig</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateLabelWidget</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusValue.resetLabelConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.resetLabelConfig">[docs]</a>    <span class="k">def</span> <span class="nf">resetLabelConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_labelConfig</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{attr.label}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labelConfig</span> <span class="o">=</span> <span class="s1">&#39;label&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateLabelWidget</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValue.getLabelText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.getLabelText">[docs]</a>    <span class="k">def</span> <span class="nf">getLabelText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labelText</span></div>
+
+<div class="viewcode-block" id="TaurusValue.setLabelText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setLabelText">[docs]</a>    <span class="k">def</span> <span class="nf">setLabelText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labelText</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setPermanentText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValue.getSwitcherClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.getSwitcherClass">[docs]</a>    <span class="k">def</span> <span class="nf">getSwitcherClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns the TaurusValue switcher class (used in compact mode).</span>
