@@ -162,6 +162,7 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module provides widgets that display the database in a tree format&quot;&quot;&quot;</span>
+<span class="c1"># TODO: tango-centric</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusTreeDevicePartItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeDeviceDomainItem&quot;</span><span class="p">,</span>
            <span class="s2">&quot;TaurusTreeDeviceFamilyItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeDeviceMemberItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeSimpleDeviceItem&quot;</span><span class="p">,</span>
@@ -179,8 +180,6 @@
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusDevState</span>
 <span class="kn">import</span> <span class="nn">taurus.qt.qtcore.mimetypes</span>
-
-<span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoInfo</span><span class="p">,</span> <span class="n">TangoDatabase</span>
 
 <span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusBaseTreeItem</span><span class="p">,</span> <span class="n">TaurusBaseModel</span><span class="p">,</span> <span class="n">TaurusBaseProxyModel</span>
 
@@ -218,8 +217,12 @@
 
 
 <span class="k">class</span> <span class="nc">TaurusTreeDbBaseItem</span><span class="p">(</span><span class="n">TaurusBaseTreeItem</span><span class="p">):</span>
-    <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="n">TangoInfo</span><span class="o">.</span><span class="n">name</span>
-
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># TODO: tango-centric</span>
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoInfo</span>
+        <span class="n">DisplayFunc</span> <span class="o">=</span> <span class="n">TangoInfo</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="TaurusTreeDevicePartItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusTreeDevicePartItem.html#taurus.qt.qtcore.model.TaurusTreeDevicePartItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusTreeDevicePartItem</span><span class="p">(</span><span class="n">TaurusTreeDbBaseItem</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A node designed to represent a &#39;part&#39; (or totality) of a device name&quot;&quot;&quot;</span>
@@ -596,6 +599,8 @@
 <div class="viewcode-block" id="TaurusDbBaseModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
+
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
         <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
@@ -625,6 +630,8 @@
 <div class="viewcode-block" id="TaurusDbSimpleDeviceAliasModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbSimpleDeviceAliasModel.html#taurus.qt.qtcore.model.TaurusDbSimpleDeviceAliasModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
+
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
         <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
@@ -648,6 +655,8 @@
 <div class="viewcode-block" id="TaurusDbPlainDeviceModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbPlainDeviceModel.html#taurus.qt.qtcore.model.TaurusDbPlainDeviceModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
+
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
         <span class="n">devices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
@@ -660,7 +669,7 @@
 
 
 <div class="viewcode-block" id="TaurusDbDeviceModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceModel.html#taurus.qt.qtcore.model.TaurusDbDeviceModel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDbDeviceModel</span><span class="p">(</span><span class="n">TaurusDbBaseModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A Qt model that structures device elements is a 3 level tree organized</span>
+    <span class="sd">&quot;&quot;&quot;A Qt model that structures device elements in a 3 level tree organized</span>
 <span class="sd">       as:</span>
 
 <span class="sd">           - &lt;domain&gt;</span>
@@ -671,6 +680,12 @@
 
 <div class="viewcode-block" id="TaurusDbDeviceModel.setupModelData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceModel.html#taurus.qt.qtcore.model.TaurusDbDeviceModel.setupModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setupModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># TODO: Tango-centric</span>
+            <span class="c1"># TODO: is this try needed? (not done in, e.g. TaurusDbPlainDeviceModel)</span>
+            <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">()</span>
@@ -702,6 +717,7 @@
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 
@@ -732,6 +748,7 @@
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 
@@ -783,6 +800,7 @@
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TangoDatabase</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
 

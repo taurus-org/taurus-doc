@@ -247,6 +247,7 @@
 <div class="viewcode-block" id="TangoFactory.reInit"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.reInit">[docs]</a>    <span class="k">def</span> <span class="nf">reInit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reinitialize the singleton&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_tango_host</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tango_subscribe_enabled</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tango_db_queries</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
@@ -320,6 +321,16 @@
         <span class="sd">&quot;&quot;&quot;Retruns the current default tango host</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_tango_host</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.set_tango_subscribe_enabled"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.set_tango_subscribe_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">set_tango_subscribe_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; If True, enables event subscribing on TangoAttribute objects </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tango_subscribe_enabled</span> <span class="o">=</span> <span class="n">value</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.is_tango_subscribe_enabled"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.is_tango_subscribe_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">is_tango_subscribe_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the current tango_subscribe_enabled status</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tango_subscribe_enabled</span></div>
 
 <div class="viewcode-block" id="TangoFactory.registerAttributeClass"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.registerAttributeClass">[docs]</a>    <span class="k">def</span> <span class="nf">registerAttributeClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">attr_klass</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Registers a new attribute class for the attribute name.</span>

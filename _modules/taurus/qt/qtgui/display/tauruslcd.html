@@ -169,10 +169,8 @@
 
 <span class="kn">import</span> <span class="nn">operator</span>
 
-<span class="c1"># shame of me for importing PyTango!</span>
-<span class="kn">import</span> <span class="nn">PyTango</span>
-
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
+                                         <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">TaurusDevState</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseController</span>
@@ -279,10 +277,10 @@
         <span class="k">return</span> <span class="mf">0.0</span>
 
     <span class="k">def</span> <span class="nf">quality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_VALID</span>
+        <span class="k">return</span> <span class="n">AttrQuality</span><span class="o">.</span><span class="n">ATTR_VALID</span>
 
     <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">ON</span>
+        <span class="k">return</span> <span class="n">TaurusDevState</span><span class="o">.</span><span class="n">ON</span>
 
     <span class="k">def</span> <span class="nf">_updateToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lcd</span><span class="p">):</span>
         <span class="n">lcd</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Some random value for design purposes only&quot;</span><span class="p">)</span>

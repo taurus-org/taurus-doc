@@ -170,10 +170,9 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">import</span> <span class="nn">PyTango</span>
 
 <span class="kn">import</span> <span class="nn">taurus.core</span>
-<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">TaurusDevState</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">TaurusDevState</span><span class="p">,</span> <span class="n">DisplayLevel</span>
 
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span>
                                         <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">)</span>
@@ -308,6 +307,7 @@
 <span class="sd">                      type strings (i.e. see :class:`PyTango.DeviceInfo`) and</span>
 <span class="sd">                      whose values are tuples of classname,args,kwargs</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># TODO: tango-centric</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span> <span class="o">=</span> <span class="n">cwmap</span></div>
 
 <div class="viewcode-block" id="TaurusForm.getCustomWidgetMap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm.getCustomWidgetMap">[docs]</a>    <span class="k">def</span> <span class="nf">getCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -317,6 +317,7 @@
 <span class="sd">                 type strings (i.e. see :class:`PyTango.DeviceInfo`) and whose</span>
 <span class="sd">                 values are tuples of classname,args,kwargs</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># TODO: tango-centric</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span></div>
 
     <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;modelChanged&#39;</span><span class="p">)</span>
@@ -684,6 +685,7 @@
 <div class="viewcode-block" id="TaurusCommandsForm"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusCommandsForm.html#taurus.qt.qtgui.panel.TaurusCommandsForm">[docs]</a><span class="k">class</span> <span class="nc">TaurusCommandsForm</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A form that shows commands available for a Device Server&#39;&#39;&#39;</span>
 
+    <span class="c1"># TODO: tango-centric</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="p">)</span>
 
@@ -712,7 +714,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_defaultParameters</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sortKey</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">cmd_name</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_operatorViewFilter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">disp_level</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DispLevel</span><span class="o">.</span><span class="n">OPERATOR</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operatorViewFilter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">disp_level</span> <span class="o">==</span> <span class="n">DisplayLevel</span><span class="o">.</span><span class="n">OPERATOR</span>
 
         <span class="c1"># self.setLayout(Qt.QGridLayout())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_updateCommandWidgets</span><span class="p">)</span>
@@ -909,7 +911,7 @@
         <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_viewFilters</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_operatorViewFilter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">disp_level</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DispLevel</span><span class="o">.</span><span class="n">OPERATOR</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operatorViewFilter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">disp_level</span> <span class="o">==</span> <span class="n">DisplayLevel</span><span class="o">.</span><span class="n">OPERATOR</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
 

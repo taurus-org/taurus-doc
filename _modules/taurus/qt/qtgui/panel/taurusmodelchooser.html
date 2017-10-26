@@ -175,9 +175,6 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessList</span>
 <span class="kn">from</span> <span class="nn">taurusmodellist</span> <span class="k">import</span> <span class="n">TaurusModelList</span>
 
-<span class="c1">#@todo: tango-centric!!</span>
-<span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDevInfo</span><span class="p">,</span> <span class="n">TangoAttrInfo</span>
-
 
 <div class="viewcode-block" id="TaurusModelSelectorTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelSelectorTree</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
 
@@ -245,8 +242,13 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid buttons position&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusModelSelectorTree.getSelectedModels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree.getSelectedModels">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectedModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># todo: this method is tango-centric, but it could be fixed...</span>
         <span class="n">selected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.core.tango.tangodatabase</span> <span class="k">import</span> <span class="p">(</span><span class="n">TangoDevInfo</span><span class="p">,</span>
+                                                         <span class="n">TangoAttrInfo</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">selected</span>
+        <span class="c1"># TODO: Tango-centric</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">():</span>
             <span class="n">nfo</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">itemData</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nfo</span><span class="p">,</span> <span class="n">TangoDevInfo</span><span class="p">):</span>

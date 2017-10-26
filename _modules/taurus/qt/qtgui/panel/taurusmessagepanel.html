@@ -180,10 +180,6 @@
 <span class="k">except</span><span class="p">:</span>
     <span class="n">pygments</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="c1"># shame on me for importing PyTango! well not so much since this is designed to</span>
-<span class="c1"># show PyTango exceptions</span>
-<span class="kn">import</span> <span class="nn">PyTango</span>
-
 <span class="kn">from</span> <span class="nn">taurus.core.util.report</span> <span class="k">import</span> <span class="n">TaurusMessageReportHandler</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
@@ -232,6 +228,7 @@
 <div class="viewcode-block" id="TangoMessageErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoMessageErrorHandler.html#taurus.qt.qtgui.panel.TangoMessageErrorHandler">[docs]</a><span class="k">class</span> <span class="nc">TangoMessageErrorHandler</span><span class="p">(</span><span class="n">TaurusMessageErrorHandler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class is designed to handle :class:`PyTango.DevFailed` error into</span>
 <span class="sd">    a :class:`TaurusMessagePanel`&quot;&quot;&quot;</span>
+    <span class="c1"># TODO: tango-centric</span>
 
 <div class="viewcode-block" id="TangoMessageErrorHandler.setError"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TangoMessageErrorHandler.html#taurus.qt.qtgui.panel.TangoMessageErrorHandler.setError">[docs]</a>    <span class="k">def</span> <span class="nf">setError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_traceback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Translates the given error object into an HTML string and places it</span>
@@ -626,7 +623,11 @@
 <span class="sd">        :rtype: tuple&lt;type, value, traceback&gt;&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exc_info</span></div>
 
-    <span class="n">ErrorHandlers</span> <span class="o">=</span> <span class="p">{</span><span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span> <span class="n">TangoMessageErrorHandler</span><span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">Pyango</span>
+        <span class="n">ErrorHandlers</span> <span class="o">=</span> <span class="p">{</span><span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span> <span class="n">TangoMessageErrorHandler</span><span class="p">}</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">ErrorHandlers</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="TaurusMessagePanel.registerErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessagePanel.html#taurus.qt.qtgui.panel.TaurusMessagePanel.registerErrorHandler">[docs]</a>    <span class="k">def</span> <span class="nf">registerErrorHandler</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">err_type</span><span class="p">,</span> <span class="n">err_handler</span><span class="p">):</span>

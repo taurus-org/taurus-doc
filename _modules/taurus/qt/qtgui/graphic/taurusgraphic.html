@@ -164,6 +164,8 @@
 <span class="sd">taurusgraphic.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="c1"># TODO: Tango-centric</span>
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SynopticSelectionStyle&#39;</span><span class="p">,</span>
            <span class="s1">&#39;parseTangoUri&#39;</span><span class="p">,</span>
            <span class="s1">&#39;QEmitter&#39;</span><span class="p">,</span>  <span class="c1"># TODO: QEmitter should probably be removed (kept priv)</span>
@@ -207,10 +209,6 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
-<span class="c1"># TODO: tango-centric!</span>
-<span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">DevState</span>
-<span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span><span class="n">TangoDeviceNameValidator</span><span class="p">,</span>
-                                              <span class="n">TangoAttributeNameValidator</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span><span class="p">,</span>
@@ -226,7 +224,11 @@
 
 
 <div class="viewcode-block" id="parseTangoUri"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic.html#taurus.qt.qtgui.graphic.parseTangoUri">[docs]</a><span class="k">def</span> <span class="nf">parseTangoUri</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c1"># TODO: Tango-centric</span>
     <span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">tango</span>
+    <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span><span class="n">TangoDeviceNameValidator</span><span class="p">,</span>
+                                                  <span class="n">TangoAttributeNameValidator</span><span class="p">)</span>
+
     <span class="n">validator</span> <span class="o">=</span> <span class="p">{</span><span class="n">tango</span><span class="o">.</span><span class="n">TangoDevice</span><span class="p">:</span> <span class="n">TangoDeviceNameValidator</span><span class="p">,</span>
                  <span class="n">tango</span><span class="o">.</span><span class="n">TangoAttribute</span><span class="p">:</span> <span class="n">TangoAttributeNameValidator</span><span class="p">}</span>
     <span class="k">try</span><span class="p">:</span>
@@ -486,6 +488,11 @@
 
 <span class="sd">        :return: (list) items</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># TODO: Tango-centric</span>
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span>
+            <span class="n">TangoDeviceNameValidator</span><span class="p">,</span> <span class="n">TangoAttributeNameValidator</span><span class="p">)</span>
+
         <span class="n">strict</span> <span class="o">=</span> <span class="p">(</span>
             <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANY_ATTRIBUTE_SELECTS_DEVICE</span><span class="p">)</span> <span class="k">if</span> <span class="n">strict</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">strict</span>
         <span class="n">alnum</span> <span class="o">=</span> <span class="s1">&#39;(?:[a-zA-Z0-9-_\*]|(?:\.\*))(?:[a-zA-Z0-9-_\*]|(?:\.\*))*&#39;</span>
@@ -1309,6 +1316,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusGraphicsItem</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusGraphicsStateItem.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsStateItem.html#taurus.qt.qtgui.graphic.TaurusGraphicsStateItem.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">DevState</span>  <span class="c1"># Tango-centric</span>
+
         <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_currBrush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span><span class="p">)</span>

@@ -425,7 +425,8 @@
 
         <span class="c1"># subscribe to configuration events (unsubscription done at cleanup)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeConfEvents</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">is_tango_subscribe_enabled</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeConfEvents</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TangoAttribute.cleanUp"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TangoAttribute] cleanUp&quot;</span><span class="p">)</span>
@@ -720,6 +721,9 @@
 
 <div class="viewcode-block" id="TangoAttribute.isUsingEvents"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.isUsingEvents">[docs]</a>    <span class="k">def</span> <span class="nf">isUsingEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">==</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Subscribed</span></div>
+    
+<div class="viewcode-block" id="TangoAttribute.getSubscriptionState"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.getSubscriptionState">[docs]</a>    <span class="k">def</span> <span class="nf">getSubscriptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span>    </div>
 
     <span class="k">def</span> <span class="nf">_process_event_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ex</span><span class="p">):</span>
         <span class="k">pass</span>
@@ -727,6 +731,11 @@
     <span class="k">def</span> <span class="nf">_subscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Enable subscription to the attribute events. If change events are</span>
 <span class="sd">            not supported polling is activated &quot;&quot;&quot;</span>
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;chg events already subscribed (id=</span><span class="si">%s</span><span class="s2">)&quot;</span>
+                       <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span><span class="p">)</span>
+            <span class="k">return</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
@@ -738,26 +747,33 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;failed to subscribe to chg events: HW is None&quot;</span><span class="p">)</span>
                 <span class="k">return</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
-        <span class="n">attr_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">is_tango_subscribe_enabled</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_activatePolling</span><span class="p">()</span>
+            <span class="k">return</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">=</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Subscribing</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span><span class="o">.</span><span class="n">subscribe_event</span><span class="p">(</span>
-                <span class="n">attr_name</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">CHANGE_EVENT</span><span class="p">,</span>
-                <span class="bp">self</span><span class="p">,</span> <span class="p">[])</span>  <span class="c1"># connects to self.push_event callback</span>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">_call_dev_hw_subscribe_event</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">=</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">PendingSubscribe</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_activatePolling</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span><span class="o">.</span><span class="n">subscribe_event</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_call_dev_hw_subscribe_event</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                
+    <span class="k">def</span> <span class="nf">_call_dev_hw_subscribe_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stateless</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Executes event subscription on parent TangoDevice objectName</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span><span class="o">.</span><span class="n">subscribe_event</span><span class="p">(</span>
                 <span class="n">attr_name</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">CHANGE_EVENT</span><span class="p">,</span>
-                <span class="bp">self</span><span class="p">,</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># connects to self.push_event callback</span>
-
+                <span class="bp">self</span><span class="p">,</span> <span class="p">[],</span> <span class="n">stateless</span><span class="p">)</span> <span class="c1"># connects to self.push_event callback</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span>
+                
     <span class="k">def</span> <span class="nf">_unsubscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Careful in this method: This is intended to be executed in the cleanUp</span>
         <span class="c1"># so we should not access external objects from the factory, like the</span>
         <span class="c1"># parent object</span>
+        
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;Unsubscribing to change events (ID=</span><span class="si">%d</span><span class="s2">)&quot;</span><span class="p">,</span>
                        <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span><span class="p">)</span>
@@ -778,6 +794,12 @@
     <span class="k">def</span> <span class="nf">_subscribeConfEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Enable subscription to the attribute configuration events.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;Subscribing to configuration events...&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;cfg events already subscribed (id=</span><span class="si">%s</span><span class="s2">)&quot;</span>
+                       <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span><span class="p">)</span>
+            <span class="k">return</span>
+        
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -813,7 +835,8 @@
         <span class="c1"># Careful in this method: This is intended to be executed in the cleanUp</span>
         <span class="c1"># so we should not access external objects from the factory, like the</span>
         <span class="c1"># parent object</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;Unsubscribing to configuration events (ID=</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span>
                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span><span class="p">))</span>
             <span class="k">try</span><span class="p">:</span>
