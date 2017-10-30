@@ -494,8 +494,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">getLabelConfig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setLabelConfig</span><span class="p">,</span> <span class="s1">&#39;labelConfig&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">getLabelText</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setLabelText</span><span class="p">,</span> <span class="s1">&#39;labelText&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isCompact</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCompact</span><span class="p">,</span> <span class="s1">&#39;compact&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusValue.setVisible"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setVisible">[docs]</a>    <span class="k">def</span> <span class="nf">setVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible</span><span class="p">):</span>
@@ -1376,9 +1374,10 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">getModelFragmentObj</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Use setLabelText for setting an arbitrary label text&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setLabelText</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting permanent text to the label widget failed&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_labelConfig</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateLabelWidget</span><span class="p">()</span></div>
@@ -1386,13 +1385,6 @@
 <div class="viewcode-block" id="TaurusValue.resetLabelConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.resetLabelConfig">[docs]</a>    <span class="k">def</span> <span class="nf">resetLabelConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_labelConfig</span> <span class="o">=</span> <span class="s1">&#39;label&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateLabelWidget</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TaurusValue.getLabelText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.getLabelText">[docs]</a>    <span class="k">def</span> <span class="nf">getLabelText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labelText</span></div>
-
-<div class="viewcode-block" id="TaurusValue.setLabelText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setLabelText">[docs]</a>    <span class="k">def</span> <span class="nf">setLabelText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_labelText</span> <span class="o">=</span> <span class="n">text</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_labelWidget</span><span class="o">.</span><span class="n">setPermanentText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValue.getSwitcherClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.getSwitcherClass">[docs]</a>    <span class="k">def</span> <span class="nf">getSwitcherClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns the TaurusValue switcher class (used in compact mode).</span>
