@@ -281,6 +281,8 @@
                            <span class="bp">self</span><span class="o">.</span><span class="n">taurusValueBuddy</span><span class="p">()</span><span class="o">.</span><span class="n">onChangeLabelConfig</span><span class="p">)</span>
             <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Change Read Widget&quot;</span><span class="p">,</span>
                            <span class="bp">self</span><span class="o">.</span><span class="n">taurusValueBuddy</span><span class="p">()</span><span class="o">.</span><span class="n">onChangeReadWidget</span><span class="p">)</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Set Formatter&quot;</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">taurusValueBuddy</span><span class="p">()</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">)</span>
             <span class="n">cw_action</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
                 <span class="s2">&quot;Change Write Widget&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusValueBuddy</span><span class="p">()</span><span class="o">.</span><span class="n">onChangeWriteWidget</span><span class="p">)</span>
             <span class="c1"># disable the action if the taurusValue is readonly</span>
@@ -570,6 +572,13 @@
 
         <span class="c1"># do the base class stuff too</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValue.onSetFormatter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.onSetFormatter">[docs]</a>    <span class="k">def</span> <span class="nf">onSetFormatter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reimplemented to call onSetFormatter of the read widget (if provided)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="p">,</span> <span class="s1">&#39;onSetFormatter&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusValue.getAllowWrite"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.getAllowWrite">[docs]</a>    <span class="k">def</span> <span class="nf">getAllowWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowWrite</span></div>

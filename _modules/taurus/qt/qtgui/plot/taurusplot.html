@@ -1169,8 +1169,12 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;TaurusPlot&quot;</span>
+        <span class="c1"># book-keeping of attached tauruscurves</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curves</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>  <span class="c1"># TODO: Tango-centric</span>
+
         <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span> <span class="o">=</span> <span class="n">designMode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_useParentModel</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1204,8 +1208,6 @@
         <span class="c1"># enable dropping (see also dragEnterEvent and dropEvent methods)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAcceptDrops</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="c1"># book-keeping of attached tauruscurves</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">curves</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>  <span class="c1"># TODO: Tango-centric</span>
         <span class="c1">#self.curves_lock = threading.RLock()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">curves_lock</span> <span class="o">=</span> <span class="n">DummyLock</span><span class="p">()</span>
 
@@ -1315,6 +1317,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dataInspectorAction</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pointPicker</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dataInspectorAction</span><span class="o">.</span><span class="n">toggled</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggleDataInspectorMode</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setFormatterAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Set Formatter...&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setFormatterAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_curveStatsAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Calculate statistics&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_curveStatsAction</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_S</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_curveStatsAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onCurveStatsAction</span><span class="p">)</span>
@@ -1386,17 +1391,30 @@
 
         <span class="c1"># add all actions and limit the scope of the key shortcuts to the</span>
         <span class="c1"># widget (default is Window)</span>
-        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataInspectorAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_autoscaleAllAxisAction</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">_toggleZoomAxisAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configDialogAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputDataAction</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">_saveConfigAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loadConfigAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showLegendAction</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">_showMaxAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showMinAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_printAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exportPdfAction</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">_exportAsciiAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setCurvesTitleAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_curveStatsAction</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataInspectorAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pauseAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_autoscaleAllAxisAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_toggleZoomAxisAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configDialogAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_inputDataAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_saveConfigAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_loadConfigAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showLegendAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_showMaxAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showMinAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_printAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exportPdfAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_exportAsciiAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setCurvesTitleAction</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">_curveStatsAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setFormatterAction</span><span class="p">):</span>
             <span class="c1"># this is needed to avoid ambiguity when more than one TaurusPlot</span>
             <span class="c1"># is used in the same window</span>
             <span class="n">action</span><span class="o">.</span><span class="n">setShortcutContext</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WidgetShortcut</span><span class="p">)</span>
             <span class="c1"># because of the line above, we must add the actions to the widget</span>
             <span class="c1"># that gets the focus (the canvas instead of self)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">()</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusPlot.setFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlot.html#taurus.qt.qtgui.plot.TaurusPlot.setFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplemented from TaurusBaseComponent&quot;&quot;&quot;</span>
+        <span class="n">targetCurveNames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curves</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">targetCurveNames</span><span class="p">:</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curves</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="s1">&#39;owner&#39;</span><span class="p">,</span> <span class="n">curve</span><span class="p">)</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span>
+        <span class="n">TaurusBaseComponent</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusPlot.dropEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlot.html#taurus.qt.qtgui.plot.TaurusPlot.dropEvent">[docs]</a>    <span class="k">def</span> <span class="nf">dropEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented to support dropping of modelnames in taurusplots&#39;&#39;&#39;</span>
@@ -2297,6 +2315,7 @@
 
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_showLegendAction</span><span class="p">)</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataInspectorAction</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_setFormatterAction</span><span class="p">)</span>
 
         <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
         <span class="n">exportSubMenu</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;&amp;Export &amp;&amp; Print&quot;</span><span class="p">)</span>
@@ -2439,7 +2458,8 @@
         <span class="n">miscdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;defaultCurvesTitle&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultCurvesTitle</span><span class="p">(),</span>
                     <span class="s1">&#39;canvasBackground&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvasBackground</span><span class="p">(),</span>
                     <span class="s1">&#39;orderedCurveNames&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCurveNamesSorted</span><span class="p">(),</span>
-                    <span class="s1">&#39;plotTitle&#39;</span><span class="p">:</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">())}</span>
+                    <span class="s1">&#39;plotTitle&#39;</span><span class="p">:</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
+                    <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">()}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isWindow</span><span class="p">():</span>
             <span class="n">miscdict</span><span class="p">[</span><span class="s2">&quot;Geometry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">miscdict</span>
@@ -2567,7 +2587,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="n">miscdict</span><span class="p">[</span><span class="s1">&#39;plotTitle&#39;</span><span class="p">])</span>
         <span class="c1"># set geometry (if this is a top level window)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isWindow</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;Geometry&#39;</span> <span class="ow">in</span> <span class="n">miscdict</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">miscdict</span><span class="p">[</span><span class="s1">&#39;Geometry&#39;</span><span class="p">])</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">miscdict</span><span class="p">[</span><span class="s1">&#39;Geometry&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">&quot;formatter&quot;</span> <span class="ow">in</span> <span class="n">miscdict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="n">miscdict</span><span class="p">[</span><span class="s1">&#39;formatter&#39;</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="TaurusPlot.applyAxesConfig"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlot.html#taurus.qt.qtgui.plot.TaurusPlot.applyAxesConfig">[docs]</a>    <span class="k">def</span> <span class="nf">applyAxesConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;sets the axes according to settings stored in the axes dict,</span>

@@ -246,6 +246,7 @@
         <span class="n">help_taurusserial</span> <span class="o">=</span> <span class="s2">&quot;taurus serialization mode. Allowed values are (case insensitive): &quot;</span>\
             <span class="s2">&quot;serial, concurrent (default)&quot;</span>
         <span class="n">help_rcport</span> <span class="o">=</span> <span class="s2">&quot;enables remote debugging using the given port&quot;</span>
+        <span class="n">help_formatter</span> <span class="o">=</span> <span class="s2">&quot;Override the default formatter&quot;</span>
         <span class="n">group</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--taurus-log-level&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;taurus_log_level&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;LEVEL&quot;</span><span class="p">,</span>
                          <span class="n">help</span><span class="o">=</span><span class="n">help_tauruslog</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;str&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
         <span class="n">group</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--taurus-polling-period&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;taurus_polling_period&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;MILLISEC&quot;</span><span class="p">,</span>
@@ -256,6 +257,9 @@
                          <span class="n">help</span><span class="o">=</span><span class="n">help_tangohost</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;str&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="n">group</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--remote-console-port&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;remote_console_port&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span>
                          <span class="n">help</span><span class="o">=</span><span class="n">help_rcport</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--default-formatter&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;default_formatter&quot;</span><span class="p">,</span>
+                         <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;FORMATTER&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="n">help_formatter</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;str&quot;</span><span class="p">,</span>
+                         <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_option_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">parser</span></div>
 
@@ -334,6 +338,12 @@
                         <span class="n">options</span><span class="o">.</span><span class="n">remote_console_port</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">taurus</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot spawn debugger. Reason: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="c1"># initialize default formatter</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">default_formatter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;DEFAULT_FORMATTER&#39;</span><span class="p">,</span>
+                <span class="n">options</span><span class="o">.</span><span class="n">default_formatter</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">parser</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">args</span></div>
 

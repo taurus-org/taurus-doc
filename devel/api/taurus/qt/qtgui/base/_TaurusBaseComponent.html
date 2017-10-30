@@ -197,32 +197,10 @@ inherit from QObject (or from a QObject derived class).</p>
 <cite>taurusEvent</cite> is implemented using <code class="xref py py-func docutils literal"><span class="pre">baseSignal()</span></code>, that doesn&#8217;t
 require the class to inherit from QObject.</p>
 </div>
-<dl class="method">
+<dl class="attribute">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT">
-<code class="descname">FORMAT</code><span class="sig-paren">(</span><em>dtype=None</em>, <em>basecomponent=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default formatter callable. Returns a format string based on dtype
-and the mapping provided by 
-<a href="#id1"><span class="problematic" id="id2">:attribute:`TaurusBaseComponent.defaultFormatDict`</span></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a>) &#8211; data type</li>
-<li><strong>basecomponent</strong> &#8211; widget whose display is to be formatted</li>
-<li><strong>kwargs</strong> &#8211; other keyworld arguments</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The format string corresponding to the given dtype.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">FORMAT</code><em class="property"> = None</em><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.applyPendingOperations">
@@ -257,7 +235,7 @@ If None is given (default) the component fetches the pending operations</td>
 
 <dl class="attribute">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict">
-<code class="descname">defaultFormatDict</code><em class="property"> = {&lt;type 'float'&gt;: '{:.{bc.modelObj.precision}f}', &lt;enum 'Enum'&gt;: '{0.name}', &lt;class 'taurus.external.pint.pint_local.quantity.Quantity'&gt;: '{:~.{bc.modelObj.precision}f}'}</em><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">defaultFormatDict</code><em class="property"> = {&lt;enum 'Enum'&gt;: '{0.name}', &lt;type 'float'&gt;: '{:.{bc.modelObj.precision}f}', &lt;class 'taurus.external.pint.pint_local.quantity.Quantity'&gt;: '{:~.{bc.modelObj.precision}f}'}</em><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -272,13 +250,13 @@ this object stops listening its model.</p>
 <code class="descname">displayValue</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.displayValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a string representation of the given value</p>
 <p>This method will use a format string which is determined 
-dynamically from <a href="#id3"><span class="problematic" id="id4">:attribute:`FORMAT`</span></a>.</p>
+dynamically from <a href="#id1"><span class="problematic" id="id2">:attribute:`FORMAT`</span></a>.</p>
 <p>By default <cite>TaurusBaseComponent.FORMAT</cite> is set to 
-<a href="#id5"><span class="problematic" id="id6">:function:`defaultFormatter`</span></a>, which makes use of 
-<a href="#id7"><span class="problematic" id="id8">:attribute:`defaultFormatDict`</span></a>.</p>
+<a href="#id3"><span class="problematic" id="id4">:function:`defaultFormatter`</span></a>, which makes use of 
+<a href="#id5"><span class="problematic" id="id6">:attribute:`defaultFormatDict`</span></a>.</p>
 <p>In order to customize the formatting behaviour, one can change
-<a href="#id9"><span class="problematic" id="id10">:attribute:`defaultFormatDict`</span></a> or <a href="#id11"><span class="problematic" id="id12">:attribute:`FORMAT`</span></a> directly
-at class level, or use <a href="#id13"><span class="problematic" id="id14">:method:`setFormat`</span></a> to alter the 
+<a href="#id7"><span class="problematic" id="id8">:attribute:`defaultFormatDict`</span></a> or <a href="#id9"><span class="problematic" id="id10">:attribute:`FORMAT`</span></a> directly
+at class level, or use <a href="#id11"><span class="problematic" id="id12">:method:`setFormat`</span></a> to alter the 
 format string of an specific instance</p>
 <p><cite>FORMAT</cite> can be set to a python format string [1] or a callable 
 that returns a python format string.
@@ -296,7 +274,7 @@ keyword arguments:
 <li><p class="first">Change FORMAT for all TaurusLabels (using a callable):</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>def baseFormatter(dtype=None, basecomponent=None, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs):</dt>
+<dt>def baseFormatter(dtype=None, basecomponent=None, <a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs):</dt>
 <dd><p class="first last">return &#8220;{:.1f}&#8221;</p>
 </dd>
 </dl>
@@ -528,6 +506,23 @@ Qt thread (default)</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getFormat">
+<code class="descname">getFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the <cite>FORMAT</cite> attribute for this instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string of the current format.</td>
+</tr>
+</tbody>
+</table>
+<p>It could be a python format string or a callable string representation.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1143,7 +1138,7 @@ for this component will be considered safe.</p>
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetFormat">
 <code class="descname">resetFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset the internal format string. It forces a recalculation
-in the next call to <a href="#id17"><span class="problematic" id="id18">:method:`displayValue`</span></a>.</p>
+in the next call to <a href="#id15"><span class="problematic" id="id16">:method:`displayValue`</span></a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1295,13 +1290,14 @@ value to be filtered as well. This can be done as in this example:</p>
 <code class="descname">setFormat</code><span class="sig-paren">(</span><em>format</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to set the <cite>FORMAT</cite> attribute for this instance.
 It also resets the internal format string, which will be recalculated
-in the next call to :method&#8221;<cite>displayValue</cite></p>
+in the next call to <a href="#id17"><span class="problematic" id="id18">:method:`displayValue`</span></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>format</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">callable</span></code>) &#8211; A format string or a callable
-that returns it</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>format</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">callable</span></code>) &#8211; A format string
+or a formatter callable (or the callable name in
+&#8220;full.module.callable&#8221; format)</td>
 </tr>
 </tbody>
 </table>
