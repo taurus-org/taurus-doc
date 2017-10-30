@@ -173,6 +173,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurusbasecontainer</span> <span class="k">import</span> <span class="n">TaurusBaseContainer</span>
 
@@ -1015,6 +1016,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">unregisterConfigurableItem</span><span class="p">(</span><span class="s2">&quot;_extApp[</span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
                                         <span class="n">raiseOnError</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">dbg_msg</span><span class="o">=</span><span class="s2">&quot;Change Tango Host action is TangoCentric&quot;</span><span class="p">,</span>
+                           <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;4.1.2&quot;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_onChangeTangoHostAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        slot called when the Change Tango Host is triggered. It prompts for a</span>
