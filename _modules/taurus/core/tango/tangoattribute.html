@@ -179,6 +179,7 @@
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Manager</span>
 <span class="kn">from</span> <span class="nn">taurus.external.pint</span> <span class="k">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span><span class="p">,</span> <span class="n">UndefinedUnitError</span>
 
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="p">,</span>
                                          <span class="n">TaurusSerializationMode</span><span class="p">,</span>
@@ -382,12 +383,15 @@
     <span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;A Tango Attribute&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
         <span class="c1"># the last attribute value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># the last attribute error</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Lock for protecting the critical read region </span>
+        <span class="c1"># where __attr_value and __attr_err are updated</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__read_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
 
         <span class="c1"># the change event identifier</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
@@ -427,6 +431,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">is_tango_subscribe_enabled</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeConfEvents</span><span class="p">()</span>
+
 
 <div class="viewcode-block" id="TangoAttribute.cleanUp"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TangoAttribute] cleanUp&quot;</span><span class="p">)</span>
@@ -574,29 +579,43 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;[Tango] write failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">e</span></div>
 
-<div class="viewcode-block" id="TangoAttribute.poll"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.poll">[docs]</a>    <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TangoAttribute.poll"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.poll">[docs]</a>    <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">single</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Notify listeners when the attribute has been polled&quot;&quot;&quot;</span>
-        <span class="n">single</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;single&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">single</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_lock</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">single</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="n">error</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span>
+                        <span class="c1"># Avoid &quot;valid-but-outdated&quot; notifications</span>
+                        <span class="c1"># if FILTER_OLD_TANGO_EVENTS is enabled</span>
+                        <span class="c1"># and the given timestamp is older than the timestamp</span>
+                        <span class="c1"># of the cached value</span>
+                        <span class="n">filter_old_event</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span>
+                                                   <span class="s1">&#39;FILTER_OLD_TANGO_EVENTS&#39;</span><span class="p">,</span>
+                                                   <span class="kc">False</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                                <span class="ow">and</span> <span class="n">filter_old_event</span>
+                                <span class="ow">and</span> <span class="n">time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                                <span class="ow">and</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">totime</span><span class="p">()</span>
+                           <span class="p">):</span>
+                            <span class="k">return</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error polling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error polling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span>
-        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error polling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error polling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="p">)</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TangoAttribute.read"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Returns the current value of the attribute.</span>
@@ -604,7 +623,6 @@
 <span class="sd">            active then it will return the local cached value. Otherwise it will</span>
 <span class="sd">            read the attribute value from the tango device.&quot;&quot;&quot;</span>
         <span class="n">curr_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
         <span class="k">if</span> <span class="n">cache</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">attr_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">totime</span><span class="p">()</span>
@@ -619,34 +637,43 @@
                                <span class="bp">self</span><span class="o">.</span><span class="n">fullname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">cache</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="ow">in</span> <span class="p">(</span><span class="n">SubscriptionState</span><span class="o">.</span><span class="n">PendingSubscribe</span><span class="p">,</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Unsubscribed</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingActive</span><span class="p">()):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
-                <span class="n">v</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">())</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="kc">None</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span>
-            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">df</span>
-                <span class="n">err</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[Tango] read failed (</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                           <span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
-                <span class="k">raise</span> <span class="n">df</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">e</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[Tango] read failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-                <span class="k">raise</span> <span class="n">e</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="ow">in</span> <span class="p">(</span><span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Subscribing</span><span class="p">,</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">PendingSubscribe</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cache</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">PendingSubscribe</span><span class="p">,</span>
+                <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Unsubscribed</span><span class="p">)</span>
+                         <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingActive</span><span class="p">()):</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_lock</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">())</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span>
+                <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="n">df</span>
+                    <span class="n">err</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[Tango] read failed (</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                               <span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">df</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="n">e</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[Tango] read failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="ow">in</span> <span class="p">(</span><span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Subscribing</span><span class="p">,</span>
+                                           <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">PendingSubscribe</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span></div>
-    
+
+
 <div class="viewcode-block" id="TangoAttribute.getAttributeProxy"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.getAttributeProxy">[docs]</a>    <span class="k">def</span> <span class="nf">getAttributeProxy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convenience method that creates and returns a PyTango.AttributeProxy</span>
 <span class="sd">        object&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttributeProxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span></div>
-    
+
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
     <span class="c1"># API for listeners</span>
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
@@ -851,24 +878,25 @@
 <span class="sd">        It propagates the event to listeners and delegates other tasks to</span>
 <span class="sd">        specific handlers for different event types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># if it is a configuration event</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrConfEventData</span><span class="p">):</span>
-            <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pushConfEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-        <span class="c1"># if it is an attribute event</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pushAttrEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_lock</span><span class="p">:</span>
+            <span class="c1"># if it is a configuration event</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrConfEventData</span><span class="p">):</span>
+                <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pushConfEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="c1"># if it is an attribute event</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pushAttrEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
-        <span class="c1"># notify the listeners if required (i.e, if etype is not None)</span>
-        <span class="k">if</span> <span class="n">etype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
-        <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
-        <span class="n">listeners</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Concurrent</span><span class="p">:</span>
-            <span class="n">manager</span><span class="o">.</span><span class="n">addJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span>
-                           <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span></div>
+            <span class="c1"># notify the listeners if required (i.e, if etype is not None)</span>
+            <span class="k">if</span> <span class="n">etype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+            <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
+            <span class="n">listeners</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Concurrent</span><span class="p">:</span>
+                <span class="n">manager</span><span class="o">.</span><span class="n">addJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span>
+                               <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_pushAttrEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Handler of (non-configuration) events from the PyTango layer.</span>
@@ -882,8 +910,22 @@
 <span class="sd">                 evt_value is a TaurusValue, an Exception, or None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">err</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
-                <span class="n">event</span><span class="o">.</span><span class="n">attr_value</span><span class="p">),</span> <span class="kc">None</span>
+            <span class="n">attr_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">attr_value</span><span class="p">)</span>
+            <span class="n">filter_old_event</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span>
+                                       <span class="s1">&#39;FILTER_OLD_TANGO_EVENTS&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">attr_value</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">totime</span><span class="p">()</span>
+
+            <span class="c1"># Discard &quot;valid&quot; events if the attribute value is not None</span>
+            <span class="c1"># and FILTER_OLD_TANGO_EVENTS is enabled</span>
+            <span class="c1"># and the given timestamp is older than the timestamp</span>
+            <span class="c1"># of the cache value</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">filter_old_event</span>
+                <span class="ow">and</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">totime</span><span class="p">()):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="n">attr_value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">=</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Subscribed</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingForced</span><span class="p">():</span>
@@ -896,7 +938,7 @@
                           <span class="n">event</span><span class="o">.</span><span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">=</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">PendingSubscribe</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_activatePolling</span><span class="p">()</span>
-            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">(</span>
