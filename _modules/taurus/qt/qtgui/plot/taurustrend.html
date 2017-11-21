@@ -1764,7 +1764,12 @@
         <span class="c1"># stop the scale change notification temporally (to avoid duplicate</span>
         <span class="c1"># warnings)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setUseArchiving</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">axisWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span><span class="o">.</span><span class="n">scaleDivChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scaleChangeWarning</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axisWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xBottom</span><span class="p">)</span><span class="o">.</span><span class="n">scaleDivChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_scaleChangeWarning</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Failed to disconnect ScaleChangeWarning dialog&#39;</span><span class="p">)</span>        
+
         <span class="c1"># show a dialog</span>
         <span class="n">dlg</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">dlg</span><span class="o">.</span><span class="n">setModal</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
