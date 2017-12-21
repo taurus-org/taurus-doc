@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.display.tauruslabel &mdash; taurus 4.1.2-alpha documentation</title>
+  <title>taurus.qt.qtgui.display.tauruslabel &mdash; taurus 4.2.1-alpha documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.2.1-alpha documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.1
+                4.2
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.2 documentation</a></li>
 </ul>
 
             
@@ -499,7 +499,20 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bgRole</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.setBgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.setBgRole">[docs]</a>    <span class="k">def</span> <span class="nf">setBgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgRole</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bgRole</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">bgRole</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the background role. The label background will be set according</span>
+<span class="sd">        to the current palette and the role. Valid roles are:</span>
+<span class="sd">        - &#39;none&#39; : no background</span>
+<span class="sd">        - &#39;state&#39; a color depending on the device state</span>
+<span class="sd">        - &#39;quality&#39; a color depending on the attribute quality</span>
+<span class="sd">        - &#39;value&#39; a color depending on the rvalue of the attribute</span>
+<span class="sd">        - &lt;arbitrary member name&gt; a color based on the value of an arbitrary</span>
+<span class="sd">          member of the model object (warning: experimental feature!)</span>
+
+<span class="sd">        .. warning:: the &lt;arbitrary member name&gt; support is still experimental</span>
+<span class="sd">                     and its API may change in future versions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bgRole</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">bgRole</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">controllerUpdate</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.resetBgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.resetBgRole">[docs]</a>    <span class="k">def</span> <span class="nf">resetBgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -796,7 +809,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.1.2-alpha',
+            VERSION:'4.2.1-alpha',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

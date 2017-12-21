@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.base.tauruscontroller &mdash; taurus 4.1.2-alpha documentation</title>
+  <title>taurus.qt.qtgui.base.tauruscontroller &mdash; taurus 4.2.1-alpha documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.1.2-alpha documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.2.1-alpha documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.1
+                4.2
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.1 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.2 documentation</a></li>
 </ul>
 
             
@@ -444,7 +444,7 @@
 
     <span class="k">if</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">usePalette</span><span class="p">():</span>
         <span class="n">widget</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">bgRole</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">bgRole</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;None&#39;</span><span class="p">):</span>
             <span class="n">transparentBrush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">transparent</span><span class="p">)</span>
             <span class="n">frameBrush</span> <span class="o">=</span> <span class="n">transparentBrush</span>
             <span class="n">bgBrush</span><span class="p">,</span> <span class="n">fgBrush</span> <span class="o">=</span> <span class="n">transparentBrush</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
@@ -458,10 +458,18 @@
                 <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
             <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
                 <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># TODO: this is an *experimental* extension of the bgRole API</span>
+                <span class="c1"># added in v 4.1.2-alpha. It may change in future versions</span>
+                <span class="n">modelObj</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">bgItem</span> <span class="o">=</span> <span class="n">modelObj</span><span class="o">.</span><span class="n">getFragmentObj</span><span class="p">(</span><span class="n">bgRole</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Invalid bgRole &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">bgRole</span><span class="p">)</span>
             <span class="n">bgBrush</span><span class="p">,</span> <span class="n">fgBrush</span> <span class="o">=</span> <span class="n">palette</span><span class="o">.</span><span class="n">qbrush</span><span class="p">(</span><span class="n">bgItem</span><span class="p">)</span>
         <span class="n">_updatePaletteColors</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">bgBrush</span><span class="p">,</span> <span class="n">fgBrush</span><span class="p">,</span> <span class="n">frameBrush</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">bgRole</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">bgRole</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;None&#39;</span><span class="p">):</span>
             <span class="n">ss</span> <span class="o">=</span> <span class="n">StyleSheetTemplate</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;rgba(0,0,0,0)&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bgItem</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span>
@@ -472,6 +480,14 @@
                 <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
             <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
                 <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># TODO: this is an *experimental* extension of the bgRole API</span>
+                <span class="c1"># added in v 4.1.2-alpha. It may change in future versions</span>
+                <span class="n">modelObj</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">bgItem</span> <span class="o">=</span> <span class="n">modelObj</span><span class="o">.</span><span class="n">getFragmentObj</span><span class="p">(</span><span class="n">bgRole</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">widget</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Invalid bgRole &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">bgRole</span><span class="p">)</span>
             <span class="n">color_ss</span> <span class="o">=</span> <span class="n">palette</span><span class="o">.</span><span class="n">qtStyleSheet</span><span class="p">(</span><span class="n">bgItem</span><span class="p">)</span>
             <span class="n">ss</span> <span class="o">=</span> <span class="n">StyleSheetTemplate</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;rgba(255,255,255,128)&quot;</span><span class="p">,</span>  <span class="n">color_ss</span><span class="p">)</span>
         <span class="n">widget</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
@@ -510,7 +526,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.1.2-alpha',
+            VERSION:'4.2.1-alpha',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
