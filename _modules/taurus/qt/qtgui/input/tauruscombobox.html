@@ -262,7 +262,8 @@
 <div class="viewcode-block" id="TaurusValueComboBox.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasPendingOperations</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;TaurusValueComboBox {color: blue; }&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>
+                <span class="s1">&#39;TaurusValueComboBox {color: blue; font-weight: bold;}&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;TaurusValueComboBox </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TaurusValueComboBox</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
@@ -525,17 +526,24 @@
         <span class="p">(</span><span class="s1">&#39;name3&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
     <span class="p">]</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusValueComboBox</span><span class="p">()</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">addValueNames</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
-    <span class="c1">#w.autoApply = True</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
+
+    <span class="n">cs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">TaurusValueComboBox</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">addValueNames</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">cs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="c1">#c.autoApply = True</span>
     <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="c1"># main = _taurusValueComboboxTest #uncomment to test TaurusValueCombobox</span>
-    <span class="n">main</span> <span class="o">=</span> <span class="n">_taurusAttrListTest</span>  <span class="c1"># uncomment to testtaurusAttrList</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">_taurusValueComboboxTest</span> <span class="c1">#uncomment to test TaurusValueCombobox</span>
+    <span class="c1"># main = _taurusAttrListTest  # uncomment to testtaurusAttrList</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 
