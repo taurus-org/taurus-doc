@@ -1163,13 +1163,19 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pytango_attrinfoex</span><span class="o">.</span><span class="n">data_type</span>
 
     <span class="k">def</span> <span class="nf">_unit_from_tango</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unit</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">UnitNotSpec</span><span class="p">:</span>
+        <span class="c1"># silently treat unit-not-defined as unitless</span>
+        <span class="c1"># TODO: consider logging that unit-not-defined is treated as unitless</span>
+        <span class="c1"># TODO: See https://github.com/taurus-org/taurus/issues/584 and</span>
+        <span class="c1"># https://github.com/taurus-org/taurus/pull/662</span>
+        <span class="c1"># The extra comparison to &quot;No unit&quot; is necessary where</span>
+        <span class="c1"># server/database runs Tango 7 or 8 and client runs higher versions.</span>
+        <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">UnitNotSpec</span> <span class="ow">or</span> <span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;No unit&quot;</span><span class="p">:</span>
             <span class="n">unit</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">UR</span><span class="o">.</span><span class="n">parse_units</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="c1"># TODO: Maybe we could dynamically register the unit in the UR</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Unknown unit &quot;</span><span class="si">%s</span><span class="s1"> (will be treated as unitless)&quot;&#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Unknown unit &quot;</span><span class="si">%s</span><span class="s1">&quot; (will be treated as unitless)&#39;</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__already_warned_unit</span> <span class="o">==</span> <span class="n">unit</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
