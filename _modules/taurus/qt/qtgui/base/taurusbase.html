@@ -2199,6 +2199,21 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[]</span></div>
 
+<div class="viewcode-block" id="TaurusBaseWritableWidget.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseWritableWidget.html#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fragmentName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplemented from class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
+        <span class="c1"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+        <span class="c1"># The widgets inheriting from this class interact with</span>
+        <span class="c1"># writable models and therefore the fragmentName should fall back to &#39;wvalue&#39; </span>
+        <span class="c1"># instead of &#39;rvalue&#39;. </span>
+        <span class="c1"># But changing it now is delicate due to risk of introducing API</span>
+        <span class="c1"># incompatibilities for widgets already assuming the current default.</span>
+        <span class="c1"># So instead of reimplementing it here, the fix was constrained to </span>
+        <span class="c1"># TaurusValueLineEdit.getDisplayValue()</span>
+        <span class="c1"># TODO: Consider reimplementing this to use wvalue by default</span>
+        <span class="k">return</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
+                                                <span class="n">fragmentName</span><span class="o">=</span><span class="n">fragmentName</span><span class="p">)</span></div>
+        <span class="c1"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
 <div class="viewcode-block" id="TaurusBaseWritableWidget.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseWritableWidget.html#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        This method must be implemented in derived classes to return</span>
