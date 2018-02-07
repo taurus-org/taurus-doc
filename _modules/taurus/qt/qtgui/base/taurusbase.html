@@ -818,19 +818,23 @@
 <span class="sd">        :function:`defaultFormatter`, which makes use of </span>
 <span class="sd">        :attribute:`defaultFormatDict`. </span>
 <span class="sd"> </span>
-<span class="sd">        In order to customize the formatting behaviour, one can change</span>
-<span class="sd">        :attribute:`defaultFormatDict` or :attribute:`FORMAT` directly</span>
-<span class="sd">        at class level, or use :method:`setFormat` to alter the </span>
-<span class="sd">        format string of an specific instance</span>
+<span class="sd">        In order to customize the formatting behaviour, one can</span>
+<span class="sd">        use :method:`setFormat` to alter the formatter of an specific instance</span>
+<span class="sd">        (recommended) or change :attribute:`defaultFormatDict` or</span>
+<span class="sd">        :attribute:`FORMAT` directly at class level.</span>
 <span class="sd">        </span>
-<span class="sd">        `FORMAT` can be set to a python format string [1] or a callable </span>
+<span class="sd">        The formatter can be set to a python format string [1] or a callable</span>
 <span class="sd">        that returns a python format string.</span>
 <span class="sd">        If a callable is used, it will be called with the following </span>
 <span class="sd">        keyword arguments:</span>
 <span class="sd">        - dtype: the data type of the value to be formatted</span>
-<span class="sd">        - basecomponent: the affected widget    </span>
+<span class="sd">        - basecomponent: the affected widget</span>
 <span class="sd">  </span>
 <span class="sd">        The following are some examples for customizing the formatting:</span>
+
+<span class="sd">        - Change the format for widget instance `foo`:</span>
+
+<span class="sd">            foo.setFormat(&quot;{:.2e}&quot;)</span>
 
 <span class="sd">        - Change FORMAT for all widgets (using a string):</span>
 
@@ -843,9 +847,13 @@
 
 <span class="sd">            TaurusLabel.FORMAT = baseFormatter</span>
 
-<span class="sd">        - Use the defaultFormatter but modify the format string for dtype=str:</span>
+<span class="sd">        - Use the defaultFormatDict but modify the format string for dtype=str:</span>
 
-<span class="sd">            TaurusBaseComponent.defaultFormatDict.update({&quot;str&quot;: &quot;{!r}&quot;})</span>
+<span class="sd">            TaurusLabel.defaultFormatDict.update({&quot;str&quot;: &quot;{!r}&quot;})</span>
+
+<span class="sd">        .. seealso:: :attribute:`tauruscustomsettings.DEFAULT_FORMATTER`,</span>
+<span class="sd">                     `--default-formatter` option in :class:`TaurusApplication`,</span>
+<span class="sd">                     :meth:`TaurusBaseWidget.onSetFormatter`</span>
 
 <span class="sd">        [1] https://docs.python.org/2/library/string.html</span>
 
@@ -1433,7 +1441,12 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="TaurusBaseWidget.onSetFormatter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget.onSetFormatter">[docs]</a>    <span class="k">def</span> <span class="nf">onSetFormatter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Slot to be called by setFormatter action&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Slot to allow interactive setting of the Formatter.</span>
+
+<span class="sd">        .. seealso:: :meth:`TaurusBaseWidget.showFormatterDlg`,</span>
+<span class="sd">                     :meth:`TaurusBaseComponent.displayValue`,</span>
+<span class="sd">                     :attribute:`tauruscustomsettings.DEFAULT_FORMATTER`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">showFormatterDlg</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
