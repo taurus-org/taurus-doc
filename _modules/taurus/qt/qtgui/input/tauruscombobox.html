@@ -207,15 +207,13 @@
 <div class="viewcode-block" id="TaurusValueComboBox.preAttach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.preAttach">[docs]</a>    <span class="k">def</span> <span class="nf">preAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
         <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">preAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeIndexValue</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeIndexValue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValueComboBox.postDetach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.postDetach">[docs]</a>    <span class="k">def</span> <span class="nf">postDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
         <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">postDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeIndexValue</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="c1"># In new style-signal if a signal is disconnected without</span>
             <span class="c1"># previously was connected it, it raises a TypeError</span>
@@ -274,16 +272,19 @@
 
     <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;currentIndexChanged&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusValueComboBox.writeIndexValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.writeIndexValue">[docs]</a>    <span class="k">def</span> <span class="nf">writeIndexValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;slot called to emit a valueChanged signal when the currentIndex is changed&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;slot called to emit a valueChanged signal when the currentIndex is</span>
+<span class="sd">        changed (and trigger a write if AutoApply is enabled)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emitValueChanged</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAutoApply</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusValueComboBox.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtgui.input.TaurusValueComboBox.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;reimplemented to emit an &#39;applied()&#39; signal when Enter (or Return)</span>
-<span class="sd">        key is pressed&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;reimplemented to trigger a write when Enter (or Return) key is</span>
+<span class="sd">        pressed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Return</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Enter</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">applied</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">()</span>
             <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
@@ -518,7 +519,7 @@
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
     <span class="sd">&quot;&quot;&quot;tests TaurusValueCombobox &quot;&quot;&quot;</span>
     <span class="c1"># model = sys.argv[1]</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;sys/tg_test/1/short_scalar&#39;</span>
+
     <span class="n">names</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="s1">&#39;name0&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
         <span class="p">(</span><span class="s1">&#39;name1&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
@@ -530,13 +531,13 @@
     <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
 
     <span class="n">cs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sys/tg_test/1/short_scalar&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">TaurusValueComboBox</span><span class="p">()</span>
         <span class="n">c</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="n">c</span><span class="o">.</span><span class="n">addValueNames</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
         <span class="n">w</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="n">cs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-        <span class="c1">#c.autoApply = True</span>
+        <span class="c1"># c.autoApply = True</span>
     <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
 
