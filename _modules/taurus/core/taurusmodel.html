@@ -363,8 +363,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">listener</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="n">weak_listener</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getCallableRef</span><span class="p">(</span>
-            <span class="n">listener</span><span class="p">,</span> <span class="n">BoundMethodWeakref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_listenerDied</span><span class="p">))</span>
+        <span class="n">weak_listener</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getCallableRef</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listenerDied</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">weak_listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weak_listener</span><span class="p">)</span>

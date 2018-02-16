@@ -186,7 +186,7 @@
                                          <span class="n">SubscriptionState</span><span class="p">,</span> <span class="n">TaurusAttrValue</span><span class="p">,</span>
                                          <span class="n">DataFormat</span><span class="p">,</span> <span class="n">DataType</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusoperation</span> <span class="k">import</span> <span class="n">WriteAttrOperation</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.event</span> <span class="k">import</span> <span class="p">(</span><span class="n">EventListener</span><span class="p">,</span> <span class="n">BoundMethodWeakref</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.event</span> <span class="k">import</span> <span class="n">EventListener</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="p">(</span><span class="n">debug</span><span class="p">,</span> <span class="n">taurus4_deprecation</span><span class="p">,</span>
                                   <span class="n">deprecation_decorator</span><span class="p">)</span>
 
@@ -431,8 +431,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">is_tango_subscribe_enabled</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeConfEvents</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TangoAttribute.cleanUp"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TangoAttribute] cleanUp&quot;</span><span class="p">)</span>
@@ -800,10 +798,9 @@
                 
         <span class="n">attr_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
 
-        <span class="c1"># connects to self.push_event callback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span><span class="o">.</span><span class="n">subscribe_event</span><span class="p">(</span>
                 <span class="n">attr_name</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">CHANGE_EVENT</span><span class="p">,</span>
-                <span class="n">BoundMethodWeakref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">push_event</span><span class="p">),</span> <span class="p">[],</span> <span class="n">stateless</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="p">[],</span> <span class="n">stateless</span><span class="p">)</span> <span class="c1"># connects to self.push_event callback</span>
         
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span>
                 
@@ -850,11 +847,10 @@
 
         <span class="n">attr_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># connects to self.push_event callback</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span><span class="o">.</span><span class="n">subscribe_event</span><span class="p">(</span>
                 <span class="n">attr_name</span><span class="p">,</span>
                 <span class="n">PyTango</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">ATTR_CONF_EVENT</span><span class="p">,</span>
-                <span class="n">BoundMethodWeakref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">push_event</span><span class="p">),</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># connects to self.push_event callback</span>
         <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error trying to subscribe to CONFIGURATION events.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
