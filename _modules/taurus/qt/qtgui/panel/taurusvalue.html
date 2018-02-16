@@ -176,7 +176,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">import</span> <span class="nn">taurus.core</span>
-<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">DataFormat</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">DataFormat</span><span class="p">,</span> <span class="n">TaurusEventType</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
@@ -450,6 +450,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">__error</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__modelClass</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span> <span class="o">=</span> <span class="n">designMode</span>
 
@@ -1306,13 +1307,19 @@
         <span class="sd">&quot;&quot;&quot;Reimplemented from :meth:`TaurusBaseWidget.handleEvent`</span>
 <span class="sd">        to update subwidgets on config events</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__error</span> <span class="ow">or</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateCustomWidget</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateLabelWidget</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateReadWidget</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateWriteWidget</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateUnitsWidget</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">updateExtraWidget</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateExtraWidget</span><span class="p">()</span>
+
+        <span class="c1"># set/unset the error flag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__error</span> <span class="o">=</span> <span class="p">(</span><span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValue.isValueChangedByUser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.isValueChangedByUser">[docs]</a>    <span class="k">def</span> <span class="nf">isValueChangedByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>

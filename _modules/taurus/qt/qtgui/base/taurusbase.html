@@ -778,6 +778,16 @@
             <span class="n">fragmentName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="o">.</span><span class="n">getFragmentObj</span><span class="p">(</span><span class="n">fragmentName</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TaurusBaseComponent.getModelIndexValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.getModelIndexValue">[docs]</a>    <span class="k">def</span> <span class="nf">getModelIndexValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called inside getDisplayValue to use with spectrum attributes.</span>
+<span class="sd">        By default not used, but some widget might want to support this</span>
+<span class="sd">        feature.</span>
+
+<span class="sd">        Override when needed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
 <div class="viewcode-block" id="TaurusBaseComponent.getFormatedToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.getFormatedToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">getFormatedToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a string with contents to be displayed in a tooltip.</span>
 
@@ -955,6 +965,11 @@
             <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelFragmentObj</span><span class="p">(</span><span class="n">fragmentName</span><span class="o">=</span><span class="n">fragmentName</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelIndexValue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">idx</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">displayValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
 

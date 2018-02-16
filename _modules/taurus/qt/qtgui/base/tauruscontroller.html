@@ -235,11 +235,17 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusBaseController.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">evt_src</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="p">():</span>  <span class="c1"># update the &quot;_last&quot; values only if the event source is the model (it could be the background...)</span>
-            <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span> <span class="ow">or</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">:</span>
+        <span class="c1"># update the &quot;_last&quot; values only if the event source is the model</span>
+        <span class="c1"># (it could be the background...)</span>
+        <span class="k">if</span> <span class="n">evt_src</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">evt_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># reset the format so that it gets updated by displayValue</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">resetFormat</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="n">evt_value</span>
             <span class="k">elif</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span><span class="p">:</span>  <span class="c1"># TODO: adapt to tep14</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_last_config_value</span> <span class="o">=</span> <span class="n">evt_value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">resetFormat</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_last_error_value</span> <span class="o">=</span> <span class="n">evt_value</span>
                 <span class="c1"># In case of error, modify the last_value as well</span>
@@ -381,7 +387,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">configParam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">getModelFragmentName</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">modelFragmentName</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span>
 
 <div class="viewcode-block" id="TaurusConfigurationControllerHelper.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusConfigurationControllerHelper.html#taurus.qt.qtgui.base.TaurusConfigurationControllerHelper.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
