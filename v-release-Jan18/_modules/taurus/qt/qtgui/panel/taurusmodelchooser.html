@@ -303,8 +303,12 @@
 <span class="sd">                            model. Otherwise (default) a list of models can be selected</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">host</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Authority</span><span class="p">()</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>  <span class="c1"># TODO: Tango-centric!</span>
+                <span class="n">host</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="s1">&#39;tango&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">()</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">taurus</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Cannot populate Tango Tree: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_allowDuplicates</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -434,7 +438,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setSingleModelMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="TaurusModelChooser.modelChooserDlg"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.modelChooserDlg">[docs]</a>    <span class="k">def</span> <span class="nf">modelChooserDlg</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">asMimeData</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">windowTitle</span><span class="o">=</span><span class="s1">&#39;Model Chooser&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusModelChooser.modelChooserDlg"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser.modelChooserDlg">[docs]</a>    <span class="k">def</span> <span class="nf">modelChooserDlg</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">asMimeData</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">singleModel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">windowTitle</span><span class="o">=</span><span class="s1">&#39;Model Chooser&#39;</span><span class="p">,</span>
+                        <span class="n">listedModels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Static method that launches a modal dialog containing a TaurusModelChooser</span>
 
 <span class="sd">        :param parent: (QObject) parent for the dialog</span>
@@ -448,6 +454,8 @@
 <span class="sd">        :param singleModel: (bool) If True, the selection will be of just one</span>
 <span class="sd">                            model. Otherwise (default) a list of models can be selected</span>
 <span class="sd">        :param windowTitle: (str) Title of the dialog (default=&quot;Model Chooser&quot;)</span>
+<span class="sd">        :param listedModels: (list&lt;str&gt;) List of model names for initializing the </span>
+<span class="sd">                             model list</span>
 
 <span class="sd">        :return: (list,bool or QMimeData,bool) Returns a models,ok tuple. models can be</span>
 <span class="sd">                 either a list of models or a QMimeData object, depending on</span>
@@ -460,6 +468,8 @@
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusModelChooser</span><span class="p">(</span>
             <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="n">selectables</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="n">singleModel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">listedModels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">setListedModels</span><span class="p">(</span><span class="n">listedModels</span><span class="p">)</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
         <span class="n">dlg</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
         <span class="n">w</span><span class="o">.</span><span class="n">updateModels</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
