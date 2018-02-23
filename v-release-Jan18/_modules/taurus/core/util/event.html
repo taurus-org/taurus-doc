@@ -244,6 +244,12 @@
 <span class="c1"># PyTango #185 issue.</span>
 <span class="k">class</span> <span class="nc">_BoundMethodWeakrefWithCall</span><span class="p">(</span><span class="n">BoundMethodWeakref</span><span class="p">):</span>
 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bound_method</span><span class="p">,</span> <span class="n">del_cb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplementation of __init__ method&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BoundMethodWeakrefWithCall</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bound_method</span><span class="p">,</span>
+                                                          <span class="n">del_cb</span><span class="o">=</span><span class="n">del_cb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">func_ref</span><span class="p">()</span><span class="o">.</span><span class="vm">__name__</span>
+
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Retrieve references and call callback with arguments</span>
 <span class="sd">        &quot;&quot;&quot;</span>
