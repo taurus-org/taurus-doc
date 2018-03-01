@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.input.taurusspinbox &mdash; taurus 4.3.0-alpha documentation</title>
+  <title>taurus.qt.qtgui.input.taurusspinbox &mdash; taurus 4.3.1-alpha documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0-alpha documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.3.1-alpha documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -170,6 +170,7 @@
 <span class="kn">from</span> <span class="nn">tauruslineedit</span> <span class="k">import</span> <span class="n">TaurusValueLineEdit</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getStandardIcon</span>
 <span class="kn">from</span> <span class="nn">taurus.external.pint</span> <span class="k">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">PintValidator</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusValueSpinBox&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusValueSpinBoxEx&quot;</span><span class="p">]</span>
 
@@ -189,6 +190,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span> <span class="o">=</span> <span class="mf">1.0</span>
 
         <span class="n">lineEdit</span> <span class="o">=</span> <span class="n">TaurusValueLineEdit</span><span class="p">(</span><span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        <span class="n">lineEdit</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">PintValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLineEdit</span><span class="p">(</span><span class="n">lineEdit</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAccelerated</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
@@ -473,7 +475,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.3.0-alpha',
+            VERSION:'4.3.1-alpha',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

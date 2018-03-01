@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.input.tauruslineedit &mdash; taurus 4.3.0-alpha documentation</title>
+  <title>taurus.qt.qtgui.input.tauruslineedit &mdash; taurus 4.3.1-alpha documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0-alpha documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.3.1-alpha documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -247,20 +247,20 @@
         <span class="c1"># handle the case in which the line edit is not yet initialized</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="n">frag_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span> <span class="ow">or</span> <span class="s1">&#39;wvalue&#39;</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelFragmentObj</span><span class="p">(</span><span class="n">fragmentName</span><span class="o">=</span><span class="n">frag_name</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Overwriting wvalue=None with </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_updateValidator</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">wvalue</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Failed attempt to initialize value: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Failed attempt to initialize value: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">evt_type</span> <span class="o">!=</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">evt_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_updateValidator</span><span class="p">(</span><span class="n">evt_value</span><span class="p">)</span>
+
         <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">handleEvent</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
 
@@ -353,36 +353,18 @@
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
 
-<div class="viewcode-block" id="TaurusValueLineEdit.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fragmentName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a string representation of the model value associated with</span>
-<span class="sd">        this component. As this is a writable widget, if there is no fragment</span>
-<span class="sd">        specified, the default behaviour is to display the wvalue.</span>
-
-<span class="sd">        :param cache: (bool) (ignored, just for bck-compat).</span>
-<span class="sd">        :param fragmentName: (str or None) the returned value will correspond</span>
-<span class="sd">                        to the given fragmentName. If None passed,</span>
-<span class="sd">                         self.modelFragmentName will be used, and if None is</span>
-<span class="sd">                         set, the defaultFragmentName of the model will be used</span>
-<span class="sd">                         instead.</span>
-
-<span class="sd">        :return: (str) a string representation of the model value.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">fragmentName</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span>
-                <span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">fragmentName</span><span class="o">=</span><span class="s1">&#39;wvalue&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span>
-                <span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="n">fragmentName</span><span class="o">=</span><span class="n">fragmentName</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="TaurusValueLineEdit.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">v_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">v_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-        <span class="n">v_str</span> <span class="o">=</span> <span class="n">v_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;Set the displayed text from a given value object&quot;&quot;&quot;</span>
+        <span class="c1"># Support displaying the value without units (enabled by fragment)</span>
+        <span class="c1"># Other fragments are ignored by setValue</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span> <span class="o">==</span> <span class="s2">&quot;wvalue.magnitude&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">units</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot enforce fragment. Reason: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="n">v</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">v_str</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">displayValue</span><span class="p">(</span><span class="n">v</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TaurusValueLineEdit.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
@@ -545,7 +527,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.3.0-alpha',
+            VERSION:'4.3.1-alpha',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
