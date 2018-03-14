@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.taurusgui.taurusgui &mdash; taurus 4.3.1-alpha documentation</title>
+  <title>taurus.qt.qtgui.taurusgui.taurusgui &mdash; taurus 4.3.2-alpha documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.1-alpha documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.3.2-alpha documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -1044,7 +1044,13 @@
             <span class="n">instrument</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">instrument</span>
             <span class="k">if</span> <span class="n">instrument</span><span class="p">:</span>
                 <span class="n">i_name</span> <span class="o">=</span> <span class="n">instrument</span>
-                <span class="n">e_name</span> <span class="o">=</span> <span class="s2">&quot;tango://</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">elem</span><span class="o">.</span><span class="n">full_name</span>
+                <span class="c1"># -----------------------------------------------------------</span>
+                <span class="c1"># Support sardana v&lt;2.4 (which used tango names instead of </span>
+                <span class="c1"># taurus full names</span>
+                <span class="n">e_name</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">full_name</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">e_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;tango://&quot;</span><span class="p">):</span>
+                    <span class="n">e_name</span> <span class="o">=</span> <span class="s2">&quot;tango://</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e_name</span>
+                <span class="c1"># -----------------------------------------------------------</span>
                 <span class="n">instrument_dict</span><span class="p">[</span><span class="n">i_name</span><span class="p">]</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e_name</span><span class="p">)</span>
         <span class="c1"># filter out empty panels</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">instrument</span> <span class="k">for</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="n">instrument_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
@@ -1825,7 +1831,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.3.1-alpha',
+            VERSION:'4.3.2-alpha',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
