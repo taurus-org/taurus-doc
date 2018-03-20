@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.resource.taurus_resource_utils &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://sourceforge.net/projects/tauruslib">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 3.7 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.resource.taurus_resource_utils</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.resource.taurus_resource_utils</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides widgets that display the database in a tree format&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;getPixmap&#39;</span><span class="p">,</span> <span class="s1">&#39;getThemePixmap&#39;</span><span class="p">,</span> <span class="s1">&#39;getIcon&#39;</span><span class="p">,</span> <span class="s1">&#39;getThemeIcon&#39;</span><span class="p">,</span> <span class="s1">&#39;getStandardIcon&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;getElementTypeToolTip&#39;</span><span class="p">,</span> <span class="s1">&#39;getElementTypeIconName&#39;</span><span class="p">,</span> <span class="s1">&#39;getElementTypeIcon&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;getElementTypePixmap&#39;</span><span class="p">,</span> <span class="s1">&#39;getElementTypeSize&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;getSWDevHealthToolTip&#39;</span><span class="p">,</span> <span class="s1">&#39;getSWDevHealthIcon&#39;</span><span class="p">,</span> <span class="s1">&#39;getSWDevHealthPixmap&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;getThemeMembers&#39;</span> <span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusSWDevHealth</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+
+<span class="n">__LOGGER</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">ElemType</span> <span class="o">=</span> <span class="n">TaurusElementType</span>
+<span class="n">DevHealth</span> <span class="o">=</span> <span class="n">TaurusSWDevHealth</span>
+<span class="n">Size</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span>
+
+<span class="n">__INITIALIZED</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="c1"># Theme capacity was only added in Qt 4.6</span>
+<span class="n">__THEME_CAPACITY</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">,</span> <span class="s2">&quot;fromTheme&quot;</span><span class="p">)</span>
+<span class="c1"># Uncomment the following line to force NOT to use OS theme.</span>
+<span class="c1">#__THEME_CAPACITY = False </span>
+
+<span class="n">__THEME_MEMBERS</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># Default width, height and QSize constants</span>
+<span class="n">__DW</span> <span class="o">=</span> <span class="mi">70</span>
+<span class="n">__DH</span> <span class="o">=</span> <span class="mi">24</span>
+
+<span class="n">__DQS</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="n">__DW</span><span class="p">,</span> <span class="n">__DH</span><span class="p">)</span>
+<span class="n">__1DQS</span> <span class="o">=</span> <span class="n">__DQS</span>
+<span class="n">__2DQS</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">__DW</span><span class="p">,</span> <span class="n">__DH</span><span class="p">)</span>
+<span class="n">__3DQS</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">__DW</span><span class="p">,</span> <span class="n">__DH</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">__init</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">__INITIALIZED</span>
+    <span class="k">global</span> <span class="n">__THEME_MEMBERS</span>
+    
+    <span class="k">if</span> <span class="n">__INITIALIZED</span><span class="p">:</span> <span class="k">return</span>
+        
+    <span class="c1">#register only the tango-icons rcc files (and initialize the THEME_MEMBERS)</span>
+    <span class="n">res_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">Qt</span><span class="o">.</span><span class="n">QDir</span><span class="o">.</span><span class="n">addSearchPath</span><span class="p">(</span><span class="s2">&quot;resource&quot;</span><span class="p">,</span> <span class="n">res_dir</span><span class="p">)</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;qrc_tango_icons_&#39;</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;.rcc&#39;</span>
+    <span class="n">lp</span><span class="p">,</span> <span class="n">ls</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)</span>
+    <span class="n">theme_members</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">other_rcc_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">res_dir</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QResource</span><span class="o">.</span><span class="n">registerResource</span><span class="p">(</span><span class="s2">&quot;resource:&quot;</span> <span class="o">+</span> <span class="n">f</span><span class="p">):</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">lp</span><span class="p">:</span><span class="o">-</span><span class="n">ls</span><span class="p">]</span>
+                    <span class="n">theme_members</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDir</span><span class="p">(</span><span class="s2">&quot;:</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">entryList</span><span class="p">()</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.svg&#39;</span><span class="p">)]</span> 
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">__LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Failed to load resource </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">f</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">other_rcc_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#we remember these and will register later</span>
+    <span class="n">__THEME_MEMBERS</span> <span class="o">=</span> <span class="n">theme_members</span>
+    
+    <span class="c1">#register the rest of the resource files</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">other_rcc_files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QResource</span><span class="o">.</span><span class="n">registerResource</span><span class="p">(</span><span class="s2">&quot;resource:&quot;</span> <span class="o">+</span> <span class="n">f</span><span class="p">):</span>
+            <span class="n">__LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Failed to load resource </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">f</span><span class="p">)</span>
+    
+    <span class="n">__INITIALIZED</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">__init</span><span class="p">()</span>
+
+<div class="viewcode-block" id="getThemeMembers"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getThemeMembers">[docs]</a><span class="k">def</span> <span class="nf">getThemeMembers</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns the current icon theme elements</span>
+<span class="sd">    </span>
+<span class="sd">    :return: the current icon theme elements in a dictionary where each key is</span>
+<span class="sd">             a group name and the value is a sequence of theme icon name.</span>
+<span class="sd">    :rtype: dict&lt;str,seq&lt;str&gt;&gt;&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">__THEME_MEMBERS</span>
+    <span class="k">return</span> <span class="n">__THEME_MEMBERS</span></div>
+
+<div class="viewcode-block" id="getPixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getPixmap">[docs]</a><span class="k">def</span> <span class="nf">getPixmap</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a PyQt4.QtGui.QPixmap object for the given key and size</span>
+<span class="sd">    </span>
+<span class="sd">    :param key: (str) a string with the pixmap resource key (ex.: &#39;:/status/folder_open.svg&#39;)</span>
+<span class="sd">    :param size: (int) the pixmap size in pixels (will get a square pixmap). Default is None</span>
+<span class="sd">                 meaning it will return the original size</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QPixmap) a PyQt4.QtGui.QPixmap for the given key and size&quot;&quot;&quot;</span>
+    
+    <span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_</span><span class="si">%s</span><span class="s2">x</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pm</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">KeepAspectRatio</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SmoothTransformation</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmapCache</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">pm</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">pm</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getIcon">[docs]</a><span class="k">def</span> <span class="nf">getIcon</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a PyQt4.QtGui.QIcon object for the given key</span>
+<span class="sd">    </span>
+<span class="sd">    :param key: (str) a string with the pixmap resource key (ex.: &#39;:/status/folder_open.svg&#39;)</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QIcon) a PyQt4.QtGui.QIcon for the given key&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">getThemeIcon</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getThemePixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getThemePixmap">[docs]</a><span class="k">def</span> <span class="nf">getThemePixmap</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a PyQt4.QtGui.QPixmap object for the given key and size. Key should be a valid theme</span>
+<span class="sd">    key. See `Icon Naming Specification &lt;http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html&gt;`_</span>
+<span class="sd">    for the list of valid theme keys.</span>
+<span class="sd">    </span>
+<span class="sd">    If theme is not supported by Qt (version &lt; 4.6) or by the OS, the method will return a</span>
+<span class="sd">    theme pixmap from the `Tango Icon Library &lt;http://tango.freedesktop.org/Tango_Icon_Library&gt;`_.</span>
+<span class="sd">    </span>
+<span class="sd">    If the key cannot be found, it will return a null content Pixmap.</span>
+<span class="sd">    </span>
+<span class="sd">    :param key: (str) a string with the pixmap theme key (ex.: &#39;folder_open&#39;)</span>
+<span class="sd">    :param size: (int) the pixmap size in pixels (will get a square pixmap). Default is None</span>
+<span class="sd">                 meaning it will return the original size</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QPixmap) a PyQt4.QtGui.QPixmap for the given key and size&quot;&quot;&quot;</span>
+
+    <span class="k">global</span> <span class="n">__THEME_CAPACITY</span>
+    <span class="k">global</span> <span class="n">__LOGGER</span>
+    <span class="k">if</span> <span class="n">__THEME_CAPACITY</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">hasThemeIcon</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">size</span> <span class="ow">or</span> <span class="mi">48</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">pixmap</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">__LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Theme pixmap &quot;</span><span class="si">%s</span><span class="s1">&quot; not supported. Trying to provide a fallback...&#39;</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">member</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">getThemeMembers</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="k">return</span> <span class="n">getPixmap</span><span class="p">(</span><span class="s2">&quot;:/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">.svg&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">size</span><span class="p">)</span>
+    <span class="n">__LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Theme pixmap &quot;</span><span class="si">%s</span><span class="s1">&quot; not supported.&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="getThemeIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getThemeIcon">[docs]</a><span class="k">def</span> <span class="nf">getThemeIcon</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a PyQt4.QtGui.QIcon object for the given key. Key should be a valid theme key. See</span>
+<span class="sd">    `Icon Naming Specification &lt;http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html&gt;`_</span>
+<span class="sd">    for the list of valid theme keys.</span>
+<span class="sd">    </span>
+<span class="sd">    If theme is not supported by Qt (version &lt; 4.6) or by the OS, the method will return a</span>
+<span class="sd">    theme icon from the `Tango Icon Library &lt;http://tango.freedesktop.org/Tango_Icon_Library&gt;`_.</span>
+<span class="sd">    </span>
+<span class="sd">    If the key cannot be found, it will return a null content QIcon.</span>
+<span class="sd">    </span>
+<span class="sd">    :param key: (str) a string with the icon theme key (ex.: &#39;folder_open&#39;)</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QIcon) a PyQt4.QtGui.QIcon for the given key&quot;&quot;&quot;</span>
+
+    <span class="k">global</span> <span class="n">__THEME_CAPACITY</span>
+    <span class="k">global</span> <span class="n">__LOGGER</span>
+    <span class="k">if</span> <span class="n">__THEME_CAPACITY</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">hasThemeIcon</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">__LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Theme icon &quot;</span><span class="si">%s</span><span class="s1">&quot; not supported. Trying to provide a fallback...&#39;</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">__LOGGER</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">member</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">getThemeMembers</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;:/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">.svg&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+    <span class="n">__LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Theme icon &quot;</span><span class="si">%s</span><span class="s1">&quot; not supported.&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="getStandardIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getStandardIcon">[docs]</a><span class="k">def</span> <span class="nf">getStandardIcon</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a PyQt4.QtGui.QIcon object for the given key. Key should be a </span>
+<span class="sd">    QStyle.StandardPixmap enumeration member. The widget argument is optional </span>
+<span class="sd">    and can also be used to aid the determination of the icon.</span>
+<span class="sd">    </span>
+<span class="sd">    :param key: (QStyle.StandardPixmap) a standard pixmap which can follow some existing GUI style or guideline</span>
+<span class="sd">    :param widget: (Qt.QWidget) the widget argument (optional) can also be used to aid the determination of the icon.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QIcon) a PyQt4.QtGui.QIcon for the given key&quot;&quot;&quot;</span>
+    <span class="n">styleOption</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">styleOption</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStyleOption</span><span class="p">()</span>
+        <span class="n">styleOption</span><span class="o">.</span><span class="n">initFrom</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">style</span><span class="o">.</span><span class="n">standardIcon</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">styleOption</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span></div>
+    
+<span class="c1"># Indexes for the map below</span>
+<span class="n">__IDX_ELEM_TYPE_ICON</span><span class="p">,</span> <span class="n">__IDX_ELEM_TYPE_SIZE</span><span class="p">,</span> <span class="n">__IDX_ELEM_TYPE_TOOLTIP</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># New default role map</span>
+<span class="c1"># Elements are: icon theme, preferred size, description/tooltip</span>
+<span class="n">_ELEM_TYPE_MAP</span> <span class="o">=</span> <span class="p">{</span> <span class="n">ElemType</span><span class="o">.</span><span class="n">Name</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;folder&quot;</span><span class="p">,</span> <span class="n">__3DQS</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">ElemType</span><span class="o">.</span><span class="n">Device</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;applications-system&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango device name&quot;</span><span class="p">),</span>
+       <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceAlias</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;applications-system&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">140</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango device alias&quot;</span><span class="p">),</span>
+            <span class="n">ElemType</span><span class="o">.</span><span class="n">Domain</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;folder&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango device domain&quot;</span><span class="p">),</span>
+            <span class="n">ElemType</span><span class="o">.</span><span class="n">Family</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;folder&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango device family&quot;</span><span class="p">),</span>
+            <span class="n">ElemType</span><span class="o">.</span><span class="n">Member</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;applications-system&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango device member&quot;</span><span class="p">),</span>
+            <span class="n">ElemType</span><span class="o">.</span><span class="n">Server</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;application-x-executable&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">190</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango server&quot;</span><span class="p">),</span>
+        <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerName</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;application-x-executable&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango server name&quot;</span><span class="p">),</span>
+    <span class="n">ElemType</span><span class="o">.</span><span class="n">ServerInstance</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;application-x-executable&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango server instance&quot;</span><span class="p">),</span>
+       <span class="n">ElemType</span><span class="o">.</span><span class="n">DeviceClass</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;text-x-script&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">140</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Tango class name&quot;</span><span class="p">),</span>
+          <span class="n">ElemType</span><span class="o">.</span><span class="n">Exported</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;start-here&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Alive/not alive&quot;</span><span class="p">),</span>
+              <span class="n">ElemType</span><span class="o">.</span><span class="n">Host</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;network-server&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Host machine were last ran&quot;</span><span class="p">),</span>
+         <span class="n">ElemType</span><span class="o">.</span><span class="n">Attribute</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;format-text-bold&quot;</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">__DH</span><span class="p">),</span> <span class="s2">&quot;Attribute name&quot;</span><span class="p">),</span> <span class="p">}</span>
+
+<div class="viewcode-block" id="getElementTypeToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getElementTypeToolTip">[docs]</a><span class="k">def</span> <span class="nf">getElementTypeToolTip</span><span class="p">(</span><span class="n">elemType</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_ELEM_TYPE_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elemType</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">__IDX_ELEM_TYPE_TOOLTIP</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="getElementTypeSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getElementTypeSize">[docs]</a><span class="k">def</span> <span class="nf">getElementTypeSize</span><span class="p">(</span><span class="n">elemType</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_ELEM_TYPE_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elemType</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">__IDX_ELEM_TYPE_SIZE</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="getElementTypeIconName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getElementTypeIconName">[docs]</a><span class="k">def</span> <span class="nf">getElementTypeIconName</span><span class="p">(</span><span class="n">elemType</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets an icon name string for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`.</span>
+<span class="sd">    </span>
+<span class="sd">    If an icon name cannot be found for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`,</span>
+<span class="sd">    None is returned.</span>
+<span class="sd">    </span>
+<span class="sd">    :param elemType: (TaurusElementType) the taurus element type</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (str) a string representing the icon name for the given </span>
+<span class="sd">             :class:`taurus.core.taurusbasetypes.TaurusElementType`&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">elemType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_ELEM_TYPE_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elemType</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">__IDX_ELEM_TYPE_ICON</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="getElementTypeIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getElementTypeIcon">[docs]</a><span class="k">def</span> <span class="nf">getElementTypeIcon</span><span class="p">(</span><span class="n">elemType</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets a PyQt4.QtGui.QIcon object for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`.</span>
+<span class="sd">    </span>
+<span class="sd">    If an icon cannot be found for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`,</span>
+<span class="sd">    fallback is returned.</span>
+<span class="sd">    </span>
+<span class="sd">    :param elemType: (TaurusElementType) the taurus element type</span>
+<span class="sd">    :param fallback: (PyQt4.QtGui.QIcon) the fallback icon. Default is None.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QIcon) a PyQt4.QtGui.QIcon for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`&quot;&quot;&quot;</span>
+
+    <span class="n">themeIconName</span> <span class="o">=</span> <span class="n">getElementTypeIconName</span><span class="p">(</span><span class="n">elemType</span><span class="p">)</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="n">getThemeIcon</span><span class="p">(</span><span class="n">themeIconName</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">icon</span><span class="o">.</span><span class="n">isNull</span><span class="p">()</span> <span class="ow">and</span> <span class="n">fallback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">fallback</span>
+    <span class="k">return</span> <span class="n">icon</span></div>
+
+<div class="viewcode-block" id="getElementTypePixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getElementTypePixmap">[docs]</a><span class="k">def</span> <span class="nf">getElementTypePixmap</span><span class="p">(</span><span class="n">elemType</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets a PyQt4.QtGui.QPixmap object for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`.</span>
+<span class="sd">    </span>
+<span class="sd">    If a pixmap cannot be found for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`,</span>
+<span class="sd">    fallback is returned.</span>
+<span class="sd">    </span>
+<span class="sd">    :param elemType: (TaurusElementType) the taurus element type</span>
+<span class="sd">    :param fallback: (PyQt4.QtGui.QPixmap) the fallback pixmap. Default is None.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QPixmap) a PyQt4.QtGui.QPixmap for the given :class:`taurus.core.taurusbasetypes.TaurusElementType`&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">elemType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_ELEM_TYPE_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elemType</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">themeName</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">__IDX_ELEM_TYPE_ICON</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">getThemePixmap</span><span class="p">(</span><span class="n">themeName</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div>
+
+<span class="c1"># Indexes for the map below</span>
+<span class="n">__IDX_HEALTH_ICON</span><span class="p">,</span> <span class="n">__IDX_HEALTH_TOOLTIP</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">_HEALTH_MAP</span> <span class="o">=</span> <span class="p">{</span> <span class="n">DevHealth</span><span class="o">.</span><span class="n">Exported</span>   <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;face-smile&quot;</span><span class="p">,</span> <span class="s2">&quot;Element reported to be alive&quot;</span><span class="p">)</span> <span class="p">,</span>
+            <span class="n">DevHealth</span><span class="o">.</span><span class="n">ExportedAlive</span>  <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;face-smile-big&quot;</span><span class="p">,</span> <span class="s2">&quot;Element confirmed to be alive&quot;</span><span class="p">),</span>
+          <span class="n">DevHealth</span><span class="o">.</span><span class="n">ExportedNotAlive</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;face-surprise&quot;</span><span class="p">,</span> <span class="s2">&quot;Element reported to be alive but there is no connection!&quot;</span><span class="p">),</span>
+             <span class="n">DevHealth</span><span class="o">.</span><span class="n">NotExported</span>   <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;face-sad&quot;</span><span class="p">,</span> <span class="s2">&quot;Element reported to be shutdown&quot;</span><span class="p">),</span>
+         <span class="n">DevHealth</span><span class="o">.</span><span class="n">NotExportedAlive</span>  <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;face-plain&quot;</span><span class="p">,</span> <span class="s2">&quot;Element reported to be shutdown but there is a connection!&quot;</span><span class="p">),</span>
+       <span class="n">DevHealth</span><span class="o">.</span><span class="n">NotExportedNotAlive</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;face-sad&quot;</span><span class="p">,</span> <span class="s2">&quot;Element reported to be shutdown&quot;</span><span class="p">)</span> <span class="p">}</span>
+
+<div class="viewcode-block" id="getSWDevHealthToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getSWDevHealthToolTip">[docs]</a><span class="k">def</span> <span class="nf">getSWDevHealthToolTip</span><span class="p">(</span><span class="n">elemHealth</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_HEALTH_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elemHealth</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">__IDX_HEALTH_TOOLTIP</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="getSWDevHealthIcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getSWDevHealthIcon">[docs]</a><span class="k">def</span> <span class="nf">getSWDevHealthIcon</span><span class="p">(</span><span class="n">elemHealth</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets a PyQt4.QtGui.QIcon object for the given :class:`taurus.core.taurusbasetypes.TaurusSWDevHealth`.</span>
+<span class="sd">    </span>
+<span class="sd">    If an icon cannot be found for the given :class:`taurus.core.taurusbasetypes.TaurusSWDevHealth`,</span>
+<span class="sd">    fallback is returned.</span>
+<span class="sd">    </span>
+<span class="sd">    :param elemHealth: (TaurusSWDevHealth) the taurus software device health status</span>
+<span class="sd">    :param fallback: (PyQt4.QtGui.QIcon) the fallback icon. Default is None.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QIcon) a PyQt4.QtGui.QIcon for the given :class:`taurus.core.taurusbasetypes.TaurusSWDevHealth`&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">elemHealth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_HEALTH_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elemHealth</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">themeIconName</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">__IDX_HEALTH_ICON</span><span class="p">]</span>
+    
+    <span class="n">icon</span> <span class="o">=</span> <span class="n">getThemeIcon</span><span class="p">(</span><span class="n">themeIconName</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">icon</span><span class="o">.</span><span class="n">isNull</span><span class="p">()</span> <span class="ow">and</span> <span class="n">fallback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">fallback</span>
+    <span class="k">return</span> <span class="n">icon</span></div>
+
+<div class="viewcode-block" id="getSWDevHealthPixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/resource.html#taurus.qt.qtgui.resource.getSWDevHealthPixmap">[docs]</a><span class="k">def</span> <span class="nf">getSWDevHealthPixmap</span><span class="p">(</span><span class="n">elemHealth</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets a PyQt4.QtGui.QPixmap object for the given :class:`taurus.core.taurusbasetypes.TaurusSWDevHealth`.</span>
+<span class="sd">    </span>
+<span class="sd">    If a pixmap cannot be found for the given :class:`taurus.core.taurusbasetypes.TaurusSWDevHealth`,</span>
+<span class="sd">    fallback is returned.</span>
+<span class="sd">    </span>
+<span class="sd">    :param elemHealth: (TaurusSWDevHealth) the taurus software device health status</span>
+<span class="sd">    :param fallback: (PyQt4.QtGui.QPixmap) the fallback icon. Default is None.</span>
+<span class="sd">    </span>
+<span class="sd">    :return: (PyQt4.QtGui.QPixmap) a PyQt4.QtGui.QPixmap for the given :class:`taurus.core.taurusbasetypes.TaurusSWDevHealth`&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">elemHealth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_HEALTH_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elemHealth</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">themeName</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">__IDX_HEALTH_ICON</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">getThemePixmap</span><span class="p">(</span><span class="n">themeName</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

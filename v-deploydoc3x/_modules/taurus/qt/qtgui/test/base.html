@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.test.base &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://sourceforge.net/projects/tauruslib">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 3.7 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.test.base</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.test.base</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;Utilities for creating generic tests for Taurus widgets&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">taurus.core</span>
+<span class="kn">from</span> <span class="nn">taurus.external</span> <span class="k">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+<span class="kn">from</span> <span class="nn">taurus.test</span> <span class="k">import</span> <span class="n">skipUnlessGui</span>
+
+
+<span class="nd">@skipUnlessGui</span><span class="p">()</span>
+<div class="viewcode-block" id="BaseWidgetTestCase"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/test/_BaseWidgetTestCase.html#taurus.qt.qtgui.test.BaseWidgetTestCase">[docs]</a><span class="k">class</span> <span class="nc">BaseWidgetTestCase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A base class for tests that need a widget instance</span>
+
+<span class="sd">    To use it, simply inherit from BaseWidgetTestCase *and* unittest.TestCase</span>
+<span class="sd">    and provide the following class members:</span>
+
+<span class="sd">      - _klass (typeobject) the widget class to test (mandatory)</span>
+<span class="sd">      - initargs (list) a list of arguments for the klass init method</span>
+<span class="sd">                 (default=[])</span>
+<span class="sd">      - initkwargs (dict) a dict of keyword arguments for the klass init method</span>
+<span class="sd">                   (default={})</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">_klass</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">initargs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">initkwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="BaseWidgetTestCase.setUp"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/test/_BaseWidgetTestCase.html#taurus.qt.qtgui.test.BaseWidgetTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Preconditions:</span>
+<span class="sd">        </span>
+<span class="sd">          - A TaurusApplication must be initialized.</span>
+<span class="sd">          - The widget must be instantiated</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">app</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">initargs</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initkwargs</span><span class="p">)</span></div></div>
+
+
+<span class="nd">@skipUnlessGui</span><span class="p">()</span>
+<div class="viewcode-block" id="GenericWidgetTestCase"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/test/_GenericWidgetTestCase.html#taurus.qt.qtgui.test.GenericWidgetTestCase">[docs]</a><span class="k">class</span> <span class="nc">GenericWidgetTestCase</span><span class="p">(</span><span class="n">BaseWidgetTestCase</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;a base class for testing common cases of arbitrary Taurus widget classes</span>
+
+<span class="sd">    To use it, simply inherit from GenericWidgetTestCase *and* unittest.TestCase</span>
+<span class="sd">    and provide the following class members:</span>
+
+<span class="sd">      - _klass (typeobject) the widget class to test (mandatory)</span>
+<span class="sd">      - initargs (list) a list of arguments for the klass init method</span>
+<span class="sd">                 (default=[])</span>
+<span class="sd">      - initkwargs (dict) a dict of keyword arguments for the klass init method</span>
+<span class="sd">                   (default={})</span>
+<span class="sd">      - modelnames (list) a list of model names which the widget should be able</span>
+<span class="sd">                   to handle (default=[])</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">modelnames</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="GenericWidgetTestCase.setUp"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/test/_GenericWidgetTestCase.html#taurus.qt.qtgui.test.GenericWidgetTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Preconditions:</span>
+<span class="sd">        </span>
+<span class="sd">          - Those from :class:`BaseWidgetTestCase`</span>
+<span class="sd">          - A list of models corresponding to the modelnames list</span>
+<span class="sd">            should be created without using the widget being tested</span>
+<span class="sd">            (e.g. by using taurusManager.findObject()).</span>
+<span class="sd">            None should be used as a placeholder when a model cannot be created</span>
+<span class="sd">            for a given modelname.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#Make sure the basics are taken care of (QApplication, etc)</span>
+        <span class="n">BaseWidgetTestCase</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1">#construct a list of models corresponding to the test model names</span>
+        <span class="c1"># provided by the widget</span>
+        <span class="n">taurusManager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelnames</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="p">:</span>
+                <span class="c1"># an empty string or None are &quot;valid&quot; modelnames which should</span>
+                <span class="c1"># lead to a reset in the model</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># note, an unsupported model name will result in a None,</span>
+                    <span class="c1"># which will be caught later on</span>
+                    <span class="n">model</span> <span class="o">=</span> <span class="n">taurusManager</span><span class="o">.</span><span class="n">findObject</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericWidgetTestCase.test00_Instantiation"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/test/_GenericWidgetTestCase.html#taurus.qt.qtgui.test.GenericWidgetTestCase.test00_Instantiation">[docs]</a>    <span class="k">def</span> <span class="nf">test00_Instantiation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Check that the widget instantiates correctly&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericWidgetTestCase.test10_SetModelsSequentially"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/test/_GenericWidgetTestCase.html#taurus.qt.qtgui.test.GenericWidgetTestCase.test10_SetModelsSequentially">[docs]</a>    <span class="k">def</span> <span class="nf">test10_SetModelsSequentially</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Check that we can set several models sequentially&#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelnames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">modelobj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">name</span><span class="p">:</span>
+                <span class="c1"># the modelname is not supported by the manager (we cannot test</span>
+                <span class="c1"># it apart from the fact that setModel does not raise an</span>
+                <span class="c1"># exception</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">modelobj</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span>
+                              <span class="s1">&#39;failed to set model &quot;</span><span class="si">%s</span><span class="s1">&quot; for </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div></div>
+
+<span class="c1">#    def test10_ModelProperty(self):</span>
+<span class="c1">#        pass</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
+
+    <span class="k">class</span> <span class="nc">TaurusLabelTest</span><span class="p">(</span><span class="n">GenericWidgetTestCase</span><span class="p">,</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="n">_klass</span> <span class="o">=</span> <span class="n">TaurusLabel</span>
+        <span class="n">modelnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sys/tg_test/1/wave&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;eval://1&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">defaultTestLoader</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TaurusLabelTest</span><span class="p">)</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">(</span><span class="n">descriptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">)</span>
+    <span class="c1">#unittest.main()</span>
+    <span class="c1">#TaurusLabelTest().run()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
