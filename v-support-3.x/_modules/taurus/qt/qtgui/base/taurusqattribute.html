@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.base.taurusqattribute &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://sourceforge.net/projects/tauruslib">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 3.7 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.base.taurusqattribute</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.base.taurusqattribute</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Provides a QtObject for taurus attributes </span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusvalidator</span> <span class="k">import</span> <span class="n">AttributeNameValidator</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.safeeval</span> <span class="k">import</span> <span class="n">SafeEvaluator</span>
+
+<div class="viewcode-block" id="TaurusQAttributeFactory"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusQAttributeFactory.html#taurus.qt.qtgui.base.TaurusQAttributeFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusQAttributeFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="c1">#@this probably needs to be ported to a proper TaurusFactory</span>
+    <span class="sd">&#39;&#39;&#39;A factory for TaurusQAttributes that ensures that only one </span>
+<span class="sd">    TaurusQAttributes is created for a given extended model.</span>
+<span class="sd">    IMPORTANT: This API is for testing purposes.It is likely to change.  Don&#39;t rely on it&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_qAttrsByExtModel</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
+        
+<div class="viewcode-block" id="TaurusQAttributeFactory.getQAttr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusQAttributeFactory.html#taurus.qt.qtgui.base.TaurusQAttributeFactory.getQAttr">[docs]</a>    <span class="k">def</span> <span class="nf">getQAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmodel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">autoIdformat</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;_QAttr</span><span class="si">%i</span><span class="s1">_&#39;</span><span class="p">):</span>
+        <span class="c1">#check if the qAttr is known to this factory</span>
+        <span class="k">if</span> <span class="n">xmodel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">xmodel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qAttrsByExtModel</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qAttrsByExtModel</span><span class="p">[</span><span class="n">xmodel</span><span class="p">]</span>
+        <span class="c1">#create a new qAttr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+                <span class="nb">id</span> <span class="o">=</span> <span class="n">autoIdformat</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_count</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">TaurusQAttribute</span><span class="p">(</span><span class="n">xmodel</span><span class="o">=</span><span class="n">xmodel</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_qAttrsByExtModel</span><span class="p">[</span><span class="n">xmodel</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="n">c</span></div></div>
+    
+    
+<span class="n">taurusQAttributeFactory</span> <span class="o">=</span> <span class="n">TaurusQAttributeFactory</span><span class="p">()</span>
+<span class="n">ATTRNAMEVALIDATOR</span> <span class="o">=</span> <span class="n">AttributeNameValidator</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaurusQAttribute"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusQAttribute.html#taurus.qt.qtgui.base.TaurusQAttribute">[docs]</a><span class="k">class</span> <span class="nc">TaurusQAttribute</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QObject</span><span class="p">,</span> <span class="n">TaurusBaseComponent</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A listener for taurus attributes.</span>
+<span class="sd">    It stores the value in a numpy array and emits a </span>
+<span class="sd">    dataChanged signal when the data has changed.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">pyVar_RegExp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;[a-zA-Z_][a-zA-Z0-9_]*&quot;</span><span class="p">)</span> <span class="c1">#regexp for a variable/method name (symbol)</span>
+    <span class="n">cref_RegExp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;\$\{(.+?)\}&quot;</span><span class="p">)</span> <span class="c1">#regexp for references to qAttrs in extended models</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmodel</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">TaurusBaseComponent</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attrnamevalidator</span> <span class="o">=</span> <span class="n">ATTRNAMEVALIDATOR</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sev</span> <span class="o">=</span> <span class="n">SafeEvaluator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_referencedQAttrs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setExtendedModel</span><span class="p">(</span><span class="n">xmodel</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_setExtendedModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmodel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xmodel</span> <span class="o">=</span> <span class="n">xmodel</span>
+        <span class="k">if</span> <span class="n">xmodel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transformationString</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">xmodel</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">xmodel</span><span class="p">)</span>
+        <span class="c1">#for formulas</span>
+        <span class="k">if</span> <span class="n">xmodel</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">):</span>
+            <span class="n">trstring</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preProcessTransformation</span><span class="p">(</span><span class="n">xmodel</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_transformationString</span> <span class="o">=</span> <span class="n">trstring</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">applyTransformation</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s2">&quot;!!!!!!!!!!!!!&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformationString</span>
+                <span class="k">return</span>
+        <span class="c1">#for tango attributes</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrnamevalidator</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">xmodel</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">xmodel</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="c1">#fake event to force a reading</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Unsupported extended model &quot;</span><span class="si">%s</span><span class="s1">&quot;. Skipping&#39;</span><span class="p">,</span><span class="n">xmodel</span><span class="p">)</span>
+<span class="c1">#        #for nexus files</span>
+<span class="c1">#        m = re.match(NEXUS_src,model)</span>
+<span class="c1">#        if m is not None:</span>
+<span class="c1">#            host,path,nxpath,slice = m.group(4,5,9,10) </span>
+<span class="c1">#            #@todo:open file and check the data is accessible</span>
+<span class="c1">#            return model, nxpath, getThemeIcon(&#39;x-office-spreadsheet&#39;), True</span>
+<span class="c1">#        #for ascii files</span>
+<span class="c1">#        m = re.match(ASCII_src,model)</span>
+<span class="c1">#        if m is not None:</span>
+<span class="c1">#            host,path, = m.group(4,5)</span>
+<span class="c1">#        #@todo: open and check the file</span>
+<span class="c1">#        #If nothing matches...</span>
+<span class="c1">#        return model, model, getThemeIcon(&#39;dialog-warning&#39;), False</span>
+        
+    
+<div class="viewcode-block" id="TaurusQAttribute.preProcessTransformation"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusQAttribute.html#taurus.qt.qtgui.base.TaurusQAttribute.preProcessTransformation">[docs]</a>    <span class="k">def</span> <span class="nf">preProcessTransformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trstring</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        parses the transformation string and creates the necessary symbols for</span>
+<span class="sd">        the evaluator. It also connects any referenced qAttrs so that the</span>
+<span class="sd">        transformation gets re-evaluated if they change.</span>
+<span class="sd">        :param trstring: (str) a string to be pre-processed</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (tuple&lt;str,bool&gt;) a tuple containing the processed string </span>
+<span class="sd">                 and a boolean indicating if the preprocessing was successful.</span>
+<span class="sd">                 if ok==True, the string is ready to be evaluated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#disconnect previously referenced qAttrs and clean the list</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_referencedQAttrs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;dataChanged&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">applyTransformation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_referencedQAttrs</span><span class="o">=</span><span class="p">[]</span>  
+        
+        <span class="c1">#reset symbols      </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sev</span><span class="o">.</span><span class="n">resetSafe</span><span class="p">()</span>
+        
+        <span class="c1">#Find references in the string, create qAttrs if needed, connect to them and change the string to use the qAttr id</span>
+        <span class="n">trstring</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cref_RegExp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Match2Id</span><span class="p">,</span> <span class="n">trstring</span><span class="p">)</span>
+        
+        <span class="n">safesymbols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sev</span><span class="o">.</span><span class="n">getSafe</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="c1">#validate the expression (look for missing symbols) </span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyVar_RegExp</span><span class="p">,</span> <span class="n">trstring</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">safesymbols</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Missing symbol &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">trstring</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">trstring</span><span class="p">,</span><span class="kc">True</span></div>
+            
+    <span class="k">def</span> <span class="nf">__Match2Id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        receives a re.match object for cref_RegExp. Returns the id of an</span>
+<span class="sd">        existing qAttr corresponding to the match. The qAttr is created</span>
+<span class="sd">        if it didn&#39;t previously exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__createReference</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">id</span>
+        
+    <span class="k">def</span> <span class="nf">__createReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;creates a (or gets an existing)qAttr and connects to it and adds</span>
+<span class="sd">        its id to the safe evaluation symbols. It returns the qAttr.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">taurusQAttributeFactory</span><span class="o">.</span><span class="n">getQAttr</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;dataChanged&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">applyTransformation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sev</span><span class="o">.</span><span class="n">addSafe</span><span class="p">({</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">:</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_referencedQAttrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span>        
+        
+<div class="viewcode-block" id="TaurusQAttribute.applyTransformation"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusQAttribute.html#taurus.qt.qtgui.base.TaurusQAttribute.applyTransformation">[docs]</a>    <span class="k">def</span> <span class="nf">applyTransformation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">TaurusQAttribute</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sev</span><span class="o">.</span><span class="n">addSafe</span><span class="p">({</span><span class="n">sender</span><span class="o">.</span><span class="n">id</span><span class="p">:</span><span class="n">sender</span><span class="o">.</span><span class="n">value</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sev</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transformationString</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;dataChanged&quot;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;the function &#39;</span><span class="si">%s</span><span class="s2">&#39; could not be evaluated. Reason: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transformationString</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span> </div>
+        
+<div class="viewcode-block" id="TaurusQAttribute.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusQAttribute.html#taurus.qt.qtgui.base.TaurusQAttribute.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Handles Taurus Events for this curve</span>
+
+<span class="sd">        See: :meth:`TaurusBaseQAttr.handleEvent`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">src</span> <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_values</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;dataChanged&#39;</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">val</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceAttribute</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceAttribute</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not get DeviceAttribute value for this event. Dropping&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;dataChanged&#39;</span><span class="p">))</span></div></div>
+        
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

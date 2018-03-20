@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusattribute &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://sourceforge.net/projects/tauruslib">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 3.7 documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusattribute</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusattribute</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the base class for a taurus attribute&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusAttribute&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusStateAttribute&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusModel</span>
+<span class="kn">from</span> <span class="nn">.taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfigurationProxy</span>
+
+<div class="viewcode-block" id="TaurusAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttribute</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parentDevice</span> <span class="o">=</span> <span class="n">parent</span> <span class="c1"># just to keep it alive</span>
+        
+        <span class="c1"># User enabled/disabled polling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__enable_polling</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;enablePolling&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> 
+        
+        <span class="c1"># attribute should be polled. The attribute is in fact polled only if the polling is also enabled </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="c1"># efectively tells if the attribute is being polled periodically</span>
+        <span class="c1"># in summary: polled = enable_polling and activate_polling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__polled</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="c1"># current polling period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__polling_period</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pollingPeriod&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+        
+        <span class="c1"># stores if polling has been forced by user API</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__forced_polling</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="c1"># Everything went ok so now we are sure we can store the object</span>
+        <span class="n">storeCallback</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storeCallback&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">storeCallback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">storeCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dev_hw_obj</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">getHWObj</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="TaurusAttribute.cleanUp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TaurusAttribute] cleanUp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeEvents</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dev_hw_obj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">TaurusModel</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusModel implementation</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusAttribute.getTaurusElementType"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getTaurusElementType">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusElementType</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span></div>
+            
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusAttribute.buildModelName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.buildModelName">[docs]</a>    <span class="k">def</span> <span class="nf">buildModelName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent_model</span><span class="p">,</span> <span class="n">relative_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;build an &#39;absolute&#39; model name from the parent model and the &#39;relative&#39;</span>
+<span class="sd">        name. </span>
+<span class="sd">        - If parent_model is a TaurusDevice, the return is a composition of</span>
+<span class="sd">        the database model name and is device name</span>
+<span class="sd">        - If parent_model is a TaurusAttribute, the relative name is ignored and</span>
+<span class="sd">        the parent name is returned</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parent_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">relative_name</span>
+        <span class="n">parent_name</span> <span class="o">=</span> <span class="n">parent_model</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">relative_name</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent_model</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">parent_name</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parent_name</span><span class="p">,</span><span class="n">relative_name</span><span class="p">)</span>  </div>
+            
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusAttribute.getNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getNameValidator</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">taurusvalidator</span>
+        <span class="k">return</span> <span class="n">taurusvalidator</span><span class="o">.</span><span class="n">AttributeNameValidator</span><span class="p">()</span></div>
+        
+    <span class="c1"># received configuration events</span>
+<div class="viewcode-block" id="TaurusAttribute.eventReceived"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">src_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method invoked by the configuration object when a configuration event</span>
+<span class="sd">           is received. Default implementation propagates the event to all </span>
+<span class="sd">           listeners.&quot;&quot;&quot;</span>
+        <span class="c1">#self.fireEvent(src_type, evt_value)</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Necessary to overwrite in subclass</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+<div class="viewcode-block" id="TaurusAttribute.isNumeric"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isNumeric">[docs]</a>    <span class="k">def</span> <span class="nf">isNumeric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.isNumeric&quot;</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TaurusAttribute.isBoolean"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isBoolean">[docs]</a>    <span class="k">def</span> <span class="nf">isBoolean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.isBoolean&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.isState"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isState">[docs]</a>    <span class="k">def</span> <span class="nf">isState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.isState&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.getDisplayValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.getDisplayValue&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.encode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.encode&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.decode"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.decode&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.write"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">with_read</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.write&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.read"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.read&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.poll"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.poll">[docs]</a>    <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.poll&quot;</span><span class="p">)</span></div>
+            
+    <span class="k">def</span> <span class="nf">_subscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute._subscribeEvents&quot;</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_unsubscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute._unsubscribeEvents&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusAttribute.isUsingEvents"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isUsingEvents">[docs]</a>    <span class="k">def</span> <span class="nf">isUsingEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute.isUsingEvents&quot;</span><span class="p">)</span></div>
+        
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusModel necessary overwrite</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusAttribute.getValueObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getValueObj">[docs]</a>    <span class="k">def</span> <span class="nf">getValueObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.getDisplayDescrObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getDisplayDescrObj">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescrObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLabel</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayName</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
+
+        <span class="n">descr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDescription</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">descr</span> <span class="ow">and</span> <span class="n">descr</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_description</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;description&#39;</span><span class="p">,</span><span class="n">descr</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span><span class="s2">&quot;&amp;lt;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&amp;gt;&quot;</span><span class="p">)))</span>
+        
+        <span class="n">unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUnit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">unit</span> <span class="ow">and</span> <span class="n">unit</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_unit</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;unit&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="p">))</span>
+            
+        <span class="n">limits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRange</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">limits</span> <span class="ow">and</span> <span class="p">(</span><span class="n">limits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_min_value</span> <span class="ow">or</span> \
+                       <span class="n">limits</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_max_value</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">limits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_min_value</span><span class="p">:</span> <span class="n">limits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_cfg_value</span>
+            <span class="k">if</span> <span class="n">limits</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_max_value</span><span class="p">:</span> <span class="n">limits</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_cfg_value</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;limits&#39;</span><span class="p">,</span> <span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">limits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">limits</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+
+        <span class="n">alarms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAlarms</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">alarms</span> <span class="ow">and</span> <span class="p">(</span><span class="n">alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_min_alarm</span> <span class="ow">or</span> \
+                       <span class="n">alarms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_max_alarm</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_min_alarm</span><span class="p">:</span> <span class="n">alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_cfg_value</span>
+            <span class="k">if</span> <span class="n">alarms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_max_alarm</span><span class="p">:</span> <span class="n">alarms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_cfg_value</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;alarms&#39;</span><span class="p">,</span> <span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">alarms</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+
+        <span class="n">warnings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getWarnings</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">warnings</span> <span class="ow">and</span> <span class="p">(</span><span class="n">warnings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_min_warning</span> <span class="ow">or</span> \
+                         <span class="n">warnings</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_max_warning</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">warnings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_min_warning</span><span class="p">:</span> <span class="n">warnings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_cfg_value</span>
+            <span class="k">if</span> <span class="n">warnings</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_max_warning</span><span class="p">:</span> <span class="n">warnings</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_cfg_value</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;warnings&#39;</span><span class="p">,</span> <span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">warnings</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">warnings</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+        
+        <span class="k">return</span> <span class="n">obj</span></div>
+        
+<div class="viewcode-block" id="TaurusAttribute.areStrValuesEqual"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.areStrValuesEqual">[docs]</a>    <span class="k">def</span> <span class="nf">areStrValuesEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;nan&quot;</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.getDisplayWriteValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getDisplayWriteValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayWriteValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isWritable</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;requesting write value of a read-only attribute&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">attrvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attrvalue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        
+        <span class="n">v</span> <span class="o">=</span> <span class="n">attrvalue</span><span class="o">.</span><span class="n">w_value</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">displayValue</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TaurusAttribute.displayValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isScalar</span><span class="p">():</span>
+                <span class="n">fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isNumeric</span><span class="p">()</span> <span class="ow">and</span> <span class="n">fmt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">ret</span> <span class="o">=</span> <span class="n">fmt</span> <span class="o">%</span> <span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">isSpectrum</span><span class="p">():</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># if cannot calculate value based on the format just return the value</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+    
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for listeners</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+    
+<div class="viewcode-block" id="TaurusAttribute.hasEvents"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.hasEvents">[docs]</a>    <span class="k">def</span> <span class="nf">hasEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="s2">&quot;Don&#39;t use this anymore. Use isUsingEvents instead&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">isUsingEvents</span><span class="p">()</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Polling (client side)</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    
+<div class="viewcode-block" id="TaurusAttribute.enablePolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.enablePolling">[docs]</a>    <span class="k">def</span> <span class="nf">enablePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Enable polling. See :meth:`isPollingEnabled` for clarification of</span>
+<span class="sd">        what enabled polling means.</span>
+
+<span class="sd">        :param force: (bool) True also activates polling </span>
+<span class="sd">                      (see: :meth:`activatePolling`)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__enable_polling</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__forced_polling</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span> <span class="o">=</span> <span class="kc">True</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_activatePolling</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.disablePolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.disablePolling">[docs]</a>    <span class="k">def</span> <span class="nf">disablePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Disable polling and if polling is active also deactivate it.</span>
+<span class="sd">        See :meth:`isPollingEnabled` for clarification of</span>
+<span class="sd">        what enabled polling means.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__enable_polling</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__forced_polling</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deactivatePolling</span><span class="p">()</span></div>
+            
+<div class="viewcode-block" id="TaurusAttribute.isPollingEnabled"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isPollingEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">isPollingEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Indicate whether polling was activated/deactivated by user.</span>
+<span class="sd">        Enabled polling does not mean that it is active - periodically poll</span>
+<span class="sd">        the attribute. By default the attribute creation enables polling.</span>
+
+<span class="sd">        :return: (bool) whether polling is enabled</span>
+
+<span class="sd">        :see: :meth:`enablePolling`, :meth:`disablePolling`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__enable_polling</span></div>
+        
+    <span class="k">def</span> <span class="nf">_activatePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">addAttributeToPolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPollingPeriod</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__polled</span> <span class="o">=</span> <span class="kc">True</span>
+    
+    <span class="k">def</span> <span class="nf">_deactivatePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">removeAttributeFromPolling</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__polled</span> <span class="o">=</span> <span class="kc">False</span>
+    
+<div class="viewcode-block" id="TaurusAttribute.isPollingActive"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isPollingActive">[docs]</a>    <span class="k">def</span> <span class="nf">isPollingActive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Indicate whether polling is active. Active polling means that</span>
+<span class="sd">        a periodic timer poll the attribute. By default the attribute creation</span>
+<span class="sd">        does not activate polling.</span>
+
+<span class="sd">        :return: (bool) whether polling is active</span>
+
+<span class="sd">        :see: :meth:`activatePolling`, :meth:`disablePolling`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__polled</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.isPollingForced"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isPollingForced">[docs]</a>    <span class="k">def</span> <span class="nf">isPollingForced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__forced_polling</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.changePollingPeriod"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.changePollingPeriod">[docs]</a>    <span class="k">def</span> <span class="nf">changePollingPeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;change polling period to period miliseconds &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__polling_period</span> <span class="o">==</span> <span class="n">period</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span><span class="p">:</span>
+            <span class="k">return</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">__polling_period</span> <span class="o">=</span> <span class="n">period</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__activate_polling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deactivatePolling</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_activatePolling</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.isPolled"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isPolled">[docs]</a>    <span class="k">def</span> <span class="nf">isPolled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="s2">&quot;use isPollingActive()&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingActive</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.getPollingPeriod"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getPollingPeriod">[docs]</a>    <span class="k">def</span> <span class="nf">getPollingPeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns the polling period &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__polling_period</span></div>
+
+    <span class="c1"># The following are deprecated and maintained only for compatibility</span>
+
+<div class="viewcode-block" id="TaurusAttribute.activatePolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.activatePolling">[docs]</a>    <span class="k">def</span> <span class="nf">activatePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">unsubscribe_evts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;activate polling for attribute.</span>
+<span class="sd">        </span>
+<span class="sd">           :param period: polling period (in miliseconds)</span>
+<span class="sd">           :type period: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">## REENABLED, used to solve problems with ID GUI&#39;s and other systems where event independency is needed.</span>
+        <span class="c1">#self.deprecated(&quot;use changePollingPeriod(). Not exactly the same functionality. Only activates polling if necessary&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changePollingPeriod</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enablePolling</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.deactivatePolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.deactivatePolling">[docs]</a>    <span class="k">def</span> <span class="nf">deactivatePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maintain_enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;unregister attribute from polling&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="s2">&quot;use disablePolling()&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disablePolling</span><span class="p">()</span></div>
+            
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for attribute configuration</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+
+    <span class="k">def</span> <span class="nf">_getRealConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the current configuration of the attribute.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass TaurusAttribute::_getRealConfig&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusAttribute.getConfig"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getConfig">[docs]</a>    <span class="k">def</span> <span class="nf">getConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the current configuration of the attribute.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ob</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">ob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__weakFakeConfigObj</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="n">ob</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ob</span>
+
+        <span class="n">ob</span> <span class="o">=</span> <span class="n">TaurusConfigurationProxy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__weakFakeConfigObj</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">ob</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ob</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.isWritable"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isWritable">[docs]</a>    <span class="k">def</span> <span class="nf">isWritable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getRealConfig</span><span class="p">()</span><span class="o">.</span><span class="n">isReadOnly</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.isWrite"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isWrite">[docs]</a>    <span class="k">def</span> <span class="nf">isWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getRealConfig</span><span class="p">()</span><span class="o">.</span><span class="n">isWrite</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusAttribute.isReadOnly"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getRealConfig</span><span class="p">()</span><span class="o">.</span><span class="n">isReadOnly</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.isReadWrite"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isReadWrite">[docs]</a>    <span class="k">def</span> <span class="nf">isReadWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getRealConfig</span><span class="p">()</span><span class="o">.</span><span class="n">isReadWrite</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusAttribute.getWritable"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getWritable">[docs]</a>    <span class="k">def</span> <span class="nf">getWritable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getRealConfig</span><span class="p">()</span><span class="o">.</span><span class="n">getWritable</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusStateAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusStateAttribute.html#taurus.core.TaurusStateAttribute">[docs]</a><span class="k">class</span> <span class="nc">TaurusStateAttribute</span><span class="p">(</span><span class="n">TaurusAttribute</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusAttribute</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="TaurusStateAttribute.isInformDeviceOfErrors"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusStateAttribute.html#taurus.core.TaurusStateAttribute.isInformDeviceOfErrors">[docs]</a>    <span class="k">def</span> <span class="nf">isInformDeviceOfErrors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
+<span class="c1">#del weakef</span>
+<span class="c1">#del TaurusModel</span>
+<span class="c1">#del TaurusConfigurationProxy</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
