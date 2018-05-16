@@ -188,10 +188,9 @@
         <span class="c1"># Overwrite not to show quality by default</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_showQuality</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span> <span class="o">=</span> <span class="mf">1.0</span>
-
         <span class="n">lineEdit</span> <span class="o">=</span> <span class="n">TaurusValueLineEdit</span><span class="p">(</span><span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
         <span class="n">lineEdit</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">PintValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">lineEdit</span><span class="o">.</span><span class="n">setEnableWheelEvent</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLineEdit</span><span class="p">(</span><span class="n">lineEdit</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAccelerated</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
@@ -207,20 +206,15 @@
 <div class="viewcode-block" id="TaurusValueSpinBox.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueSpinBox.html#taurus.qt.qtgui.input.TaurusValueSpinBox.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="n">evt</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TaurusValueSpinBox.wheelEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueSpinBox.html#taurus.qt.qtgui.input.TaurusValueSpinBox.wheelEvent">[docs]</a>    <span class="k">def</span> <span class="nf">wheelEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">wheelEvent</span><span class="p">(</span><span class="n">evt</span><span class="p">)</span></div>
+
     <span class="c1"># ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~</span>
     <span class="c1"># Mandatory overload from QAbstractSpinBox</span>
     <span class="c1"># ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~</span>
 
 <div class="viewcode-block" id="TaurusValueSpinBox.stepBy"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueSpinBox.html#taurus.qt.qtgui.input.TaurusValueSpinBox.stepBy">[docs]</a>    <span class="k">def</span> <span class="nf">stepBy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getSingleStepQuantity</span><span class="p">()</span> <span class="o">*</span> <span class="n">steps</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">getAutoApply</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">kmods</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">keyboardModifiers</span><span class="p">()</span>
-            <span class="n">controlpressed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">kmods</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ControlModifier</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">controlpressed</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">writeValue</span><span class="p">(</span><span class="n">forceApply</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">_stepBy</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValueSpinBox.stepEnabled"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueSpinBox.html#taurus.qt.qtgui.input.TaurusValueSpinBox.stepEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">stepEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractSpinBox</span><span class="o">.</span><span class="n">StepEnabled</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractSpinBox</span><span class="o">.</span><span class="n">StepNone</span><span class="p">)</span>
@@ -297,14 +291,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">resetForcedApply</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusValueSpinBox.getSingleStep"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueSpinBox.html#taurus.qt.qtgui.input.TaurusValueSpinBox.getSingleStep">[docs]</a>    <span class="k">def</span> <span class="nf">getSingleStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">getSingleStep</span><span class="p">()</span></div>
 
     <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusValueSpinBox.setSingleStep"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueSpinBox.html#taurus.qt.qtgui.input.TaurusValueSpinBox.setSingleStep">[docs]</a>    <span class="k">def</span> <span class="nf">setSingleStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span> <span class="o">=</span> <span class="n">step</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="n">step</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValueSpinBox.resetSingleStep"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueSpinBox.html#taurus.qt.qtgui.input.TaurusValueSpinBox.resetSingleStep">[docs]</a>    <span class="k">def</span> <span class="nf">resetSingleStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit</span><span class="p">()</span><span class="o">.</span><span class="n">resetSingleStep</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_getSingleStepQuantity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

@@ -188,6 +188,7 @@
                           <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_enableWheelEvent</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span> <span class="o">=</span> <span class="mf">1.</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -316,11 +317,6 @@
         <span class="n">evt</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
         <span class="n">numDegrees</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">delta</span><span class="p">()</span> <span class="o">/</span> <span class="mi">8</span>
         <span class="n">numSteps</span> <span class="o">=</span> <span class="n">numDegrees</span> <span class="o">/</span> <span class="mi">15</span>
-        <span class="n">modifiers</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">modifiers</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">modifiers</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ControlModifier</span><span class="p">:</span>
-            <span class="n">numSteps</span> <span class="o">*=</span> <span class="mi">10</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">modifiers</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AltModifier</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">:</span>
-            <span class="n">numSteps</span> <span class="o">*=</span> <span class="o">.</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stepBy</span><span class="p">(</span><span class="n">numSteps</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValueLineEdit.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">):</span>
@@ -343,16 +339,19 @@
             <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt</span><span class="p">)</span>
 
         <span class="n">evt</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-        <span class="n">modifiers</span> <span class="o">=</span> <span class="n">evt</span><span class="o">.</span><span class="n">modifiers</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">modifiers</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ControlModifier</span><span class="p">:</span>
-            <span class="n">numSteps</span> <span class="o">*=</span> <span class="mi">10</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">modifiers</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AltModifier</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">:</span>
-            <span class="n">numSteps</span> <span class="o">*=</span> <span class="o">.</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stepBy</span><span class="p">(</span><span class="n">numSteps</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_stepBy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_stepBy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValue</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">steps</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAutoApply</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kmods</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">keyboardModifiers</span><span class="p">()</span>
+            <span class="n">controlpressed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">kmods</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ControlModifier</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">controlpressed</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">(</span><span class="n">forceApply</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusValueLineEdit.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set the displayed text from a given value object&quot;&quot;&quot;</span>
@@ -419,6 +418,15 @@
 
 <div class="viewcode-block" id="TaurusValueLineEdit.resetEnableWheelEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.resetEnableWheelEvent">[docs]</a>    <span class="k">def</span> <span class="nf">resetEnableWheelEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setEnableWheelEvent</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValueLineEdit.getSingleStep"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.getSingleStep">[docs]</a>    <span class="k">def</span> <span class="nf">getSingleStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span></div>
+
+<div class="viewcode-block" id="TaurusValueLineEdit.setSingleStep"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.setSingleStep">[docs]</a>    <span class="k">def</span> <span class="nf">setSingleStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span> <span class="o">=</span> <span class="n">step</span></div>
+
+<div class="viewcode-block" id="TaurusValueLineEdit.resetSingleStep"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.resetSingleStep">[docs]</a>    <span class="k">def</span> <span class="nf">resetSingleStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="TaurusValueLineEdit.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtgui.compact.TaurusValueLineEdit.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>

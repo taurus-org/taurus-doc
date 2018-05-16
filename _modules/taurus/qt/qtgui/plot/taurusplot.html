@@ -191,11 +191,16 @@
 
 
 <div class="viewcode-block" id="isodatestr2float"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot.html#taurus.qt.qtgui.plot.isodatestr2float">[docs]</a><span class="k">def</span> <span class="nf">isodatestr2float</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    converts a date string in iso format to a timestamp (seconds since epoch)</span>
-<span class="sd">    with microseconds precision</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="sd">    with microseconds precision if available</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># with microseconds</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="c1"># without microseconds</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">microsecond</span> <span class="o">*</span> <span class="mf">1e-6</span></div>
 
 
