@@ -197,7 +197,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span> <span class="o">=</span> <span class="n">safedict</span>
         <span class="k">if</span> <span class="n">defaultSafe</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">numpy</span>
-            <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span>
+            <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;pow&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">pow</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;len&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span>
@@ -216,6 +216,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;Quantity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;Q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span>  <span class="c1"># Q() is an alias for Quantity()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;UR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">UR</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_originalSafeDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
