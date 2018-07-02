@@ -176,10 +176,11 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusEventType</span>
 <span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">TangoDevice</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span><span class="p">,</span> <span class="n">CaselessList</span>
-<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">RLock</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Lock</span>
 
 
 <div class="viewcode-block" id="ImageDevice"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_ImageDevice.html#taurus.core.tango.img.ImageDevice">[docs]</a><span class="k">class</span> <span class="nc">ImageDevice</span><span class="p">(</span><span class="n">TangoDevice</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;A class encapsulating a generic image device&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
@@ -206,12 +207,14 @@
     <span class="sd">&quot;&quot;&quot;A class encapsulating a generic image device that has an image counter</span>
 <span class="sd">    attribute&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">image_ct</span><span class="o">=</span><span class="s1">&#39;imagecounter&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">image_ct</span><span class="o">=</span><span class="s1">&#39;imagecounter&#39;</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image_data</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image_id_attr_name</span> <span class="o">=</span> <span class="n">image_ct</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">ImageDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_busy</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image_id_attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_id_attr_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discard_event</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image_id_attr</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_setDirty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -225,7 +228,7 @@
         <span class="n">dirty</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
             <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">dirty</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">names</span>
 
@@ -235,21 +238,29 @@
 <div class="viewcode-block" id="ImageCounterDevice.eventReceived"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_ImageCounterDevice.html#taurus.core.tango.img.ImageCounterDevice.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">evt_src</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_id_attr</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">:</span>
+
                 <span class="c1"># discard events if there is one being processed</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_busy</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_busy</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Processing image </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span>
-                    <span class="c1"># read the related Image attributes</span>
-                    <span class="c1"># (asap and in one action)</span>
-                    <span class="n">images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImageData</span><span class="p">()</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_setDirty</span><span class="p">()</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span>
-                    <span class="c1"># maintain this fireEvent for backwards compatibility</span>
-                    <span class="c1"># with Qub widget</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_emitImageEvents</span><span class="p">(</span><span class="n">evt_type</span><span class="p">,</span> <span class="n">images</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_busy</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Discard image </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">locked</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">discard_event</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Discard event </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Processing image </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span>
+                        <span class="c1"># read the related Image attributes</span>
+                        <span class="c1"># (asap and in one action)</span>
+                        <span class="n">images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImageData</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_setDirty</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span>
+                        <span class="c1"># maintain this fireEvent for backwards compatibility</span>
+                        <span class="c1"># with Qub widget</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_emitImageEvents</span><span class="p">(</span><span class="n">evt_type</span><span class="p">,</span> <span class="n">images</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">discard_event</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">discard_event</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">break</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ImageDevice</span><span class="o">.</span><span class="n">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span></div>
 
@@ -280,6 +291,7 @@
         <span class="k">except</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_data</span></div></div>
+
 
 <span class="n">PyImageViewer</span> <span class="o">=</span> <span class="n">ImageCounterDevice</span>
 <span class="n">ImgGrabber</span> <span class="o">=</span> <span class="n">ImageCounterDevice</span>
@@ -324,7 +336,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">ImageCounterDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">image_ct</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Prepared to listen image counter (</span><span class="si">%s</span><span class="s2">) for the </span><span class="si">%s</span><span class="s2"> images&quot;</span>
                    <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getImageIDAttrName</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImageAttrNames</span><span class="p">()))</span></div>
-
 </pre></div>
 
            </div>
