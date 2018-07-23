@@ -178,6 +178,7 @@
     <span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="k">raise</span>
 
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span>
                                          <span class="n">TaurusSerializationMode</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
@@ -245,7 +246,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reInit</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Serial</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;TANGO_SERIALIZATION_MODE&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Serial&#39;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TangoFactory.reInit"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.reInit">[docs]</a>    <span class="k">def</span> <span class="nf">reInit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reinitialize the singleton&quot;&quot;&quot;</span>
