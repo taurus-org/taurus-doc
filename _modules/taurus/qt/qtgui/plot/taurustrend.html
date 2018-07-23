@@ -1118,7 +1118,9 @@
         <span class="n">TaurusPlot</span><span class="o">.</span><span class="n">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isTimerNeeded</span><span class="p">(</span><span class="n">checkMinimized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;(re)starting the timer (in showEvent)&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_replotTimer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_replotTimer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="c1"># call a replot now (since it may not have been done while hidden)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">doReplot</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusTrend.hideEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusTrend.html#taurus.qt.qtgui.plot.TaurusTrend.hideEvent">[docs]</a>    <span class="k">def</span> <span class="nf">hideEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :meth:`TaurusPlot.showEvent` so that</span>
