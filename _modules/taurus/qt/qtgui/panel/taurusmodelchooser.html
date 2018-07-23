@@ -192,7 +192,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span> <span class="o">=</span> <span class="n">TaurusDbTreeWidget</span><span class="p">(</span>
             <span class="n">perspective</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_selectables</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1"># toolbar</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QToolBar</span><span class="p">(</span><span class="s2">&quot;TangoSelector toolbar&quot;</span><span class="p">)</span>
@@ -204,8 +203,6 @@
         <span class="c1"># defines the layout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setButtonsPos</span><span class="p">(</span><span class="n">buttonsPos</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">recheckTaurusParent</span><span class="p">()</span>  <span class="c1"># NOT WORKING????</span>
-        <span class="c1"># @todo: This is Workaround because UseSetParentModel is giving trouble again!</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceTree</span><span class="o">.</span><span class="n">setModel</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusModelSelectorTree.setButtonsPos"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree.setButtonsPos">[docs]</a>    <span class="k">def</span> <span class="nf">setButtonsPos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttonsPos</span><span class="p">):</span>
