@@ -223,8 +223,12 @@
             <span class="n">attr</span> <span class="o">=</span> <span class="n">config</span>
         <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attrType</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attrName</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attrType</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">type</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span>  <span class="c1"># bck-compat</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_pytango_dev_attr</span> <span class="o">=</span> <span class="n">p</span> <span class="o">=</span> <span class="n">pytango_dev_attr</span>
@@ -274,12 +278,20 @@
 
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Use the attr reference if the attr is still valid</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ReferenceError</span><span class="p">:</span>
+                <span class="c1"># re-create the attribute in case it was no longer referenced</span>
+                <span class="c1"># (this may happen in some rare cases in which the value is</span>
+                <span class="c1"># still used but the attr is no longer referenced elsewhere)</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">TangoAttribute</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__attrName</span><span class="p">)</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pytango_dev_attr</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> has no attribute </span><span class="si">%s</span><span class="s1">&#39;</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; object has no attribute </span><span class="si">%s</span><span class="s2">&quot;</span>
                                      <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
         <span class="c1"># return the attr but only after warning</span>
         <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecated</span>
@@ -353,10 +365,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span>
 
     <span class="k">def</span> <span class="nf">__fix_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;cast value to int if  it is an integer.</span>
+        <span class="sd">&quot;&quot;&quot;cast value to int if it is an integer.</span>
 <span class="sd">        Works on scalar and non-scalar values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attrType</span> <span class="o">!=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">value</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -451,8 +463,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pytango_attrinfoex</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;TangoAttribute does not have the attribute </span><span class="si">%s</span><span class="s1">&#39;</span>
-                            <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;TangoAttribute&#39; object has no attribute </span><span class="si">%s</span><span class="s2">&quot;</span>
+                                 <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TangoAttribute.getNewOperation"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.getNewOperation">[docs]</a>    <span class="k">def</span> <span class="nf">getNewOperation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">attr_value</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttributeValue</span><span class="p">()</span>
