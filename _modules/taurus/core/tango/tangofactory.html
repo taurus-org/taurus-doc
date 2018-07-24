@@ -307,13 +307,16 @@
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TangoFactory.set_default_tango_host"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.set_default_tango_host">[docs]</a>    <span class="k">def</span> <span class="nf">set_default_tango_host</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tango_host</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Sets the new default tango host. The method will transform the given</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the new default tango host. The method will transform the given</span>
 <span class="sd">        name to an Authority URI.</span>
 <span class="sd">        </span>
 <span class="sd">        .. note:: Calling this method also clears the device alias cache.</span>
 
 <span class="sd">        :param tango_host: (str) the new tango host. It accepts any valid Tango</span>
-<span class="sd">        authority name or None to use the defined by $TANGO_HOST env. var.</span>
+<span class="sd">                                 authority name or None to use the defined by</span>
+<span class="sd">                                 $TANGO_HOST env. var.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Translate to Authority URI</span>
         <span class="k">if</span> <span class="n">tango_host</span> <span class="ow">and</span> <span class="s2">&quot;//&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tango_host</span><span class="p">:</span>

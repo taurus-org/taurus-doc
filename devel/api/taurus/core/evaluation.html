@@ -240,88 +240,80 @@ in <code class="file docutils literal"><span class="pre">&lt;taurus&gt;/core/eva
 <blockquote>
 <div><ul>
 <li><p class="first">An attribute that multiplies a tango attribute by 2:</p>
-<blockquote>
-<div><p><cite>eval:2*{tango:a/b/c/d}</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="p">{</span><span class="n">tango</span><span class="p">:</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">d</span><span class="p">}</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">Same as above, but using substitutions:</p>
-<blockquote>
-<div><p><cite>eval:k=2;a={tango:a/b/c/d};k*a</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="n">a</span><span class="o">=</span><span class="p">{</span><span class="n">tango</span><span class="p">:</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">d</span><span class="p">};</span><span class="n">k</span><span class="o">*</span><span class="n">a</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">An attribute that adds two tango attributes together (assuming that tango
-is set as the default scheme)</p>
-<blockquote>
-<div><p><cite>eval:{a/b/c/d}+{f/g/h/i}</cite></p>
-</div></blockquote>
+is set as the default scheme):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:{</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">d</span><span class="p">}</span><span class="o">+</span><span class="p">{</span><span class="n">f</span><span class="o">/</span><span class="n">g</span><span class="o">/</span><span class="n">h</span><span class="o">/</span><span class="n">i</span><span class="p">}</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">An attribute that generates an array of random values:</p>
-<blockquote>
-<div><p><cite>eval:rand(256)</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="n">rand</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">Same as above, but with units:</p>
-<blockquote>
-<div><p><cite>eval:Q(rand(256),&#8217;V&#8217;)</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="n">Q</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span><span class="s1">&#39;V&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">An attribute that adds noise to a tango image attribute:</p>
-<blockquote>
-<div><p><cite>eval:img={tango:sys/tg_test/1/short_image_ro};img+10*rand(*img.shape)</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="n">img</span><span class="o">=</span><span class="p">{</span><span class="n">tango</span><span class="p">:</span><span class="n">sys</span><span class="o">/</span><span class="n">tg_test</span><span class="o">/</span><span class="mi">1</span><span class="o">/</span><span class="n">short_image_ro</span><span class="p">};</span><span class="n">img</span><span class="o">+</span><span class="mi">10</span><span class="o">*</span><span class="n">rand</span><span class="p">(</span><span class="o">*</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">An attribute that accesses a method from a given module (in this
 case to use os.path.exists):</p>
-<blockquote>
-<div><p><cite>eval:&#64;os.*/path.exists(&#8220;/some/file&#8221;)</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="nd">@os</span><span class="o">.*/</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/some/file&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">Same as before, for getting today&#8217;s date as an attribute:</p>
-<blockquote>
-<div><p>&#8216;eval:&#64;datetime.*/date.today().isoformat()&#8217;</p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="nd">@datetime</span><span class="o">.*/</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">A default evaluator device named <cite>foo</cite>:</p>
-<blockquote>
-<div><p><cite>eval:&#64;foo</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="nd">@foo</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">A custom evaluator device (implemented as class <cite>MyEvalDev</cite> in the <cite>mymod</cite>
 module):</p>
-<blockquote>
-<div><p><cite>eval:&#64;mymod.MyEvalDev</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="nd">@mymod</span><span class="o">.</span><span class="n">MyEvalDev</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">A custom evaluator device (implemented as class <cite>MyEvalDev</cite> in the <cite>mymod</cite>
 module):</p>
-<blockquote>
-<div><p><cite>eval:&#64;mymod.MyEvalDev</cite></p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="nd">@mymod</span><span class="o">.</span><span class="n">MyEvalDev</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">A writable attribute foo (implemented as a writable property of the
 <cite>MyClass</cite> class from the <cite>mymod</cite> module):</p>
-<blockquote>
-<div><p><cite>eval:&#64;c=mymod.MyClass()/c.foo</cite></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="p">:</span><span class="nd">@c</span><span class="o">=</span><span class="n">mymod</span><span class="o">.</span><span class="n">MyClass</span><span class="p">()</span><span class="o">/</span><span class="n">c</span><span class="o">.</span><span class="n">foo</span>
+</pre></div>
+</div>
 <p>assuming that the <cite>mymod</cite> module defines <cite>MyClass</cite> as:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>class MyClass(object):</dt>
-<dd><p class="first">(...)
-get_foo(self):</p>
-<blockquote>
-<div><p>(...)</p>
-</div></blockquote>
-<dl class="docutils">
-<dt>set_foo(self, value):</dt>
-<dd><p class="first last">(...)</p>
-</dd>
-</dl>
-<p class="last">foo = property(get_foo, set_foo)
-(...)</p>
-</dd>
-</dl>
-</div></blockquote>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">get_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">set_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">foo</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_foo</span><span class="p">,</span> <span class="n">set_foo</span><span class="p">)</span>
+    <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
 </li>
 </ul>
 </div></blockquote>

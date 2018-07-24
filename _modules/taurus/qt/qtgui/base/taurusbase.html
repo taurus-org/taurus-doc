@@ -203,8 +203,7 @@
 <div class="viewcode-block" id="defaultFormatter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base.html#taurus.qt.qtgui.base.defaultFormatter">[docs]</a><span class="k">def</span> <span class="nf">defaultFormatter</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">basecomponent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Default formatter callable. Returns a format string based on dtype</span>
-<span class="sd">    and the mapping provided by </span>
-<span class="sd">    :attribute:`TaurusBaseComponent.defaultFormatDict`</span>
+<span class="sd">    and the mapping provided by :attr:`TaurusBaseComponent.defaultFormatDict`</span>
 
 <span class="sd">    :param dtype: (object) data type</span>
 <span class="sd">    :param basecomponent: widget whose display is to be formatted</span>
@@ -820,19 +819,20 @@
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TaurusBaseComponent.displayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a string representation of the given value</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a string representation of the given value</span>
 
 <span class="sd">        This method will use a format string which is determined </span>
-<span class="sd">        dynamically from :attribute:`FORMAT`.</span>
+<span class="sd">        dynamically from :attr:`FORMAT`.</span>
 
 <span class="sd">        By default `TaurusBaseComponent.FORMAT` is set to </span>
-<span class="sd">        :function:`defaultFormatter`, which makes use of </span>
-<span class="sd">        :attribute:`defaultFormatDict`. </span>
+<span class="sd">        :func:`defaultFormatter`, which makes use of</span>
+<span class="sd">        :attr:`defaultFormatDict`.</span>
 <span class="sd"> </span>
 <span class="sd">        In order to customize the formatting behaviour, one can</span>
-<span class="sd">        use :method:`setFormat` to alter the formatter of an specific instance</span>
-<span class="sd">        (recommended) or change :attribute:`defaultFormatDict` or</span>
-<span class="sd">        :attribute:`FORMAT` directly at class level.</span>
+<span class="sd">        use :meth:`setFormat` to alter the formatter of an specific instance</span>
+<span class="sd">        (recommended) or change :attr:`defaultFormatDict` or</span>
+<span class="sd">        :attr:`FORMAT` directly at class level.</span>
 <span class="sd">        </span>
 <span class="sd">        The formatter can be set to a python format string [1] or a callable</span>
 <span class="sd">        that returns a python format string.</span>
@@ -841,30 +841,33 @@
 <span class="sd">        - dtype: the data type of the value to be formatted</span>
 <span class="sd">        - basecomponent: the affected widget</span>
 <span class="sd">  </span>
-<span class="sd">        The following are some examples for customizing the formatting:</span>
+<span class="sd">        The following are some examples for customizing the formatting::</span>
 
-<span class="sd">        - Change the format for widget instance `foo`:</span>
+<span class="sd">        - Change the format for widget instance `foo`::</span>
 
 <span class="sd">            foo.setFormat(&quot;{:.2e}&quot;)</span>
 
-<span class="sd">        - Change FORMAT for all widgets (using a string):</span>
+<span class="sd">        - Change FORMAT for all widgets (using a string)::</span>
 
 <span class="sd">            TaurusBaseComponent.FORMAT = &quot;{:.2e}&quot;</span>
 <span class="sd">            </span>
-<span class="sd">        - Change FORMAT for all TaurusLabels (using a callable):</span>
+<span class="sd">        - Change FORMAT for all TaurusLabels (using a callable)::</span>
 <span class="sd">        </span>
 <span class="sd">            def baseFormatter(dtype=None, basecomponent=None, **kwargs):</span>
 <span class="sd">                return &quot;{:.1f}&quot;</span>
 
 <span class="sd">            TaurusLabel.FORMAT = baseFormatter</span>
 
-<span class="sd">        - Use the defaultFormatDict but modify the format string for dtype=str:</span>
+<span class="sd">        - Use the defaultFormatDict but modify the format string for</span>
+<span class="sd">          dtype=str::</span>
 
 <span class="sd">            TaurusLabel.defaultFormatDict.update({&quot;str&quot;: &quot;{!r}&quot;})</span>
 
-<span class="sd">        .. seealso:: :attribute:`tauruscustomsettings.DEFAULT_FORMATTER`,</span>
+
+<span class="sd">        .. seealso:: :attr:`tauruscustomsettings.DEFAULT_FORMATTER`,</span>
 <span class="sd">                     `--default-formatter` option in :class:`TaurusApplication`,</span>
 <span class="sd">                     :meth:`TaurusBaseWidget.onSetFormatter`</span>
+
 
 <span class="sd">        [1] https://docs.python.org/2/library/string.html</span>
 
@@ -910,7 +913,7 @@
 <div class="viewcode-block" id="TaurusBaseComponent.setFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.setFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Method to set the `FORMAT` attribute for this instance.</span>
 <span class="sd">        It also resets the internal format string, which will be recalculated</span>
-<span class="sd">        in the next call to :method:`displayValue`</span>
+<span class="sd">        in the next call to :meth:`displayValue`</span>
 
 <span class="sd">        :param format: (str or callable) A format string</span>
 <span class="sd">                       or a formatter callable (or the callable name in</span>
@@ -931,8 +934,8 @@
 <div class="viewcode-block" id="TaurusBaseComponent.getFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.getFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Method to get the `FORMAT` attribute for this instance.</span>
 
-<span class="sd">        :return: (str) a string of the current format.</span>
-<span class="sd">        It could be a python format string or a callable string representation.</span>
+<span class="sd">        :return: (str) a string of the current format. It could be a python</span>
+<span class="sd">                 format string or a callable string representation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
             <span class="n">formatter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span>
@@ -943,7 +946,7 @@
 
 <div class="viewcode-block" id="TaurusBaseComponent.resetFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.resetFormat">[docs]</a>    <span class="k">def</span> <span class="nf">resetFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reset the internal format string. It forces a recalculation</span>
-<span class="sd">        in the next call to :method:`displayValue`.</span>
+<span class="sd">        in the next call to :meth:`displayValue`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_format</span> <span class="o">=</span> <span class="kc">None</span></div>
 
@@ -1467,7 +1470,7 @@
 
 <span class="sd">        .. seealso:: :meth:`TaurusBaseWidget.showFormatterDlg`,</span>
 <span class="sd">                     :meth:`TaurusBaseComponent.displayValue`,</span>
-<span class="sd">                     :attribute:`tauruscustomsettings.DEFAULT_FORMATTER`</span>
+<span class="sd">                     :attr:`tauruscustomsettings.DEFAULT_FORMATTER`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">showFormatterDlg</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
