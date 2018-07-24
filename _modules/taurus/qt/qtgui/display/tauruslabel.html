@@ -507,7 +507,7 @@
 <span class="sd">        - &#39;none&#39; : no background</span>
 <span class="sd">        - &#39;state&#39; a color depending on the device state</span>
 <span class="sd">        - &#39;quality&#39; a color depending on the attribute quality</span>
-<span class="sd">        - &#39;value&#39; a color depending on the rvalue of the attribute</span>
+<span class="sd">        - &#39;rvalue&#39; a color depending on the rvalue of the attribute</span>
 <span class="sd">        - &lt;arbitrary member name&gt; a color based on the value of an arbitrary</span>
 <span class="sd">          member of the model object (warning: experimental feature!)</span>
 
@@ -518,12 +518,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">controllerUpdate</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.resetBgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.resetBgRole">[docs]</a>    <span class="k">def</span> <span class="nf">resetBgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset the background role to its default value&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setBgRole</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultBgRole</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.getFgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.getFgRole">[docs]</a>    <span class="k">def</span> <span class="nf">getFgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the foreground role for this label (see :meth:`setFgRole`)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fgRole</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.setFgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.setFgRole">[docs]</a>    <span class="k">def</span> <span class="nf">setFgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fgRole</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set what is shown as the foreground (the text) of the label</span>
+<span class="sd">        Valid Roles are:</span>
+
+<span class="sd">        - &#39;rvalue&#39; the read value of the attribute</span>
+<span class="sd">        - &#39;wvalue&#39; the write value of the attribute</span>
+<span class="sd">        - &#39;none&#39; : no text</span>
+<span class="sd">        - &#39;quality&#39; - the quality of the attribute is displayed</span>
+<span class="sd">        - &#39;state&#39; - the device state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># warn about deprecated roles</span>
         <span class="n">role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deprecatedRoles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fgRole</span><span class="p">,</span> <span class="n">fgRole</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fgRole</span> <span class="o">!=</span> <span class="n">role</span><span class="p">:</span>
@@ -533,6 +544,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">controllerUpdate</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.resetFgRole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.resetFgRole">[docs]</a>    <span class="k">def</span> <span class="nf">resetFgRole</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset the foreground role to its default value&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setFgRole</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultFgRole</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.getPrefixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.getPrefixText">[docs]</a>    <span class="k">def</span> <span class="nf">getPrefixText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -572,6 +584,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_setPermanentText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.setAutoTrim"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.setAutoTrim">[docs]</a>    <span class="k">def</span> <span class="nf">setAutoTrim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trim</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Enable/disable auto-trimming of the text. If trim is True, the text</span>
+<span class="sd">        in the label will be trimmed when it doesn&#39;t fit in the available space</span>
+
+<span class="sd">        :param trim: (bool)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_autoTrim</span> <span class="o">=</span> <span class="n">trim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">controllerUpdate</span><span class="p">()</span></div>
 
@@ -591,9 +608,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dynamicTextInteractionFlags</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.getAutoTrim"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.getAutoTrim">[docs]</a>    <span class="k">def</span> <span class="nf">getAutoTrim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether auto-trimming of the text is enabled.</span>
+
+<span class="sd">        :return: (bool)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_autoTrim</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.resetAutoTrim"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.resetAutoTrim">[docs]</a>    <span class="k">def</span> <span class="nf">resetAutoTrim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset auto-trimming to its default value&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAutoTrim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultAutoTrim</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusLabel.displayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusLabel.html#taurus.qt.qtgui.compact.TaurusLabel.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
@@ -689,8 +712,8 @@
     <span class="c1">#: Valid values are:</span>
     <span class="c1">#:</span>
     <span class="c1">#:     #. &#39;&#39;/&#39;None&#39; - no value is displayed</span>
-    <span class="c1">#:     #. &#39;value&#39; - the value is displayed</span>
-    <span class="c1">#:     #. &#39;w_value&#39; - the write value is displayed</span>
+    <span class="c1">#:     #. &#39;rvalue&#39; - the value is displayed</span>
+    <span class="c1">#:     #. &#39;wvalue&#39; - the write value is displayed</span>
     <span class="c1">#:     #. &#39;quality&#39; - the quality is displayed</span>
     <span class="c1">#:     #. &#39;state&#39; - the device state is displayed</span>
     <span class="c1">#:</span>
@@ -713,7 +736,8 @@
     <span class="n">bgRole</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getBgRole</span><span class="p">,</span> <span class="n">setBgRole</span><span class="p">,</span>
                              <span class="n">resetBgRole</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;background role&quot;</span><span class="p">)</span>
 
-    <span class="c1">#: This property holds the</span>
+    <span class="c1">#: Specifies wether the text will be trimmed when it doesn&#39;t fit in the</span>
+    <span class="c1">#: available space</span>
     <span class="c1">#:</span>
     <span class="c1">#: **Access functions:**</span>
     <span class="c1">#:</span>
@@ -723,7 +747,7 @@
     <span class="n">autoTrim</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getAutoTrim</span><span class="p">,</span> <span class="n">setAutoTrim</span><span class="p">,</span>
                                <span class="n">resetAutoTrim</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;auto trim text&quot;</span><span class="p">)</span>
 
-    <span class="c1">#: This property holds the</span>
+    <span class="c1">#: Specifies whether the user can drag data from this widget</span>
     <span class="c1">#:</span>
     <span class="c1">#: **Access functions:**</span>
     <span class="c1">#:</span>
