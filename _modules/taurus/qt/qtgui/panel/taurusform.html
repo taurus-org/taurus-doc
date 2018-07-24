@@ -519,6 +519,16 @@
                     <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">format</span></div>
 
+<div class="viewcode-block" id="TaurusForm.setFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm.setFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reimplemented to call setFormat on the taurusvalues</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItems</span><span class="p">():</span>
+            <span class="n">rw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">readWidget</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
+                <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TaurusForm.setCompact"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm.setCompact">[docs]</a>    <span class="k">def</span> <span class="nf">setCompact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compact</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compact</span> <span class="o">=</span> <span class="n">compact</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItems</span><span class="p">():</span>
@@ -611,6 +621,11 @@
                 <span class="n">widget</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">())</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot set format </span><span class="si">%s</span><span class="s1"> to child </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">(),</span> <span class="n">model</span><span class="p">)</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;__item</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>

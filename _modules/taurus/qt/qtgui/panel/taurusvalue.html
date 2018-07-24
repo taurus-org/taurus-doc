@@ -169,7 +169,8 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusValue&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusValuesFrame&quot;</span><span class="p">,</span> <span class="s2">&quot;DefaultTaurusValueCheckBox&quot;</span><span class="p">,</span>
            <span class="s2">&quot;DefaultUnitsWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusPlotButton&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusArrayEditorButton&quot;</span><span class="p">,</span>
            <span class="s2">&quot;TaurusValuesTableButton&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusValuesTableButton_W&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;DefaultLabelWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevButton&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusImageButton&quot;</span><span class="p">]</span>
+           <span class="s2">&quot;DefaultLabelWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;DefaultReadWidgetLabel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevButton&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusImageButton&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
@@ -323,10 +324,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">DefaultReadWidgetLabel</span><span class="p">(</span><span class="n">ExpandingLabel</span><span class="p">):</span>
+<div class="viewcode-block" id="DefaultReadWidgetLabel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_DefaultReadWidgetLabel.html#taurus.qt.qtgui.panel.DefaultReadWidgetLabel">[docs]</a><span class="k">class</span> <span class="nc">DefaultReadWidgetLabel</span><span class="p">(</span><span class="n">ExpandingLabel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A customised label for the read widget&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<div class="viewcode-block" id="DefaultReadWidgetLabel.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_DefaultReadWidgetLabel.html#taurus.qt.qtgui.panel.DefaultReadWidgetLabel.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
         <span class="n">TaurusLabel</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
         <span class="n">fgrole</span> <span class="o">=</span> <span class="s1">&#39;rvalue&#39;</span>
         <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
@@ -334,7 +335,7 @@
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">):</span>
             <span class="n">fgrole</span> <span class="o">+=</span> <span class="s1">&#39;.magnitude&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setFgRole</span><span class="p">(</span><span class="n">fgrole</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFgRole</span><span class="p">(</span><span class="n">fgrole</span><span class="p">)</span></div></div>
 
 
 <span class="k">class</span> <span class="nc">CenteredLed</span><span class="p">(</span><span class="n">TaurusLed</span><span class="p">):</span>
@@ -343,6 +344,8 @@
 
 
 <div class="viewcode-block" id="DefaultUnitsWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_DefaultUnitsWidget.html#taurus.qt.qtgui.panel.DefaultUnitsWidget">[docs]</a><span class="k">class</span> <span class="nc">DefaultUnitsWidget</span><span class="p">(</span><span class="n">TaurusLabel</span><span class="p">):</span>
+
+    <span class="n">FORMAT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">TaurusLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
@@ -580,6 +583,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="p">,</span> <span class="s1">&#39;onSetFormatter&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValue.setFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reimplemented to call setFormat of the read widget (if provided)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_readWidget&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValue.getAllowWrite"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.getAllowWrite">[docs]</a>    <span class="k">def</span> <span class="nf">getAllowWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowWrite</span></div>
