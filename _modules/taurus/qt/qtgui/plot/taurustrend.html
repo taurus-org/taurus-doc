@@ -1298,6 +1298,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># For it to work properly, &#39;names&#39; must be a CaselessList, just as</span>
             <span class="c1"># self.trendSets is a CaselessDict</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">CaselessList</span><span class="p">):</span>
+                <span class="n">names</span> <span class="o">=</span> <span class="n">CaselessList</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
             <span class="n">del_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
                         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
 
