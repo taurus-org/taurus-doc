@@ -244,14 +244,11 @@
 <dl class="method">
 <dt id="taurus.core.TaurusModel.getFragmentObj">
 <code class="descname">getFragmentObj</code><span class="sig-paren">(</span><em>fragmentName=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmodel.html#TaurusModel.getFragmentObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusModel.getFragmentObj" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a fragment object of the model. A fragment of a model is a
-python attribute of the model object.</p>
-<p>Fragment names including dots will be used to recursively get fragments
-of fragments.</p>
+<dd><p>Returns a fragment object of the model. A fragment is computed from
+a model by evaluating the expression <cite>&lt;model&gt;.&lt;fragmentName&gt;</cite></p>
 <p>For a simple fragmentName (no dots), this is roughly equivalent to
 getattr(self, fragmentName)</p>
-<p>If the model does not have the fragment, <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#AttributeError" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">AttributeError</span></code></a> is
-raised</p>
+<p>If the fragment cannot be computed, <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#AttributeError" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">AttributeError</span></code></a> is raised</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -262,7 +259,7 @@ defaultFragmentName will be used instead.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">obj</span></code></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the member of the modelObj referred by the fragment.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the computed fragment of the modelObj.</td>
 </tr>
 </tbody>
 </table>
