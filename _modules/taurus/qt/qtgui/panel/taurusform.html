@@ -182,6 +182,17 @@
 <span class="kn">from</span> <span class="nn">taurusmodelchooser</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
 
 
+<span class="k">def</span> <span class="nf">_normalize_model_name_case</span><span class="p">(</span><span class="n">modelname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accepts a model name and returns it in lower case if the models is</span>
+<span class="sd">    case insensitive. Otherwise it returns the same model name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">getSchemeFromName</span><span class="p">(</span><span class="n">modelname</span><span class="p">))</span><span class="o">.</span><span class="n">caseSensitive</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">modelname</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">modelname</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+
 <span class="k">class</span> <span class="nc">ParameterCB</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A custom combobox&#39;&#39;&#39;</span>
 
@@ -352,11 +363,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__modelChooserDlg</span><span class="o">.</span><span class="n">modelChooser</span><span class="o">.</span><span class="n">updateModels</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">)</span>
 
         <span class="n">models_and_labels</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModel</span><span class="p">()]</span>
         <span class="n">indexdict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
-            <span class="n">indexdict</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItemByModel</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">indexdict</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModel</span><span class="p">():</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">_normalize_model_name_case</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+            <span class="n">indexdict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItemByModel</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">indexdict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">else</span><span class="p">:</span>
@@ -641,7 +652,8 @@
 <span class="sd">        with the same model, the index parameter can be used to distinguish among them</span>
 <span class="sd">        Please note that his index is only relative to same-model items!&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">model</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">_normalize_model_name_case</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">getModel</span><span class="p">())</span> <span class="o">==</span>
+                    <span class="n">_normalize_model_name_case</span><span class="p">(</span><span class="n">model</span><span class="p">)):</span>
                 <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">child</span>
                 <span class="k">else</span><span class="p">:</span>
