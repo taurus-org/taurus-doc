@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.taurusgui.appsettingswizard &mdash; taurus 4.3.0 documentation</title>
+  <title>taurus.qt.qtgui.taurusgui.appsettingswizard &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -90,7 +90,8 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.3 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -187,6 +188,7 @@
 <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.panel</span>
 <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.taurusgui.paneldescriptionwizard</span>
 <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.input</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="n">TangoDeviceNameValidator</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ExternalAppAction</span>
 
@@ -855,13 +857,18 @@
 
     <span class="k">def</span> <span class="nf">_getMacroServerName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macroGroupBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">macroServerComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">()):</span>
-            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">macroServerComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+            <span class="n">ms_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">macroServerComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+            <span class="n">complete_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">TangoDeviceNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">ms_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">complete_name</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">_getDoorName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macroGroupBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">macroServerComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">()):</span>
-            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">doorComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+            <span class="n">door_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">doorComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+            <span class="n">complete_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">TangoDeviceNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span>
+                <span class="n">door_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">complete_name</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
@@ -1849,7 +1856,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

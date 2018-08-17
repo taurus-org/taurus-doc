@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TaurusModel &mdash; taurus 4.3.0 documentation</title>
+  <title>TaurusModel &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="taurus.core" href="../core.html"/>
         <link rel="next" title="TaurusModelValue" href="_TaurusModelValue.html"/>
         <link rel="prev" title="TaurusManager" href="_TaurusManager.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.3 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -146,7 +147,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../../../docs.html">Taurus 4.3 documentation</a> &raquo;</li>
+          <li><a href="../../../../docs.html">Taurus 4.4 documentation</a> &raquo;</li>
       
           <li><a href="../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -243,14 +244,11 @@
 <dl class="method">
 <dt id="taurus.core.TaurusModel.getFragmentObj">
 <code class="descname">getFragmentObj</code><span class="sig-paren">(</span><em>fragmentName=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmodel.html#TaurusModel.getFragmentObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusModel.getFragmentObj" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a fragment object of the model. A fragment of a model is a
-python attribute of the model object.</p>
-<p>Fragment names including dots will be used to recursively get fragments
-of fragments.</p>
+<dd><p>Returns a fragment object of the model. A fragment is computed from
+a model by evaluating the expression <cite>&lt;model&gt;.&lt;fragmentName&gt;</cite></p>
 <p>For a simple fragmentName (no dots), this is roughly equivalent to
 getattr(self, fragmentName)</p>
-<p>If the model does not have the fragment, <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#AttributeError" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">AttributeError</span></code></a> is
-raised</p>
+<p>If the fragment cannot be computed, <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#AttributeError" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">AttributeError</span></code></a> is raised</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -261,7 +259,7 @@ defaultFragmentName will be used instead.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">obj</span></code></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the member of the modelObj referred by the fragment.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the computed fragment of the modelObj.</td>
 </tr>
 </tbody>
 </table>
@@ -409,7 +407,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

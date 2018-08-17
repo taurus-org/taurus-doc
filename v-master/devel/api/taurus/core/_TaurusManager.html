@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TaurusManager &mdash; taurus 4.3.0 documentation</title>
+  <title>TaurusManager &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="taurus.core" href="../core.html"/>
         <link rel="next" title="TaurusModel" href="_TaurusModel.html"/>
         <link rel="prev" title="TaurusLockInfo" href="_TaurusLockInfo.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.3 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -146,7 +147,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../../../docs.html">Taurus 4.3 documentation</a> &raquo;</li>
+          <li><a href="../../../../docs.html">Taurus 4.4 documentation</a> &raquo;</li>
       
           <li><a href="../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -201,22 +202,7 @@
 <dl class="method">
 <dt id="taurus.core.TaurusManager.addJob">
 <code class="descname">addJob</code><span class="sig-paren">(</span><em>job</em>, <em>callback=None</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.addJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.addJob" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a new job (callable) to the queue. The new job will be processed
-by a separate thread</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>job</strong> (<code class="xref py py-class docutils literal"><span class="pre">callable</span></code>) &#8211; a callable object</li>
-<li><strong>callback</strong> (<code class="xref py py-class docutils literal"><span class="pre">callable</span></code>) &#8211; called after the job has been processed</li>
-<li><strong>args</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a>) &#8211; list of arguments passed to the job</li>
-<li><strong>kw</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) &#8211; keyword arguments passed to the job</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Deprecated. Wrapper of enqueueJob. See enqueueJob documentation.</p>
 </dd></dl>
 
 <dl class="method">
@@ -264,6 +250,24 @@ by a separate thread</p>
 <dt id="taurus.core.TaurusManager.default_scheme">
 <code class="descname">default_scheme</code><em class="property"> = 'tango'</em><a class="headerlink" href="#taurus.core.TaurusManager.default_scheme" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.TaurusManager.enqueueJob">
+<code class="descname">enqueueJob</code><span class="sig-paren">(</span><em>job</em>, <em>callback=None</em>, <em>job_args=()</em>, <em>job_kwargs=None</em>, <em>serialization_mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusmanager.html#TaurusManager.enqueueJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusManager.enqueueJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enqueue a job (callable) to the queue. The new job will be
+processed by a separate thread
+:type job: <code class="xref py py-class docutils literal"><span class="pre">callable</span></code>
+:param job:  a callable object
+:type callback: <code class="xref py py-class docutils literal"><span class="pre">callable</span></code>
+:param callback:  called after the job has been processed
+:type job_args: <code class="xref py py-class docutils literal"><span class="pre">sequence</span></code>
+:param job_args:  positional arguments passed to the job
+:type job_kwargs: <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>
+:param job_kwargs:  keyword arguments passed to the job
+:type serialization_mode: <code class="xref py py-class docutils literal"><span class="pre">TaurusSerializationMode</span></code>
+:param serialization_mode:  serialization
+mode</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="taurus.core.TaurusManager.findObject">
@@ -600,7 +604,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

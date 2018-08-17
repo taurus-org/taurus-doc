@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TaurusValueLineEdit &mdash; taurus 4.3.0 documentation</title>
+  <title>TaurusValueLineEdit &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../../index.html"/>
         <link rel="up" title="taurus.qt.qtgui.input" href="../input.html"/>
         <link rel="next" title="TaurusValueSpinBox" href="_TaurusValueSpinBox.html"/>
         <link rel="prev" title="TaurusValueComboBox" href="_TaurusValueComboBox.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.3 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.4 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -146,7 +147,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../../../../../docs.html">Taurus 4.3 documentation</a> &raquo;</li>
+          <li><a href="../../../../../../docs.html">Taurus 4.4 documentation</a> &raquo;</li>
       
           <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -174,12 +175,13 @@
             
   <div class="section" id="taurusvaluelineedit">
 <h1><a class="reference internal" href="#taurus.qt.qtgui.input.TaurusValueLineEdit" title="taurus.qt.qtgui.input.TaurusValueLineEdit"><code class="xref py py-class docutils literal"><span class="pre">TaurusValueLineEdit</span></code></a><a class="headerlink" href="#taurusvaluelineedit" title="Permalink to this headline">¶</a></h1>
-<img src="../../../../../../_images/inheritance-e8fc7b3bce3e68d0bbb99ea3dbbfdd68fb2809c9.png" alt="Inheritance diagram of TaurusValueLineEdit" usemap="#inheritancef2eda76eff" class="inheritance"/>
+<img src="../../../../../../_images/inheritance-dac169fabaf20bdbc82c9488f5e2a85638c9573c.png" alt="Inheritance diagram of TaurusValueLineEdit" usemap="#inheritancef2eda76eff" class="inheritance"/>
 <map id="inheritancef2eda76eff" name="inheritancef2eda76eff">
 <area shape="rect" id="node1" title="A base class defining the API for configurable objects." alt="" coords="5,197,173,245"/>
 <area shape="rect" id="node10" title="A generic Taurus component." alt="" coords="115,293,285,341"/>
 <area shape="rect" id="node2" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="219,101,291,149"/>
 <area shape="rect" id="node11" title="TaurusListener Interface" alt="" coords="197,197,312,245"/>
+<area shape="rect" id="node14" title="A taurus&#45;aware ``QLineEdit``. It will display the value (or fragment" alt="" coords="207,581,355,629"/>
 <area shape="rect" id="node12" title="The base class for all Qt Taurus widgets." alt="" coords="131,389,269,437"/>
 <area shape="rect" id="node13" title="The base class for all taurus input widgets" alt="" coords="107,485,295,533"/>
 </map>
@@ -187,6 +189,27 @@
 <dt id="taurus.qt.qtgui.input.TaurusValueLineEdit">
 <em class="property">class </em><code class="descname">TaurusValueLineEdit</code><span class="sig-paren">(</span><em>qt_parent=None</em>, <em>designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/input/tauruslineedit.html#TaurusValueLineEdit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.input.TaurusValueLineEdit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QLineEdit</span></code>, <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.base.taurusbase.TaurusBaseWritableWidget</span></code></p>
+<p>A taurus-aware <code class="docutils literal"><span class="pre">QLineEdit</span></code>. It will display the value (or fragment
+of the value) referenced by its model. It is a
+<a class="reference internal" href="../base/_TaurusBaseWritableWidget.html#taurus.qt.qtgui.base.TaurusBaseWritableWidget" title="taurus.qt.qtgui.base.TaurusBaseWritableWidget"><code class="xref py py-class docutils literal"><span class="pre">TaurusBaseWritableWidget</span></code></a>
+and as such it does not apply the changes straight away to the model
+(unless <code class="docutils literal"><span class="pre">autoApply</span></code> is enabled), but instead shows that there are pending
+operations which can be applied by pressing &#8220;ENTER&#8221;.</p>
+<p>When used with numerical value Attributes as its model, it provides some
+extended behaviour:</p>
+<ul class="simple">
+<li>It represents out-of-limit values using different colours (for warning,
+range, invalid,...)</li>
+<li>It uses a validator that is range-aware</li>
+<li>The mouse wheel and keyboard arrows can be enabled for doing value
+increments</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">when used with models whose value is a pint <cite>Quantity</cite>, the text
+is parsed by pint and therefore one can write e.g. <cite>2 3 mm</cite> which is
+equivalent to <cite>6 mm</cite> !</p>
+</div>
 <dl class="attribute">
 <dt id="taurus.qt.qtgui.input.TaurusValueLineEdit.autoApply">
 <code class="descname">autoApply</code><a class="headerlink" href="#taurus.qt.qtgui.input.TaurusValueLineEdit.autoApply" title="Permalink to this definition">¶</a></dt>
@@ -232,6 +255,11 @@
 <dl class="classmethod">
 <dt id="taurus.qt.qtgui.input.TaurusValueLineEdit.getQtDesignerPluginInfo">
 <em class="property">classmethod </em><code class="descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/input/tauruslineedit.html#TaurusValueLineEdit.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.input.TaurusValueLineEdit.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.input.TaurusValueLineEdit.getSingleStep">
+<code class="descname">getSingleStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/input/tauruslineedit.html#TaurusValueLineEdit.getSingleStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.input.TaurusValueLineEdit.getSingleStep" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -295,8 +323,18 @@ text is not Acceptable. Returns True otherwise.</td>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="taurus.qt.qtgui.input.TaurusValueLineEdit.resetSingleStep">
+<code class="descname">resetSingleStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/input/tauruslineedit.html#TaurusValueLineEdit.resetSingleStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.input.TaurusValueLineEdit.resetSingleStep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="taurus.qt.qtgui.input.TaurusValueLineEdit.setEnableWheelEvent">
 <code class="descname">setEnableWheelEvent</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/input/tauruslineedit.html#TaurusValueLineEdit.setEnableWheelEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.input.TaurusValueLineEdit.setEnableWheelEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.input.TaurusValueLineEdit.setSingleStep">
+<code class="descname">setSingleStep</code><span class="sig-paren">(</span><em>step</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/input/tauruslineedit.html#TaurusValueLineEdit.setSingleStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.input.TaurusValueLineEdit.setSingleStep" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -379,7 +417,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

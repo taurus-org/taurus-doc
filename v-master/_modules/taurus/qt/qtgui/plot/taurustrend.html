@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.plot.taurustrend &mdash; taurus 4.3.0 documentation</title>
+  <title>taurus.qt.qtgui.plot.taurustrend &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -90,7 +90,8 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.3 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -1117,7 +1118,9 @@
         <span class="n">TaurusPlot</span><span class="o">.</span><span class="n">showEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isTimerNeeded</span><span class="p">(</span><span class="n">checkMinimized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;(re)starting the timer (in showEvent)&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_replotTimer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_replotTimer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="c1"># call a replot now (since it may not have been done while hidden)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">doReplot</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusTrend.hideEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusTrend.html#taurus.qt.qtgui.plot.TaurusTrend.hideEvent">[docs]</a>    <span class="k">def</span> <span class="nf">hideEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :meth:`TaurusPlot.showEvent` so that</span>
@@ -1295,6 +1298,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># For it to work properly, &#39;names&#39; must be a CaselessList, just as</span>
             <span class="c1"># self.trendSets is a CaselessDict</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">CaselessList</span><span class="p">):</span>
+                <span class="n">names</span> <span class="o">=</span> <span class="n">CaselessList</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
             <span class="n">del_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
                         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
 
@@ -2131,7 +2136,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

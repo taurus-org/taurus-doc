@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.tango.tangofactory &mdash; taurus 4.3.0 documentation</title>
+  <title>taurus.core.tango.tangofactory &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -90,7 +90,8 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.3 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -177,7 +178,9 @@
     <span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="k">raise</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span>
+                                         <span class="n">TaurusSerializationMode</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">OperationMode</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span><span class="p">,</span> <span class="n">DoubleRegistration</span>
@@ -242,7 +245,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusFactory</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reInit</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;TANGO_SERIALIZATION_MODE&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Serial&#39;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TangoFactory.reInit"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.reInit">[docs]</a>    <span class="k">def</span> <span class="nf">reInit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reinitialize the singleton&quot;&quot;&quot;</span>
@@ -301,13 +307,16 @@
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TangoFactory.set_default_tango_host"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.set_default_tango_host">[docs]</a>    <span class="k">def</span> <span class="nf">set_default_tango_host</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tango_host</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Sets the new default tango host. The method will transform the given</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the new default tango host. The method will transform the given</span>
 <span class="sd">        name to an Authority URI.</span>
 <span class="sd">        </span>
 <span class="sd">        .. note:: Calling this method also clears the device alias cache.</span>
 
 <span class="sd">        :param tango_host: (str) the new tango host. It accepts any valid Tango</span>
-<span class="sd">        authority name or None to use the defined by $TANGO_HOST env. var.</span>
+<span class="sd">                                 authority name or None to use the defined by</span>
+<span class="sd">                                 $TANGO_HOST env. var.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Translate to Authority URI</span>
         <span class="k">if</span> <span class="n">tango_host</span> <span class="ow">and</span> <span class="s2">&quot;//&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tango_host</span><span class="p">:</span>
@@ -432,7 +441,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not create Authority </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;authority&#39;</span><span class="p">],</span>
                            <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span>
+            <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TangoFactory.getDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">,</span> <span class="n">create_if_needed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
@@ -769,7 +779,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

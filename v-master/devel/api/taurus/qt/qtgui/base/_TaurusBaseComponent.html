@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TaurusBaseComponent &mdash; taurus 4.3.0 documentation</title>
+  <title>TaurusBaseComponent &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../../index.html"/>
         <link rel="up" title="taurus.qt.qtgui.base" href="../base.html"/>
         <link rel="next" title="TaurusBaseController" href="_TaurusBaseController.html"/>
         <link rel="prev" title="TaurusAttributeControllerHelper" href="_TaurusAttributeControllerHelper.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.3 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.4 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -116,6 +116,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -146,7 +147,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../../../../../docs.html">Taurus 4.3 documentation</a> &raquo;</li>
+          <li><a href="../../../../../../docs.html">Taurus 4.4 documentation</a> &raquo;</li>
       
           <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -235,7 +236,7 @@ If None is given (default) the component fetches the pending operations</td>
 
 <dl class="attribute">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict">
-<code class="descname">defaultFormatDict</code><em class="property"> = {&lt;enum 'Enum'&gt;: '{0.name}', &lt;type 'float'&gt;: '{:.{bc.modelObj.precision}f}', &lt;class 'taurus.external.pint.pint_local.quantity.Quantity'&gt;: '{:~.{bc.modelObj.precision}f}'}</em><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">defaultFormatDict</code><em class="property"> = {&lt;type 'float'&gt;: '{:.{bc.modelObj.precision}f}', &lt;class 'pint.quantity.Quantity'&gt;: '{:~.{bc.modelObj.precision}f}', &lt;enum 'Enum'&gt;: '{0.name}'}</em><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -250,14 +251,14 @@ this object stops listening its model.</p>
 <code class="descname">displayValue</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.displayValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a string representation of the given value</p>
 <p>This method will use a format string which is determined 
-dynamically from <a href="#id1"><span class="problematic" id="id2">:attribute:`FORMAT`</span></a>.</p>
+dynamically from <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT" title="taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT"><code class="xref py py-attr docutils literal"><span class="pre">FORMAT</span></code></a>.</p>
 <p>By default <cite>TaurusBaseComponent.FORMAT</cite> is set to 
-<a href="#id3"><span class="problematic" id="id4">:function:`defaultFormatter`</span></a>, which makes use of 
-<a href="#id5"><span class="problematic" id="id6">:attribute:`defaultFormatDict`</span></a>.</p>
+<a class="reference internal" href="../base.html#taurus.qt.qtgui.base.defaultFormatter" title="taurus.qt.qtgui.base.defaultFormatter"><code class="xref py py-func docutils literal"><span class="pre">defaultFormatter()</span></code></a>, which makes use of
+<a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict" title="taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict"><code class="xref py py-attr docutils literal"><span class="pre">defaultFormatDict</span></code></a>.</p>
 <p>In order to customize the formatting behaviour, one can
-use <a href="#id7"><span class="problematic" id="id8">:method:`setFormat`</span></a> to alter the formatter of an specific instance
-(recommended) or change <a href="#id9"><span class="problematic" id="id10">:attribute:`defaultFormatDict`</span></a> or
-<a href="#id11"><span class="problematic" id="id12">:attribute:`FORMAT`</span></a> directly at class level.</p>
+use <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setFormat" title="taurus.qt.qtgui.base.TaurusBaseComponent.setFormat"><code class="xref py py-meth docutils literal"><span class="pre">setFormat()</span></code></a> to alter the formatter of an specific instance
+(recommended) or change <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict" title="taurus.qt.qtgui.base.TaurusBaseComponent.defaultFormatDict"><code class="xref py py-attr docutils literal"><span class="pre">defaultFormatDict</span></code></a> or
+<a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT" title="taurus.qt.qtgui.base.TaurusBaseComponent.FORMAT"><code class="xref py py-attr docutils literal"><span class="pre">FORMAT</span></code></a> directly at class level.</p>
 <p>The formatter can be set to a python format string [1] or a callable
 that returns a python format string.
 If a callable is used, it will be called with the following 
@@ -265,36 +266,35 @@ keyword arguments:
 - dtype: the data type of the value to be formatted
 - basecomponent: the affected widget</p>
 <p>The following are some examples for customizing the formatting:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>- Change the format for widget instance `foo`::
+</pre></div>
+</div>
+<blockquote>
+<div>foo.setFormat(&#8220;{:.2e}&#8221;)</div></blockquote>
 <ul>
-<li><p class="first">Change the format for widget instance <cite>foo</cite>:</p>
-<blockquote>
-<div><p>foo.setFormat(&#8220;{:.2e}&#8221;)</p>
-</div></blockquote>
-</li>
 <li><p class="first">Change FORMAT for all widgets (using a string):</p>
-<blockquote>
-<div><p>TaurusBaseComponent.FORMAT = &#8220;{:.2e}&#8221;</p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">TaurusBaseComponent</span><span class="o">.</span><span class="n">FORMAT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.2e}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">Change FORMAT for all TaurusLabels (using a callable):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>def baseFormatter(dtype=None, basecomponent=None, <a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs):</dt>
-<dd><p class="first last">return &#8220;{:.1f}&#8221;</p>
-</dd>
-</dl>
-<p>TaurusLabel.FORMAT = baseFormatter</p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">baseFormatter</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">basecomponent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:.1f}</span><span class="s2">&quot;</span>
+
+<span class="n">TaurusLabel</span><span class="o">.</span><span class="n">FORMAT</span> <span class="o">=</span> <span class="n">baseFormatter</span>
+</pre></div>
+</div>
 </li>
-<li><p class="first">Use the defaultFormatDict but modify the format string for dtype=str:</p>
-<blockquote>
-<div><p>TaurusLabel.defaultFormatDict.update({&#8220;str&#8221;: &#8220;{!r}&#8221;})</p>
-</div></blockquote>
+<li><p class="first">Use the defaultFormatDict but modify the format string for
+dtype=str:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">TaurusLabel</span><span class="o">.</span><span class="n">defaultFormatDict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;str&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
 </li>
 </ul>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a href="#id15"><span class="problematic" id="id16">:attribute:`tauruscustomsettings.DEFAULT_FORMATTER`</span></a>,
+<p class="last"><code class="xref py py-attr docutils literal"><span class="pre">tauruscustomsettings.DEFAULT_FORMATTER</span></code>,
 <cite>&#8211;default-formatter</cite> option in <code class="xref py py-class docutils literal"><span class="pre">TaurusApplication</span></code>,
 <a class="reference internal" href="_TaurusBaseWidget.html#taurus.qt.qtgui.base.TaurusBaseWidget.onSetFormatter" title="taurus.qt.qtgui.base.TaurusBaseWidget.onSetFormatter"><code class="xref py py-meth docutils literal"><span class="pre">TaurusBaseWidget.onSetFormatter()</span></code></a></p>
 </div>
@@ -529,11 +529,11 @@ Qt thread (default)</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string of the current format.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string of the current format. It could be a python
+format string or a callable string representation.</td>
 </tr>
 </tbody>
 </table>
-<p>It could be a python format string or a callable string representation.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1158,7 +1158,7 @@ for this component will be considered safe.</p>
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetFormat">
 <code class="descname">resetFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset the internal format string. It forces a recalculation
-in the next call to <a href="#id17"><span class="problematic" id="id18">:method:`displayValue`</span></a>.</p>
+in the next call to <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue" title="taurus.qt.qtgui.base.TaurusBaseComponent.displayValue"><code class="xref py py-meth docutils literal"><span class="pre">displayValue()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1310,7 +1310,7 @@ value to be filtered as well. This can be done as in this example:</p>
 <code class="descname">setFormat</code><span class="sig-paren">(</span><em>format</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to set the <cite>FORMAT</cite> attribute for this instance.
 It also resets the internal format string, which will be recalculated
-in the next call to <a href="#id19"><span class="problematic" id="id20">:method:`displayValue`</span></a></p>
+in the next call to <a class="reference internal" href="#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue" title="taurus.qt.qtgui.base.TaurusBaseComponent.displayValue"><code class="xref py py-meth docutils literal"><span class="pre">displayValue()</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1581,7 +1581,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

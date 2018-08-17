@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.tango.tangoattribute &mdash; taurus 4.3.0 documentation</title>
+  <title>taurus.core.tango.tangoattribute &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -90,7 +90,8 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.3 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -177,7 +178,8 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
 
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Manager</span>
-<span class="kn">from</span> <span class="nn">taurus.external.pint</span> <span class="k">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span><span class="p">,</span> <span class="n">UndefinedUnitError</span>
+<span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span>
+<span class="kn">from</span> <span class="nn">pint</span> <span class="k">import</span> <span class="n">UndefinedUnitError</span>
 
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
@@ -221,8 +223,12 @@
             <span class="n">attr</span> <span class="o">=</span> <span class="n">config</span>
         <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attrType</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attrName</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__attrType</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">type</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span>  <span class="c1"># bck-compat</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_pytango_dev_attr</span> <span class="o">=</span> <span class="n">p</span> <span class="o">=</span> <span class="n">pytango_dev_attr</span>
@@ -272,12 +278,20 @@
 
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Use the attr reference if the attr is still valid</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ReferenceError</span><span class="p">:</span>
+                <span class="c1"># re-create the attribute in case it was no longer referenced</span>
+                <span class="c1"># (this may happen in some rare cases in which the value is</span>
+                <span class="c1"># still used but the attr is no longer referenced elsewhere)</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">TangoAttribute</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__attrName</span><span class="p">)</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">ret</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pytango_dev_attr</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> has no attribute </span><span class="si">%s</span><span class="s1">&#39;</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; object has no attribute </span><span class="si">%s</span><span class="s2">&quot;</span>
                                      <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
         <span class="c1"># return the attr but only after warning</span>
         <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecated</span>
@@ -351,10 +365,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span>
 
     <span class="k">def</span> <span class="nf">__fix_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;cast value to int if  it is an integer.</span>
+        <span class="sd">&quot;&quot;&quot;cast value to int if it is an integer.</span>
 <span class="sd">        Works on scalar and non-scalar values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attrType</span> <span class="o">!=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">value</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -449,8 +463,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pytango_attrinfoex</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;TangoAttribute does not have the attribute </span><span class="si">%s</span><span class="s1">&#39;</span>
-                            <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;TangoAttribute&#39; object has no attribute </span><span class="si">%s</span><span class="s2">&quot;</span>
+                                 <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TangoAttribute.getNewOperation"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.getNewOperation">[docs]</a>    <span class="k">def</span> <span class="nf">getNewOperation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">attr_value</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttributeValue</span><span class="p">()</span>
@@ -717,12 +731,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeEvents</span><span class="p">()</span>
 
         <span class="c1"># if initial_subscription_state == SubscriptionState.Subscribed:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">listeners</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="p">(</span><span class="n">initial_subscription_state</span> <span class="o">==</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Subscribed</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingActive</span><span class="p">()):</span>
-            <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Concurrent</span><span class="p">:</span>
-                <span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">addJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fireRegisterEvent</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">listener</span><span class="p">,))</span>
-            <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">listeners</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="n">initial_subscription_state</span> <span class="o">==</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Subscribed</span> 
+                 <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingActive</span><span class="p">())</span>
+           <span class="p">):</span>
+            <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span>
+            <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">TangoSerial</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TaurusSerializationMode.TangoSerial mode&#39;</span><span class="p">,</span>
+                                <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TaurusSerializationMode.Serial&#39;</span><span class="p">,</span>
+                                <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.3.2&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__fireRegisterEvent</span><span class="p">((</span><span class="n">listener</span><span class="p">,))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">enqueueJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fireRegisterEvent</span><span class="p">,</span>
+                                     <span class="n">job_args</span><span class="o">=</span><span class="p">((</span><span class="n">listener</span><span class="p">,),),</span>
+                                     <span class="n">serialization_mode</span><span class="o">=</span><span class="n">sm</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TangoAttribute.removeListener"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.removeListener">[docs]</a>    <span class="k">def</span> <span class="nf">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
@@ -919,13 +941,17 @@
             <span class="k">if</span> <span class="n">etype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span>
             <span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
-            <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
             <span class="n">listeners</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">Concurrent</span><span class="p">:</span>
-                <span class="n">manager</span><span class="o">.</span><span class="n">addJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span>
-                               <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span>
+            <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span>
+            <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">TangoSerial</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TaurusSerializationMode.TangoSerial mode&#39;</span><span class="p">,</span>
+                                <span class="n">alt</span><span class="o">=</span><span class="s2">&quot;TaurusSerializationMode.Serial&quot;</span><span class="p">,</span>
+                                <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.3.2&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span></div>
+                <span class="n">manager</span><span class="o">.</span><span class="n">enqueueJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">,</span> <span class="n">job_args</span><span class="o">=</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">),</span>
+                                   <span class="n">job_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;listeners&#39;</span><span class="p">:</span> <span class="n">listeners</span><span class="p">},</span>
+                                   <span class="n">serialization_mode</span><span class="o">=</span><span class="n">sm</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_pushAttrEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Handler of (non-configuration) events from the PyTango layer.</span>
@@ -1140,12 +1166,26 @@
             <span class="n">Q_</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">quantity_from_tango_str</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
                          <span class="n">dtype</span><span class="o">=</span><span class="n">i</span><span class="o">.</span><span class="n">data_type</span><span class="p">)</span>
             <span class="n">ninf</span><span class="p">,</span> <span class="n">inf</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
-            <span class="n">min_value</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">min_value</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">ninf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
-            <span class="n">max_value</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">max_value</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
-            <span class="n">min_alarm</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_alarm</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">ninf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
-            <span class="n">max_alarm</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_alarm</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
-            <span class="n">min_warning</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">ninf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
-            <span class="n">max_warning</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+
+            <span class="n">min_value</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">min_value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">min_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">min_value</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">ninf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">max_value</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">max_value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">max_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">max_value</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">min_alarm</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_alarm</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">min_alarm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">min_alarm</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">ninf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">max_alarm</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_alarm</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">max_alarm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">max_alarm</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">min_warning</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">min_warning</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">min_warning</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">ninf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">max_warning</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">max_warning</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">max_warning</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">_range</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_warning</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_warning</span><span class="p">,</span> <span class="n">max_warning</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_alarm</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_alarm</span><span class="p">,</span> <span class="n">max_alarm</span><span class="p">]</span>
@@ -1540,7 +1580,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

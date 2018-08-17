@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.display.taurusled &mdash; taurus 4.3.0 documentation</title>
+  <title>taurus.qt.qtgui.display.taurusled &mdash; taurus 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.3.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.3
+                4.4
               </div>
             
           
@@ -90,7 +90,8 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.3 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
@@ -214,23 +215,20 @@
         <span class="n">fgRole</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">fgRole</span>
         <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">fgRole</span> <span class="o">==</span> <span class="s1">&#39;rvalue&#39;</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">rvalue</span>
         <span class="k">elif</span> <span class="n">fgRole</span> <span class="o">==</span> <span class="s1">&#39;wvalue&#39;</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">wvalue</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">wvalue</span>
         <span class="k">elif</span> <span class="n">fgRole</span> <span class="o">==</span> <span class="s1">&#39;quality&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">quality</span>
 
         <span class="c1"># handle 1D and 2D values</span>
-        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_0D</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">data_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_0D</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelIndexValue</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">idx</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">getModelIndexValue</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">value</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">usePreferedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
@@ -504,9 +502,6 @@
     <span class="c1">#: with which this widget will get its data from. The convention used for</span>
     <span class="c1">#: the string can be found :ref:`here &lt;model-concept&gt;`.</span>
     <span class="c1">#:</span>
-    <span class="c1">#: In case the property :attr:`useParentModel` is set to True, the model</span>
-    <span class="c1">#: text must start with a &#39;/&#39; followed by the attribute name.</span>
-    <span class="c1">#:</span>
     <span class="c1">#: **Access functions:**</span>
     <span class="c1">#:</span>
     <span class="c1">#:     * :meth:`TaurusBaseWidget.getModel`</span>
@@ -669,7 +664,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
