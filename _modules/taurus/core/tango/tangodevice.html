@@ -420,7 +420,12 @@
         <span class="k">if</span> <span class="n">weWereListening</span><span class="p">:</span>
             <span class="c1"># We were listening already, so we must fake an event to the new</span>
             <span class="c1"># subscribed listener with the current value</span>
-            <span class="n">evt_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__decode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stateObj</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">evt_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__decode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stateObj</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="c1"># the value may not be available (e.g. if device is not ready)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot read state&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">ret</span>
             <span class="n">listeners</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">listener</span> <span class="ow">or</span> <span class="p">[</span>
                 <span class="n">listener</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">,</span> <span class="n">listeners</span><span class="p">)</span>
