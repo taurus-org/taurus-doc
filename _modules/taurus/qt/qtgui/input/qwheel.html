@@ -464,6 +464,15 @@
                                 <span class="bp">self</span><span class="o">.</span><span class="n">getDecDigitCount</span><span class="p">())</span>
         <span class="n">ed</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span> <span class="o">=</span> <span class="n">ed</span>
+
+        <span class="c1"># set the minimum height for the widget</span>
+        <span class="c1"># (otherwise the hints seem to be ignored by the layouts)</span>
+        <span class="n">min_height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ed</span><span class="o">.</span><span class="n">minimumSizeHint</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span>
+                         <span class="n">signLabel</span><span class="o">.</span><span class="n">minimumSizeHint</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getShowArrowButtons</span><span class="p">():</span>
+            <span class="n">min_height</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">_ArrowButton</span><span class="o">.</span><span class="n">ButtonSize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumHeight</span><span class="p">(</span><span class="n">min_height</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">clearWarning</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1003,6 +1012,7 @@
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.icon</span>  <span class="c1"># otherwise the arrows don&#39;t show in the demo</span>
     <span class="k">global</span> <span class="n">arrowWidget</span>
 
     <span class="k">def</span> <span class="nf">resetAll</span><span class="p">():</span>
