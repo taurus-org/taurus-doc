@@ -224,6 +224,7 @@
 
     <span class="k">def</span> <span class="nf">_updateValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This method sets a validator depending on the data type&quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">wvalue</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
             <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">PintValidator</span><span class="p">):</span>
@@ -244,6 +245,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validator disabled&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span>
 
     <span class="k">def</span> <span class="nf">__decimalDigits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;returns the number of decimal digits from a format string</span>
@@ -383,7 +385,11 @@
         <span class="c1"># Other fragments are ignored by setValue</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelFragmentName</span> <span class="o">==</span> <span class="s2">&quot;wvalue.magnitude&quot;</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">units</span>
+                <span class="n">validator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">validator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">()</span>
+                    <span class="n">validator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updateValidator</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">units</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot enforce fragment. Reason: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
