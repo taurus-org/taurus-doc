@@ -307,9 +307,11 @@
 <span class="sd">            rvalue of the returned TangoAttributeValue is now a member of</span>
 <span class="sd">            TaurusDevState instead of TaurusSWDevState</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Ignoring argument `cache=False`to getValueObj()&#39;</span><span class="p">)</span>
         <span class="kn">from</span> <span class="nn">taurus.core.tango.tangoattribute</span> <span class="k">import</span> <span class="n">TangoAttrValue</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">TangoAttrValue</span><span class="p">()</span>
-        <span class="n">ret</span><span class="o">.</span><span class="n">rvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">rvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
         <span class="k">return</span> <span class="n">ret</span>
 
 <div class="viewcode-block" id="TangoDevice.getDisplayDescrObj"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.getDisplayDescrObj">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescrObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>

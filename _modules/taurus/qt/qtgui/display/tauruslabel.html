@@ -626,8 +626,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span>
 
-        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
-        <span class="n">dev</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">modeltype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelType</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">modeltype</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">modeltype</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dev</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span>

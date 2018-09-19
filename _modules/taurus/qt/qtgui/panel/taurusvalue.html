@@ -238,13 +238,8 @@
             <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusValueBuddy</span><span class="p">()</span><span class="o">.</span><span class="n">getLabelConfig</span><span class="p">()</span>
             <span class="n">TaurusLabel</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">#</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">config</span><span class="p">))</span>
         <span class="k">elif</span> <span class="n">elementtype</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span>
-            <span class="c1"># @TODO: tango-centric!</span>
-            <span class="c1"># TaurusLabel.setModel(self, &#39;%s/state#dev_alias&#39;%fullname)</span>
-            <span class="c1">#</span>
-            <span class="c1"># The following is a workaround to avoid tango-centricity, but</span>
-            <span class="c1"># it has the drawback that the model is not set (e.g., no tooltip)</span>
             <span class="n">devName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusValueBuddy</span><span class="p">()</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
-            <span class="n">TaurusLabel</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">TaurusLabel</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">devName</span><span class="p">)</span></div>
 
     <span class="n">_BCK_COMPAT_TAGS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;&lt;attr_name&gt;&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{attr.name}</span><span class="s1">&#39;</span><span class="p">,</span>
