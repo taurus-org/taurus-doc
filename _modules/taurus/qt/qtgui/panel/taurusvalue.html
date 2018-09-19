@@ -581,16 +581,21 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reimplemented to call onSetFormatter of the read widget (if provided)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="p">,</span> <span class="s1">&#39;onSetFormatter&#39;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">()</span></div>
+        <span class="n">rw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">(</span><span class="n">followCompact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="s1">&#39;onSetFormatter&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">rw</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusValue.setFormat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reimplemented to call setFormat of the read widget (if provided)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_readWidget&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readWidget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">(</span><span class="n">followCompact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
+            <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValue.getAllowWrite"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.getAllowWrite">[docs]</a>    <span class="k">def</span> <span class="nf">getAllowWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowWrite</span></div>
@@ -1223,12 +1228,28 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">extraWidgetClassID</span> <span class="o">=</span> <span class="s1">&#39;Auto&#39;</span></div>
 
 <div class="viewcode-block" id="TaurusValue.setCompact"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.setCompact">[docs]</a>    <span class="k">def</span> <span class="nf">setCompact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compact</span><span class="p">):</span>
+
+        <span class="c1"># don&#39;t do anything if it is already done</span>
         <span class="k">if</span> <span class="n">compact</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compact</span><span class="p">:</span>
             <span class="k">return</span>
+
+        <span class="c1">#do not switch to compact mode if the write widget is None</span>
+        <span class="k">if</span> <span class="n">compact</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">writeWidget</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;No write widget. Ignoring setCompact(True)&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Backup the current RW format</span>
+        <span class="n">rw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">(</span><span class="n">followCompact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">getFormat</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_compact</span> <span class="o">=</span> <span class="n">compact</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModel</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateReadWidget</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">updateWriteWidget</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateWriteWidget</span><span class="p">()</span>
+
+        <span class="c1"># Apply the format to the new RW</span>
+        <span class="n">rw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readWidget</span><span class="p">(</span><span class="n">followCompact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValue.isCompact"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue.isCompact">[docs]</a>    <span class="k">def</span> <span class="nf">isCompact</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compact</span></div>

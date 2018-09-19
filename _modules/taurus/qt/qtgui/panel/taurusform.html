@@ -525,7 +525,7 @@
         <span class="nb">format</span> <span class="o">=</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItems</span><span class="p">():</span>
-                <span class="n">rw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">readWidget</span><span class="p">()</span>
+                <span class="n">rw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">readWidget</span><span class="p">(</span><span class="n">followCompact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
                     <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">format</span></div>
@@ -536,9 +536,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItems</span><span class="p">():</span>
-            <span class="n">rw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">readWidget</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
-                <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusForm.setCompact"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm.setCompact">[docs]</a>    <span class="k">def</span> <span class="nf">setCompact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compact</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compact</span> <span class="o">=</span> <span class="n">compact</span>
