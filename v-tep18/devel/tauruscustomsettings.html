@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Taurus custom settings &mdash; taurus 4.5.0-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="taurus 4.5.0-alpha documentation" href="../index.html"/>
+        <link rel="up" title="Developer’s Guide" href="index.html"/>
+        <link rel="next" title="Examples" href="examples.html"/>
+        <link rel="prev" title="taurus core tutorial" href="core_tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+      
+          <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+    <li>Taurus custom settings</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/devel/tauruscustomsettings.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurus-custom-settings">
+<span id="tauruscustomsettings"></span><h1>Taurus custom settings<a class="headerlink" href="#taurus-custom-settings" title="Permalink to this headline">¶</a></h1>
+<p>Taurus provides a module located at its root directory called
+<cite>tauruscustomsettings</cite> which stores global configuration options.
+It can be modified permanently so that it affects all applications
+(use with care), or accessed at run time for setting options for
+the current execution.</p>
+<span class="target" id="module-taurus.tauruscustomsettings"></span><p>This module contains some Taurus-wide default configurations.</p>
+<p>The idea is that the final user may edit the values here to customize certain
+aspects of Taurus.</p>
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.DEFAULT_QT_API">
+<code class="descname">DEFAULT_QT_API</code><em class="property"> = 'pyqt'</em><a class="headerlink" href="#taurus.tauruscustomsettings.DEFAULT_QT_API" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set preffered API if not is already loaded</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.DEFAULT_SCHEME">
+<code class="descname">DEFAULT_SCHEME</code><em class="property"> = 'tango'</em><a class="headerlink" href="#taurus.tauruscustomsettings.DEFAULT_SCHEME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default scheme (if not defined, &#8220;tango&#8221; is assumed)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.EXTRA_SCHEME_MODULES">
+<code class="descname">EXTRA_SCHEME_MODULES</code><em class="property"> = []</em><a class="headerlink" href="#taurus.tauruscustomsettings.EXTRA_SCHEME_MODULES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extra Taurus schemes. You can add a list of modules to be loaded for
+providing support to new schemes
+(e.g. EXTRA_SCHEME_MODULES = [&#8216;myownschememodule&#8217;]</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.FILTER_OLD_TANGO_EVENTS">
+<code class="descname">FILTER_OLD_TANGO_EVENTS</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.FILTER_OLD_TANGO_EVENTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter old tango events:
+Sometimes TangoAttribute can receive an event with an older timestamp
+than its current one. See <a class="reference external" href="https://github.com/taurus-org/taurus/issues/216">https://github.com/taurus-org/taurus/issues/216</a>
+True discards (Tango) events whose timestamp is older than the cached one.
+False (or commented out) for backwards (pre 4.1) compatibility</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.LIGHTWEIGHT_IMPORTS">
+<code class="descname">LIGHTWEIGHT_IMPORTS</code><em class="property"> = False</em><a class="headerlink" href="#taurus.tauruscustomsettings.LIGHTWEIGHT_IMPORTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lightweight imports:
+True enables delayed imports (may break older code).
+False (or commented out) for backwards compatibility</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.ORGANIZATION_LOGO">
+<code class="descname">ORGANIZATION_LOGO</code><em class="property"> = 'logos:taurus.png'</em><a class="headerlink" href="#taurus.tauruscustomsettings.ORGANIZATION_LOGO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom organization logo. Set the absolute path to an image file to be used as your
+organization logo. Qt registered paths can also be used.
+If not set, it defaults to &#8216;logos:taurus.png&#8221;
+(note that &#8220;logos:&#8221; is a Qt a registered path for &#8220;&lt;taurus&gt;/qt/qtgui/icon/logos/&#8221;)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.PLY_OPTIMIZE">
+<code class="descname">PLY_OPTIMIZE</code><em class="property"> = 1</em><a class="headerlink" href="#taurus.tauruscustomsettings.PLY_OPTIMIZE" title="Permalink to this definition">¶</a></dt>
+<dd><p>PLY (lex/yacc) optimization: 1=Active (default) , 0=disabled.
+Set PLY_OPTIMIZE = 0 if you are getting yacc exceptions while loading
+synoptics</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_AUTO_INIT_LOG">
+<code class="descname">QT_AUTO_INIT_LOG</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_AUTO_INIT_LOG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auto initialize Qt logging to python logging</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_AUTO_REMOVE_INPUTHOOK">
+<code class="descname">QT_AUTO_REMOVE_INPUTHOOK</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_AUTO_REMOVE_INPUTHOOK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove input hook (only valid for PyQt4)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_THEME_DIR">
+<code class="descname">QT_THEME_DIR</code><em class="property"> = ''</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_THEME_DIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the theme to be used: set the theme dir  and the theme name.
+The path can be absolute or relative to the dir of taurus.qt.qtgui.icon
+If not set, the dir of taurus.qt.qtgui.icon will be used</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_THEME_FORCE_ON_LINUX">
+<code class="descname">QT_THEME_FORCE_ON_LINUX</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_THEME_FORCE_ON_LINUX" title="Permalink to this definition">¶</a></dt>
+<dd><p>In Linux the QT_THEME_NAME is not applied (to respect the system theme)
+setting QT_THEME_FORCE_ON_LINUX=True overrides this.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.QT_THEME_NAME">
+<code class="descname">QT_THEME_NAME</code><em class="property"> = 'Tango'</em><a class="headerlink" href="#taurus.tauruscustomsettings.QT_THEME_NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the icon theme (e.g. &#8216;Tango&#8217;, &#8216;Oxygen&#8217;, etc). Default=&#8217;Tango&#8217;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.STRICT_MODEL_NAMES">
+<code class="descname">STRICT_MODEL_NAMES</code><em class="property"> = False</em><a class="headerlink" href="#taurus.tauruscustomsettings.STRICT_MODEL_NAMES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strict RFC3986 URI names in models.
+True makes Taurus only use the strict URI names
+False enables a backwards-compatibility mode for pre-sep3 model names</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.TANGO_SERIALIZATION_MODE">
+<code class="descname">TANGO_SERIALIZATION_MODE</code><em class="property"> = 'Serial'</em><a class="headerlink" href="#taurus.tauruscustomsettings.TANGO_SERIALIZATION_MODE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default serialization mode <strong>for the tango scheme</strong>. Possible values are:
+&#8216;Serial&#8217; (default), &#8216;Concurrent&#8217;, or &#8216;TangoSerial&#8217; (deprecated)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.T_FORM_COMPACT">
+<code class="descname">T_FORM_COMPACT</code><em class="property"> = False</em><a class="headerlink" href="#taurus.tauruscustomsettings.T_FORM_COMPACT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compact mode for widgets
+True sets the preferred mode of TaurusForms to use &#8220;compact&#8221; widgets</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="taurus.tauruscustomsettings.T_FORM_CUSTOM_WIDGET_MAP">
+<code class="descname">T_FORM_CUSTOM_WIDGET_MAP</code><em class="property"> = {'ZeroDExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'SimuMotor': ('sardana.taurus.qt.qtgui.extra_pool.PoolMotorTV', (), {}), 'Motor': ('sardana.taurus.qt.qtgui.extra_pool.PoolMotorTV', (), {}), 'PseudoCounter': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'OneDExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'TwoDExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'IORegister': ('sardana.taurus.qt.qtgui.extra_pool.PoolIORegisterTV', (), {}), 'PseudoMotor': ('sardana.taurus.qt.qtgui.extra_pool.PoolMotorTV', (), {}), 'CTExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {})}</em><a class="headerlink" href="#taurus.tauruscustomsettings.T_FORM_CUSTOM_WIDGET_MAP" title="Permalink to this definition">¶</a></dt>
+<dd><p>A map for using custom widgets for certain devices in TaurusForms. It is a
+dictionary with the following structure:
+device_class_name:(classname_with_full_module_path, args, kwargs)
+where the args and kwargs will be passed to the constructor of the class</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="core_tutorial.html" class="btn btn-neutral" title="taurus core tutorial" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.0-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
