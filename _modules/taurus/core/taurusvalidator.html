@@ -163,18 +163,18 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module contains the base taurus name validator classes&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurushelper</span> <span class="k">import</span> <span class="n">makeSchemeExplicit</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusAuthorityNameValidator&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDeviceNameValidator&quot;</span><span class="p">,</span>
            <span class="s2">&quot;TaurusAttributeNameValidator&quot;</span><span class="p">]</span>
 
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurushelper</span> <span class="k">import</span> <span class="n">makeSchemeExplicit</span>
 
 
 <span class="k">class</span> <span class="nc">_TaurusBaseValidator</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
@@ -452,8 +452,8 @@
 
     <span class="n">v</span> <span class="o">=</span> <span class="n">FooAttributeNameValidator</span><span class="p">()</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;foo://bar#label&#39;</span>
-    <span class="nb">print</span> <span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="n">v</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
 </pre></div>
 
            </div>

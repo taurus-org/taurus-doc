@@ -165,13 +165,16 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">qwtdialog.py: Dialogs for Taurusplot</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusPlotConfigDialog&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Qwt5</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusPlotConfigDialog&quot;</span><span class="p">]</span>
 
 
 <span class="c1"># class TaurusPlotConfigCapable:</span>
@@ -211,7 +214,7 @@
 
         <span class="c1"># insert the CurvesAppearanceWidget</span>
         <span class="c1">#(@TODO:must be changed to be done directly in the ui, but I couldn&#39;t make the widget available to TaurusDesigner)</span>
-        <span class="kn">from</span> <span class="nn">curvesAppearanceChooserDlg</span> <span class="k">import</span> <span class="n">CurvesAppearanceChooser</span>
+        <span class="kn">from</span> <span class="nn">.curvesAppearanceChooserDlg</span> <span class="k">import</span> <span class="n">CurvesAppearanceChooser</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span> <span class="o">=</span> <span class="n">CurvesAppearanceChooser</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curvesAppearanceChooser</span><span class="p">)</span>
@@ -304,7 +307,7 @@
             <span class="k">elif</span> <span class="n">scaleType</span> <span class="o">==</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtScaleTransformation</span><span class="o">.</span><span class="n">Log10</span><span class="p">:</span>
                 <span class="n">axes</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="s2">&quot;TaurusPlotConfigDialog::__init__(): unexpected axis scale type (linear or logarihtmic expected)&quot;</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;TaurusPlotConfigDialog::__init__(): unexpected axis scale type (linear or logarihtmic expected)&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">xModeComboBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">getXIsTime</span><span class="p">())</span>
 
         <span class="c1"># determine which axes are visible</span>
@@ -416,14 +419,14 @@
                      <span class="mi">24</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span><span class="p">}</span>
         <span class="k">if</span> <span class="n">strtime</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;now&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">timeunits</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">timeunits</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">strtime</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">timeunits</span><span class="p">[</span><span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="s1">&#39;[str2deltatime] No format could be applied to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[str2deltatime] No format could be applied to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s1">&#39;[str2deltatime] Non-supported unit &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[str2deltatime] Non-supported unit &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="TaurusPlotConfigDialog.strtime2epoch"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.strtime2epoch">[docs]</a>    <span class="k">def</span> <span class="nf">strtime2epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strtime</span><span class="p">):</span>
@@ -472,12 +475,12 @@
                     <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">lt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span>
                          <span class="mi">4</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">lt</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
                     <span class="k">break</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">pass</span>
         <span class="k">if</span> <span class="n">t</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s1">&#39;No format could be applied to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No format could be applied to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">strtime</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="TaurusPlotConfigDialog.validate"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_TaurusPlotConfigDialog.html#taurus.qt.qtgui.plot.TaurusPlotConfigDialog.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

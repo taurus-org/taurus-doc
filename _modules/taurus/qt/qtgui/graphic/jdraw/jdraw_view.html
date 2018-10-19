@@ -163,13 +163,15 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module contains the graphics view widget for jdraw files&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusJDrawSynopticsView&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+
 <span class="kn">import</span> <span class="nn">taurus</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
@@ -178,7 +180,12 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
 
-<span class="kn">import</span> <span class="nn">jdraw_parser</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">jdraw_parser</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusJDrawSynopticsView&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <div class="viewcode-block" id="TaurusJDrawSynopticsView"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView">[docs]</a><span class="k">class</span> <span class="nc">TaurusJDrawSynopticsView</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsView</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
@@ -213,7 +220,7 @@
 <span class="sd">     allows to configure custom context menus for graphic items using a list</span>
 <span class="sd">     of tuples. Empty tuples will insert separators in the menu.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">itemsChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+    <span class="n">itemsChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
     <span class="n">modelsChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">graphicItemSelected</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
     <span class="n">graphicSceneClicked</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QPoint&#39;</span><span class="p">)</span>
@@ -259,7 +266,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">emitColors</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusJDrawSynopticsView.openJDraw"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.openJDraw">[docs]</a>    <span class="k">def</span> <span class="nf">openJDraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">ifile</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+        <span class="n">ifile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Load JDraw File&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;JDraw File (*.jdw)&#39;</span><span class="p">))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ifile</span><span class="p">:</span>
             <span class="k">return</span>
@@ -407,7 +414,7 @@
         <span class="c1"># self.fitting()</span>
 
 <div class="viewcode-block" id="TaurusJDrawSynopticsView.getGraphicsFactory"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getGraphicsFactory">[docs]</a>    <span class="k">def</span> <span class="nf">getGraphicsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="kn">import</span> <span class="nn">jdraw</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">jdraw</span>
         <span class="c1"># self.parent())</span>
         <span class="k">return</span> <span class="n">jdraw</span><span class="o">.</span><span class="n">TaurusJDrawGraphicsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">),</span> <span class="n">delayed</span><span class="o">=</span><span class="n">delayed</span><span class="p">)</span></div>
 
@@ -579,7 +586,7 @@
     <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getModel</span><span class="p">,</span> <span class="n">setModel</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusJDrawSynopticsView.setSelectionStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setSelectionStyle">[docs]</a>    <span class="k">def</span> <span class="nf">setSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selectionStyle</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selectionStyle</span><span class="p">,</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,</span> <span class="n">basestring</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selectionStyle</span><span class="p">,</span>  <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,)):</span>
             <span class="n">selectionStyle</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">selectionStyle</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">selectionStyle</span> <span class="o">=</span> <span class="n">SynopticSelectionStyle</span><span class="p">[</span><span class="n">selectionStyle</span><span class="p">]</span>

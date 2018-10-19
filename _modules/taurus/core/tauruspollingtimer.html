@@ -164,17 +164,16 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains the polling class&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusPollingTimer&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 
-<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">DebugIt</span>
+<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
 <span class="kn">from</span> <span class="nn">.util.containers</span> <span class="k">import</span> <span class="n">CaselessWeakValueDict</span>
 <span class="kn">from</span> <span class="nn">.util.timer</span> <span class="k">import</span> <span class="n">Timer</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusPollingTimer&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 
 <div class="viewcode-block" id="TaurusPollingTimer"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer">[docs]</a><span class="k">class</span> <span class="nc">TaurusPollingTimer</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
@@ -214,7 +213,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">attr_dict</span> <span class="ow">and</span> <span class="n">attr_dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">attr_dict</span> <span class="ow">and</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">attr_dict</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
 

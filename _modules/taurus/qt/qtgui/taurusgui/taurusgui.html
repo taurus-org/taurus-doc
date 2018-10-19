@@ -164,17 +164,14 @@
 
 <span class="sd">&quot;&quot;&quot;This package provides the TaurusGui class&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DockWidgetPanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusGui&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
-
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
 
 <span class="kn">import</span> <span class="nn">taurus</span>
@@ -192,6 +189,11 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">QDoubleListDlg</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui.utils</span> <span class="k">import</span> <span class="n">ExternalAppAction</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DockWidgetPanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusGui&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">)</span>
@@ -230,7 +232,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">onInstrumentChanged</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">instrumentCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">onInstrumentChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrumentname</span><span class="p">):</span>
-        <span class="n">instrumentname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
+        <span class="n">instrumentname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
         <span class="n">panelname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">associations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">panelname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">panelCB</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -243,10 +245,10 @@
         <span class="n">role</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">buttonRole</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">role</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">AcceptRole</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">ApplyRole</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">panelCB</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">panelname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">panelCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+                <span class="n">panelname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">panelCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">panelname</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">instrumentname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">instrumentCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+            <span class="n">instrumentname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">instrumentCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">associations</span><span class="p">[</span><span class="n">instrumentname</span><span class="p">]</span> <span class="o">=</span> <span class="n">panelname</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">setInstrumentAssociation</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">,</span> <span class="n">panelname</span><span class="p">)</span>
 
@@ -267,7 +269,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
         <span class="c1"># self._widget = self.widget()  #keep a pointer that may change if the</span>
         <span class="c1"># widget changes</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_custom</span> <span class="o">=</span> <span class="kc">False</span>
@@ -301,7 +303,7 @@
                     <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">modulename</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">])</span>
                     <span class="n">klass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">classname</span><span class="p">)</span>
                     <span class="n">w</span> <span class="o">=</span> <span class="n">klass</span><span class="p">()</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                         <span class="s1">&#39;Cannot create widget from classname &quot;</span><span class="si">%s</span><span class="s1">&quot;. Reason: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">classname</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
             <span class="c1"># set customwidgetmap if necessary</span>
@@ -330,7 +332,7 @@
                 <span class="s1">&#39;widgetClassName&#39;</span><span class="p">),</span> <span class="n">modulename</span><span class="o">=</span><span class="n">configdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;widgetModuleName&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">(),</span> <span class="n">BaseConfigurableClass</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">applyConfig</span><span class="p">(</span><span class="n">configdict</span><span class="p">[</span><span class="s1">&#39;widget&#39;</span><span class="p">])</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                 <span class="s1">&#39;Failed to set the widget for this panel. Reason: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Debug</span><span class="p">)</span>
@@ -411,10 +413,10 @@
 
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">SelectedInstrument</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">doorNameChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">macroserverNameChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">newShortMessage</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">SelectedInstrument</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
+    <span class="n">doorNameChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
+    <span class="n">macroserverNameChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
+    <span class="n">newShortMessage</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 
     <span class="n">IMPLICIT_ASSOCIATION</span> <span class="o">=</span> <span class="s1">&#39;__[IMPLICIT]__&#39;</span>
 
@@ -639,7 +641,7 @@
 <span class="sd">                     removed</span>
 <span class="sd">                     If None given, the user will be prompted</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">apps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__external_app</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__permanent_ext_apps</span>
+        <span class="n">apps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__external_app</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__permanent_ext_apps</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">apps</span><span class="p">)</span>
             <span class="n">msg1</span> <span class="o">=</span> <span class="s2">&quot;Remove External application&quot;</span>
@@ -649,13 +651,13 @@
                                                <span class="kc">False</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
                 <span class="k">return</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">apps</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Cannot remove the external application &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span>
                    <span class="s1">&#39; (not found)&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__external_app</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__external_app</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__external_app</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__permanent_ext_apps</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -709,12 +711,12 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">isCustom</span><span class="p">()])</span>
+                <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">isCustom</span><span class="p">()])</span>
             <span class="n">name</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Remove Panel&quot;</span><span class="p">,</span>
                                                <span class="s2">&quot;Panel to be removed (only custom panels can be removed).</span><span class="se">\n</span><span class="s2"> Important: you may want to save the perspective afterwards,</span><span class="se">\n</span><span class="s2"> and maybe remove the panel from other perspectives as well&quot;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
                 <span class="k">return</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot remove panel &quot;</span><span class="si">%s</span><span class="s1">&quot; (not found)&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span>
@@ -765,7 +767,7 @@
                 <span class="s1">&#39;Deprecation warning: please note that the &quot;area&quot; argument is deprecated. See TaurusGui.createPanel doc&#39;</span><span class="p">)</span>
             <span class="n">floating</span> <span class="o">=</span> <span class="ow">not</span><span class="p">(</span><span class="n">floating</span><span class="p">)</span>
 
-        <span class="n">name</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Panel with name &quot;</span><span class="si">%s</span><span class="s1">&quot; already exists. Reusing.&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
@@ -775,7 +777,7 @@
         <span class="c1"># we will only place panels in this area</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addDockWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TopDockWidgetArea</span><span class="p">,</span> <span class="n">panel</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tabifyDockWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">panel</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tabifyDockWidget</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">panel</span><span class="p">)</span>
 
         <span class="n">panel</span><span class="o">.</span><span class="n">setFloating</span><span class="p">(</span><span class="n">floating</span><span class="p">)</span>
 
@@ -813,14 +815,14 @@
 
 <span class="sd">        :return: (DockWidgetPanel)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="p">[</span><span class="n">unicode</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span></div>
 
 <div class="viewcode-block" id="TaurusGui.getPanelNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.getPanelNames">[docs]</a>    <span class="k">def</span> <span class="nf">getPanelNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;returns the names of existing panels</span>
 
 <span class="sd">        :return: (list&lt;str&gt;)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
 
     <span class="k">def</span> <span class="nf">_setPermanentExternalApps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">permExternalApps</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;creates empty panels for restoring custom panels.</span>
@@ -856,7 +858,7 @@
 
 <span class="sd">        :return: (list&lt;str&gt;)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">isCustom</span><span class="p">()</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">isPermanent</span><span class="p">())]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">isCustom</span><span class="p">()</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">isPermanent</span><span class="p">())]</span>
 
 <div class="viewcode-block" id="TaurusGui.updatePermanentCustomPanels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.updatePermanentCustomPanels">[docs]</a>    <span class="k">def</span> <span class="nf">updatePermanentCustomPanels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showAlways</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -868,7 +870,7 @@
         <span class="c1"># check if there are some newly created panels that may be made</span>
         <span class="c1"># permanent</span>
         <span class="n">perm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getPermanentCustomPanels</span><span class="p">()</span>
-        <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span>
             <span class="n">p</span><span class="o">.</span><span class="n">isCustom</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">isPermanent</span><span class="p">())]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">showAlways</span><span class="p">:</span>
             <span class="n">dlg</span> <span class="o">=</span> <span class="n">QDoubleListDlg</span><span class="p">(</span><span class="n">winTitle</span><span class="o">=</span><span class="s1">&#39;Stored panels&#39;</span><span class="p">,</span>
@@ -904,7 +906,7 @@
                                  <span class="n">mainLabel</span><span class="o">=</span><span class="n">msg</span><span class="p">,</span>
                                  <span class="n">label1</span><span class="o">=</span><span class="s1">&#39;Temporary (to be discarded)&#39;</span><span class="p">,</span>
                                  <span class="n">label2</span><span class="o">=</span><span class="s1">&#39;Permanent (to be stored)&#39;</span><span class="p">,</span>
-                                 <span class="n">list1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__external_app</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+                                 <span class="n">list1</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__external_app</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
                                  <span class="n">list2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__permanent_ext_apps</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
@@ -959,7 +961,7 @@
             <span class="n">synoptic</span> <span class="o">=</span> <span class="n">TaurusJDrawSynopticsView</span><span class="p">()</span>
             <span class="n">synoptic</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">jdwFileName</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__synoptics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">synoptic</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="c1"># print repr(e)</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Error loading synoptic file &quot;</span><span class="si">%s</span><span class="s1">&quot;.</span><span class="se">\n</span><span class="s1">Synoptic won</span><span class="se">\&#39;</span><span class="s1">t be available&#39;</span> <span class="o">%</span> <span class="n">jdwFileName</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -1018,8 +1020,8 @@
             <span class="n">ms</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="n">macroservername</span><span class="p">)</span>
             <span class="n">instruments</span> <span class="o">=</span> <span class="n">ms</span><span class="o">.</span><span class="n">getElementsOfType</span><span class="p">(</span><span class="s1">&#39;Instrument&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">instruments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Could not fetch Instrument list from &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">macroservername</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Initialization error&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
@@ -1129,7 +1131,7 @@
             <span class="k">else</span><span class="p">:</span>  <span class="c1"># if confname is not a dir name, we assume it is a module name in the python path</span>
                 <span class="n">conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_importConfiguration</span><span class="p">(</span><span class="n">confname</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">traceback</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Error loading configuration: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>  <span class="c1"># repr(e)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -1155,7 +1157,7 @@
                 <span class="n">xmlstring</span> <span class="o">=</span> <span class="n">xmlFile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
                 <span class="n">xmlFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="n">xmlroot</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xmlstring</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Error reading the XML file: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">xmlfname</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">)</span>
@@ -1258,7 +1260,7 @@
 
         <span class="c1"># Synoptics</span>
         <span class="n">SYNOPTIC</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;SYNOPTIC&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">SYNOPTIC</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>  <span class="c1"># old config file style</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">SYNOPTIC</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>  <span class="c1"># old config file style</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s1">&#39;Deprecated usage of SYNOPTIC keyword (now it expects a list of paths). Please update your configuration file to: &quot;SYNOPTIC=[</span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s1">]&quot;.&#39;</span> <span class="o">%</span> <span class="n">SYNOPTIC</span><span class="p">)</span>
             <span class="n">SYNOPTIC</span> <span class="o">=</span> <span class="p">[</span><span class="n">SYNOPTIC</span><span class="p">]</span>
@@ -1330,7 +1332,7 @@
                 <span class="c1"># create a panel</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">floating</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span> <span class="n">registerconfig</span><span class="o">=</span><span class="n">registerconfig</span><span class="p">,</span>
                                  <span class="n">instrumentkey</span><span class="o">=</span><span class="n">instrumentkey</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Cannot create panel </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
                     <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;__Unknown__&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -1372,7 +1374,7 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">BaseConfigurableClass</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Cannot add toolbar </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
                     <span class="n">d</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;__Unknown__&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -1418,7 +1420,7 @@
                 <span class="c1"># register the toolbar as delegate if it supports it</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">BaseConfigurableClass</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Cannot add applet </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
                     <span class="n">d</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;__Unknown__&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -1494,12 +1496,12 @@
 
 <div class="viewcode-block" id="TaurusGui.hideAllPanels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.hideAllPanels">[docs]</a>    <span class="k">def</span> <span class="nf">hideAllPanels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;hides all current panels&#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">panel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">panel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">panel</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusGui.showAllPanels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.showAllPanels">[docs]</a>    <span class="k">def</span> <span class="nf">showAllPanels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;shows all current panels&#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">panel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">panel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">panel</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusGui.onShowAssociationDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.onShowAssociationDialog">[docs]</a>    <span class="k">def</span> <span class="nf">onShowAssociationDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1530,7 +1532,7 @@
 <span class="sd">                          panel or None to remove the association</span>
 <span class="sd">                          for this instrument.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">instrumentname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
+        <span class="n">instrumentname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
         <span class="c1"># remove a previous association if it exists</span>
         <span class="n">oldpanelname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__instrumentToPanelMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__panelToInstrumentMap</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">oldpanelname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -1565,12 +1567,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__instrumentToPanelMap</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">associationsdict</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__panelToInstrumentMap</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__instrumentToPanelMap</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__instrumentToPanelMap</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__panelToInstrumentMap</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span></div>
 
     <span class="k">def</span> <span class="nf">_onPanelVisibilityChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">visible</span><span class="p">:</span>
-            <span class="n">panelname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">objectName</span><span class="p">())</span>
+            <span class="n">panelname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">objectName</span><span class="p">())</span>
             <span class="n">instrumentname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panelToInstrumentMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">panelname</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">instrumentname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">SelectedInstrument</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
@@ -1581,7 +1583,7 @@
 
 <span class="sd">        :param instrumentname: (str) The name that identifies the instrument.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">instrumentname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
+        <span class="n">instrumentname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
         <span class="n">panelname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getInstrumentAssociation</span><span class="p">(</span><span class="n">instrumentname</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setFocusToPanel</span><span class="p">(</span><span class="n">panelname</span><span class="p">)</span></div>
 
@@ -1591,7 +1593,7 @@
 <span class="sd">        :param panelname: (str) The name that identifies the panel.</span>
 <span class="sd">                               This name must be unique within the panels in the GUI.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">panelname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">panelname</span><span class="p">)</span>
+        <span class="n">panelname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">panelname</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="p">[</span><span class="n">panelname</span><span class="p">]</span>
             <span class="n">panel</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1654,7 +1656,7 @@
                 <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xmlConfigFileName</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
                 <span class="n">xmlroot</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Cannot parse file &quot;</span><span class="si">%s</span><span class="s1">&quot;: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
                            <span class="bp">self</span><span class="o">.</span><span class="n">_xmlConfigFileName</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 <span class="k">return</span>
@@ -1669,7 +1671,7 @@
         <span class="n">dlg</span> <span class="o">=</span> <span class="n">QDoubleListDlg</span><span class="p">(</span><span class="n">winTitle</span><span class="o">=</span><span class="s1">&#39;Export Panels to XML&#39;</span><span class="p">,</span>
                              <span class="n">mainLabel</span><span class="o">=</span><span class="s1">&#39;Select which of the custom panels you want to export as xml configuration&#39;</span><span class="p">,</span>
                              <span class="n">label1</span><span class="o">=</span><span class="s1">&#39;Not Exported&#39;</span><span class="p">,</span> <span class="n">label2</span><span class="o">=</span><span class="s1">&#39;Exported&#39;</span><span class="p">,</span>
-                             <span class="n">list1</span><span class="o">=</span><span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">isCustom</span><span class="p">()],</span> <span class="n">list2</span><span class="o">=</span><span class="p">[])</span>
+                             <span class="n">list1</span><span class="o">=</span><span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">isCustom</span><span class="p">()],</span> <span class="n">list2</span><span class="o">=</span><span class="p">[])</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1709,7 +1711,7 @@
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="k">break</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Cannot write to </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>

@@ -165,20 +165,23 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">event.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">taurus.core</span>
+
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BoundMethodWeakref&quot;</span><span class="p">,</span> <span class="s2">&quot;CallableRef&quot;</span><span class="p">,</span> <span class="s2">&quot;EventGenerator&quot;</span><span class="p">,</span>
            <span class="s2">&quot;ConfigEventGenerator&quot;</span><span class="p">,</span> <span class="s2">&quot;ListEventGenerator&quot;</span><span class="p">,</span> <span class="s2">&quot;EventListener&quot;</span><span class="p">,</span>
            <span class="s2">&quot;AttributeEventWait&quot;</span><span class="p">,</span> <span class="s2">&quot;AttributeEventIterator&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">weakref</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">operator</span>
-
-<span class="kn">import</span> <span class="nn">taurus.core</span>
 
 
 <div class="viewcode-block" id="BoundMethodWeakref"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_BoundMethodWeakref.html#taurus.core.util.BoundMethodWeakref">[docs]</a><span class="k">class</span> <span class="nc">BoundMethodWeakref</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -212,10 +215,20 @@
 
     <span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">past.builtins</span> <span class="k">import</span> <span class="nb">cmp</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="nb">cmp</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">func_ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ref</span><span class="p">),</span>
                       <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">func_ref</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">obj_ref</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">ret</span>
         <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;func_ref&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;obj_ref&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">func_ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ref</span><span class="p">)</span>
+                    <span class="o">==</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">func_ref</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">obj_ref</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">obj</span><span class="p">,</span> <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ref</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">func_ref</span><span class="p">()</span>
@@ -233,9 +246,14 @@
 
 <span class="sd">    :return: a weak reference for the given callable</span>
 <span class="sd">    :rtype: BoundMethodWeakref or weakref.ref&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s1">&#39;im_self&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">object</span><span class="o">.</span><span class="n">im_self</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">BoundMethodWeakref</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">del_cb</span><span class="p">)</span>
+    <span class="n">im_self</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s1">&#39;__self__&#39;</span><span class="p">):</span>
+        <span class="n">im_self</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="vm">__self__</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s1">&#39;im_self&#39;</span><span class="p">):</span>
+        <span class="n">im_self</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">im_self</span>
+
+    <span class="k">if</span> <span class="n">im_self</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">BoundMethodWeakref</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">del_cb</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">del_cb</span><span class="p">)</span></div>
 
 
@@ -296,7 +314,7 @@
         <span class="k">return</span> <span class="n">read</span>
 
 
-<span class="kn">from</span> <span class="nn">object</span> <span class="k">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">.object</span> <span class="k">import</span> <span class="n">Object</span>
 
 
 <div class="viewcode-block" id="EventGenerator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator">[docs]</a><span class="k">class</span> <span class="nc">EventGenerator</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
@@ -347,7 +365,7 @@
 <span class="sd">        :type data: boolean</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">events_active</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> does not have &#39;</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> does not have &#39;</span>
                                  <span class="s1">&#39;events/polling active&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_name</span><span class="p">)</span>
 
         <span class="n">cb_ref</span> <span class="o">=</span> <span class="n">CallableRef</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unsubscribeDeletedEvent</span><span class="p">)</span>
@@ -355,7 +373,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">cb_ref</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb_list</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;Callback </span><span class="si">%s</span><span class="s1">(</span><span class="si">%s</span><span class="s1">) already reg. on </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Callback </span><span class="si">%s</span><span class="s1">(</span><span class="si">%s</span><span class="s1">) already reg. on </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
                                      <span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_name</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cb_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cb_ref</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">with_first_event</span><span class="p">:</span>
@@ -368,7 +386,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
             <span class="n">aux_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cb_list</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">aux_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">aux_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
                 <span class="n">pair</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">cb_ref</span><span class="p">:</span>
                     <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -459,7 +477,7 @@
 <span class="sd">        :return: the value of the event that unblocked the wait</span>
 <span class="sd">        :rtype: object&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">events_active</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> does not have &#39;</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> does not have &#39;</span>
                                  <span class="s1">&#39;events/polling active&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_name</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
@@ -582,7 +600,7 @@
                 <span class="k">if</span> <span class="n">t</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">after</span><span class="p">:</span>
                     <span class="k">return</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
                     <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">val</span><span class="p">:</span>
                         <span class="k">continue</span>
                     <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">after</span><span class="p">:</span>
@@ -684,8 +702,8 @@
                 <span class="n">name</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">name</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&lt;unknown&gt;&quot;</span>
-            <span class="nb">print</span> <span class="s2">&quot;WARNING: Thread </span><span class="si">%s</span><span class="s2"> trying to unlock condition previously &quot;</span> \
-                  <span class="s2">&quot;locked by thread </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">curr_th</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: Thread </span><span class="si">%s</span><span class="s2"> trying to unlock condition previously &quot;</span> \
+                  <span class="s2">&quot;locked by thread </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">curr_th</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="AttributeEventWait.clearEventSet"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.clearEventSet">[docs]</a>    <span class="k">def</span> <span class="nf">clearEventSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Clears the internal event buffer&quot;</span>
@@ -797,9 +815,9 @@
                             <span class="k">return</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
                 <span class="n">retries</span> <span class="o">-=</span> <span class="mi">1</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                <span class="s2">&quot;AttributeEventWait: Caught exception while waitting: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="s2">&quot;AttributeEventWait: Caught exception while waiting: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">e</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div></div>
@@ -815,7 +833,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AttributeEventIterator.connect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">operator</span><span class="o">.</span><span class="n">isSequenceType</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
             <span class="n">attrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">attrs</span><span class="p">,)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span> <span class="o">=</span> <span class="n">attrs</span>
@@ -838,8 +856,8 @@
             <span class="n">lock</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="p">,</span> <span class="s2">&quot;_Condition__lock&quot;</span><span class="p">)</span>
             <span class="n">th</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="s2">&quot;_RLock__owner&quot;</span><span class="p">)</span>
             <span class="n">curr_th</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span>
-            <span class="nb">print</span> <span class="s2">&quot;WARNING: Thread </span><span class="si">%s</span><span class="s2"> trying to unlock condition previously &quot;</span> \
-                  <span class="s2">&quot;locked by thread </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">curr_th</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+            <span class="nb">print</span><span class="p">((</span><span class="s2">&quot;WARNING: Thread </span><span class="si">%s</span><span class="s2"> trying to unlock condition previously &quot;</span>
+                   <span class="o">+</span> <span class="s2">&quot;locked by thread </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">curr_th</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="AttributeEventIterator.eventReceived"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">):</span>
@@ -861,8 +879,8 @@
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
                 <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s2">&quot;INFO: Caught exception while waiting&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INFO: Caught exception while waiting&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div></div>
 </pre></div>

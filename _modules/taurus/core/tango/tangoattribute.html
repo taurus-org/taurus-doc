@@ -137,7 +137,8 @@
            <div itemprop="articleBody">
             
   <h1>Source code for taurus.core.tango.tangoattribute</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#!/usr/bin/env python</span>
 
 <span class="c1">#############################################################################</span>
 <span class="c1">##</span>
@@ -164,11 +165,9 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains all taurus tango attribute&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoAttribute&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoAttributeEventListener&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoAttrValue&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">threading</span>
@@ -179,7 +178,6 @@
 
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Manager</span>
 <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span>
-<span class="kn">from</span> <span class="nn">pint</span> <span class="k">import</span> <span class="n">UndefinedUnitError</span>
 
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
@@ -191,7 +189,7 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.event</span> <span class="k">import</span> <span class="n">EventListener</span>
 <span class="c1"># -------------------------------------------------------------------------</span>
 <span class="c1"># TODO: remove this when PyTango&#39;s bug 185 is fixed</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.event</span> <span class="k">import</span> <span class="n">_BoundMethodWeakrefWithCall</span>  
+<span class="kn">from</span> <span class="nn">taurus.core.util.event</span> <span class="k">import</span> <span class="n">_BoundMethodWeakrefWithCall</span>
 <span class="c1"># -------------------------------------------------------------------------</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="p">(</span><span class="n">debug</span><span class="p">,</span> <span class="n">taurus4_deprecation</span><span class="p">,</span>
                                   <span class="n">deprecation_decorator</span><span class="p">)</span>
@@ -205,8 +203,12 @@
                                 <span class="n">quality_from_tango</span><span class="p">,</span>
                                 <span class="n">standard_display_format_from_tango</span><span class="p">,</span>
                                 <span class="n">quantity_from_tango_str</span><span class="p">,</span>
-                                <span class="n">str_2_obj</span><span class="p">,</span> <span class="n">data_format_from_tango</span><span class="p">,</span>
+                                <span class="n">data_format_from_tango</span><span class="p">,</span>
                                 <span class="n">data_type_from_tango</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoAttribute&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoAttributeEventListener&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoAttrValue&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 
 <div class="viewcode-block" id="TangoAttrValue"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttrValue.html#taurus.core.tango.TangoAttrValue">[docs]</a><span class="k">class</span> <span class="nc">TangoAttrValue</span><span class="p">(</span><span class="n">TaurusAttrValue</span><span class="p">):</span>
@@ -257,7 +259,7 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">numerical</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Boolean</span><span class="p">):</span>
                     <span class="c1"># generate a nested empty list of given shape</span>
                     <span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[]</span>
-                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                         <span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
 
         <span class="n">rvalue</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span>
@@ -498,6 +500,9 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="TangoAttribute.isState"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.isState">[docs]</a>    <span class="k">def</span> <span class="nf">isState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns whether the attribute of tango DevState type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tgtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tango_data_type</span>
         <span class="k">return</span> <span class="n">tgtype</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevState</span></div>
 
@@ -529,7 +534,7 @@
             <span class="k">elif</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_int_type</span><span class="p">(</span><span class="n">tgtype</span><span class="p">):</span>
                 <span class="c1"># changed as a partial workaround to a problem in PyTango</span>
                 <span class="c1"># writing to DevULong64 attributes (see ALBA RT#29793)</span>
-                <span class="n">attrvalue</span> <span class="o">=</span> <span class="n">long</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
+                <span class="n">attrvalue</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">tgtype</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevBoolean</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">attrvalue</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">magnitude</span><span class="p">))</span>
@@ -577,8 +582,8 @@
                     <span class="c1"># handle old PyTango</span>
                     <span class="n">dev</span><span class="o">.</span><span class="n">write_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                     <span class="n">result</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-                <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span>
+                <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">df</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
                         <span class="c1"># Handle old device servers</span>
                         <span class="k">if</span> <span class="n">err</span><span class="o">.</span><span class="n">reason</span> <span class="o">==</span> <span class="s1">&#39;API_UnsupportedFeature&#39;</span><span class="p">:</span>
                             <span class="n">dev</span><span class="o">.</span><span class="n">write_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -591,12 +596,12 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">dev</span><span class="o">.</span><span class="n">write_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
-            <span class="n">err</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">df</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;[Tango] write failed (</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
                        <span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">desc</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">df</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;[Tango] write failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">e</span></div>
 
@@ -625,12 +630,12 @@
                        <span class="p">):</span>
                         <span class="k">return</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
+            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">df</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error polling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error polling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error polling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span><span class="p">)</span>
@@ -672,7 +677,7 @@
                 <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">df</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="o">=</span> <span class="n">df</span>
-                    <span class="n">err</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">err</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[Tango] read failed (</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
                                <span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="n">df</span>
@@ -846,13 +851,13 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span><span class="o">.</span><span class="n">unsubscribe_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="ow">and</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reason</span> <span class="o">==</span> <span class="s1">&#39;API_EventNotFound&#39;</span><span class="p">:</span>
+            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">df</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="ow">and</span> <span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reason</span> <span class="o">==</span> <span class="s1">&#39;API_EventNotFound&#39;</span><span class="p">:</span>
                     <span class="c1"># probably tango shutdown has been initiated before and</span>
                     <span class="c1"># it unsubscribed from events itself</span>
                     <span class="k">pass</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_deactivatePolling</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">=</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Unsubscribed</span>
@@ -911,7 +916,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span><span class="o">.</span><span class="n">unsubscribe_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error trying to unsubscribe configuration events&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 

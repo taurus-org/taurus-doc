@@ -166,12 +166,13 @@
 <span class="sd">TaurusDevicePanel.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusDevicePanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevPanel&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">import</span> <span class="nn">taurus</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
@@ -182,11 +183,16 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span><span class="p">,</span> <span class="n">TaurusMainWindow</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLed</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel.taurusform</span> <span class="k">import</span> <span class="n">TaurusForm</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel.taurusform</span> <span class="k">import</span> <span class="n">TaurusCommandsForm</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getCachedPixmap</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusDevicePanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevPanel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
 
 <span class="c1">###############################################################################</span>
 <span class="c1"># TaurusDevicePanel (from Vacca)</span>
@@ -220,7 +226,7 @@
     <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;KeyNotFound:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">k</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;KeyNotFound:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">get_eqtype</span><span class="p">(</span><span class="n">dev</span><span class="p">):</span>  <span class="c1"># TODO: Tango-centric</span>
@@ -237,7 +243,7 @@
         <span class="n">f</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">seq</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;.*&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">f</span><span class="p">]}</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;.*&#39;</span><span class="p">:</span> <span class="n">f</span><span class="p">}</span>
@@ -410,7 +416,7 @@
 
 <div class="viewcode-block" id="TaurusDevicePanel.loadConfigFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusDevicePanel.html#taurus.qt.qtgui.panel.TaurusDevicePanel.loadConfigFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadConfigFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;In TaurusDevicePanel.loadConfigFile(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">ifile</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ifile</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.py&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ifile</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.py&#39;</span><span class="p">):</span>
             <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifile</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">imp</span> <span class="k">import</span> <span class="n">load_source</span>
@@ -492,7 +498,7 @@
                 <span class="n">filters</span> <span class="o">=</span> <span class="n">get_regexp_dict</span><span class="p">(</span>
                     <span class="n">TaurusDevicePanel</span><span class="o">.</span><span class="n">_attribute_filter</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;.*&#39;</span><span class="p">])</span>
                 <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="s1">&#39;keys&#39;</span><span class="p">):</span>
-                    <span class="n">filters</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>  <span class="c1"># Dictionary!</span>
+                    <span class="n">filters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  <span class="c1"># Dictionary!</span>
                 <span class="k">if</span> <span class="n">filters</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>  <span class="c1"># Mapping</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="k">for</span> <span class="n">tab</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">:</span>
@@ -611,7 +617,7 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">setViewFilters</span><span class="p">([</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">cmd_name</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span>
                     <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">searchCl</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">cmd_name</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">params</span><span class="p">)])</span>
                 <span class="n">form</span><span class="o">.</span><span class="n">setDefaultParameters</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="n">params</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="s1">&#39;items&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="k">if</span> <span class="n">v</span><span class="p">))</span>
+                    <span class="n">params</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="s1">&#39;items&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span> <span class="k">if</span> <span class="n">v</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">wid</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">_cmdWidgets</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">wid</span><span class="p">,</span> <span class="s1">&#39;getCommand&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">wid</span><span class="p">,</span> <span class="s1">&#39;setDangerMessage&#39;</span><span class="p">):</span>
                     <span class="k">continue</span>

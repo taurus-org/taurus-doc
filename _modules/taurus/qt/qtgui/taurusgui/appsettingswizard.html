@@ -171,8 +171,9 @@
 <span class="sd">time and those customizations will also be stored, this file defines what a</span>
 <span class="sd">user will find when launching the GUI for the first time.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AppSettingsWizard&quot;</span><span class="p">,</span> <span class="s2">&quot;ExternalAppEditor&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -191,6 +192,9 @@
 <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="n">TangoDeviceNameValidator</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ExternalAppAction</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AppSettingsWizard&quot;</span><span class="p">,</span> <span class="s2">&quot;ExternalAppEditor&quot;</span><span class="p">]</span>
 
 
 <span class="k">class</span> <span class="nc">BooleanWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
@@ -369,19 +373,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_projectDirBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSelectDir</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">onSelectDir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">dirname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getExistingDirectory</span><span class="p">(</span>
+        <span class="n">dirname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getExistingDirectory</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Choose the project directory&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_projectDirLE</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">dirname</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_projectDirLE</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">validatePage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">dirname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_projectDirLE</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">dirname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_projectDirLE</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Error creating project directory&#39;</span><span class="p">,</span>
                                        <span class="s1">&#39;Could not create the project directory.</span><span class="se">\n</span><span class="s1">Reason:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span>
                                            <span class="n">e</span><span class="p">),</span>
@@ -400,7 +404,7 @@
             <span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">loadXml</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Error loading project configuration&#39;</span><span class="p">,</span>
                                            <span class="s1">&#39;Could not load the existing configuration.</span><span class="se">\n</span><span class="s1">Reason:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span>
                                                <span class="n">e</span><span class="p">),</span>
@@ -419,7 +423,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_getProjectDir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_projectDirLE</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_projectDirLE</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
 
 
 <span class="k">class</span> <span class="nc">GeneralSettings</span><span class="p">(</span><span class="n">BasePage</span><span class="p">):</span>
@@ -718,7 +722,7 @@
         <span class="n">fileNames</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span>
             <span class="s2">&quot;Open File&quot;</span><span class="p">),</span> <span class="n">pdir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;JDW (*.jdw );; All files (*)&quot;</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">fileName</span> <span class="ow">in</span> <span class="n">fileNames</span><span class="p">:</span>
-            <span class="n">fileName</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
+            <span class="n">fileName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">fileName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synoptics</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_synoptics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refreshSynopticList</span><span class="p">()</span>
@@ -1449,7 +1453,7 @@
     <span class="k">def</span> <span class="nf">validatePage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createProject</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Error creating project&#39;</span><span class="p">,</span>
                                    <span class="s1">&#39;Could not create project files. </span><span class="se">\n</span><span class="s1">Reason:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span>
                                        <span class="n">e</span><span class="p">),</span>
@@ -1472,8 +1476,8 @@
                       <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">())</span>
         <span class="c1"># copy files</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_substTable</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
-            <span class="n">src</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_substTable</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-            <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">install_dir</span><span class="p">,</span> <span class="n">unicode</span><span class="p">(</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_substTable</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">install_dir</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_substTable</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">!=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
                 <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
@@ -1482,7 +1486,7 @@
         <span class="n">xmlcfgfilename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">install_dir</span><span class="p">,</span>
                                       <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">getXmlConfigFileName</span><span class="p">())</span>
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">xmlcfgfilename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xml</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xml</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()))</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;XML Config file created: &quot;</span><span class="si">%s</span><span class="s1">&quot;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">xmlcfgfilename</span><span class="p">)</span>
         <span class="c1"># write python config file</span>
@@ -1535,17 +1539,17 @@
         <span class="n">warnings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">getProjectWarnings</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">warnings</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">However, some fine-tuning may be needed. Please check the details:</span><span class="se">\n</span><span class="s1">&#39;</span>
-            <span class="k">for</span> <span class="n">short</span><span class="p">,</span> <span class="n">long</span> <span class="ow">in</span> <span class="n">warnings</span><span class="p">:</span>
-                <span class="n">details</span> <span class="o">+=</span> <span class="s1">&#39;- </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">short</span><span class="p">,</span> <span class="n">long</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_short</span><span class="p">,</span> <span class="n">_long</span> <span class="ow">in</span> <span class="n">warnings</span><span class="p">:</span>
+                <span class="n">details</span> <span class="o">+=</span> <span class="s1">&#39;- </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_short</span><span class="p">,</span> <span class="n">_long</span><span class="p">)</span>
         <span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span> <span class="o">+</span> <span class="n">details</span><span class="p">)</span>
         <span class="n">logfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">dlg</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Information</span><span class="p">,</span>
                              <span class="s1">&#39;Application project created&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="n">dlg</span><span class="o">.</span><span class="n">setDetailedText</span><span class="p">(</span><span class="n">details</span><span class="p">)</span>
         <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-        <span class="nb">print</span> 
-        <span class="nb">print</span> <span class="n">msg</span> <span class="o">+</span> <span class="n">details</span>
-        <span class="nb">print</span>
+        <span class="nb">print</span><span class="p">()</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span> <span class="o">+</span> <span class="n">details</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="AppSettingsWizard"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_AppSettingsWizard.html#taurus.qt.qtgui.taurusgui.AppSettingsWizard">[docs]</a><span class="k">class</span> <span class="nc">AppSettingsWizard</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWizard</span><span class="p">):</span>
@@ -1626,13 +1630,13 @@
         <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
 
         <span class="c1"># print self.Pages</span>
-        <span class="k">for</span> <span class="n">pageNumber</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Pages</span><span class="o">.</span><span class="n">keys</span><span class="p">())):</span>
+        <span class="k">for</span> <span class="n">pageNumber</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Pages</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="p">(</span><span class="n">pageNumber</span><span class="p">)</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">root</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AppSettingsWizard.getXml"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_AppSettingsWizard.html#taurus.qt.qtgui.taurusgui.AppSettingsWizard.getXml">[docs]</a>    <span class="k">def</span> <span class="nf">getXml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="s2">&quot;xml&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span></div>
 
     <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -1644,7 +1648,7 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">BasePage</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">p</span><span class="p">[</span><span class="n">name</span><span class="p">]()</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">pass</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_funcs</span><span class="p">[</span><span class="n">name</span><span class="p">]()</span>
 
@@ -1765,11 +1769,11 @@
                     <span class="n">refsrc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="n">ref</span><span class="p">)</span>
                     <span class="n">refdst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitutionName</span><span class="p">(</span><span class="n">refsrc</span><span class="p">,</span> <span class="n">mod_dir</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">ref</span> <span class="o">!=</span> <span class="n">refdst</span><span class="p">:</span>
-                        <span class="n">short</span> <span class="o">=</span> <span class="s1">&#39;Manual editing needed in &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">dst</span>
-                        <span class="n">long</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;The synoptic file &quot;</span><span class="si">%s</span><span class="s1">&quot; references a file that &#39;</span>
+                        <span class="n">_short</span> <span class="o">=</span> <span class="s1">&#39;Manual editing needed in &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">dst</span>
+                        <span class="n">_long</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;The synoptic file &quot;</span><span class="si">%s</span><span class="s1">&quot; references a file that &#39;</span>
                                 <span class="s1">&#39;has been copied to the project dir in order to make the project portable. &#39;</span>
                                 <span class="s1">&#39;Please edit &quot;</span><span class="si">%s</span><span class="s1">&quot; and replace &quot;</span><span class="si">%s</span><span class="s1">&quot; by &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">refdst</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_projectWarnings</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">short</span><span class="p">,</span> <span class="n">long</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_projectWarnings</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">_short</span><span class="p">,</span> <span class="n">_long</span><span class="p">))</span>
 
         <span class="c1"># macroserver page</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">SARDANA_INSTALLED</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="s2">&quot;macroServerName&quot;</span><span class="p">):</span>

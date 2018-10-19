@@ -164,19 +164,19 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">evaluation module. See __init__.py for more detailed documentation</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;EvaluationFactory&#39;</span><span class="p">]</span>
 
-
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
-
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
-<span class="kn">from</span> <span class="nn">evalattribute</span> <span class="k">import</span> <span class="n">EvaluationAttribute</span>
-<span class="kn">from</span> <span class="nn">evalauthority</span> <span class="k">import</span> <span class="n">EvaluationAuthority</span>
-<span class="kn">from</span> <span class="nn">evaldevice</span> <span class="k">import</span> <span class="n">EvaluationDevice</span>
+<span class="kn">from</span> <span class="nn">.evalattribute</span> <span class="k">import</span> <span class="n">EvaluationAttribute</span>
+<span class="kn">from</span> <span class="nn">.evalauthority</span> <span class="k">import</span> <span class="n">EvaluationAuthority</span>
+<span class="kn">from</span> <span class="nn">.evaldevice</span> <span class="k">import</span> <span class="n">EvaluationDevice</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span><span class="p">,</span> <span class="n">DoubleRegistration</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;EvaluationFactory&#39;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="EvaluationFactory"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory">[docs]</a><span class="k">class</span> <span class="nc">EvaluationFactory</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">TaurusFactory</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
@@ -334,7 +334,7 @@
             <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if the full name is not there, create one</span>
                 <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">validator</span><span class="o">.</span><span class="n">getDeviceName</span><span class="p">(</span><span class="n">attr_name</span><span class="p">))</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;storeCallback&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storeAttr</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;pollingPeriod&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s1">&#39;pollingPeriod&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pollingPeriod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultPollingPeriod</span><span class="p">()</span>
                 <span class="n">a</span> <span class="o">=</span> <span class="n">EvaluationAttribute</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">a</span></div>
@@ -381,17 +381,17 @@
 
 <div class="viewcode-block" id="EvaluationFactory.getAuthorityNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getAuthorityNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthorityNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return EvaluationAuthorityNameValidator&quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">evalvalidator</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">evalvalidator</span>
         <span class="k">return</span> <span class="n">evalvalidator</span><span class="o">.</span><span class="n">EvaluationAuthorityNameValidator</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="EvaluationFactory.getDeviceNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getDeviceNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return EvaluationDeviceNameValidator&quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">evalvalidator</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">evalvalidator</span>
         <span class="k">return</span> <span class="n">evalvalidator</span><span class="o">.</span><span class="n">EvaluationDeviceNameValidator</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="EvaluationFactory.getAttributeNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/evaluation/_EvaluationFactory.html#taurus.core.evaluation.EvaluationFactory.getAttributeNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getAttributeNameValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return EvaluationAttributeNameValidator&quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">evalvalidator</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">evalvalidator</span>
         <span class="k">return</span> <span class="n">evalvalidator</span><span class="o">.</span><span class="n">EvaluationAttributeNameValidator</span><span class="p">()</span></div></div>
 </pre></div>
 

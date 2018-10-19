@@ -166,6 +166,8 @@
 <span class="sd">monitor.py: Specialized mini-trend widget to monitor some scalar value</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.plot</span> <span class="k">import</span> <span class="n">TaurusTrend</span>
 
@@ -248,7 +250,7 @@
         <span class="k">elif</span> <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-config=&#39;</span><span class="p">):</span>
             <span class="n">CONFIG</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">elif</span> <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">):</span>  <span class="c1"># whatever other argument starting by &quot;-&quot;</span>
-            <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Usage: </span><span class="se">\n</span><span class="si">%s</span><span class="s2"> [-xe|-xt] [-config=configfilename] [model1 [model2] ...]</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Usage: </span><span class="se">\n</span><span class="si">%s</span><span class="s2"> [-xe|-xt] [-config=configfilename] [model1 [model2] ...]</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># anything that is not a parameter is interpreted as a model</span>
             <span class="n">MODELS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>

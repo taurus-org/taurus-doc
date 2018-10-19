@@ -164,9 +164,7 @@
 
 <span class="sd">&quot;&quot;&quot;This module defines the TangoDevice object&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoDevice&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">PyTango</span> <span class="k">import</span> <span class="p">(</span><span class="n">DeviceProxy</span><span class="p">,</span> <span class="n">DevFailed</span><span class="p">,</span> <span class="n">LockerInfo</span><span class="p">,</span> <span class="n">DevState</span><span class="p">)</span>
@@ -177,14 +175,20 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
 
 
-<span class="k">class</span> <span class="nc">_TangoInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoDevice&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dev_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_type</span> <span class="o">=</span> <span class="s1">&#39;TangoDevice&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">doc_url</span> <span class="o">=</span> <span class="s1">&#39;http://www.esrf.fr/computing/cs/tango/tango_doc/ds_doc/&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">server_host</span> <span class="o">=</span> <span class="s1">&#39;Unknown&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">server_id</span> <span class="o">=</span> <span class="s1">&#39;Unknown&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">_TangoInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dev_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_type</span> <span class="o">=</span> <span class="s1">&#39;TangoDevice&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">doc_url</span> <span class="o">=</span> <span class="s1">&#39;http://www.esrf.fr/computing/cs/tango/tango_doc/ds_doc/&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">server_host</span> <span class="o">=</span> <span class="s1">&#39;Unknown&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">server_id</span> <span class="o">=</span> <span class="s1">&#39;Unknown&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">=</span> <span class="mi">1</span>
 
 
 <div class="viewcode-block" id="TangoDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice">[docs]</a><span class="k">class</span> <span class="nc">TangoDevice</span><span class="p">(</span><span class="n">TaurusDevice</span><span class="p">):</span>
@@ -342,8 +346,8 @@
     <span class="k">def</span> <span class="nf">_createHWObject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">DeviceProxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span>
-        <span class="k">except</span> <span class="n">DevFailed</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not create HW object: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">DevFailed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not create HW object: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
 
     <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s2">&quot;getDeviceProxy()&quot;</span><span class="p">)</span>
@@ -481,7 +485,7 @@
     <span class="k">def</span> <span class="nf">__pollAsynch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">req_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_attributes_asynch</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">req_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_attributes_asynch</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="k">except</span> <span class="n">DevFailed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">ts</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">req_id</span><span class="p">,</span> <span class="n">ts</span>
@@ -509,7 +513,7 @@
         <span class="n">error</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_attributes</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_attributes</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="k">except</span> <span class="n">DevFailed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">error</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">e</span>

@@ -166,7 +166,7 @@
 <span class="sd">nexusWidget.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusNexusBrowser&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">posixpath</span>
@@ -175,7 +175,9 @@
 <span class="kn">from</span> <span class="nn">PyMca5.PyMcaGui.io.hdf5</span> <span class="k">import</span> <span class="n">HDF5Widget</span><span class="p">,</span> <span class="n">HDF5Info</span><span class="p">,</span> <span class="n">HDF5DatasetTable</span>
 
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.plot</span> <span class="k">import</span> <span class="n">TaurusPlot</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusNexusBrowser&quot;</span><span class="p">]</span>
 
 
 <span class="k">class</span> <span class="nc">NeXusInfoWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QTabWidget</span><span class="p">):</span>
@@ -250,7 +252,7 @@
 
 <div class="viewcode-block" id="TaurusNeXusBrowser.openFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_nexus/_TaurusNeXusBrowser.html#taurus.qt.qtgui.extra_nexus.TaurusNeXusBrowser.openFile">[docs]</a>    <span class="k">def</span> <span class="nf">openFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fname</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Choose NeXus File&quot;</span><span class="p">,</span> <span class="s2">&quot;/home/cpascual/local/tmp/scantest.h5&quot;</span><span class="p">))</span>  <span class="c1"># @TODO!!</span>
         <span class="k">if</span> <span class="n">fname</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__nexusFile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fileModel</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span></div>
@@ -268,6 +270,7 @@
             <span class="n">node</span> <span class="o">=</span> <span class="n">ddict</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nexusFile</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.plot</span> <span class="k">import</span> <span class="n">TaurusPlot</span>
                 <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusPlot</span><span class="p">()</span>
                 <span class="n">w</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
             <span class="k">else</span><span class="p">:</span>

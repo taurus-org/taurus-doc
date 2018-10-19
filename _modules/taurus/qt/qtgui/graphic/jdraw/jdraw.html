@@ -164,9 +164,10 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains the graphics factory for the jdraw file format&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusJDrawGraphicsFactory&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
@@ -177,6 +178,11 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusBaseGraphicsFactory</span><span class="p">,</span>
                                      <span class="n">TaurusGraphicsScene</span><span class="p">,</span> <span class="n">TaurusGraphicsItem</span><span class="p">)</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusJDrawGraphicsFactory&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <span class="n">LINESTYLE_JDW2QT</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">,</span>
@@ -319,7 +325,7 @@
 
         <span class="n">polygon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPolygonF</span><span class="p">()</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
             <span class="n">polygon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>
         <span class="n">item</span><span class="o">.</span><span class="n">setPolygon</span><span class="p">(</span><span class="n">polygon</span><span class="p">)</span>
 
@@ -328,7 +334,7 @@
 <div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getSplineObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusJDrawGraphicsFactory.getSplineObj">[docs]</a>    <span class="k">def</span> <span class="nf">getSplineObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;Spline&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
         <span class="n">item</span><span class="o">.</span><span class="n">setControlPoints</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="n">isClosed</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;isClosed&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">item</span><span class="o">.</span><span class="n">setClose</span><span class="p">(</span><span class="n">isClosed</span><span class="p">)</span>
@@ -351,8 +357,8 @@
         <span class="c1"># it is parsed as a float</span>
         <span class="n">vAlignment</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vAlignment&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
         <span class="n">hAlignment</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hAlignment&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-        <span class="k">assert</span><span class="p">(</span><span class="n">vAlignment</span> <span class="ow">in</span> <span class="n">VALIGNMENT</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-        <span class="k">assert</span><span class="p">(</span><span class="n">hAlignment</span> <span class="ow">in</span> <span class="n">ALIGNMENT</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">vAlignment</span> <span class="ow">in</span> <span class="n">VALIGNMENT</span><span class="p">)</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">hAlignment</span> <span class="ow">in</span> <span class="n">ALIGNMENT</span><span class="p">)</span>
         <span class="n">vAlignment</span> <span class="o">=</span> <span class="n">VALIGNMENT</span><span class="p">[</span><span class="n">vAlignment</span><span class="p">]</span>
         <span class="n">hAlignment</span> <span class="o">=</span> <span class="n">ALIGNMENT</span><span class="p">[</span><span class="n">hAlignment</span><span class="p">]</span>
         <span class="n">item</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">hAlignment</span> <span class="o">|</span> <span class="n">vAlignment</span><span class="p">)</span>
@@ -510,9 +516,9 @@
                 <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="n">lineWidth</span><span class="p">)</span>
                 <span class="n">pen</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">LINESTYLE_JDW2QT</span><span class="p">[</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lineStyle&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
             <span class="n">item</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="n">ae</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">ae</span><span class="p">:</span>
             <span class="k">pass</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;jdraw.set_common_params(</span><span class="si">%s</span><span class="s1">(</span><span class="si">%s</span><span class="s1">)).(foreground,width,style) failed!: </span><span class="se">\n\t</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
                 <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
 
@@ -558,7 +564,7 @@
         <span class="k">return</span></div></div>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">jdraw_view</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">jdraw_view</span>
     <span class="n">jdraw_view</span><span class="o">.</span><span class="n">jdraw_view_main</span><span class="p">()</span>
 </pre></div>
 

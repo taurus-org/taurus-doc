@@ -164,16 +164,13 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains a set of useful logging elements based on python&#39;s</span>
 <span class="sd">:mod:`logging` system.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LogIt&quot;</span><span class="p">,</span> <span class="s2">&quot;TraceIt&quot;</span><span class="p">,</span> <span class="s2">&quot;DebugIt&quot;</span><span class="p">,</span> <span class="s2">&quot;InfoIt&quot;</span><span class="p">,</span> <span class="s2">&quot;WarnIt&quot;</span><span class="p">,</span> <span class="s2">&quot;ErrorIt&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;CriticalIt&quot;</span><span class="p">,</span> <span class="s2">&quot;MemoryLogHandler&quot;</span><span class="p">,</span> <span class="s2">&quot;LogExceptHook&quot;</span><span class="p">,</span> <span class="s2">&quot;Logger&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;LogFilter&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;_log&quot;</span><span class="p">,</span> <span class="s2">&quot;trace&quot;</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;fatal&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;critical&quot;</span><span class="p">,</span> <span class="s2">&quot;deprecated&quot;</span><span class="p">,</span> <span class="s2">&quot;deprecation_decorator&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;taurus4_deprecation&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
+<span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging.handlers</span>
@@ -184,13 +181,23 @@
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 
-<span class="kn">from</span> <span class="nn">object</span> <span class="k">import</span> <span class="n">Object</span>
-<span class="kn">from</span> <span class="nn">wrap</span> <span class="k">import</span> <span class="n">wraps</span>
-<span class="kn">from</span> <span class="nn">excepthook</span> <span class="k">import</span> <span class="n">BaseExceptHook</span>
+<span class="kn">from</span> <span class="nn">.object</span> <span class="k">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">.wrap</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">.excepthook</span> <span class="k">import</span> <span class="n">BaseExceptHook</span>
 
 <span class="c1"># ------------------------------------------------------------------------------</span>
 <span class="c1"># TODO: substitute this ugly hack (below) by a more general mechanism</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LogIt&quot;</span><span class="p">,</span> <span class="s2">&quot;TraceIt&quot;</span><span class="p">,</span> <span class="s2">&quot;DebugIt&quot;</span><span class="p">,</span> <span class="s2">&quot;InfoIt&quot;</span><span class="p">,</span> <span class="s2">&quot;WarnIt&quot;</span><span class="p">,</span> <span class="s2">&quot;ErrorIt&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;CriticalIt&quot;</span><span class="p">,</span> <span class="s2">&quot;MemoryLogHandler&quot;</span><span class="p">,</span> <span class="s2">&quot;LogExceptHook&quot;</span><span class="p">,</span> <span class="s2">&quot;Logger&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;LogFilter&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;_log&quot;</span><span class="p">,</span> <span class="s2">&quot;trace&quot;</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;fatal&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;critical&quot;</span><span class="p">,</span> <span class="s2">&quot;deprecated&quot;</span><span class="p">,</span> <span class="s2">&quot;deprecation_decorator&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;taurus4_deprecation&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">_DeprecationCounter</span><span class="p">(</span><span class="n">defaultdict</span><span class="p">):</span>
@@ -200,14 +207,13 @@
 
     <span class="k">def</span> <span class="nf">getTotal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">c</span> <span class="o">+=</span> <span class="n">v</span>
         <span class="k">return</span> <span class="n">c</span>
 
     <span class="k">def</span> <span class="nf">pretty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
-        <span class="n">sorted_items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">sorted_items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">%d</span><span class="s1"> * &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sorted_items</span><span class="p">])</span>
         <span class="k">return</span> <span class="s2">&quot;&lt; Deprecation Counts (</span><span class="si">%d</span><span class="s2">):</span><span class="se">\n</span><span class="si">%s</span><span class="s2"> &gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getTotal</span><span class="p">(),</span> <span class="n">ret</span><span class="p">)</span>
 
@@ -307,7 +313,7 @@
                 <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
             <span class="n">has_log</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">f_self</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">)</span>
-            <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">func_name</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
             <span class="n">log_obj</span> <span class="o">=</span> <span class="n">f_self</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">has_log</span><span class="p">:</span>
                 <span class="n">log_obj</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
@@ -327,7 +333,7 @@
             <span class="n">out_msg</span> <span class="o">=</span> <span class="s2">&quot;&lt;-&quot;</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">exc_info</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
                 <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; (with </span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
                 <span class="n">log_obj</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_level</span><span class="p">,</span> <span class="n">out_msg</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">exc_info</span><span class="p">)</span>
@@ -464,27 +470,27 @@
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">func_name</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
             <span class="n">in_msg</span> <span class="o">=</span> <span class="s2">&quot;-&gt; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showargs</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">in_msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
                     <span class="n">in_msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="nb">print</span>
-            <span class="nb">print</span> <span class="n">in_msg</span>
+            <span class="nb">print</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">in_msg</span><span class="p">)</span>
             <span class="n">out_msg</span> <span class="o">=</span> <span class="s2">&quot;&lt;-&quot;</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; (with </span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
-                <span class="nb">print</span> <span class="n">out_msg</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">out_msg</span><span class="p">)</span>
                 <span class="k">raise</span>
             <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showret</span><span class="p">:</span>
                 <span class="n">out_msg</span> <span class="o">+=</span> <span class="s2">&quot; = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-            <span class="nb">print</span> <span class="n">out_msg</span>
-            <span class="nb">print</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">out_msg</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">ret</span>
         <span class="k">return</span> <span class="n">wrapper</span>
 
@@ -549,7 +555,8 @@
 
 <span class="k">class</span> <span class="nc">_Logger</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">findCaller</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">findCaller</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stack_info</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Find the stack frame of the caller so that we can note the source</span>
 <span class="sd">        file name, line number and function name.</span>
@@ -559,14 +566,24 @@
         <span class="c1"># IronPython isn&#39;t run with -X:Frames.</span>
         <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">f_back</span>
-        <span class="n">rv</span> <span class="o">=</span> <span class="s2">&quot;(unknown file)&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;(unknown function)&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="s2">&quot;(unknown file)&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;(unknown function)&quot;</span><span class="p">,</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;f_code&quot;</span><span class="p">):</span>
             <span class="n">co</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">f_code</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">co</span><span class="o">.</span><span class="n">co_filename</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_srcfile</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">_srcfile</span><span class="p">):</span>
                 <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">f_back</span>
                 <span class="k">continue</span>
-            <span class="n">rv</span> <span class="o">=</span> <span class="p">(</span><span class="n">co</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">,</span> <span class="n">co</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+            
+            <span class="n">sinfo</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">stack_info</span><span class="p">:</span>
+                <span class="n">sio</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+                <span class="n">sio</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Stack (most recent call last):</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">traceback</span><span class="o">.</span><span class="n">print_stack</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sio</span><span class="p">)</span>
+                <span class="n">sinfo</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">sinfo</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
+                    <span class="n">sinfo</span> <span class="o">=</span> <span class="n">sinfo</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">sio</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">rv</span> <span class="o">=</span> <span class="p">(</span><span class="n">co</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">,</span> <span class="n">co</span><span class="o">.</span><span class="n">co_name</span><span class="p">,</span> <span class="n">sinfo</span><span class="p">)</span>
             <span class="k">break</span>
         <span class="k">return</span> <span class="n">rv</span>
 
@@ -817,7 +834,7 @@
 <span class="sd">           :return: (sequence&lt;logging.Logger) the list of log children</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ref</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_children</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ref</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_children</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">child</span> <span class="o">=</span> <span class="n">ref</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">child</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
@@ -1022,10 +1039,9 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">_DEPRECATION_COUNT</span><span class="p">[</span><span class="n">msg</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">_MAX_DEPRECATIONS_LOGGED</span><span class="p">:</span>
                 <span class="k">return</span>
-
         <span class="k">if</span> <span class="n">_callerinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_callerinfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">findCaller</span><span class="p">()</span>
-        <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_callerinfo</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="n">_callerinfo</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">depr_msg</span> <span class="o">=</span> <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span><span class="p">(</span>
             <span class="n">msg</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_obj</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">depr_msg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
@@ -1217,7 +1233,7 @@
 <span class="sd">        - zab</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-    <span class="nb">print</span> <span class="n">foo</span><span class="o">.</span><span class="vm">__doc__</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
 </pre></div>
 
            </div>

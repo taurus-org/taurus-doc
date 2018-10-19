@@ -165,6 +165,14 @@
 <span class="sd">&quot;&quot;&quot;This module provides widgets that display the database in a tree format&quot;&quot;&quot;</span>
 <span class="c1"># TODO: tango-centric</span>
 
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusDevState</span>
+<span class="kn">import</span> <span class="nn">taurus.qt.qtcore.mimetypes</span>
+<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusBaseTreeItem</span><span class="p">,</span> <span class="n">TaurusBaseModel</span><span class="p">,</span> <span class="n">TaurusBaseProxyModel</span>
+
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusTreeDevicePartItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeDeviceDomainItem&quot;</span><span class="p">,</span>
            <span class="s2">&quot;TaurusTreeDeviceFamilyItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeDeviceMemberItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeSimpleDeviceItem&quot;</span><span class="p">,</span>
            <span class="s2">&quot;TaurusTreeDeviceItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeAttributeItem&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTreeServerNameItem&quot;</span><span class="p">,</span>
@@ -178,11 +186,6 @@
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusDevState</span>
-<span class="kn">import</span> <span class="nn">taurus.qt.qtcore.mimetypes</span>
-
-<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusBaseTreeItem</span><span class="p">,</span> <span class="n">TaurusBaseModel</span><span class="p">,</span> <span class="n">TaurusBaseProxyModel</span>
 
 <span class="n">ElemType</span> <span class="o">=</span> <span class="n">TaurusElementType</span>
 
@@ -692,15 +695,15 @@
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">()</span>
 
         <span class="n">rootItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span>
-        <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">families</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">domain</span><span class="p">]</span>
             <span class="n">domainItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceDomainItem</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">rootItem</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">family</span> <span class="ow">in</span> <span class="n">families</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">family</span> <span class="ow">in</span> <span class="n">families</span><span class="p">:</span>
                 <span class="n">members</span> <span class="o">=</span> <span class="n">families</span><span class="p">[</span><span class="n">family</span><span class="p">]</span>
                 <span class="n">familyItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceFamilyItem</span><span class="p">(</span>
                     <span class="bp">self</span><span class="p">,</span> <span class="n">family</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">domainItem</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">members</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">members</span><span class="p">:</span>
                     <span class="n">dev</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="n">member</span><span class="p">]</span>
                     <span class="n">memberItem</span> <span class="o">=</span> <span class="n">TaurusTreeDeviceItem</span><span class="p">(</span>
                         <span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">familyItem</span><span class="p">)</span>

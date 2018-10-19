@@ -165,7 +165,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">taurustrend.py: Generic trend widget for Taurus</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ScanTrendsSet&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrend&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrendsSet&quot;</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -180,6 +182,9 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span><span class="p">,</span> <span class="n">CaselessList</span><span class="p">,</span> <span class="n">ArrayBuffer</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.plot</span> <span class="k">import</span> <span class="n">TaurusPlot</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ScanTrendsSet&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrend&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrendsSet&quot;</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">getArchivedTrendValues</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -251,7 +256,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_orderedCurveNames</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_curves</span> <span class="o">=</span> <span class="n">curves</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_orderedCurveNames</span> <span class="o">=</span> <span class="n">curves</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orderedCurveNames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">curves</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_titleText</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
@@ -322,7 +327,7 @@
         <span class="n">ntrends</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_curves</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;&lt;trend_index&gt;&#39;</span> <span class="ow">in</span> <span class="n">basetitle</span><span class="p">:</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">basetitle</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;trend_index&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
-                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">ntrends</span><span class="p">)]</span>
+                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntrends</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">basetitle</span><span class="p">]</span> <span class="o">*</span> <span class="n">ntrends</span>
         <span class="k">return</span> <span class="n">ret</span></div>
@@ -477,7 +482,7 @@
                 <span class="n">v</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">rvalue</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_yBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Problem updating history (</span><span class="si">%s</span><span class="s1">=</span><span class="si">%s</span><span class="s1">):</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
                              <span class="n">model</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
@@ -493,7 +498,7 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">getXDynScale</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">axisAutoScale</span><span class="p">(</span><span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">getArchivedTrendValues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                         <span class="kn">import</span> <span class="nn">traceback</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: reading from archiving failed: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
                             <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
@@ -577,7 +582,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_xValues</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_yValues</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updateHistory</span><span class="p">(</span>
                 <span class="n">model</span><span class="o">=</span><span class="n">model</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModel</span><span class="p">(),</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_onDroppedEvent</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">raise</span>
 
@@ -610,7 +615,7 @@
             <span class="c1"># them to the TrendSet</span>
             <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">()</span>
             <span class="n">rawdata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">0</span><span class="p">)}</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">ntrends</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntrends</span><span class="p">):</span>
                 <span class="n">subname</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">[</span><span class="si">%i</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">(</span><span class="n">rawdata</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">subname</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">addCurve</span><span class="p">(</span><span class="n">subname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">curves</span><span class="p">[</span><span class="n">subname</span><span class="p">])</span>
@@ -1264,7 +1269,7 @@
 <span class="sd">        not remove the models, it simply removes all stored data)&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">curves_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                 <span class="n">ts</span><span class="o">.</span><span class="n">clearTrends</span><span class="p">(</span><span class="n">replot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">curves_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
@@ -1314,7 +1319,7 @@
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                         <span class="s1">&#39;composed (&quot;X|Y&quot;) models are not supported by TaurusTrend&#39;</span><span class="p">)</span>
                 <span class="c1"># create a new TrendSet if not already there</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="p">:</span>
                     <span class="c1"># check if the model name is of scan type and provides a</span>
                     <span class="c1"># door</span>
                     <span class="n">matchScan</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;scan:\/\/(.*)&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -1418,7 +1423,7 @@
                     <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">tset</span><span class="o">.</span><span class="n">compiledTitle</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">tset</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tset</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">curves_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">title</span></div>
@@ -1467,7 +1472,7 @@
                     <span class="n">newTitlesDict</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
                     <span class="k">for</span> <span class="n">curveName</span> <span class="ow">in</span> <span class="n">curveNamesList</span><span class="p">:</span>
                         <span class="n">curvetitle</span> <span class="o">=</span> <span class="n">titletext</span>
-                        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+                        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                             <span class="k">if</span> <span class="n">curveName</span> <span class="ow">in</span> <span class="n">ts</span><span class="p">:</span>
                                 <span class="n">curvetitle</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">compileBaseTitle</span><span class="p">(</span><span class="n">curvetitle</span><span class="p">)</span>
                                 <span class="n">curvetitle</span> <span class="o">=</span> <span class="n">curvetitle</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
@@ -1579,7 +1584,7 @@
 
 <span class="sd">        .. seealso:: :meth:`TaurusBaseComponent.setPaused`</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">ts</span><span class="o">.</span><span class="n">setPaused</span><span class="p">(</span><span class="n">paused</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isPaused</span> <span class="o">=</span> <span class="n">paused</span></div>
 
@@ -1617,7 +1622,7 @@
         <span class="n">miscdict</span><span class="p">[</span><span class="s2">&quot;MaxBufferSize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMaxDataBufferSize</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">curves_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">tsname</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">tsname</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">tsname</span> <span class="ow">in</span> <span class="n">tsnames</span><span class="p">:</span>
                     <span class="c1"># store a dict containing just model names (key and value</span>
                     <span class="c1"># are the same)</span>
@@ -1652,7 +1657,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">attachRawData</span><span class="p">(</span><span class="n">rd</span><span class="p">)</span>
         <span class="c1"># for backwards compatibility, if the ordered list of models is not</span>
         <span class="c1"># stored, it uses the unsorted dict values</span>
-        <span class="n">models</span> <span class="o">=</span> <span class="n">configdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">configdict</span><span class="p">[</span><span class="s2">&quot;TrendSets&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="n">configdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">configdict</span><span class="p">[</span><span class="s2">&quot;TrendSets&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addModels</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
             <span class="n">tset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
@@ -1828,7 +1833,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">curves_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">ts</span><span class="o">.</span><span class="n">setMaxDataBufferSize</span><span class="p">(</span><span class="n">maxSize</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
@@ -2065,16 +2070,16 @@
         <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
     <span class="c1"># export option</span>
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">export_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">curves</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">curves</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">trendSets</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">exportIfAllCurves</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">counters</span><span class="o">=</span><span class="n">curves</span><span class="p">):</span>
             <span class="n">curve</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
-            <span class="nb">print</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Event received for </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">curve</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Event received for </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">curve</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">curve</span> <span class="ow">in</span> <span class="n">counters</span><span class="p">:</span>
                 <span class="n">counters</span><span class="p">[</span><span class="n">curve</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">counters</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
                     <span class="n">trend</span><span class="o">.</span><span class="n">exportPdf</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">export_file</span><span class="p">)</span>
-                    <span class="nb">print</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Exported to : </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">options</span><span class="o">.</span><span class="n">export_file</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Exported to : </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">options</span><span class="o">.</span><span class="n">export_file</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
                     <span class="n">trend</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">curves</span><span class="p">:</span>

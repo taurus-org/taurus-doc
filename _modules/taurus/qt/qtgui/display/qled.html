@@ -237,7 +237,7 @@
 <span class="sd">        :type  color: str</span>
 <span class="sd">        :return: True is the given color name is valid or False otherwise</span>
 <span class="sd">        :rtype: bool&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">LedColor</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">in</span> <span class="n">LedColor</span></div>
 
     <span class="k">def</span> <span class="nf">_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;internal usage only&quot;&quot;&quot;</span>
@@ -428,8 +428,8 @@
 <div class="viewcode-block" id="QLedOld"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld">[docs]</a><span class="k">class</span> <span class="nc">QLedOld</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
     <span class="n">ledDirPattern</span> <span class="o">=</span> <span class="s2">&quot;:leds/images</span><span class="si">%(size)d</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ledsize</span><span class="o">=</span><span class="n">LedSize</span><span class="o">.</span><span class="n">SMALL</span><span class="p">,</span> <span class="n">ledcolor</span><span class="o">=</span><span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">):</span>
-
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ledsize</span><span class="o">=</span><span class="n">LedSize</span><span class="o">.</span><span class="n">SMALL</span><span class="p">,</span>
+                 <span class="n">ledcolor</span><span class="o">=</span><span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ledsize</span> <span class="o">=</span> <span class="n">ledsize</span>

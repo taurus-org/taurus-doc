@@ -194,20 +194,22 @@
 <span class="sd">  &lt;https://tools.ietf.org/html/rfc3986#section-3.3&gt;)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="k">import</span> <span class="n">WeakValueDictionary</span>
+<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">.taurusauthority</span> <span class="k">import</span> <span class="n">TaurusAuthority</span>
+<span class="kn">from</span> <span class="nn">.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">.taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfiguration</span><span class="p">,</span> <span class="n">TaurusConfigurationProxy</span>
+<span class="kn">from</span> <span class="nn">.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tauruspollingtimer</span> <span class="k">import</span> <span class="n">TaurusPollingTimer</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusFactory&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">import</span> <span class="nn">atexit</span>
-<span class="kn">from</span> <span class="nn">weakref</span> <span class="k">import</span> <span class="n">WeakValueDictionary</span>
-<span class="kn">from</span> <span class="nn">taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
-<span class="kn">from</span> <span class="nn">taurusauthority</span> <span class="k">import</span> <span class="n">TaurusAuthority</span>
-<span class="kn">from</span> <span class="nn">taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
-<span class="kn">from</span> <span class="nn">taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
-<span class="kn">from</span> <span class="nn">taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfiguration</span><span class="p">,</span> <span class="n">TaurusConfigurationProxy</span>
-<span class="kn">from</span> <span class="nn">taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
-<span class="kn">from</span> <span class="nn">taurus.core.tauruspollingtimer</span> <span class="k">import</span> <span class="n">TaurusPollingTimer</span>
 
 
 <div class="viewcode-block" id="TaurusFactory"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -232,7 +234,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_devs</span> <span class="o">=</span> <span class="n">WeakValueDictionary</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_auths</span> <span class="o">=</span> <span class="n">WeakValueDictionary</span><span class="p">()</span>
 
-        <span class="kn">import</span> <span class="nn">taurusmanager</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">taurusmanager</span>
         <span class="n">manager</span> <span class="o">=</span> <span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
 
@@ -462,14 +464,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">():</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TaurusFactory.enablePolling"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.enablePolling">[docs]</a>    <span class="k">def</span> <span class="nf">enablePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Enable the application tango polling&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">():</span>
             <span class="k">return</span>
-        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">True</span></div>
 
@@ -492,7 +494,7 @@
 <span class="sd">           :param attribute: (str) attribute name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">containsAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">):</span>
                 <span class="n">timer</span><span class="o">.</span><span class="n">removeAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">getAttributeCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>

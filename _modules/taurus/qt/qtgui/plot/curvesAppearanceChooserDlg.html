@@ -168,6 +168,9 @@
 <span class="sd">    for a QwtPlot-derived widget (like Taurusplot)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Qwt5</span>
@@ -184,7 +187,7 @@
                    <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DashDotDotLine</span><span class="p">:</span> <span class="s2">&quot;.._..&quot;</span><span class="p">,</span>
                    <span class="p">}</span>
 <span class="n">ReverseNamedLineStyles</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedLineStyles</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedLineStyles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">ReverseNamedLineStyles</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
 
 <span class="n">NamedCurveStyles</span> <span class="o">=</span> <span class="p">{</span><span class="kc">None</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -195,7 +198,7 @@
                     <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtPlotCurve</span><span class="o">.</span><span class="n">Dots</span><span class="p">:</span> <span class="s2">&quot;Dots&quot;</span>
                     <span class="p">}</span>
 <span class="n">ReverseNamedCurveStyles</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedCurveStyles</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedCurveStyles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">ReverseNamedCurveStyles</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
 
 <span class="n">NamedSymbolStyles</span> <span class="o">=</span> <span class="p">{</span>
@@ -219,7 +222,7 @@
 <span class="p">}</span>
 
 <span class="n">ReverseNamedSymbolStyles</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedSymbolStyles</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">NamedSymbolStyles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">ReverseNamedSymbolStyles</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
 
 <span class="n">NamedColors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Black&quot;</span><span class="p">,</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span> <span class="s2">&quot;Blue&quot;</span><span class="p">,</span> <span class="s2">&quot;Magenta&quot;</span><span class="p">,</span>
@@ -251,8 +254,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">autoApply</span> <span class="o">=</span> <span class="n">autoApply</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">NamedSymbolStyles</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NamedLineStyles</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NamedCurveStyles</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">NamedLineStyles</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cStyleCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">NamedCurveStyles</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lColorCB</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">showButtons</span><span class="p">:</span>
@@ -302,7 +305,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_curvePropDictOrig</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">curvePropDict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="c1"># create and insert the item</span>
             <span class="n">item</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QListWidgetItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">title</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
@@ -330,7 +333,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">newTitlesDict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">newTitlesDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">newTitlesDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">title</span><span class="p">)</span></div>
 
@@ -569,10 +572,10 @@
 
     <span class="k">def</span> <span class="nf">_print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Just for debug&quot;&quot;&quot;</span>
-        <span class="nb">print</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">77</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">77</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyList</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="n">k</span> <span class="o">+</span> <span class="s2">&quot;= &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">77</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="s2">&quot;= &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">77</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="CurveAppearanceProperties.inConflict_update_a"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/plot/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.inConflict_update_a">[docs]</a>    <span class="k">def</span> <span class="nf">inConflict_update_a</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>

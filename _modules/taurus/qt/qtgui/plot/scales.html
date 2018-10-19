@@ -165,14 +165,18 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">scales.py: Custom scales used by taurus.qt.qtgui.plot module</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DateTimeScaleEngine&quot;</span><span class="p">,</span> <span class="s2">&quot;DeltaTimeScaleEngine&quot;</span><span class="p">,</span> <span class="s2">&quot;FixedLabelsScaleEngine&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;FancyScaleDraw&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTimeScaleDraw&quot;</span><span class="p">,</span> <span class="s2">&quot;DeltaTimeScaleDraw&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;FixedLabelsScaleDraw&quot;</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">mktime</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">Qwt5</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DateTimeScaleEngine&quot;</span><span class="p">,</span> <span class="s2">&quot;DeltaTimeScaleEngine&quot;</span><span class="p">,</span> <span class="s2">&quot;FixedLabelsScaleEngine&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;FancyScaleDraw&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTimeScaleDraw&quot;</span><span class="p">,</span> <span class="s2">&quot;DeltaTimeScaleDraw&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;FixedLabelsScaleDraw&quot;</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_getDefaultAxisLabelsAlignment</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
@@ -356,7 +360,7 @@
 
         <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># 2s</span>
             <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%H:%M:%S&quot;</span>
-            <span class="n">majticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x2</span><span class="p">))</span>
+            <span class="n">majticks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x2</span><span class="p">)))</span>
 
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># less than 2s (show microseconds)</span>
             <span class="n">scaleDiv</span> <span class="o">=</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtLinearScaleEngine</span><span class="o">.</span><span class="n">divideScale</span><span class="p">(</span>
@@ -457,8 +461,8 @@
         <span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>  <span class="c1"># If the scaleDiv was created by a DateTimeScaleEngine it has a _datetimeLabelFormat</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datetimeLabelFormat</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s2">&quot;Warning: cannot get the datetime label format (Are you using a DateTimeScaleEngine?)&quot;</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: cannot get the datetime label format (Are you using a DateTimeScaleEngine?)&quot;</span><span class="p">)</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Qwt5</span><span class="o">.</span><span class="n">QwtText</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div></div>
 

@@ -207,7 +207,7 @@
 <span class="n">__3DQS</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">__DW</span><span class="p">,</span> <span class="n">__DH</span><span class="p">)</span>
 
 <span class="c1"># Indexes for the map below</span>
-<span class="n">__IDX_ELEM_TYPE_ICON</span><span class="p">,</span> <span class="n">__IDX_ELEM_TYPE_SIZE</span><span class="p">,</span> <span class="n">__IDX_ELEM_TYPE_TOOLTIP</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">__IDX_ELEM_TYPE_ICON</span><span class="p">,</span> <span class="n">__IDX_ELEM_TYPE_SIZE</span><span class="p">,</span> <span class="n">__IDX_ELEM_TYPE_TOOLTIP</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 
 <span class="c1"># New default role map</span>
 <span class="c1"># Elements are: icon theme, preferred size, description/tooltip</span>
@@ -241,7 +241,7 @@
 <span class="p">}</span>
 
 <span class="c1"># Indexes for the map below</span>
-<span class="n">__IDX_STATE_ICON</span><span class="p">,</span> <span class="n">__IDX_STATE_TOOLTIP</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">__IDX_STATE_ICON</span><span class="p">,</span> <span class="n">__IDX_STATE_TOOLTIP</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
 <span class="n">_STATE_MAP</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">TaurusDevState</span><span class="o">.</span><span class="n">Ready</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;status:available.svg&quot;</span><span class="p">,</span> <span class="s2">&quot;Element ready&quot;</span><span class="p">),</span>
@@ -274,7 +274,7 @@
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">pathfilenames</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">pathmap</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">__LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error registering &quot;</span><span class="si">%s</span><span class="s1">&quot;: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
             <span class="n">pathmap</span> <span class="o">=</span> <span class="p">[]</span>
 

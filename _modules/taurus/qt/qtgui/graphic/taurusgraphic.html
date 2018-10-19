@@ -164,8 +164,37 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">taurusgraphic.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
 <span class="c1"># TODO: Tango-centric</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span>
+
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Manager</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">DataType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDefaultDict</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">deprecation_decorator</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span><span class="p">,</span>
+                                  <span class="n">ExternalAppAction</span><span class="p">,</span> <span class="n">TaurusWidgetFactory</span><span class="p">)</span>
+
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SynopticSelectionStyle&#39;</span><span class="p">,</span>
            <span class="s1">&#39;parseTangoUri&#39;</span><span class="p">,</span>
@@ -193,27 +222,6 @@
            <span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">traceback</span>
-<span class="kn">import</span> <span class="nn">operator</span>
-<span class="kn">import</span> <span class="nn">types</span>
-
-<span class="kn">import</span> <span class="nn">Queue</span>
-
-<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Manager</span>
-<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">DataType</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDefaultDict</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">deprecation_decorator</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span><span class="p">,</span>
-                                  <span class="n">ExternalAppAction</span><span class="p">,</span> <span class="n">TaurusWidgetFactory</span><span class="p">)</span>
 
 
 <span class="n">SynopticSelectionStyle</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s2">&quot;SynopticSelectionStyle&quot;</span><span class="p">,</span> <span class="p">[</span>
@@ -279,12 +287,12 @@
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">item</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="n">types</span><span class="o">.</span><span class="n">StringTypes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">str</span><span class="p">,):</span>
                 <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s2">&quot;exit&quot;</span><span class="p">:</span>
                     <span class="k">break</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">continue</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">operator</span><span class="o">.</span><span class="n">isSequenceType</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
                 <span class="n">item</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="p">,)</span>
             <span class="c1"># @todo: Unless the call to boundingRect() has a side effect, this line is useless..  probably related to todo in _updateView()</span>
             <span class="n">item_rects</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
@@ -353,12 +361,12 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">warning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                     <span class="n">l</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s1">&#39;Unable to initialize TaurusGraphicsSceneLogger: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unable to initialize TaurusGraphicsSceneLogger: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">parent</span> <span class="ow">and</span> <span class="n">parent</span><span class="o">.</span><span class="n">panelClass</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">defaultClass</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">panelClass</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">defaultClass</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">defaultClass</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">defaultClass</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">defaultClass</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">panel_launcher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getClass</span><span class="p">(</span><span class="n">defaultClass</span><span class="p">)</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel_launcher</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">panel_launcher</span> <span class="o">=</span> <span class="n">ExternalAppAction</span><span class="p">(</span>
@@ -399,7 +407,7 @@
                 <span class="n">clName</span><span class="o">.</span><span class="n">actionTriggered</span><span class="p">(</span><span class="n">clParam</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
                     <span class="n">clParam</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="k">else</span> <span class="p">[</span><span class="n">clParam</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clName</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clName</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                     <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getClass</span><span class="p">(</span><span class="n">clName</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">klass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> Class not found!&quot;</span> <span class="o">%</span> <span class="n">clName</span><span class="p">)</span>
@@ -510,7 +518,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">target</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">):</span>
             <span class="n">target</span> <span class="o">+=</span> <span class="s1">&#39;$&#39;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemnames</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_itemnames</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
                 <span class="c1">#self.debug(&#39;getItemByName(%s): _itemnames[%s]: %s&#39;%(target,k,self._itemnames[k]))</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_itemnames</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
@@ -578,7 +586,7 @@
                     <span class="k">elif</span> <span class="ow">not</span> <span class="n">last_was_separator</span><span class="p">:</span>
                         <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
                         <span class="n">last_was_separator</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Unable to add Menu Action: </span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
                 <span class="k">return</span> <span class="n">last_was_separator</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">mouseEvent</span><span class="o">.</span><span class="n">button</span><span class="p">()</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightButton</span><span class="p">):</span>
@@ -714,7 +722,7 @@
                 <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectedItems</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_selectedItems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
                 <span class="n">retval</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;selectGraphicsItem(</span><span class="si">%s</span><span class="s1">) failed! </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
                              <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;_name&#39;</span><span class="p">,</span> <span class="n">item</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
@@ -822,12 +830,12 @@
                     <span class="n">SelectionMark</span> <span class="o">=</span> <span class="n">picture</span>
                     <span class="n">SelectionMark</span><span class="o">.</span><span class="n">setRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
                     <span class="n">SelectionMark</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
-                <span class="k">elif</span> <span class="n">operator</span><span class="o">.</span><span class="n">isCallable</span><span class="p">(</span><span class="n">picture</span><span class="p">):</span>
+                <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">):</span>
                     <span class="n">SelectionMark</span> <span class="o">=</span> <span class="n">picture</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">):</span>
                         <span class="n">pixmap</span> <span class="o">=</span> <span class="n">picture</span>
-                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="n">basestring</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">):</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,)):</span>
                         <span class="n">picture</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">picture</span><span class="p">)</span>
                         <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">picture</span><span class="p">))</span>
                     <span class="n">SelectionMark</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPixmapItem</span><span class="p">()</span>
@@ -968,7 +976,7 @@
 <div class="viewcode-block" id="TaurusGraphicsScene.start"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsScene.html#taurus.qt.qtgui.graphic.TaurusGraphicsScene.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updateThread</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">updateQueue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateQueue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateThread</span> <span class="o">=</span> <span class="n">TaurusGraphicsUpdateThread</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateThread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>  <span class="c1"># Qt.QThread.HighPriority)</span></div>
 
@@ -1122,7 +1130,7 @@
             <span class="n">path</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
                 <span class="n">p1</span> <span class="o">=</span> <span class="n">cp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">0</span><span class="p">]</span>
                 <span class="n">p2</span> <span class="o">=</span> <span class="n">cp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
                 <span class="n">end</span> <span class="o">=</span> <span class="n">cp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
@@ -1575,7 +1583,7 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="TaurusBaseGraphicsFactory"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusBaseGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusBaseGraphicsFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseGraphicsFactory</span><span class="p">:</span>
+<div class="viewcode-block" id="TaurusBaseGraphicsFactory"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusBaseGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusBaseGraphicsFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseGraphicsFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>

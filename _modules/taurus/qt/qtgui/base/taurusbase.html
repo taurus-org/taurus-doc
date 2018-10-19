@@ -166,14 +166,11 @@
 <span class="sd">&quot;&quot;&quot;This module provides the set of base classes from which the Qt taurus widgets</span>
 <span class="sd">should inherit to be considered valid taurus widgets.&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseComponent&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusBaseWidget&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;TaurusBaseWritableWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;defaultFormatter&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="n">MethodType</span>
+<span class="kn">from</span> <span class="nn">future.builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
@@ -184,18 +181,26 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusconfiguration</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusConfiguration</span><span class="p">,</span>
-                                             <span class="n">TaurusConfigurationProxy</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfigurationProxy</span>
 <span class="kn">from</span> <span class="nn">taurus.core.tauruslistener</span> <span class="k">import</span> <span class="n">TaurusListener</span><span class="p">,</span> <span class="n">TaurusExceptionListener</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusoperation</span> <span class="k">import</span> <span class="n">WriteAttrOperation</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.eventfilters</span> <span class="k">import</span> <span class="n">filterEvent</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util.signal</span> <span class="k">import</span> <span class="n">baseSignal</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_DEV_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ActionFactory</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseComponent&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusBaseWidget&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusBaseWritableWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;defaultFormatter&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
 
 <span class="n">DefaultNoneValue</span> <span class="o">=</span> <span class="s2">&quot;-----&quot;</span>
 
@@ -841,7 +846,7 @@
 <span class="sd">        - dtype: the data type of the value to be formatted</span>
 <span class="sd">        - basecomponent: the affected widget</span>
 <span class="sd">  </span>
-<span class="sd">        The following are some examples for customizing the formatting:</span>
+<span class="sd">        The following are some examples for customizing the formatting::</span>
 
 <span class="sd">        - Change the format for widget instance `foo`::</span>
 
@@ -878,7 +883,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_updateFormat</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">((</span><span class="s1">&#39;Cannot update format. Reverting to default.&#39;</span> <span class="o">+</span>
                               <span class="s1">&#39; Reason: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="n">defaultFormatter</span><span class="p">)</span>
@@ -901,7 +906,7 @@
 <span class="sd">        :param kwargs: keyword arguments that will be passed to</span>
 <span class="sd">                       :attribute:`FORMAT` if it is a callable</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="c1"># unbound method to callable</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">MethodType</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="o">.</span><span class="vm">__func__</span>
@@ -920,7 +925,7 @@
 <span class="sd">                       &quot;full.module.callable&quot; format)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Check if the format is a callable string representation</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">moduleName</span><span class="p">,</span> <span class="n">formatterName</span> <span class="o">=</span> <span class="nb">format</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="nb">__import__</span><span class="p">(</span><span class="n">moduleName</span><span class="p">)</span>
@@ -937,7 +942,7 @@
 <span class="sd">        :return: (str) a string of the current format. It could be a python</span>
 <span class="sd">                 format string or a callable string representation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">formatter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">formatter</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>

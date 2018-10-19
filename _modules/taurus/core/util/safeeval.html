@@ -165,6 +165,10 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">safeeval.py: Safe eval replacement with whitelist support</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SafeEvaluator&quot;</span><span class="p">]</span>
 
@@ -255,14 +259,14 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
-    <span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
     <span class="n">sev</span> <span class="o">=</span> <span class="n">SafeEvaluator</span><span class="p">()</span>
-    <span class="nb">print</span> <span class="s2">&quot;trying to evaluate a variable that has not been registered&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;trying to evaluate a variable that has not been registered&quot;</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># This will fail because &#39;x&#39; is not registered in sev</span>
-        <span class="nb">print</span> <span class="n">sev</span><span class="o">.</span><span class="n">safeEval</span><span class="p">(</span><span class="s1">&#39;x+2&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sev</span><span class="o">.</span><span class="n">safeEval</span><span class="p">(</span><span class="s1">&#39;x+2&#39;</span><span class="p">))</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="nb">print</span> <span class="s2">&quot;failed!!&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;failed!!&quot;</span><span class="p">)</span>
 
     <span class="n">sev</span><span class="o">.</span><span class="n">addSafe</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">})</span>  <span class="c1"># After registering x, we can use it...</span>
     <span class="n">f0</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span>
@@ -274,19 +278,20 @@
     <span class="n">f5</span> <span class="o">=</span> <span class="s1">&#39;open(&quot;/etc/passwd&quot;)&#39;</span>
 
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">f0</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f3</span><span class="p">,</span> <span class="n">f4</span><span class="p">,</span> <span class="n">f5</span><span class="p">]:</span>
-        <span class="nb">print</span> <span class="s1">&#39;Evaluating &quot;</span><span class="si">%s</span><span class="s1">&quot;:&#39;</span> <span class="o">%</span> <span class="n">f</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Evaluating &quot;</span><span class="si">%s</span><span class="s1">&quot;:&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="n">sev</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">sev</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s1">&#39;ERROR: </span><span class="si">%s</span><span class="s1"> cannot be evaluated&#39;</span> <span class="o">%</span> <span class="n">f</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR: </span><span class="si">%s</span><span class="s1"> cannot be evaluated&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="p">)</span>
 
+    <span class="kn">import</span> <span class="nn">numpy</span>
     <span class="n">vector</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
     <span class="c1"># Another way of registering a variable is using the init method...</span>
     <span class="n">sev2</span> <span class="o">=</span> <span class="n">SafeEvaluator</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">vector</span><span class="p">},</span> <span class="n">defaultSafe</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="s1">&#39;x*y=&#39;</span><span class="p">,</span> <span class="n">sev2</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;x*y&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x*y=&#39;</span><span class="p">,</span> <span class="n">sev2</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;x*y&#39;</span><span class="p">))</span>
     <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># note that the registered variable is local to the evaluator!!</span>
     <span class="c1"># here, y still has the previously registered value instead of 0</span>
-    <span class="nb">print</span> <span class="s1">&#39;x*y=&#39;</span><span class="p">,</span> <span class="n">sev2</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;x*y&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x*y=&#39;</span><span class="p">,</span> <span class="n">sev2</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;x*y&#39;</span><span class="p">))</span>
 </pre></div>
 
            </div>
