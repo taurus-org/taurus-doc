@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.display.taurusconfiglabel &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.display.taurusconfiglabel</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.display.taurusconfiglabel</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a set of basic Taurus widgets based on QLabel&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusConfigLabel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+<span class="kn">import</span> <span class="nn">taurus.core</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">QT_DEVICE_STATE_PALETTE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+
+
+<div class="viewcode-block" id="TaurusConfigLabel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigLabel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       A label widget displaying the tango attribute configuration.</span>
+<span class="sd">       </span>
+<span class="sd">    .. deprecated:: 2.0</span>
+<span class="sd">           Use :class:`taurus.qt.qtgui.display.TaurusLabel` instead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__pyqtSignals__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;modelChanged(const QString &amp;)&quot;</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;TaurusConfigLabel&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extra_style</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="TaurusConfigLabel.defineStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.defineStyle">[docs]</a>    <span class="k">def</span> <span class="nf">defineStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">palette</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="p">()</span>
+        
+        <span class="c1"># define a default background color in case the model is not connected</span>
+        <span class="n">bg_brush</span><span class="p">,</span> <span class="n">fg_brush</span> <span class="o">=</span> <span class="n">QT_DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">qbrush</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Window</span><span class="p">,</span><span class="n">bg_brush</span><span class="p">)</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span><span class="n">bg_brush</span><span class="p">)</span>
+        <span class="n">palette</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPalette</span><span class="o">.</span><span class="n">WindowText</span><span class="p">,</span><span class="n">fg_brush</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span> <span class="c1"># mandatory since PyQt 4.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusConfigLabel.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusConfigLabel.getConfigurationAttributeValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.getConfigurationAttributeValue">[docs]</a>    <span class="k">def</span> <span class="nf">getConfigurationAttributeValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper method to get the proper parameter value from the configuration&quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">no_val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;no_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">val</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">no_val</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Invalid configuration parameter </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget overwriting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    
+<div class="viewcode-block" id="TaurusConfigLabel.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusconfiguration</span><span class="o">.</span><span class="n">TaurusConfiguration</span></div>
+
+<div class="viewcode-block" id="TaurusConfigLabel.getDisplayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cfg_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getConfigurationAttributeValue</span><span class="p">()</span>
+        <span class="n">cfg_value</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">cfg_value</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_suffix</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg_value</span></div>
+
+<div class="viewcode-block" id="TaurusConfigLabel.getFormatedToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.getFormatedToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">getFormatedToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="o">.</span><span class="n">fromLatin1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">())</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="o">.</span><span class="n">fromLatin1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="o">.</span><span class="n">fromLatin1</span><span class="p">(</span><span class="s2">&quot;&lt;HTML&gt;&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">+</span> <span class="s1">&#39; for &#39;</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">getDisplayName</span><span class="p">())</span></div>
+    
+<div class="viewcode-block" id="TaurusConfigLabel.isReadOnly"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+    
+<div class="viewcode-block" id="TaurusConfigLabel.setStyleSheet"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.setStyleSheet">[docs]</a>    <span class="k">def</span> <span class="nf">setStyleSheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ss</span><span class="p">):</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extra_style</span> <span class="o">=</span> <span class="n">ss</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">():</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;TaurusConfigLabel { </span>
+<span class="s2">                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,</span>
+<span class="s2">                              stop: 0.00 rgb(240,240,240),</span>
+<span class="s2">                              stop: 0.33 rgb(200,200,200),</span>
+<span class="s2">                              stop: 0.66 rgb(240,240,240),</span>
+<span class="s2">                              stop: 1.00 rgb(200,200,200));</span>
+<span class="s2">                color: gray;</span>
+<span class="s2">            </span><span class="si">%s</span><span class="s2">}&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;TaurusConfigLabel { </span><span class="si">%s</span><span class="s2"> }&quot;&quot;&quot;</span> <span class="o">%</span> <span class="n">ss</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TaurusConfigLabel.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extra_style</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePendingOpsStyle</span><span class="p">()</span></div>
+    
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties </span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+   
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSignature</span><span class="p">(</span><span class="s2">&quot;setModel(QString)&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusConfigLabel.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configParam</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusConfigLabel.getPrefixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.getPrefixText">[docs]</a>    <span class="k">def</span> <span class="nf">getPrefixText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span></div>
+    
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSignature</span><span class="p">(</span><span class="s2">&quot;setPrefixText(QString)&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusConfigLabel.setPrefixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.setPrefixText">[docs]</a>    <span class="k">def</span> <span class="nf">setPrefixText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">prefix</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="n">prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">evt_type</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusConfigLabel.resetPrefixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.resetPrefixText">[docs]</a>    <span class="k">def</span> <span class="nf">resetPrefixText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPrefixText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TaurusConfigLabel.getSuffixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.getSuffixText">[docs]</a>    <span class="k">def</span> <span class="nf">getSuffixText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_suffix</span></div>
+    
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSignature</span><span class="p">(</span><span class="s2">&quot;setSuffixText(QString)&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusConfigLabel.setSuffixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.setSuffixText">[docs]</a>    <span class="k">def</span> <span class="nf">setSuffixText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">suffix</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_suffix</span> <span class="o">=</span> <span class="n">suffix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">evt_type</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusConfigLabel.resetSuffixText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.resetSuffixText">[docs]</a>    <span class="k">def</span> <span class="nf">resetSuffixText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSuffixText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusConfigLabel.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusConfigLabel.html#taurus.qt.qtgui.display.TaurusConfigLabel.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+<span class="c1">#        ret = TaurusBaseWidget.getQtDesignerPluginInfo()</span>
+<span class="c1">#        ret[&#39;module&#39;] = &#39;taurus.qt.qtgui.display&#39;</span>
+<span class="c1">#        ret[&#39;group&#39;] = &#39;Taurus Widgets [Old]&#39;</span>
+<span class="c1">#        ret[&#39;icon&#39;] = &quot;:/designer/label.png&quot;</span>
+<span class="c1">#        return ret</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span> <span class="n">setModel</span><span class="p">,</span> 
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+                                
+    <span class="n">useParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span> 
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+                                         
+    <span class="n">prefixText</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getPrefixText</span><span class="p">,</span> <span class="n">setPrefixText</span><span class="p">,</span> 
+                                 <span class="n">resetPrefixText</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;prefix text (optional)&quot;</span><span class="p">)</span>
+                                     
+    <span class="n">suffixText</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getSuffixText</span><span class="p">,</span> <span class="n">setSuffixText</span><span class="p">,</span> 
+                                 <span class="n">resetSuffixText</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;suffix text (optional)&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;hello&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+    <span class="n">Application</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span>
+    
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
+    
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">usage</span> <span class="o">=</span> <span class="s2">&quot;%prog [options] &lt;full configuration_name(s)&gt;&quot;</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+        
+    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;sys/tg_test/1/</span><span class="si">%s</span><span class="s1">?configuration=label&#39;</span> <span class="o">%</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;double_scalar&#39;</span> <span class="p">)</span> <span class="p">]</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">TaurusConfigLabel</span><span class="p">()</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">w</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

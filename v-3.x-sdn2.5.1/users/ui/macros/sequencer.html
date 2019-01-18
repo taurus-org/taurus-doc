@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sequencer User’s Interface &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../index.html"/>
+        <link rel="up" title="Macro related widgets" href="index.html"/>
+        <link rel="next" title="TaurusGUI User’s Interface" href="../taurusgui.html"/>
+        <link rel="prev" title="MacroExecutor User’s Interface" href="macroexecutor.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../docs.html">Taurus 3.7 documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">User&#8217;s Interface</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../ui_colors.html">Color meaning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../forms.html">Forms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../attributechooser.html">Attribute Chooser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modelchooser.html">Model Chooser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plot.html">Plots</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../trend.html">TaurusTrend User&#8217;s Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../trend.html#spectrograms-2d-trends">Spectrograms (2D trends)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taurusimage.html">Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../arrayeditor.html">Array Editor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../synoptics.html">Synoptics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../devpanels.html">TaurusPanel &amp; TaurusDevicePanel</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">Macros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taurusgui.html">TaurusGui</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../taurusdemo.html">TaurusDemo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../logs.html">Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../configurations.html">Configurations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimentconfiguration.html">Experiment Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../sardanaeditor.html">Sardana Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../screenshots.html">Screenshots</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../devel/index.html">Developer&#8217;s Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../docs.html">Taurus 3.7 documentation</a> &raquo;</li>
+      
+          <li><a href="../../index.html">User&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../index.html">User&#8217;s Interface</a> &raquo;</li>
+      
+          <li><a href="index.html">Macro related widgets</a> &raquo;</li>
+      
+    <li>Sequencer User&#8217;s Interface</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../_sources/users/ui/macros/sequencer.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sequencer-user-s-interface">
+<span id="sequencer-ui"></span><h1><a class="toc-backref" href="#id2">Sequencer User&#8217;s Interface</a><a class="headerlink" href="#sequencer-user-s-interface" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#sequencer-user-s-interface" id="id2">Sequencer User&#8217;s Interface</a><ul>
+<li><a class="reference internal" href="#sequencer-as-a-stand-alone-application" id="id3">Sequencer as a stand-alone application</a></li>
+<li><a class="reference internal" href="#editing-sequence" id="id4">Editing sequence</a></li>
+<li><a class="reference internal" href="#editing-macro-parameters" id="id5">Editing macro parameters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><cite>Sequencer</cite> provides an user-friendly interface to compose and execute sequences of macros. Sequence of macros allows execution
+of ordered set of macros with just one trigger. It also allows using a concept of hooks (macros attached and executed in defined places of other macros).
+It is divided into 3 main areas: <cite>actions bar</cite>, <cite>sequence editor</cite> and <cite>parameters editor</cite>.
+<cite>Sequence editor</cite> allows you modifying sequences in many ways: appending new macros, changing macros locations and removing macros.
+Graphical <cite>parameters editor</cite> (standard/custom) provides a clear way to set/modify macro execution settings(parameters).
+Once sequence of macros is in execution phase, <cite>Sequencer</cite> informs user about its state with Door&#8217;s state led and macros progress bars.
+User has full control over sequence, with action buttons: Start, Stop, Pause, Resume.
+If desirable, sequences can be permanently stored into a file and later on restored from there.
+This functionality is provided thanks to action buttons: Save and Open a sequence.</p>
+<div class="figure align-center">
+<img alt="../../../_images/sequencer01.png" src="../../../_images/sequencer01.png" />
+</div>
+<div class="section" id="sequencer-as-a-stand-alone-application">
+<span id="sequencer-stand-alone"></span><h2><a class="toc-backref" href="#id3">Sequencer as a stand-alone application</a><a class="headerlink" href="#sequencer-as-a-stand-alone-application" title="Permalink to this headline">¶</a></h2>
+<p>You may also use <em>Sequencer</em> as a stand-alone application. In this case it appears embedded
+in window and some extra functionalities are provided.
+You can launch the stand-alone <em>Sequencer</em> with the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sequencer</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">macro_executor_dev_name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">door_dev_name</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Options:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">level</span><span class="o">=</span><span class="n">LEVEL</span>
+                      <span class="n">taurus</span> <span class="n">log</span> <span class="n">level</span><span class="o">.</span> <span class="n">Allowed</span> <span class="n">values</span> <span class="n">are</span> <span class="p">(</span><span class="n">case</span>
+                      <span class="n">insensitive</span><span class="p">):</span> <span class="n">critical</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">warning</span><span class="o">/</span><span class="n">warn</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span>
+                      <span class="n">debug</span><span class="p">,</span> <span class="n">trace</span>
+
+<span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">polling</span><span class="o">-</span><span class="n">period</span><span class="o">=</span><span class="n">MILLISEC</span>
+                      <span class="n">taurus</span> <span class="k">global</span> <span class="n">polling</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">milliseconds</span>
+
+<span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">serialization</span><span class="o">-</span><span class="n">mode</span><span class="o">=</span><span class="n">SERIAL</span>
+                      <span class="n">taurus</span> <span class="n">serialization</span> <span class="n">mode</span><span class="o">.</span> <span class="n">Allowed</span> <span class="n">values</span> <span class="n">are</span> <span class="p">(</span><span class="n">case</span>
+                      <span class="n">insensitive</span><span class="p">):</span> <span class="n">serial</span><span class="p">,</span> <span class="n">concurrent</span> <span class="p">(</span><span class="n">default</span><span class="p">)</span>
+
+<span class="o">--</span><span class="n">tango</span><span class="o">-</span><span class="n">host</span><span class="o">=</span><span class="n">TANGO_HOST</span>
+                      <span class="n">Tango</span> <span class="n">host</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>The model list is optional and is a space-separated list of two device names: macro server and door.
+If not provided at the application startup, device names can be later on selected from Macro Configuration Dialog.</p>
+<p>Extra functionalities:</p>
+<ul class="simple">
+<li>MacroConfigurationDialog</li>
+</ul>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">This chapter in not ready... Sorry for inconvenience.</p>
+</div>
+<ul class="simple">
+<li>CustomEditorsPathDialog</li>
+</ul>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">This chapter in not ready... Sorry for inconvenience.</p>
+</div>
+</div>
+<div class="section" id="editing-sequence">
+<span id="id1"></span><h2><a class="toc-backref" href="#id4">Editing sequence</a><a class="headerlink" href="#editing-sequence" title="Permalink to this headline">¶</a></h2>
+<p>Sequence is represented as a flat list of ordered macros, in this view each macro is represented as a new line with 4 columns:
+Macro (macro name), Parameters (comma separated parameter values), Progress (macro progress bar) and Pause
+(pause point before macro execution - not implemented yet). Macros which contain hooks, expand with branched macros.
+Macro parameters values can be edited from <cite>parameters editor</cite>, to do so select one macro in sequence editor by clicking on it.
+Selected macro becomes highlighted, and <cite>parameters editor</cite> populate with its current parameters values.</p>
+<div class="figure align-center">
+<img alt="../../../_images/sequenceeditor01.png" src="../../../_images/sequenceeditor01.png" />
+</div>
+<ul class="simple">
+<li>adding a new macro</li>
+</ul>
+<p>First select macro from macro combo box, and when you are sure to add it to the sequence, press &#8216;+&#8217; button.
+To add macro as a hook of other macro, before adding it, please select its parent macro in the sequence, and then press &#8216;+&#8217; button.
+If no macro was selected as a parent, macro will be automatically appended at the end of the list.</p>
+<div class="figure align-center">
+<img alt="../../../_images/sequenceeditor02.png" src="../../../_images/sequenceeditor02.png" />
+</div>
+<ul class="simple">
+<li>reorganizing sequence</li>
+</ul>
+<p>Macros which are already part of a sequence, can be freely moved around, either in execution order or in hook place (if new macro accepts hooks).
+To move macro first select it in the sequence by single clicking on it (it will become highlighted). Then a set of buttons with arrows
+become enabled. Clicking on them will cause selected macro changin its position in the sequence (either vertically - execution order or horizontal
+parent macro - hook macro relationship)</p>
+<div class="figure align-center">
+<img alt="../../../_images/sequenceeditor03.png" src="../../../_images/sequenceeditor03.png" />
+</div>
+<ul class="simple">
+<li>remove macro</li>
+</ul>
+<p>Macros which are already part of a sequence, can be freely removed from it. To do so first select macro in a sequence by
+single clicking on it (it will become highlighted). Then button with &#8216;-&#8216; becomes enabled. Clicking on it removes selected macro.</p>
+<div class="figure align-center">
+<img alt="../../../_images/sequenceeditor04.png" src="../../../_images/sequenceeditor04.png" />
+</div>
+<ul class="simple">
+<li>configuring hook execution place</li>
+</ul>
+<p>If macro is embedded as a hook in parent macro, please follow these instructions to configure its hook execution place.
+First select macro in a sequence by single clicking on it (it will become highlighted).
+Then using right mouse button open context menu, go to &#8216;Hook places&#8217; sub-menu and select hook places which interest you
+(you can select more than one).</p>
+<div class="figure align-center">
+<img alt="../../../_images/sequenceeditor05_raw.png" src="../../../_images/sequenceeditor05_raw.png" />
+</div>
+</div>
+<div class="section" id="editing-macro-parameters">
+<h2><a class="toc-backref" href="#id5">Editing macro parameters</a><a class="headerlink" href="#editing-macro-parameters" title="Permalink to this headline">¶</a></h2>
+<p>To obtain information about editing macro parameters, please refer to the following link <a class="reference internal" href="macroexecutor.html#editing-macro-parameters"><span class="std std-ref">Editing macro parameters</span></a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../taurusgui.html" class="btn btn-neutral float-right" title="TaurusGUI User’s Interface" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="macroexecutor.html" class="btn btn-neutral" title="MacroExecutor User’s Interface" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,675 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>QBaseMeter &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../../../index.html"/>
+        <link rel="up" title="taurus.qt.qtgui.gauge" href="../gauge.html"/>
+        <link rel="next" title="QManoMeter" href="_QManoMeter.html"/>
+        <link rel="prev" title="taurus.qt.qtgui.gauge.demo" href="demo.html"/> 
+
+  
+  <script src="../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 3.7 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tau2taurus_migration_guide.html">tau to taurus migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../color_guide.html">Color guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../widget_tutorial.html">Widget tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../popupmenu_tutorial.html">Popup menu tutorial</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../test.html">test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../web.html">web</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../../../docs.html">Taurus 3.7 documentation</a> &raquo;</li>
+      
+          <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../../../../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+          <li><a href="../../../qt.html"><code class="docutils literal"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+      
+          <li><a href="../../qtgui.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+      
+          <li><a href="../gauge.html"><code class="docutils literal"><span class="pre">taurus.qt.qtgui.gauge</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">QBaseMeter</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qbasemeter">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter" title="taurus.qt.qtgui.gauge.QBaseMeter"><code class="xref py py-class docutils literal"><span class="pre">QBaseMeter</span></code></a><a class="headerlink" href="#qbasemeter" title="Permalink to this headline">¶</a></h1>
+<img src="../../../../../../_images/inheritance-089f1a19d58f27bb4d2c73403fcd48f36fd5f887.png" alt="Inheritance diagram of QBaseMeter" usemap="#inheritancefb629a576a" class="inheritance"/>
+<map id="inheritancefb629a576a" name="inheritancefb629a576a">
+<area shape="rect" id="node2" title="This widget displays an image (pixmap). By default the pixmap is" alt="" coords="5,389,128,437"/>
+</map>
+<dl class="class">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter">
+<em class="property">class </em><code class="descname">QBaseMeter</code><span class="sig-paren">(</span><em>parent=None</em>, <em>designMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.display.qpixmapwidget.QPixmapWidget</span></code></p>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultDigitFont">
+<code class="descname">DefaultDigitFont</code><em class="property"> = &lt;PyQt4.QtGui.QFont object&gt;</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultDigitFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultDigitOffset">
+<code class="descname">DefaultDigitOffset</code><em class="property"> = 1.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultDigitOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultMaximum">
+<code class="descname">DefaultMaximum</code><em class="property"> = 100.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultMaximum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultMaximumAlarm">
+<code class="descname">DefaultMaximumAlarm</code><em class="property"> = 90.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultMaximumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultMaximumWarning">
+<code class="descname">DefaultMaximumWarning</code><em class="property"> = 80.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultMaximumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultMinimum">
+<code class="descname">DefaultMinimum</code><em class="property"> = 0.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultMinimum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultMinimumAlarm">
+<code class="descname">DefaultMinimumAlarm</code><em class="property"> = 10.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultMinimumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultMinimumWarning">
+<code class="descname">DefaultMinimumWarning</code><em class="property"> = 20.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultMinimumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultSteps">
+<code class="descname">DefaultSteps</code><em class="property"> = 8</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultSteps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultValue">
+<code class="descname">DefaultValue</code><em class="property"> = 0.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultValue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultValueFont">
+<code class="descname">DefaultValueFont</code><em class="property"> = &lt;PyQt4.QtGui.QFont object&gt;</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultValueFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.DefaultValueOffset">
+<code class="descname">DefaultValueOffset</code><em class="property"> = 0.0</em><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.DefaultValueOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.digitFont">
+<code class="descname">digitFont</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.digitFont" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the digit font</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getDigitFont" title="taurus.qt.qtgui.gauge.QBaseMeter.getDigitFont"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getDigitFont()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setDigitFont" title="taurus.qt.qtgui.gauge.QBaseMeter.setDigitFont"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setDigitFont()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetDigitFont" title="taurus.qt.qtgui.gauge.QBaseMeter.resetDigitFont"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetDigitFont()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.digitOffset">
+<code class="descname">digitOffset</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.digitOffset" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the digit offset
+Used to place scale digits offset. On manometer distance from the
+center on thermometer distance form left</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getDigitOffset" title="taurus.qt.qtgui.gauge.QBaseMeter.getDigitOffset"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getDigitOffset()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setDigitOffset" title="taurus.qt.qtgui.gauge.QBaseMeter.setDigitOffset"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setDigitOffset()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetDigitOffset" title="taurus.qt.qtgui.gauge.QBaseMeter.resetDigitOffset"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetDigitOffset()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getDigitFont">
+<code class="descname">getDigitFont</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getDigitFont"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getDigitFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getDigitOffset">
+<code class="descname">getDigitOffset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getDigitOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getDigitOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getMaximum">
+<code class="descname">getMaximum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getMaximum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMaximum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getMaximumAlarm">
+<code class="descname">getMaximumAlarm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getMaximumAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMaximumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getMaximumWarning">
+<code class="descname">getMaximumWarning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getMaximumWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMaximumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getMinimum">
+<code class="descname">getMinimum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getMinimum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMinimum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getMinimumAlarm">
+<code class="descname">getMinimumAlarm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getMinimumAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMinimumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getMinimumWarning">
+<code class="descname">getMinimumWarning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getMinimumWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMinimumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getSteps">
+<code class="descname">getSteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getSteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getSteps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getValue">
+<code class="descname">getValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getValue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getValueFont">
+<code class="descname">getValueFont</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getValueFont"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getValueFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.getValueOffset">
+<code class="descname">getValueOffset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.getValueOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.getValueOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.maximum">
+<code class="descname">maximum</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.maximum" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the maximum value</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMaximum" title="taurus.qt.qtgui.gauge.QBaseMeter.getMaximum"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getMaximum()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMaximum" title="taurus.qt.qtgui.gauge.QBaseMeter.setMaximum"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setMaximum()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximum" title="taurus.qt.qtgui.gauge.QBaseMeter.resetMaximum"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetMaximum()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.maximumAlarm">
+<code class="descname">maximumAlarm</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.maximumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the maximum alarm value</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMaximumAlarm" title="taurus.qt.qtgui.gauge.QBaseMeter.getMaximumAlarm"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getMaximumAlarm()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMaximumAlarm" title="taurus.qt.qtgui.gauge.QBaseMeter.setMaximumAlarm"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setMaximumAlarm()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumAlarm" title="taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumAlarm"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetMaximumAlarm()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.maximumWarning">
+<code class="descname">maximumWarning</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.maximumWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the maximum warning value</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMaximumWarning" title="taurus.qt.qtgui.gauge.QBaseMeter.getMaximumWarning"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getMaximumWarning()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMaximumWarning" title="taurus.qt.qtgui.gauge.QBaseMeter.setMaximumWarning"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setMaximumWarning()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumWarning" title="taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumWarning"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetMaximumWarning()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.minimum">
+<code class="descname">minimum</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.minimum" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the minimum value</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMinimum" title="taurus.qt.qtgui.gauge.QBaseMeter.getMinimum"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getMinimum()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMinimum" title="taurus.qt.qtgui.gauge.QBaseMeter.setMinimum"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setMinimum()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimum" title="taurus.qt.qtgui.gauge.QBaseMeter.resetMinimum"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetMinimum()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.minimumAlarm">
+<code class="descname">minimumAlarm</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.minimumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the minimum alarm value</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMinimumAlarm" title="taurus.qt.qtgui.gauge.QBaseMeter.getMinimumAlarm"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getMinimumAlarm()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMinimumAlarm" title="taurus.qt.qtgui.gauge.QBaseMeter.setMinimumAlarm"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setMinimumAlarm()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumAlarm" title="taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumAlarm"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetMinimumAlarm()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.minimumWarning">
+<code class="descname">minimumWarning</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.minimumWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the minimum warning value</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getMinimumWarning" title="taurus.qt.qtgui.gauge.QBaseMeter.getMinimumWarning"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getMinimumWarning()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMinimumWarning" title="taurus.qt.qtgui.gauge.QBaseMeter.setMinimumWarning"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setMinimumWarning()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumWarning" title="taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumWarning"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetMinimumWarning()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetDigitFont">
+<code class="descname">resetDigitFont</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetDigitFont"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetDigitFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetDigitOffset">
+<code class="descname">resetDigitOffset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetDigitOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetDigitOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetMaximum">
+<code class="descname">resetMaximum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetMaximum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumAlarm">
+<code class="descname">resetMaximumAlarm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetMaximumAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumWarning">
+<code class="descname">resetMaximumWarning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetMaximumWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetMinimum">
+<code class="descname">resetMinimum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetMinimum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumAlarm">
+<code class="descname">resetMinimumAlarm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetMinimumAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumWarning">
+<code class="descname">resetMinimumWarning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetMinimumWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetSteps">
+<code class="descname">resetSteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetSteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetSteps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetValue">
+<code class="descname">resetValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetValue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetValueFont">
+<code class="descname">resetValueFont</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetValueFont"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetValueFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.resetValueOffset">
+<code class="descname">resetValueOffset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.resetValueOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetValueOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setDigitFont">
+<code class="descname">setDigitFont</code><span class="sig-paren">(</span><em>digitFont</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setDigitFont"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setDigitFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setDigitOffset">
+<code class="descname">setDigitOffset</code><span class="sig-paren">(</span><em>digitOffset</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setDigitOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setDigitOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setMaximum">
+<code class="descname">setMaximum</code><span class="sig-paren">(</span><em>max</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setMaximum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMaximum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setMaximumAlarm">
+<code class="descname">setMaximumAlarm</code><span class="sig-paren">(</span><em>max</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setMaximumAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMaximumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setMaximumWarning">
+<code class="descname">setMaximumWarning</code><span class="sig-paren">(</span><em>max</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setMaximumWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMaximumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setMinimum">
+<code class="descname">setMinimum</code><span class="sig-paren">(</span><em>min</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setMinimum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMinimum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setMinimumAlarm">
+<code class="descname">setMinimumAlarm</code><span class="sig-paren">(</span><em>min</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setMinimumAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMinimumAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setMinimumWarning">
+<code class="descname">setMinimumWarning</code><span class="sig-paren">(</span><em>min</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setMinimumWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setMinimumWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setSteps">
+<code class="descname">setSteps</code><span class="sig-paren">(</span><em>steps</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setSteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setSteps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setValue">
+<code class="descname">setValue</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setValue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setValueFont">
+<code class="descname">setValueFont</code><span class="sig-paren">(</span><em>valueFont</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setValueFont"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setValueFont" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.setValueOffset">
+<code class="descname">setValueOffset</code><span class="sig-paren">(</span><em>valueOffset</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/gauge/qmeter.html#QBaseMeter.setValueOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.setValueOffset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.steps">
+<code class="descname">steps</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.steps" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the number of steps</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getSteps" title="taurus.qt.qtgui.gauge.QBaseMeter.getSteps"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getSteps()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setSteps" title="taurus.qt.qtgui.gauge.QBaseMeter.setSteps"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setSteps()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetSteps" title="taurus.qt.qtgui.gauge.QBaseMeter.resetSteps"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetSteps()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.value">
+<code class="descname">value</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the value</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getValue" title="taurus.qt.qtgui.gauge.QBaseMeter.getValue"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getValue()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setValue" title="taurus.qt.qtgui.gauge.QBaseMeter.setValue"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setValue()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetValue" title="taurus.qt.qtgui.gauge.QBaseMeter.resetValue"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetValue()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.valueFont">
+<code class="descname">valueFont</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.valueFont" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the value font</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getValueFont" title="taurus.qt.qtgui.gauge.QBaseMeter.getValueFont"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getValueFont()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setValueFont" title="taurus.qt.qtgui.gauge.QBaseMeter.setValueFont"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setValueFont()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetValueFont" title="taurus.qt.qtgui.gauge.QBaseMeter.resetValueFont"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetValueFont()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.gauge.QBaseMeter.valueOffset">
+<code class="descname">valueOffset</code><a class="headerlink" href="#taurus.qt.qtgui.gauge.QBaseMeter.valueOffset" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the value offset</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.getValueOffset" title="taurus.qt.qtgui.gauge.QBaseMeter.getValueOffset"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.getValueOffset()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.setValueOffset" title="taurus.qt.qtgui.gauge.QBaseMeter.setValueOffset"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.setValueOffset()</span></code></a></li>
+<li><a class="reference internal" href="#taurus.qt.qtgui.gauge.QBaseMeter.resetValueOffset" title="taurus.qt.qtgui.gauge.QBaseMeter.resetValueOffset"><code class="xref py py-meth docutils literal"><span class="pre">QBaseMeter.resetValueOffset()</span></code></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_QManoMeter.html" class="btn btn-neutral float-right" title="QManoMeter" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="demo.html" class="btn btn-neutral" title="taurus.qt.qtgui.gauge.demo" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

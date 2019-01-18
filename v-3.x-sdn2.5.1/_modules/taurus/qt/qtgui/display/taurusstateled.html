@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.display.taurusstateled &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.display.taurusstateled</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.display.taurusstateled</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a set of basic Taurus widgets based on QLabel&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusStateLed&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="c1"># ugly</span>
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusEventType</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">qled</span> <span class="k">import</span> <span class="n">LedStatus</span><span class="p">,</span> <span class="n">LedColor</span>
+<span class="kn">from</span> <span class="nn">qled</span> <span class="k">import</span> <span class="n">QLedOld</span> <span class="k">as</span> <span class="n">QLed</span>
+
+
+<div class="viewcode-block" id="TaurusStateLed"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed">[docs]</a><span class="k">class</span> <span class="nc">TaurusStateLed</span><span class="p">(</span><span class="n">QLed</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       A led widget displaying the state tango attribute value</span>
+<span class="sd">    </span>
+<span class="sd">       .. deprecated:: 2.0</span>
+<span class="sd">           Use :class:`taurus.qt.qtgui.display.TaurusLed` instead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__pyqtSignals__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;modelChanged(const QString &amp;)&quot;</span><span class="p">,)</span>
+
+    <span class="n">DEVICE_STATE_DATA</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">ON</span>      <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">OFF</span>     <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">,</span>  <span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">CLOSE</span>   <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">OPEN</span>    <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">INSERT</span>  <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">EXTRACT</span> <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">MOVING</span>  <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">BLUE</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">STANDBY</span> <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">FAULT</span>   <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">RED</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">INIT</span>    <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">RUNNING</span> <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">BLUE</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">ALARM</span>   <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">,</span>   <span class="n">LedColor</span><span class="o">.</span><span class="n">ORANGE</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">DISABLE</span> <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">,</span>  <span class="n">LedColor</span><span class="o">.</span><span class="n">ORANGE</span><span class="p">),</span>
+        <span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">UNKNOWN</span> <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">,</span>  <span class="n">LedColor</span><span class="o">.</span><span class="n">BLUE</span><span class="p">),</span>
+        <span class="kc">None</span>                     <span class="p">:</span> <span class="p">(</span><span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">,</span>  <span class="n">LedColor</span><span class="o">.</span><span class="n">RED</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_boolIndex</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">QLed</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+    <span class="c1"># The default size of the widget</span>
+<div class="viewcode-block" id="TaurusStateLed.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusBaseWidget overwritting</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusStateLed.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">taurus.core</span>
+        <span class="k">return</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusattribute</span><span class="o">.</span><span class="n">TaurusAttribute</span></div>
+
+<div class="viewcode-block" id="TaurusStateLed.isReadOnly"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TaurusStateLed.getFormatedToolTip"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.getFormatedToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">getFormatedToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; The tooltip should refer to the device and not the state attribute.</span>
+<span class="sd">            That is why this method is being rewritten</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolTipObjToStr</span><span class="p">(</span> <span class="n">parent</span><span class="o">.</span><span class="n">getDisplayDescrObj</span><span class="p">()</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusStateLed.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setProblemsBackground</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setProblemsBackground</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">evt_value</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span>                                  
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">(),</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span> <span class="c1">#tries to get the value from the event itself, and asks if not</span>
+
+        <span class="k">if</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrDataFormat</span><span class="o">.</span><span class="n">SPECTRUM</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">boolIndex</span><span class="p">]</span>
+
+        <span class="n">onOff</span><span class="p">,</span><span class="n">state</span> <span class="o">=</span> <span class="n">TaurusStateLed</span><span class="o">.</span><span class="n">DEVICE_STATE_DATA</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">onOff</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeColor</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        
+        <span class="c1">#update tooltip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFormatedToolTip</span><span class="p">())</span>
+        
+        <span class="c1">#TODO: update whatsThis</span>
+        
+        <span class="c1">#update appearance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusStateLed.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+<span class="c1">#        ret = TaurusBaseWidget.getQtDesignerPluginInfo()</span>
+<span class="c1">#        ret[&#39;group&#39;] = &#39;Taurus Widgets [Old]&#39;</span>
+<span class="c1">#        ret[&#39;module&#39;] = &#39;taurus.qt.qtgui.display&#39;</span>
+<span class="c1">#        ret[&#39;icon&#39;] = &quot;:/designer/ledred.png&quot;</span>
+<span class="c1">#        return ret</span>
+    
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT properties</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="TaurusStateLed.getBoolIndex"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.getBoolIndex">[docs]</a>    <span class="k">def</span> <span class="nf">getBoolIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boolIndex</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSignature</span><span class="p">(</span><span class="s2">&quot;setBoolIndex(int)&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusStateLed.setBoolIndex"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.setBoolIndex">[docs]</a>    <span class="k">def</span> <span class="nf">setBoolIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_boolIndex</span> <span class="o">=</span> <span class="n">i</span></div>
+
+<div class="viewcode-block" id="TaurusStateLed.resetBoolIndex"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.resetBoolIndex">[docs]</a>    <span class="k">def</span> <span class="nf">resetBoolIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setBoolIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TaurusStateLed.getLedSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.getLedSize">[docs]</a>    <span class="k">def</span> <span class="nf">getLedSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledsize</span></div>
+
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSignature</span><span class="p">(</span><span class="s2">&quot;setLedSize(QString)&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="TaurusStateLed.setLedSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.setLedSize">[docs]</a>    <span class="k">def</span> <span class="nf">setLedSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeSize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusStateLed.resetLedSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_TaurusStateLed.html#taurus.qt.qtgui.display.TaurusStateLed.resetLedSize">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeSize</span><span class="p">(</span><span class="s1">&#39;24&#39;</span><span class="p">)</span></div>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span>
+                            <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModel</span><span class="p">)</span>
+
+    <span class="n">useParentModel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setUseParentModel</span><span class="p">,</span>
+                                     <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetUseParentModel</span><span class="p">)</span>
+
+    <span class="n">ledSize</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getLedSize</span><span class="p">,</span> <span class="n">setLedSize</span><span class="p">,</span> <span class="n">resetLedSize</span><span class="p">,</span>
+                              <span class="n">doc</span><span class="o">=</span><span class="s1">&#39;valid values as 24 and 48&#39;</span><span class="p">)</span>
+
+    <span class="n">boolIndex</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getBoolIndex</span><span class="p">,</span> <span class="n">setBoolIndex</span><span class="p">,</span> <span class="n">resetBoolIndex</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;sys/tg_test/1/state&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span> <span class="n">model</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusStateLed</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>    
+    <span class="n">w</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

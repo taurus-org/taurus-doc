@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.tango.tangodevice &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.tango.tangodevice</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.tango.tangodevice</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains all taurus tango database&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoDevice&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Factory</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusSWDevState</span><span class="p">,</span> <span class="n">TaurusLockInfo</span><span class="p">,</span> <span class="n">LockStatus</span>
+
+<span class="n">DFT_TANGO_DEVICE_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;A TANGO device&quot;</span>
+
+<span class="k">class</span> <span class="nc">_TangoInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dev_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_type</span> <span class="o">=</span> <span class="s1">&#39;TangoDevice&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doc_url</span> <span class="o">=</span> <span class="s1">&#39;http://www.esrf.fr/computing/cs/tango/tango_doc/ds_doc/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_host</span> <span class="o">=</span> <span class="s1">&#39;Unknown&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_id</span> <span class="o">=</span> <span class="s1">&#39;Unknown&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">=</span> <span class="mi">1</span>
+                
+<div class="viewcode-block" id="TangoDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice">[docs]</a><span class="k">class</span> <span class="nc">TangoDevice</span><span class="p">(</span><span class="n">TaurusDevice</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Object initialization.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusModel necessary overwrite</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># helper class property that stores a reference to the corresponding factory</span>
+    <span class="n">_factory</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TangoDevice.factory"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.factory">[docs]</a>    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;tango&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusDevice necessary overwrite</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="k">def</span> <span class="nf">_createHWObject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceProxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not create HW object: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
+            
+<div class="viewcode-block" id="TangoDevice.isValidDev"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.isValidDev">[docs]</a>    <span class="k">def</span> <span class="nf">isValidDev</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;see: :meth:`TaurusDevice.isValid`&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deviceObj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TangoDevice.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">li</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLockInfo</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLockInfo</span><span class="p">()</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">TaurusLockInfo</span><span class="o">.</span><span class="n">Locked</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getHWObj</span><span class="p">()</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoDevice.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getHWObj</span><span class="p">()</span><span class="o">.</span><span class="n">unlock</span><span class="p">(</span><span class="n">force</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TangoDevice.getLockInfo"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.getLockInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getLockInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">lock_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock_info</span>
+        <span class="k">if</span> <span class="n">cache</span> <span class="ow">and</span> <span class="n">lock_info</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">LockStatus</span><span class="o">.</span><span class="n">Unknown</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">lock_info</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getHWObj</span><span class="p">()</span>
+            <span class="n">li</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">LockerInfo</span><span class="p">()</span>
+            <span class="n">locked</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">get_locker</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">locked</span><span class="p">:</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">li</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">ll</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">locker_host</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">klass</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">locker_class</span>
+                <span class="k">if</span> <span class="n">dev</span><span class="o">.</span><span class="n">is_locked_by_me</span><span class="p">():</span>
+                    <span class="n">status</span> <span class="o">=</span> <span class="n">LockStatus</span><span class="o">.</span><span class="n">LockedMaster</span>
+                    <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;is locked by you!&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">status</span> <span class="o">=</span> <span class="n">LockStatus</span><span class="o">.</span><span class="n">Locked</span>
+                    <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;is locked by PID </span><span class="si">%s</span><span class="s2"> on </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">lock_info</span><span class="o">.</span><span class="n">klass</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="n">LockStatus</span><span class="o">.</span><span class="n">Unlocked</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;is not locked&quot;</span>
+            <span class="n">lock_info</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+            <span class="n">lock_info</span><span class="o">.</span><span class="n">status_msg</span> <span class="o">=</span> <span class="n">msg</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lock_info</span> <span class="o">=</span> <span class="n">lock_info</span> <span class="o">=</span> <span class="n">TaurusLockInfo</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">lock_info</span></div>
+    
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Protected implementation</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="k">def</span> <span class="nf">_server_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">ping</span><span class="p">()</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Running</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">import_info</span><span class="p">()</span><span class="o">.</span><span class="n">exported</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Crash</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Shutdown</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Shutdown</span>
+        <span class="k">return</span> <span class="n">state</span>
+        
+<div class="viewcode-block" id="TangoDevice.decode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_value</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceAttribute</span><span class="p">):</span>
+            <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Running</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_value</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">):</span>
+            <span class="n">new_sw_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handleExceptionEvent</span><span class="p">(</span><span class="n">event_value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span> <span class="c1"># TaurusSWDevState</span>
+            <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">event_value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Unexpected value to decode: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">event_value</span><span class="p">))</span>
+            <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Crash</span>
+            
+        <span class="n">value</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceAttribute</span><span class="p">()</span>
+        <span class="n">value</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_sw_state</span>
+        
+        <span class="k">return</span> <span class="n">value</span></div>
+        
+    <span class="k">def</span> <span class="nf">_handleExceptionEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Handles the tango error event and returns the proper SW state.&quot;&quot;&quot;</span>
+        
+        <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Uninitialized</span>
+        <span class="n">reason</span> <span class="o">=</span> <span class="n">event_value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reason</span>
+        <span class="c1"># API_EventTimeout happens when: </span>
+        <span class="c1"># 1 - the server where the device is running shuts down/crashes</span>
+        <span class="c1"># 2 - the notifd shuts down/crashes</span>
+        <span class="k">if</span> <span class="n">reason</span> <span class="o">==</span> <span class="s1">&#39;API_EventTimeout&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deviceSwState</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SHUTDOWNS</span><span class="p">:</span>
+                <span class="n">serv_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_state</span><span class="p">()</span>
+                <span class="c1"># if the device is running it means that it must have been </span>
+                <span class="c1"># the event system that failed</span>
+                <span class="k">if</span> <span class="n">serv_state</span> <span class="o">==</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Running</span><span class="p">:</span>
+                    <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">EventSystemShutdown</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">serv_state</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Keep the old state</span>
+                <span class="n">new_sw_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deviceSwState</span>
+                
+        <span class="c1"># API_BadConfigurationProperty happens when: </span>
+        <span class="c1"># 1 - at client startup the server where the device is is not </span>
+        <span class="c1">#     running.</span>
+        <span class="k">elif</span> <span class="n">reason</span> <span class="o">==</span> <span class="s1">&#39;API_BadConfigurationProperty&#39;</span><span class="p">:</span>
+            <span class="k">assert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deviceSwState</span> <span class="o">!=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Running</span><span class="p">)</span>
+            <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">Shutdown</span>
+        
+        <span class="c1"># API_EventChannelNotExported happens when:</span>
+        <span class="c1"># 1 - at client startup the server is running but the notifd</span>
+        <span class="c1">#     is not</span>
+        <span class="k">elif</span> <span class="n">reason</span> <span class="o">==</span> <span class="s1">&#39;API_EventChannelNotExported&#39;</span><span class="p">:</span>
+            <span class="n">new_sw_state</span> <span class="o">=</span> <span class="n">TaurusSWDevState</span><span class="o">.</span><span class="n">EventSystemShutdown</span>
+        <span class="k">return</span> <span class="n">new_sw_state</span>
+    
+    <span class="k">def</span> <span class="nf">_getDefaultDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DFT_TANGO_DEVICE_DESCRIPTION</span>
+
+    <span class="k">def</span> <span class="nf">__pollResult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">attr</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">single</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">ts</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">da</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">da</span><span class="o">.</span><span class="n">has_failed</span><span class="p">:</span>
+                <span class="n">v</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">(</span><span class="o">*</span><span class="n">da</span><span class="o">.</span><span class="n">get_err_stack</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">v</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">da</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="n">da</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">attr</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">single</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">err</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">ts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__pollAsynch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">req_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_attributes_asynch</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">ts</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">req_id</span><span class="p">,</span> <span class="n">ts</span>
+
+    <span class="k">def</span> <span class="nf">__pollReply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">ok</span><span class="p">,</span> <span class="n">req_id</span><span class="p">,</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">req_id</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__pollResult</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">req_id</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">timeout</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_attributes_reply</span><span class="p">(</span><span class="n">req_id</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pollResult</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TangoDevice.poll"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDevice.html#taurus.core.tango.TangoDevice.poll">[docs]</a>    <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">asynch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">req_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;optimized by reading of multiple attributes in one go&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">req_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pollReply</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">asynch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pollAsynch</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_attributes</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">e</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pollResult</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">)</span></div>
+    
+    <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getHWObj</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">_TangoInfo</span><span class="p">()</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">&lt;table&gt;</span>
+<span class="s2">    &lt;tr&gt;&lt;td&gt;Short name&lt;/td&gt;&lt;td&gt;</span><span class="si">{simple_name}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">    &lt;tr&gt;&lt;td&gt;Standard name&lt;/td&gt;&lt;td&gt;</span><span class="si">{normal_name}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">    &lt;tr&gt;&lt;td&gt;Full name&lt;/td&gt;&lt;td&gt;</span><span class="si">{full_name}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">    &lt;tr&gt;&lt;td&gt;Device class&lt;/td&gt;&lt;td&gt;</span><span class="si">{dev_class}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">    &lt;tr&gt;&lt;td&gt;Server&lt;/td&gt;&lt;td&gt;</span><span class="si">{server_id}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">    &lt;tr&gt;&lt;td&gt;Documentation&lt;/td&gt;&lt;td&gt;&lt;a target=&quot;_blank&quot; href=&quot;</span><span class="si">{doc_url}</span><span class="s2">&quot;&gt;</span><span class="si">{doc_url}</span><span class="s2">&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&lt;/table&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">simple_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">(),</span> <span class="n">normal_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">(),</span>
+           <span class="n">full_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">(),</span> <span class="n">dev_class</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dev_class</span><span class="p">,</span>
+           <span class="n">server_id</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">server_id</span><span class="p">,</span> <span class="n">doc_url</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">doc_url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">txt</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

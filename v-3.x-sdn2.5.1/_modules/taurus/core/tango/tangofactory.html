@@ -1,0 +1,948 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.tango.tangofactory &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.tango.tangofactory</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.tango.tangofactory</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains all taurus tango attribute configuration&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoFactory&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">OperationMode</span><span class="p">,</span> <span class="n">MatchLevel</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span><span class="p">,</span> <span class="n">DoubleRegistration</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tauruspollingtimer</span> <span class="k">import</span> <span class="n">TaurusPollingTimer</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessWeakValueDict</span><span class="p">,</span> <span class="n">CaselessDict</span>
+
+<span class="kn">from</span> <span class="nn">.tangodatabase</span> <span class="k">import</span> <span class="n">TangoDatabase</span><span class="p">,</span> <span class="n">InvalidAlias</span>
+<span class="kn">from</span> <span class="nn">.tangoattribute</span> <span class="k">import</span> <span class="n">TangoAttribute</span><span class="p">,</span> <span class="n">TangoStateAttribute</span>
+<span class="kn">from</span> <span class="nn">.tangodevice</span> <span class="k">import</span> <span class="n">TangoDevice</span>
+<span class="kn">from</span> <span class="nn">.tangoconfiguration</span> <span class="k">import</span> <span class="n">TangoConfiguration</span>
+
+<span class="n">_Database</span> <span class="o">=</span> <span class="n">TangoDatabase</span>
+<span class="n">_Attribute</span> <span class="o">=</span> <span class="n">TangoAttribute</span>
+<span class="n">_StateAttribute</span> <span class="o">=</span> <span class="n">TangoStateAttribute</span>
+<span class="n">_Device</span> <span class="o">=</span> <span class="n">TangoDevice</span>
+<span class="n">_Configuration</span> <span class="o">=</span> <span class="n">TangoConfiguration</span>
+
+
+<div class="viewcode-block" id="TangoFactory"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory">[docs]</a><span class="k">class</span> <span class="nc">TangoFactory</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">TaurusFactory</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Singleton class designed to provide Tango related objects.</span>
+
+<span class="sd">      The TangoFactory model containning the Factory for the Tango scheme</span>
+<span class="sd">      </span>
+<span class="sd">      Tango Factory uses the Taurus object naming (URI based)::</span>
+
+<span class="sd">          foo://username:password@example.com:8042/over/there/index.dtb;type=animal?name=ferret#nose</span>
+<span class="sd">          \_/   \________________/\_________/ \__/\_________/ \___/ \_/ \_________/ \_________/ \__/</span>
+<span class="sd">           |            |              |       |       |        |    |       |            |      |</span>
+<span class="sd">          scheme     userinfo      hostname   port   path filename extension parameter(s) query fragment</span>
+<span class="sd">                    \____________________________/</span>
+<span class="sd">                                |</span>
+<span class="sd">                             authority</span>
+
+<span class="sd">    For Tango:</span>
+<span class="sd">    </span>
+<span class="sd">        - The &#39;scheme&#39; must be the string &quot;tango&quot; (lowercase mandatory)</span>
+<span class="sd">        - The &#39;authority&#39; is the Tango database (&lt;hostname&gt; and &lt;port&gt; mandatory)</span>
+<span class="sd">        - The &#39;path&#39; is the Tango object, which can be a Device or Attribute.</span>
+<span class="sd">          For device it must have the format _/_/_ or alias </span>
+<span class="sd">          For attribute it must have the format _/_/_/_ or devalias/_</span>
+<span class="sd">        - The &#39;filename&#39; and &#39;extension&#39; are always empty</span>
+<span class="sd">        - The &#39;parameter&#39; is always empty</span>
+<span class="sd">        - The &#39;the query&#39; is valid when the &#39;path&#39; corresponds to an Attribute. Valid</span>
+<span class="sd">          queries must have the format configuration=&lt;config param&gt;. Valid </span>
+<span class="sd">          configuration parameters are: label, format, description, unit, display_unit, </span>
+<span class="sd">          standard_unit, max_value, min_value, max_alarm, min_alarm, </span>
+<span class="sd">          max_warning, min_warning. in this case the Tango object is a Configuration</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1">#: the list of schemes that this factory supports. For this factory: &#39;tango&#39; </span>
+    <span class="c1">#: is the only scheme</span>
+    <span class="n">schemes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;tango&quot;</span><span class="p">,)</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="TangoFactory.init"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Singleton instance initialization.</span>
+<span class="sd">           **For internal usage only**&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusFactory</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reInit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoFactory.reInit"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.reInit">[docs]</a>    <span class="k">def</span> <span class="nf">reInit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reinitialize the singleton&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_tango_host</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operation_mode</span> <span class="o">=</span> <span class="n">OperationMode</span><span class="o">.</span><span class="n">ONLINE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_db_queries</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_configs</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_queries</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_alias_devs</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># Plugin device classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_klasses</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># Plugin attribute classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_attr_klasses</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_attr_klasses</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_StateAttribute</span></div>
+
+<div class="viewcode-block" id="TangoFactory.cleanUp"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cleanup the singleton instance&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TangoFactory] cleanUp&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>       <span class="n">v</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_configs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>     <span class="n">v</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_queries</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="n">v</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>        <span class="n">v</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_db_queries</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  <span class="n">v</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>          <span class="n">v</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reInit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getExistingAttributes"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getExistingAttributes">[docs]</a>    <span class="k">def</span> <span class="nf">getExistingAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a new dictionary will all registered attributes on this factory</span>
+<span class="sd">           </span>
+<span class="sd">           :return:  dictionary will all registered attributes on this factory</span>
+<span class="sd">           :rtype: dict&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getExistingDevices"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getExistingDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getExistingDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a new dictionary will all registered devices on this factory</span>
+<span class="sd">           </span>
+<span class="sd">           :return:  dictionary will all registered devices on this factory</span>
+<span class="sd">           :rtype: dict&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getExistingDatabases"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getExistingDatabases">[docs]</a>    <span class="k">def</span> <span class="nf">getExistingDatabases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a new dictionary will all registered databases on this factory</span>
+<span class="sd">           </span>
+<span class="sd">           :return:  dictionary will all registered databases on this factory</span>
+<span class="sd">           :rtype: dict&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getExistingConfigurations"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getExistingConfigurations">[docs]</a>    <span class="k">def</span> <span class="nf">getExistingConfigurations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a new dictionary will all registered configurations on this factory</span>
+<span class="sd">           </span>
+<span class="sd">           :return:  dictionary will all registered configurations on this factory</span>
+<span class="sd">           :rtype: dict&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tango_configs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TangoFactory.set_default_tango_host"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.set_default_tango_host">[docs]</a>    <span class="k">def</span> <span class="nf">set_default_tango_host</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tango_host</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the new default tango host.</span>
+<span class="sd">        </span>
+<span class="sd">        :param tango_host: (str) the new tango host</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_tango_host</span> <span class="o">=</span> <span class="n">tango_host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TangoFactory.registerAttributeClass"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.registerAttributeClass">[docs]</a>    <span class="k">def</span> <span class="nf">registerAttributeClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">attr_klass</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Registers a new attribute class for the attribute name.</span>
+<span class="sd">           </span>
+<span class="sd">           :param attr_name: (str) attribute name</span>
+<span class="sd">           :param attr_klass: (taurus.core.tango.TangoAttribute) the new class that </span>
+<span class="sd">                              will handle the attribute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_attr_klasses</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_klass</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.unregisterAttributeClass"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.unregisterAttributeClass">[docs]</a>    <span class="k">def</span> <span class="nf">unregisterAttributeClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unregisters the attribute class for the given attribute</span>
+<span class="sd">           If no class was registered before for the given attribute, this call</span>
+<span class="sd">           as no effect</span>
+<span class="sd">           </span>
+<span class="sd">           :param attr_name: (str) attribute name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attr_klasses</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">attr_name</span><span class="p">):</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attr_klasses</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span></div>
+            
+<div class="viewcode-block" id="TangoFactory.registerDeviceClass"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.registerDeviceClass">[docs]</a>    <span class="k">def</span> <span class="nf">registerDeviceClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_klass_name</span><span class="p">,</span> <span class="n">dev_klass</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Registers a new python class to handle tango devices of the given tango class name</span>
+<span class="sd">        </span>
+<span class="sd">           :param dev_klass_name: (str) tango device class name</span>
+<span class="sd">           :param dev_klass: (taurus.core.tango.TangoDevice) the new class that will</span>
+<span class="sd">                             handle devices of the given tango class name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_klasses</span><span class="p">[</span><span class="n">dev_klass_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dev_klass</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.unregisterDeviceClass"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.unregisterDeviceClass">[docs]</a>    <span class="k">def</span> <span class="nf">unregisterDeviceClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_klass_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unregisters the class for the given tango class name</span>
+<span class="sd">           If no class was registered before for the given attribute, this call</span>
+<span class="sd">           as no effect</span>
+<span class="sd">           </span>
+<span class="sd">           :param dev_klass_name: (str) tango device class name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_klasses</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">dev_klass_name</span><span class="p">):</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_klasses</span><span class="p">[</span><span class="n">dev_klass_name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TangoFactory.findObjectClass"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.findObjectClass">[docs]</a>    <span class="k">def</span> <span class="nf">findObjectClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">absolute_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtain the class object corresponding to the given name.</span>
+<span class="sd">           </span>
+<span class="sd">        :param absolute_name: (str) the object absolute name string</span>
+
+<span class="sd">        :return: (taurus.core.taurusmodel.TaurusModel) a class object that should be a subclass of a taurus.core.taurusmodel.TaurusModel</span>
+<span class="sd">        :raise: (taurus.core.taurusexception.TaurusException) if the given name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">objType</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_Database</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">NORMAL_COMPLETE</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Database</span> 
+            <span class="k">elif</span> <span class="n">_Device</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">NORMAL_COMPLETE</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Device</span>
+            <span class="k">elif</span> <span class="n">_Attribute</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">NORMAL_COMPLETE</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Attribute</span>
+            <span class="k">elif</span> <span class="n">_Configuration</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">NORMAL_COMPLETE</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Configuration</span>
+            <span class="k">elif</span> <span class="n">_Database</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">SHORT</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Database</span> 
+            <span class="k">elif</span> <span class="n">_Device</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">SHORT</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Device</span>
+            <span class="k">elif</span> <span class="n">_Attribute</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">SHORT</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Attribute</span>
+            <span class="k">elif</span> <span class="n">_Configuration</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">absolute_name</span><span class="p">,</span> <span class="n">MatchLevel</span><span class="o">.</span><span class="n">SHORT</span><span class="p">):</span>
+                <span class="n">objType</span> <span class="o">=</span> <span class="n">_Configuration</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Not able to find Object class for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">absolute_name</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">objType</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getDatabase"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getDatabase">[docs]</a>    <span class="k">def</span> <span class="nf">getDatabase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtain the object corresponding to the given database name or the </span>
+<span class="sd">        default database if db_name is None.</span>
+<span class="sd">        If the corresponding database object already exists, the existing </span>
+<span class="sd">        instance is returned. Otherwise a new instance is stored and returned.</span>
+<span class="sd">           </span>
+<span class="sd">        :param db_name: (str) database name string alias. If None, the </span>
+<span class="sd">                        default database is used</span>
+<span class="sd">                           </span>
+<span class="sd">        :return: (taurus.core.tangodatabase.TangoDatabase) database object</span>
+<span class="sd">        :raise: (taurus.core.taurusexception.TaurusException) if the given alias is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">db_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_tango_host</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span> <span class="o">=</span> <span class="n">_Database</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">db_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_tango_host</span>
+                        <span class="n">validator</span> <span class="o">=</span> <span class="n">_Database</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+                        <span class="n">params</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid default Tango database name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">db_name</span><span class="p">)</span>
+                        <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">),</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span> <span class="o">=</span> <span class="n">_Database</span><span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not create Database&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="k">raise</span>
+                <span class="n">db_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="p">[</span><span class="n">db_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dft_db</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ret</span>
+            <span class="n">validator</span> <span class="o">=</span> <span class="n">_Database</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid Tango database name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">db_name</span><span class="p">)</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">),</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">_Database</span><span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not create Database </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">tango_db</span><span class="p">[</span><span class="n">db_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="n">ret</span> </div>
+
+<div class="viewcode-block" id="TangoFactory.getDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dev_name</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the object corresponding to the given tango device name.</span>
+<span class="sd">           If the corresponding device already exists, the existing instance</span>
+<span class="sd">           is returned. Otherwise a new instance is stored and returned.</span>
+<span class="sd">           </span>
+<span class="sd">           :param dev_name: (str) tango device name or tango alias for the device.</span>
+<span class="sd">                            It should be formed like: &lt;host&gt;:&lt;port&gt;/&lt;tango device name&gt;</span>
+<span class="sd">                            - If &lt;host&gt;:&lt;port&gt; is ommited then it will use the </span>
+<span class="sd">                            default database.</span>
+<span class="sd">                            - &lt;tango device name&gt; can be full tango device name </span>
+<span class="sd">                            (_/_/_) or a device alias.</span>
+<span class="sd">             </span>
+<span class="sd">           :return: (taurus.core.tango.TangoDevice) a device object </span>
+<span class="sd">           :raise: (taurus.core.taurusexception.TaurusException) if the given dev_name is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_alias_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">d</span>
+        
+        <span class="c1"># Simple approach did not work. Lets build a proper device name</span>
+        <span class="k">if</span> <span class="n">dev_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;tango://&quot;</span><span class="p">):</span>
+            <span class="n">dev_name</span> <span class="o">=</span> <span class="n">dev_name</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>
+        
+        <span class="n">validator</span> <span class="o">=</span> <span class="n">_Device</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid Tango device name &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">dev_name</span><span class="p">)</span>
+        
+        <span class="n">host</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">),</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">)</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">()</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_host</span><span class="p">(),</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_port</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+            
+        <span class="n">dev_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devicename&#39;</span><span class="p">)</span>
+        <span class="n">alias</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devalias&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">dev_name</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">alias</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_alias</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">alias</span> <span class="ow">and</span> <span class="n">alias</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">InvalidAlias</span><span class="p">:</span>
+                    <span class="n">alias</span> <span class="o">=</span> <span class="kc">None</span> 
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">alias</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dev_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_device_alias</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Device </span><span class="si">%s</span><span class="s2"> is not defined in </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">alias</span><span class="p">,</span><span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()))</span>
+
+        <span class="n">full_dev_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">dev_name</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">alias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">alias</span>
+        
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_dev_name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dev_klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDeviceClass</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">dev_name</span><span class="o">=</span><span class="n">dev_name</span><span class="p">)</span>
+                <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;storeCallback&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storeDevice</span>
+                <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">dev_klass</span><span class="p">(</span><span class="n">full_dev_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                <span class="c1"># device objects will register themselves in this factory</span>
+                <span class="c1"># so there is no need to do it here</span>
+            <span class="k">except</span> <span class="n">DoubleRegistration</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_dev_name</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error creating device </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">raise</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getAttribute"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">attr_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the object corresponding to the given attribute name.</span>
+<span class="sd">           If the corresponding attribute already exists, the existing instance</span>
+<span class="sd">           is returned. Otherwise a new instance is stored and returned.</span>
+
+<span class="sd">           :param attr_name: (str) attribute name</span>
+<span class="sd">                 </span>
+<span class="sd">           :return: (taurus.core.tangoattribute.TangoAttribute) attribute object</span>
+<span class="sd">           :raise: (taurus.core.taurusexception.TaurusException) if the given alias is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">attr</span>
+        
+        <span class="c1"># Simple approach did not work. Lets build a proper device name</span>
+        <span class="k">if</span> <span class="n">attr_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;tango://&quot;</span><span class="p">):</span>
+            <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attr_name</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>
+        <span class="n">validator</span> <span class="o">=</span> <span class="n">_Attribute</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid Tango attribute name &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span>
+        
+        <span class="n">host</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">),</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">)</span>
+        
+        <span class="n">db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">()</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_host</span><span class="p">(),</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_port</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+        
+        <span class="n">dev_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devicename&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">dev_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devalias&#39;</span><span class="p">))</span>
+            <span class="n">dev_name</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">dev_name</span>
+
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;attributename&#39;</span><span class="p">)</span>
+        <span class="n">full_attr_name</span> <span class="o">=</span> <span class="n">dev_name</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">attr_name</span>
+         
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_attr_name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># Do another try in case the Device object created the attribute</span>
+                    <span class="c1"># itself. This happens for the &#39;state&#39; attribute</span>
+                    <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_attr_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">attr</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">attr_klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttributeClass</span><span class="p">(</span><span class="n">attr_name</span><span class="o">=</span><span class="n">attr_name</span><span class="p">)</span>
+                        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;storeCallback&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storeAttribute</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;pollingPeriod&#39;</span><span class="p">):</span>
+                            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pollingPeriod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultPollingPeriod</span><span class="p">()</span>
+                        <span class="n">attr</span> <span class="o">=</span> <span class="n">attr_klass</span><span class="p">(</span><span class="n">full_attr_name</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                        <span class="c1"># attribute objects will register themselves in this factory</span>
+                        <span class="c1"># so there is no need to do it here</span>
+                    <span class="k">except</span> <span class="n">DoubleRegistration</span><span class="p">:</span>
+                        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_attr_name</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error creating attribute </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">raise</span>
+        <span class="k">return</span> <span class="n">attr</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getAttributeInfo"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getAttributeInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getAttributeInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">full_attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated: Use :meth:`taurus.core.tango.TangoFactory.getConfiguration` instead.</span>
+
+<span class="sd">           Obtain attribute information corresponding to the given attribute name.</span>
+<span class="sd">           If the corresponding attribute info already exists, the existing information</span>
+<span class="sd">           is returned. Otherwise a new information instance is stored and returned.</span>
+
+<span class="sd">           :param full_attr_name: (str) attribute name in format: &lt;tango device name&gt;&#39;/&#39;&lt;attribute name&gt;</span>
+<span class="sd">           </span>
+<span class="sd">           :return: (taurus.core.tango.TangoConfiguration) configuration object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="s2">&quot;Use getConfiguration(full_attr_name) instead&quot;</span><span class="p">)</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">full_attr_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attr</span><span class="o">.</span><span class="n">getConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoFactory.getConfiguration"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getConfiguration">[docs]</a>    <span class="k">def</span> <span class="nf">getConfiguration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">param</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the object corresponding to the given attribute or full name.</span>
+<span class="sd">           If the corresponding configuration already exists, the existing instance</span>
+<span class="sd">           is returned. Otherwise a new instance is stored and returned.</span>
+
+<span class="sd">           :param param: (taurus.core.taurusattribute.TaurusAttribute or str) attrubute object or full configuration name</span>
+<span class="sd">           </span>
+<span class="sd">           :return: (taurus.core.tango.TangoConfiguration) configuration object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getConfigurationFromName</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getConfigurationFromAttribute</span><span class="p">(</span><span class="n">param</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_getAttributeClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attr_name&quot;</span><span class="p">)</span>
+        <span class="n">attr_klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attr_klasses</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr_name</span><span class="p">,</span> <span class="n">_Attribute</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attr_klass</span>
+
+    <span class="k">def</span> <span class="nf">_getDeviceClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="n">db</span><span class="p">,</span> <span class="n">dev_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;db&quot;</span><span class="p">),</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dev_name&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">dev_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_klasses</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_Device</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tango_dev_klass</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_class_for_device</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_dev_klasses</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tango_dev_klass</span><span class="p">,</span> <span class="n">_Device</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_getConfigurationFromName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cfg_name</span><span class="p">):</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_configs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cfg_name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">cfg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cfg</span>
+        
+        <span class="c1"># Simple approach did not work. Lets build a proper configuration name</span>
+        <span class="k">if</span> <span class="n">cfg_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;tango://&quot;</span><span class="p">):</span>
+            <span class="n">cfg_name</span> <span class="o">=</span> <span class="n">cfg_name</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>
+        
+        <span class="n">validator</span> <span class="o">=</span> <span class="n">_Configuration</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">cfg_name</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid Tango configuration name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cfg_name</span><span class="p">)</span>
+        
+        <span class="n">host</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">),</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">)</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">()</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_host</span><span class="p">(),</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_port</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+        
+        <span class="n">dev_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devicename&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">db</span><span class="o">.</span><span class="n">get_device_alias</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devalias&#39;</span><span class="p">))</span>
+        <span class="n">dev_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">dev_name</span>
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;attributename&#39;</span><span class="p">)</span>
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">dev_name</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">attr_name</span>
+        <span class="n">cfg_name</span> <span class="o">=</span> <span class="n">attr_name</span> <span class="o">+</span> <span class="s2">&quot;?configuration&quot;</span>
+        
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_configs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cfg_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">cfg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+            <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getConfigurationFromAttribute</span><span class="p">(</span><span class="n">attrObj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfg</span>
+        
+    <span class="k">def</span> <span class="nf">_getConfigurationFromAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">attrObj</span><span class="p">):</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">attrObj</span><span class="o">.</span><span class="n">getConfig</span><span class="p">()</span>
+        <span class="n">cfg_name</span> <span class="o">=</span> <span class="n">attrObj</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;?configuration&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_configs</span><span class="p">[</span><span class="n">cfg_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span>
+        <span class="k">return</span> <span class="n">cfg</span>
+    
+    <span class="k">def</span> <span class="nf">_storeDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">):</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">alias</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getFullName</span><span class="p">(),</span> <span class="n">dev</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">exists</span> <span class="o">==</span> <span class="n">dev</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before&quot;</span> <span class="o">%</span> <span class="n">name</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before with a different object!&quot;</span> <span class="o">%</span> <span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">DoubleRegistration</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dev</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">alias</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">alias</span><span class="p">):</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">tango_alias_devs</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span> <span class="o">=</span> <span class="n">dev</span>
+    
+    <span class="k">def</span> <span class="nf">_storeAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">exists</span> <span class="o">==</span> <span class="n">attr</span><span class="p">:</span> 
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before&quot;</span> <span class="o">%</span> <span class="n">name</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has already been registered before with a different object!&quot;</span> <span class="o">%</span> <span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">DoubleRegistration</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span>
+        
+<div class="viewcode-block" id="TangoFactory.getExistingAttribute"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getExistingAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">getExistingAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a registered attribute or None if the corresponding attribute</span>
+<span class="sd">           as not been registered. This is used mainly to avoid recursion between </span>
+<span class="sd">           two objects supplied by this factory which can ask for the other object </span>
+<span class="sd">           in the constructor.</span>
+<span class="sd">        </span>
+<span class="sd">           :param attr_name: (str) attribute name</span>
+<span class="sd">           :return: (taurus.core.tango.TangoAttribute or None) attribute object or None</span>
+<span class="sd">           &quot;&quot;&quot;</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">attr</span>
+        
+        <span class="c1"># Simple approach did not work. Lets build a proper device name</span>
+        <span class="k">if</span> <span class="n">attr_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;tango://&quot;</span><span class="p">):</span>
+            <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attr_name</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>
+        <span class="n">validator</span> <span class="o">=</span> <span class="n">_Attribute</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid Tango attribute name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span>
+        
+        <span class="n">host</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">),</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">)</span>
+        
+        <span class="n">db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">()</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_host</span><span class="p">(),</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_port</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+        
+        <span class="n">dev_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devicename&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">dev_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devalias&#39;</span><span class="p">))</span>
+            <span class="n">dev_name</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">dev_name</span>
+
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;attributename&#39;</span><span class="p">)</span>
+        <span class="n">full_attr_name</span> <span class="o">=</span> <span class="n">dev_name</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">attr_name</span>
+         
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_attr_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attr</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.getExistingDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.getExistingDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getExistingDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a registered device or None if the corresponding device</span>
+<span class="sd">           as not been registered. This is used mainly to avoid recursion between </span>
+<span class="sd">           two objects supplied by this factory which can ask for the other object </span>
+<span class="sd">           in the constructor.</span>
+<span class="sd">        </span>
+<span class="sd">           :param dev_name: (str) tango device name or tango alias for the device.</span>
+<span class="sd">                            It should be formed like: &lt;host&gt;:&lt;port&gt;/&lt;tango device name&gt;</span>
+<span class="sd">                            - If &lt;host&gt;:&lt;port&gt; is ommited then it will use the </span>
+<span class="sd">                            default database.</span>
+<span class="sd">                            - &lt;tango device name&gt; can be full tango device name </span>
+<span class="sd">                            (_/_/_) or a device alias.</span>
+<span class="sd">           :return: (taurus.core.tango.TangoDevice or None) device object or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_alias_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">d</span>
+        
+        <span class="c1"># Simple approach did not work. Lets build a proper device name</span>
+        <span class="k">if</span> <span class="n">dev_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;tango://&quot;</span><span class="p">):</span>
+            <span class="n">dev_name</span> <span class="o">=</span> <span class="n">dev_name</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>
+        
+        <span class="n">validator</span> <span class="o">=</span> <span class="n">_Device</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Invalid Tango device name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dev_name</span><span class="p">)</span>
+        
+        <span class="n">host</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">),</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">)</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">()</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_host</span><span class="p">(),</span> <span class="n">db</span><span class="o">.</span><span class="n">get_db_port</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDatabase</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+            
+        <span class="n">dev_name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devicename&#39;</span><span class="p">)</span>
+        <span class="n">alias</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devalias&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">dev_name</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">alias</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_alias</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">alias</span> <span class="ow">and</span> <span class="n">alias</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">InvalidAlias</span><span class="p">:</span>
+                    <span class="n">alias</span> <span class="o">=</span> <span class="kc">None</span> 
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">alias</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dev_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_device_alias</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TaurusException</span><span class="p">(</span><span class="s2">&quot;Device </span><span class="si">%s</span><span class="s2"> is not defined in </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">alias</span><span class="p">,</span><span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()))</span>
+
+        <span class="n">full_dev_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">dev_name</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">alias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">alias</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_dev_name</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TangoFactory.removeExistingDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.removeExistingDevice">[docs]</a>    <span class="k">def</span> <span class="nf">removeExistingDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_or_dev_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes a previously registered device.</span>
+<span class="sd">           </span>
+<span class="sd">           :param dev_or_dev_name: (str or TangoDevice) device name or device object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dev_or_dev_name</span><span class="p">,</span> <span class="n">_Device</span><span class="p">):</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">dev_or_dev_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getExistingDevice</span><span class="p">(</span><span class="n">dev_or_dev_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Device </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">dev_or_dev_name</span><span class="p">)</span>
+        <span class="n">dev</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="n">full_name</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">full_name</span><span class="p">):</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="p">[</span><span class="n">full_name</span><span class="p">]</span>
+        <span class="n">simp_name</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_alias_devs</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">simp_name</span><span class="p">):</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_alias_devs</span><span class="p">[</span><span class="n">simp_name</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.removeExistingAttribute"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.removeExistingAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">removeExistingAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_or_attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes a previously registered attribute.</span>
+<span class="sd">           </span>
+<span class="sd">           :param attr_or_attr_name: (str or TangoAttribute) attribute name or attribute object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr_or_attr_name</span><span class="p">,</span> <span class="n">_Attribute</span><span class="p">):</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="n">attr_or_attr_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getExistingAttribute</span><span class="p">(</span><span class="n">attr_or_attr_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Attribute </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">attr_or_attr_name</span><span class="p">)</span>
+        <span class="n">attr</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
+        <span class="n">full_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">full_name</span><span class="p">):</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_attrs</span><span class="p">[</span><span class="n">full_name</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.addAttributeToPolling"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.addAttributeToPolling">[docs]</a>    <span class="k">def</span> <span class="nf">addAttributeToPolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">unsubscribe_evts</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Activates the polling (client side) for the given attribute with the</span>
+<span class="sd">           given period (seconds).</span>
+
+<span class="sd">           :param attribute: (taurus.core.tango.TangoAttribute) attribute name.</span>
+<span class="sd">           :param period: (float) polling period (in seconds)</span>
+<span class="sd">           :param unsubscribe_evts: (bool) whether or not to unsubscribe from events</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tmr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">TaurusPollingTimer</span><span class="p">(</span><span class="n">period</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">[</span><span class="n">period</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmr</span>
+        <span class="n">tmr</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TangoFactory.removeAttributeFromPolling"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.removeAttributeFromPolling">[docs]</a>    <span class="k">def</span> <span class="nf">removeAttributeFromPolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deactivate the polling (client side) for the given attribute. If the</span>
+<span class="sd">           polling of the attribute was not previously enabled, nothing happens.</span>
+
+<span class="sd">           :param attribute: (str) attribute name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span><span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">containsAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">):</span>
+                <span class="n">timer</span><span class="o">.</span><span class="n">removeAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">getAttributeCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">period</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">[</span><span class="n">period</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="TangoFactory.isPollingEnabled"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.isPollingEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">isPollingEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tells if the local tango polling is enabled</span>
+<span class="sd">        </span>
+<span class="sd">           :return: (bool) wheter or not the polling is enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span></div>
+            
+<div class="viewcode-block" id="TangoFactory.disablePolling"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.disablePolling">[docs]</a>    <span class="k">def</span> <span class="nf">disablePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disable the application tango polling&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span><span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+            
+<div class="viewcode-block" id="TangoFactory.enablePolling"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoFactory.html#taurus.core.tango.TangoFactory.enablePolling">[docs]</a>    <span class="k">def</span> <span class="nf">enablePolling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Enable the application tango polling&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPollingEnabled</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span><span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_polling_enabled</span> <span class="o">=</span> <span class="kc">True</span></div></div>
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

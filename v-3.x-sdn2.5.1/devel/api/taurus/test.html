@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.test &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../index.html"/>
+        <link rel="up" title="taurus" href="../taurus.html"/>
+        <link rel="next" title="ModuleExplorer" href="test/_ModuleExplorer.html"/>
+        <link rel="prev" title="taurus.qt.uic" href="qt/uic.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../docs.html">Taurus 3.7 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../users/index.html">User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../tau2taurus_migration_guide.html">tau to taurus migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../color_guide.html">Color guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../widget_tutorial.html">Widget tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../popupmenu_tutorial.html">Popup menu tutorial</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="qt.html">qt</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="web.html">web</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../taurus_AllClasses.html">All Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../docs.html">Taurus 3.7 documentation</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
+      
+          <li><a href="../taurus.html"><code class="docutils literal"><span class="pre">taurus</span></code></a> &raquo;</li>
+      
+    <li><code class="docutils literal"><span class="pre">taurus.test</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../_sources/devel/api/taurus/test.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-taurus.test">
+<span id="taurus-test"></span><h1><a class="reference internal" href="#module-taurus.test" title="taurus.test"><code class="xref py py-mod docutils literal"><span class="pre">taurus.test</span></code></a><a class="headerlink" href="#module-taurus.test" title="Permalink to this headline">¶</a></h1>
+<p>Taurus provides a framework for testing.
+This framework intends to facilitate evaluation, bug finding and integration of
+contributed code/patches, as well as to promote test driven development in
+Taurus.</p>
+<p>The first implementation of this Framework is an outcome of the [Sardana
+Enhancement Proposal 5 (SEP5)](<a class="reference external" href="http://sourceforge.net/p/sardana/wiki/SEP5/">http://sourceforge.net/p/sardana/wiki/SEP5/</a>)</p>
+<p>Ideally, bug reports should be accompanied by a test revealing the bug,
+whenever possible.</p>
+<p>The first tests implemented are focused on Unit Tests, but the same framework
+should be used for integration and system tests as well.</p>
+<p>The taurus.test.testsuite module provides an autodiscovered suite for all
+tests implemented in Taurus.</p>
+<p>The following are some key points to keep in mind when using this framework:</p>
+<ul class="simple">
+<li>The Taurus test framework is based on <a class="reference external" href="https://docs.python.org/dev/library/unittest.html#module-unittest" title="(in Python v3.8)"><code class="xref py py-mod docutils literal"><span class="pre">unittest</span></code></a> which should be imported
+from <code class="xref py py-mod docutils literal"><span class="pre">taurus.external</span></code> in order to be compatible with all versions of
+python supported by Taurus.</li>
+<li>all test-related code is contained in submodules named <cite>test</cite> which appear
+in any module of taurus.</li>
+<li>test-related code falls in one of these three categories:<ul>
+<li>actual test code (classes that derive from unittest.TestCase)</li>
+<li>utility classes/functions (code to simplify development of test code)</li>
+<li>resources (accessory files required by some test). They are located in
+subdirectories named <cite>res</cite></li>
+</ul>
+</li>
+</ul>
+<p>For a more complete description of the conventions on how to write tests with
+the Taurus testing framework, please refer to the
+[SEP5](<a class="reference external" href="http://sourceforge.net/p/sardana/wiki/SEP5/">http://sourceforge.net/p/sardana/wiki/SEP5/</a>).</p>
+<p class="rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="hlist"><tr><td><ul class="simple">
+<li><a class="reference internal" href="test/_ModuleExplorer.html#taurus.test.ModuleExplorer" title="taurus.test.ModuleExplorer"><code class="xref py py-class docutils literal"><span class="pre">ModuleExplorer</span></code></a></li>
+</ul>
+</td><td><ul class="simple">
+</ul>
+</td></tr></table>
+<p class="rubric">Functions</p>
+<dl class="function">
+<dt id="taurus.test.calculateTestFuzziness">
+<code class="descname">calculateTestFuzziness</code><span class="sig-paren">(</span><em>test</em>, <em>maxtries=100</em>, <em>maxfails=10</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/taurus/test/fuzzytest.html#calculateTestFuzziness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.test.calculateTestFuzziness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the fuzziness of a test by running it many times and counting
+the failures. In this context, we assume that there is an underlying 
+problem and but that the test is not perfect and only fails (triggers the 
+problem) with a certain failure rate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>testname</strong> (<em>:class:~`str`</em>) &#8211; test name. see:
+<a class="reference external" href="https://docs.python.org/dev/library/unittest.html#unittest.TestLoader.loadTestsFromName" title="(in Python v3.8)"><code class="xref py py-meth docutils literal"><span class="pre">unittest.TestLoader.loadTestsFromName()</span></code></a></li>
+<li><strong>maxtries</strong> (<em>:class:~`int`</em>) &#8211; maximum number of runs</li>
+<li><strong>maxfails</strong> (<em>:class:~`int`</em>) &#8211; maximum number of failed runs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">:class:~`tuple`</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a tuple (f,df,n) where f is the failure rate, df is its
+standard deviation, and n is the number of consecutive 
+times that the test should be passed to have a confidence&gt;99%% 
+that the bug is fixed&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.test.getResourcePath">
+<code class="descname">getResourcePath</code><span class="sig-paren">(</span><em>resmodule</em>, <em>fname=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/taurus/test/resource.html#getResourcePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.test.getResourcePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the absolute path to the directory in which the
+resource module named <cite>resmodule</cite> is implemented.
+If filename is passed, the path to the filename in such directory is
+returned, e.g.:</p>
+<dl class="docutils">
+<dt>getResourcePath(&#8216;foo.test.res&#8217;, &#8216;bar.txt&#8217;) &#8211;&gt;</dt>
+<dd>absolute path to &lt;taurus&gt;/foo/test/res/bar.txt</dd>
+</dl>
+<p>It raises ImportError if resmodule does not exist and
+RuntimeError if fname does not exist)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resmodule</strong> (<em>:class:~`str`</em>) &#8211; name of a resource module</li>
+<li><strong>fname</strong> (<em>:class:~`str`</em>) &#8211; the name of a resource file present in the
+resmodule directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">:class:~`str`</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">absolute path to the resource file
+(or to the resource directory if fname is not passed)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.test.insertTest">
+<code class="descname">insertTest</code><span class="sig-paren">(</span><em>klass=None</em>, <em>helper_name=None</em>, <em>test_method_name=None</em>, <em>test_method_doc=None</em>, <em>tested_name=None</em>, <em>**helper_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/taurus/test/base.html#insertTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.test.insertTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator that inserts test methods from a helper method that accepts
+arguments.
+<cite>insertTest</cite> provides a very economic API for creating new tests for a given
+class based on a helper method.
+<cite>insertTest</cite> accepts the following arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt>helper_name (str): the name of the helper method. <cite>insertTest</cite> will</dt>
+<dd>insert a test method which calls the helper with
+any the helper_kwargs (see below).</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>test_method_name (str): Optional. Name of the test method to be used.</dt>
+<dd>If None given, one will be generated from the
+tested class and helper names.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>test_method_doc (str): Optional. The docstring for the inserted test </dt>
+<dd>method (this shows in the unit test output). 
+If None given, a default one is generated which
+includes the input parameters and the helper
+name.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>tested_name (str): Optional. The name of the class or feature being </dt>
+<dd>tested (if given, it will be used in default method 
+names and docstrings).</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>**helper_kwargs: All remaining keyword arguments are passed to the</dt>
+<dd>helper.</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>This decorator can be considered a &#8220;base&#8221; decorator. It is often used to
+create other decorators in which the helper method is pre-set, as in 
+the following example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">isPos</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">insertTest</span><span class="p">,</span> <span class="n">helper_name</span><span class="o">=</span><span class="s1">&#39;isPositive&#39;</span><span class="p">)</span>
+
+<span class="nd">@isPos</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@isPos</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">isPositive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.test.loopSubprocess">
+<code class="descname">loopSubprocess</code><span class="sig-paren">(</span><em>target</em>, <em>maxtries=100</em>, <em>maxfails=10</em>, <em>okvalues=(0</em>, <em>)</em>, <em>args=()</em>, <em>kwargs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/taurus/test/fuzzytest.html#loopSubprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.test.loopSubprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a callable as a subprocess <cite>maxtries</cite> times or until it fails 
+<cite>maxfails</cite> times and report the number of tries and failures.
+The callable is run as a subprocess and it is considered to run fine if 
+the subprocess exit code is in the okValues list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>target</strong> (<em>:class:~`callable`</em>) &#8211; a callable test</li>
+<li><strong>maxtries</strong> (<em>:class:~`int`</em>) &#8211; maximum number of runs</li>
+<li><strong>maxfails</strong> (<em>:class:~`int`</em>) &#8211; maximum number of failed runs</li>
+<li><strong>okvalues</strong> (<em>:class:~`seq`</em>) &#8211; a sequence containing exit values of cmd which
+are considered to be successful runs.</li>
+<li><strong>args</strong> (<em>:class:~`seq`</em>) &#8211; arguments for running the target function</li>
+<li><strong>kwargs</strong> (<em>:class:~`dict`</em>) &#8211; keyword arguments for running the target function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">:class:~`tuple`</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a tuple of ints: tries, failures</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.test.loopTest">
+<code class="descname">loopTest</code><span class="sig-paren">(</span><em>testname</em>, <em>maxtries=100</em>, <em>maxfails=10</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/taurus/test/fuzzytest.html#loopTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.test.loopTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a test <cite>maxtries</cite> times or until it fails <cite>maxfails</cite> times and 
+report the number of tries and failures.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>testname</strong> (<em>:class:~`str`</em>) &#8211; test name. see:
+<a class="reference external" href="https://docs.python.org/dev/library/unittest.html#unittest.TestLoader.loadTestsFromName" title="(in Python v3.8)"><code class="xref py py-meth docutils literal"><span class="pre">unittest.TestLoader.loadTestsFromName()</span></code></a></li>
+<li><strong>maxtries</strong> (<em>:class:~`int`</em>) &#8211; maximum number of runs</li>
+<li><strong>maxfails</strong> (<em>:class:~`int`</em>) &#8211; maximum number of failed runs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">:class:~`tuple`</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a tuple of ints: tries, failures</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.test.skipUnlessGui">
+<code class="descname">skipUnlessGui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/taurus/test/skip.html#skipUnlessGui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.test.skipUnlessGui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to indicate that the given test should be skipped if GUI
+Tests are not enabled.</p>
+<p>It can be applied both to <a class="reference external" href="https://docs.python.org/dev/library/unittest.html#unittest.TestCase" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">unittest.TestCase</span></code></a> classes and to
+test methods:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FooTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_something_which_does_not_need_gui</span><span class="p">()</span>
+        <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+    <span class="nd">@skipUnlessGui</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">test_something_that</span> <span class="n">requires_gui</span><span class="p">()</span>
+        <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="nd">@skipUnlessGui</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">GUITest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note: using skipUnlessGui is equivalent to:</p>
+<blockquote>
+<div>&#64;skipunless(taurus.test.GUI_TESTS_ENABLED, &#8216;requires GUI&#8217;)</div></blockquote>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="test/_ModuleExplorer.html" class="btn btn-neutral float-right" title="ModuleExplorer" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="qt/uic.html" class="btn btn-neutral" title="taurus.qt.uic" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../index.html"/>
+        <link rel="up" title="User’s Guide" href="index.html"/>
+        <link rel="next" title="Getting started" href="getting_started.html"/>
+        <link rel="prev" title="User’s Guide" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 3.7 documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui/index.html">User&#8217;s Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="screenshots.html">Screenshots</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../devel/index.html">Developer&#8217;s Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../docs.html">Taurus 3.7 documentation</a> &raquo;</li>
+      
+          <li><a href="index.html">User&#8217;s Guide</a> &raquo;</li>
+      
+    <li>Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/users/introduction.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<span id="id1"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>taurus was originally conceived as a library for connecting client side
+applications (CLIs and GUIs) to <a class="reference external" href="http://www.tango-controls.org/">Tango</a> device servers.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">More recently, the scope of Taurus
+has been broadened and it is moving towards supporting pluggins for
+other control systems (e.g. <a class="reference external" href="http://www.aps.anl.gov/epics/">Epics</a>, <a class="reference external" href="http://www.certif.com/">Spec</a>...). While many concepts of
+Taurus Design are heavily influenced by the Tango philosophy, the goal
+is to eventually provide a control-system agnostic API allowing
+different control systems to be used even simultaneously.
+Nevertheless, due to its Tango roots, this documentation may assume
+that you are using Tango.</p>
+</div>
+<p>Taurus was developed within the <a class="reference external" href="http://www.sardana-controls.org/">Sardana</a> project, but since it has being found
+to be useful for other projects not related to Sardana, it has been
+moved to a separate project (although both projects are kept in sync and share
+most of their developers).</p>
+<p>For its Tango interface, Taurus uses <a class="reference external" href="http://packages.python.org/PyTango/">PyTango</a> which is a python binding
+for the <a class="reference external" href="http://www.tango-controls.org/">Tango</a> library. It provides an abstraction layer that allows Tango to be
+accessed in a pythonic, object oriented way. For the GUI part, taurus is built
+on top of the graphical library <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a> which is a python binding for <a class="reference external" href="http://qt.nokia.com/products/">Qt</a>.</p>
+<dl class="docutils">
+<dt>The goals of this library are:</dt>
+<dd><ul class="first last simple">
+<li>provide a simple Tango (and other control systems) API to the end-user application</li>
+<li>speed up development of tango (and other control systems) based applications</li>
+<li>provide a standardized look-and-feel</li>
+</ul>
+</dd>
+</dl>
+<p>For example, to display the values of four attributes (state, position, velocity, acceleration)
+of a device (motor/icepap/01):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusForm</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;velocity&#39;</span><span class="p">,</span> <span class="s1">&#39;acceleration&#39;</span> <span class="p">]</span>
+<span class="n">model</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;motor/icepap/01/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">attr</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span> <span class="p">]</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
+<span class="n">w</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/taurusform_example01.png"><img alt="../_images/taurusform_example01.png" src="../_images/taurusform_example01.png" style="width: 216.5px; height: 115.0px;" /></a>
+<p class="caption"><span class="caption-text">The generated GUI by the above code</span></p>
+</div>
+<p>The above example can even be achieved even without typing any code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">taurus</span><span class="o">/</span><span class="n">qt</span><span class="o">/</span><span class="n">qtgui</span><span class="o">/</span><span class="n">panel</span>
+<span class="o">%</span> <span class="n">python</span> <span class="n">taurusform</span><span class="o">.</span><span class="n">py</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">state</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">position</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">velocity</span>
+</pre></div>
+</div>
+<p>In many aspects, taurus follows the same approach as the tango java application
+toolkit: Tango <a class="reference external" href="http://www.tango-controls.org/Documents/gui/atk/tango-application-toolkit">ATK</a>. If you know <a class="reference external" href="http://www.tango-controls.org/Documents/gui/atk/tango-application-toolkit">ATK</a> you will find many things in taurus familiar.</p>
+<p>Throughout the documentation we will assume that you have a basic knowledge of
+<a class="reference external" href="http://www.tango-controls.org/">Tango</a>/<a class="reference external" href="http://packages.python.org/PyTango/">PyTango</a> and <a class="reference external" href="http://qt.nokia.com/products/">Qt</a>/<a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a>.</p>
+<p>Although taurus is written primarily in pure python, it makes heavy use of
+<a class="reference external" href="http://packages.python.org/PyTango/">PyTango</a>, <a class="reference external" href="http://numpy.scipy.org/">numpy</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a> and <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt</a> to provide good performance even when
+large amounts of data are involved.</p>
+<p>taurus is designed with the philosophy that you should be able to create simple
+applications that are able to connect to tango servers with just a few lines of
+code or even with no code at all!</p>
+<p>The concepts were not born from scratch. It is not our intention to reinvent the
+way applications are written. Many of the concepts were borrowed from the
+existing java tango library called <a class="reference external" href="http://www.tango-controls.org/Documents/gui/atk/tango-application-toolkit">ATK</a>. If you have used <a class="reference external" href="http://www.tango-controls.org/Documents/gui/atk/tango-application-toolkit">ATK</a> before you will
+find many concepts familiar.</p>
+<a class="reference internal image-reference" href="../_images/taurus_layers.png"><img alt="../_images/taurus_layers.png" class="align-center" src="../_images/taurus_layers.png" style="width: 247.2px; height: 327.2px;" /></a>
+<p>The taurus library provides a core module that does not depend on PyQt and which
+is in charge of abstracting the lower level comunication with the control system
+(<a class="reference internal" href="../devel/core_tutorial.html#taurus-core-tutorial"><span class="std std-ref">taurus core tutorial</span></a>). On top of the core, the qt module provides a
+collection of widgets that can be used inside any <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a> based GUI
+(<a class="reference internal" href="../devel/examples.html#examples"><span class="std std-ref">Examples</span></a>). Recently, the proof-of-concept web module is being
+implemented for providing web widgets.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="User’s Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

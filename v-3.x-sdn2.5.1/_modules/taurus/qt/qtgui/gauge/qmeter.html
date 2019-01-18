@@ -1,0 +1,948 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.gauge.qmeter &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.gauge.qmeter</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.gauge.qmeter</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains a collection of Qt meter widgets&quot;&quot;&quot;</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">QPixmapWidget</span>
+
+<div class="viewcode-block" id="QBaseMeter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter">[docs]</a><span class="k">class</span> <span class="nc">QBaseMeter</span><span class="p">(</span><span class="n">QPixmapWidget</span><span class="p">):</span>
+    
+    <span class="n">DefaultMinimum</span>        <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">DefaultMaximum</span>        <span class="o">=</span> <span class="mf">100.0</span>
+    <span class="n">DefaultMinimumAlarm</span>   <span class="o">=</span> <span class="mf">10.0</span>
+    <span class="n">DefaultMaximumAlarm</span>   <span class="o">=</span> <span class="mf">90.0</span>
+    <span class="n">DefaultMinimumWarning</span> <span class="o">=</span> <span class="mf">20.0</span>
+    <span class="n">DefaultMaximumWarning</span> <span class="o">=</span> <span class="mf">80.0</span>
+    <span class="n">DefaultValue</span>          <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">DefaultValueOffset</span>    <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">DefaultDigitOffset</span>    <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">DefaultSteps</span>          <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">DefaultValueFont</span>      <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">()</span>
+    <span class="n">DefaultDigitFont</span>      <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minimum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultMinimum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultMaximum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minimumWarning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultMinimumWarning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximumWarning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultMaximumWarning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minimumAlarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultMinimumAlarm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximumAlarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultMaximumAlarm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultValue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valueOffset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultValueOffset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitOffset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultDigitOffset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valueFont</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultValueFont</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitFont</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultDigitFont</span>
+        <span class="c1">#self._valueFont.setPointSize(25)</span>
+        <span class="c1">#self._digitFont.setPointSize(20)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultSteps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="n">QPixmapWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_autoRangeIt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rangeIt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_minimum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span><span class="p">,</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setDirty</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">_rangeIt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span><span class="p">,</span> <span class="n">orig_min</span><span class="p">,</span> <span class="n">orig_max</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inc</span><span class="o">=</span><span class="mf">5.0</span><span class="p">):</span>
+        <span class="n">_min</span><span class="p">,</span> <span class="n">_max</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">_max</span> <span class="o">-</span> <span class="n">_min</span><span class="p">)</span>
+        
+        <span class="c1"># calculate increment</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">inc</span> <span class="o">*</span> <span class="n">steps</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">maximum</span> <span class="o">-</span> <span class="n">minimum</span><span class="p">)):</span>
+            <span class="n">new_inc</span> <span class="o">=</span> <span class="n">inc</span> <span class="o">/</span> <span class="mi">10</span>
+            <span class="k">if</span> <span class="n">new_inc</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="n">inc</span> <span class="o">=</span> <span class="n">new_inc</span>
+            <span class="k">else</span><span class="p">:</span> <span class="k">break</span>
+        
+        <span class="c1"># calculate scale</span>
+        <span class="k">while</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="n">scale</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">+=</span> <span class="n">inc</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">steps</span> 
+        
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_max</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="n">_max</span> <span class="o">=</span> <span class="n">_min</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">fmod</span><span class="p">(</span><span class="n">_min</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">_max</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">while</span> <span class="n">_max</span> <span class="o">&lt;</span> <span class="n">maximum</span><span class="p">:</span> <span class="n">_max</span> <span class="o">+=</span> <span class="n">factor</span>
+            <span class="n">_min</span> <span class="o">=</span> <span class="n">_max</span> <span class="o">-</span> <span class="n">scale</span>
+            <span class="k">if</span> <span class="n">_min</span> <span class="o">&lt;</span> <span class="n">minimum</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">factor</span> <span class="o">+=</span> <span class="n">inc</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">steps</span>
+        
+        <span class="k">if</span> <span class="n">left</span><span class="p">:</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">_min</span> <span class="o">+</span> <span class="n">factor</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">minimum</span><span class="p">:</span>
+                <span class="n">_min</span> <span class="o">+=</span> <span class="n">factor</span>
+                <span class="n">_max</span> <span class="o">+=</span> <span class="n">factor</span>
+        <span class="k">return</span> <span class="n">_min</span><span class="p">,</span> <span class="n">_max</span><span class="p">,</span> <span class="p">(</span><span class="n">_min</span> <span class="o">!=</span> <span class="n">orig_min</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">_max</span> <span class="o">!=</span> <span class="n">orig_max</span><span class="p">)</span>
+         
+        
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT property definition</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    
+<div class="viewcode-block" id="QBaseMeter.getMinimum"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getMinimum">[docs]</a>    <span class="k">def</span> <span class="nf">getMinimum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minimum</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setMinimum"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setMinimum">[docs]</a>    <span class="k">def</span> <span class="nf">setMinimum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minimum</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetMinimum"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimum">[docs]</a>    <span class="k">def</span> <span class="nf">resetMinimum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultMinimum</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.getMaximum"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getMaximum">[docs]</a>    <span class="k">def</span> <span class="nf">getMaximum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximum</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setMaximum"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setMaximum">[docs]</a>    <span class="k">def</span> <span class="nf">setMaximum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximum</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetMaximum"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximum">[docs]</a>    <span class="k">def</span> <span class="nf">resetMaximum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultMaximum</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.getMinimumWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getMinimumWarning">[docs]</a>    <span class="k">def</span> <span class="nf">getMinimumWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minimumWarning</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setMinimumWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setMinimumWarning">[docs]</a>    <span class="k">def</span> <span class="nf">setMinimumWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minimumWarning</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetMinimumWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumWarning">[docs]</a>    <span class="k">def</span> <span class="nf">resetMinimumWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWarning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultMinimumWarning</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.getMaximumWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getMaximumWarning">[docs]</a>    <span class="k">def</span> <span class="nf">getMaximumWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximumWarning</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setMaximumWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setMaximumWarning">[docs]</a>    <span class="k">def</span> <span class="nf">setMaximumWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximumWarning</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetMaximumWarning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumWarning">[docs]</a>    <span class="k">def</span> <span class="nf">resetMaximumWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultMaximumWarning</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.getMinimumAlarm"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getMinimumAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">getMinimumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minimumAlarm</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setMinimumAlarm"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setMinimumAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">setMinimumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_minimumAlarm</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetMinimumAlarm"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetMinimumAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">resetMinimumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultMinimumAlarm</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.getMaximumAlarm"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getMaximumAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">getMaximumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximumAlarm</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setMaximumAlarm"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setMaximumAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">setMaximumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximumAlarm</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetMaximumAlarm"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetMaximumAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">resetMaximumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMaximumAlarm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultMaximumAlarm</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetValue">[docs]</a>    <span class="k">def</span> <span class="nf">resetValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultValue</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.getSteps"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getSteps">[docs]</a>    <span class="k">def</span> <span class="nf">getSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setSteps"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setSteps">[docs]</a>    <span class="k">def</span> <span class="nf">setSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">steps</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Invalid steps. Must be &gt;= 2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">=</span> <span class="n">steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetSteps"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetSteps">[docs]</a>    <span class="k">def</span> <span class="nf">resetSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSteps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultSteps</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="QBaseMeter.getValueOffset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getValueOffset">[docs]</a>    <span class="k">def</span> <span class="nf">getValueOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valueOffset</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setValueOffset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setValueOffset">[docs]</a>    <span class="k">def</span> <span class="nf">setValueOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valueOffset</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valueOffset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valueOffset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetValueOffset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetValueOffset">[docs]</a>    <span class="k">def</span> <span class="nf">resetValueOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValueOffset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultValueOffset</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.getDigitOffset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getDigitOffset">[docs]</a>    <span class="k">def</span> <span class="nf">getDigitOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_digitOffset</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setDigitOffset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setDigitOffset">[docs]</a>    <span class="k">def</span> <span class="nf">setDigitOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">digitOffset</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitOffset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">digitOffset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetDigitOffset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetDigitOffset">[docs]</a>    <span class="k">def</span> <span class="nf">resetDigitOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDigitOffset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultDigitOffset</span><span class="p">)</span></div>
+                
+<div class="viewcode-block" id="QBaseMeter.getValueFont"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getValueFont">[docs]</a>    <span class="k">def</span> <span class="nf">getValueFont</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valueFont</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setValueFont"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setValueFont">[docs]</a>    <span class="k">def</span> <span class="nf">setValueFont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valueFont</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valueFont</span> <span class="o">=</span> <span class="n">valueFont</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setDirty</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetValueFont"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetValueFont">[docs]</a>    <span class="k">def</span> <span class="nf">resetValueFont</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultValueFont</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="QBaseMeter.getDigitFont"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getDigitFont">[docs]</a>    <span class="k">def</span> <span class="nf">getDigitFont</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_digitFont</span></div>
+    
+<div class="viewcode-block" id="QBaseMeter.setDigitFont"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.setDigitFont">[docs]</a>    <span class="k">def</span> <span class="nf">setDigitFont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">digitFont</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_digitFont</span> <span class="o">=</span> <span class="n">digitFont</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setDirty</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QBaseMeter.resetDigitFont"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.resetDigitFont">[docs]</a>    <span class="k">def</span> <span class="nf">resetDigitFont</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDigitFont</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultDigitFont</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="QBaseMeter.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QBaseMeter.html#taurus.qt.qtgui.gauge.QBaseMeter.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="c1"># explicitly do NOT expose this base meter to the designer</span>
+        <span class="k">return</span></div>
+    
+    <span class="c1">#: This property holds the minimum value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getMinimum`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setMinimum`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetMinimum`</span>
+    <span class="n">minimum</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMinimum</span><span class="p">,</span> <span class="n">setMinimum</span><span class="p">,</span>
+                              <span class="n">resetMinimum</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;minimum value&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the maximum value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getMaximum`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setMaximum`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetMaximum`</span>
+    <span class="n">maximum</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMaximum</span><span class="p">,</span> <span class="n">setMaximum</span><span class="p">,</span>
+                              <span class="n">resetMaximum</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;maximum value&quot;</span><span class="p">)</span>
+                              
+    <span class="c1">#: This property holds the value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getValue`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setValue`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetValue`</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getValue</span><span class="p">,</span> <span class="n">setValue</span><span class="p">,</span> <span class="n">resetValue</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the minimum alarm value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getMinimumAlarm`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setMinimumAlarm`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetMinimumAlarm`</span>
+    <span class="n">minimumAlarm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMinimumAlarm</span><span class="p">,</span> <span class="n">setMinimumAlarm</span><span class="p">,</span>
+                                   <span class="n">resetMinimumAlarm</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;minimum alarm&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the maximum alarm value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getMaximumAlarm`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setMaximumAlarm`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetMaximumAlarm`</span>
+    <span class="n">maximumAlarm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMaximumAlarm</span><span class="p">,</span> <span class="n">setMaximumAlarm</span><span class="p">,</span>
+                                   <span class="n">resetMaximumAlarm</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;maximum alarm&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the minimum warning value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getMinimumWarning`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setMinimumWarning`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetMinimumWarning`</span>
+    <span class="n">minimumWarning</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMinimumWarning</span><span class="p">,</span> <span class="n">setMinimumWarning</span><span class="p">,</span>
+                                   <span class="n">resetMinimumWarning</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;minimum warning&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the maximum warning value</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getMaximumWarning`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setMaximumWarning`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetMaximumWarning`</span>
+    <span class="n">maximumWarning</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getMaximumWarning</span><span class="p">,</span> <span class="n">setMaximumWarning</span><span class="p">,</span>
+                                   <span class="n">resetMaximumWarning</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;maximum warning&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the number of steps</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getSteps`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setSteps`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetSteps`</span>
+    <span class="n">steps</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getSteps</span><span class="p">,</span> <span class="n">setSteps</span><span class="p">,</span> <span class="n">resetSteps</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;steps&quot;</span><span class="p">)</span>
+    
+    <span class="c1">#: This property holds the value offset</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getValueOffset`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setValueOffset`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetValueOffset`</span>
+    <span class="n">valueOffset</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getValueOffset</span><span class="p">,</span> <span class="n">setValueOffset</span><span class="p">,</span>
+                                  <span class="n">resetValueOffset</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;value offset&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the digit offset</span>
+    <span class="c1">#: Used to place scale digits offset. On manometer distance from the </span>
+    <span class="c1">#: center on thermometer distance form left</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getDigitOffset`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setDigitOffset`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetDigitOffset`</span>
+    <span class="n">digitOffset</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getDigitOffset</span><span class="p">,</span> <span class="n">setDigitOffset</span><span class="p">,</span>
+                                  <span class="n">resetDigitOffset</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;digit offset&quot;</span><span class="p">)</span>
+    
+    <span class="c1">#: This property holds the value font</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getValueFont`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setValueFont`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetValueFont`</span>
+    <span class="n">valueFont</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QFont&quot;</span><span class="p">,</span> <span class="n">getValueFont</span><span class="p">,</span> <span class="n">setValueFont</span><span class="p">,</span>
+                                <span class="n">resetValueFont</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;value font&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds the digit font</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.getDigitFont`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.setDigitFont`</span>
+    <span class="c1">#:     * :meth:`QBaseMeter.resetDigitFont`</span>
+    <span class="n">digitFont</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QFont&quot;</span><span class="p">,</span> <span class="n">getDigitFont</span><span class="p">,</span> <span class="n">setDigitFont</span><span class="p">,</span>
+                                <span class="n">resetDigitFont</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;digit font&quot;</span><span class="p">)</span></div>
+
+<span class="n">Point</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span>
+<span class="n">Color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span>
+<span class="n">RadialGradient</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRadialGradient</span>
+<span class="n">Brush</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span>
+<span class="n">Rect</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QRect</span>
+<span class="n">Polygon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPolygon</span>
+
+<div class="viewcode-block" id="QManoMeter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter">[docs]</a><span class="k">class</span> <span class="nc">QManoMeter</span><span class="p">(</span><span class="n">QBaseMeter</span><span class="p">):</span>
+
+    <span class="n">DefaultAngle</span> <span class="o">=</span> <span class="mi">240</span>
+    <span class="n">DefaultFrameWidth</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">DefaultValueOffset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100</span>
+    <span class="n">DefaultDigitOffset</span> <span class="o">=</span> <span class="mi">105</span>
+    <span class="n">DefaultShowScaleColor</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">DefaultShowScaleTicks</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">DefaultShowScaleText</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">DefaultShowValueText</span> <span class="o">=</span> <span class="kc">True</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultAngle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frameWidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultFrameWidth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowScaleColor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleTicks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowScaleTicks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleText</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowScaleText</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showValueText</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowValueText</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cache</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">QBaseMeter</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QManoMeter.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_initCoords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">):</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">side</span><span class="o">/</span><span class="mf">335.0</span><span class="p">,</span> <span class="n">side</span><span class="o">/</span><span class="mf">335.0</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bg_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cache</span>
+
+        <span class="n">back1</span> <span class="o">=</span> <span class="n">RadialGradient</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">180.0</span><span class="p">,</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">145.0</span><span class="p">))</span>
+        <span class="n">back1</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Color</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">))</span>
+        <span class="n">back1</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">Color</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+        <span class="n">back1Brush</span> <span class="o">=</span> <span class="n">Brush</span><span class="p">(</span><span class="n">back1</span><span class="p">)</span>
+
+        <span class="n">back2</span> <span class="o">=</span> <span class="n">RadialGradient</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">225.0</span><span class="p">,</span> <span class="n">Point</span><span class="p">(</span><span class="mf">76.5</span><span class="p">,</span> <span class="mf">135.0</span><span class="p">))</span>
+        <span class="n">back2</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Color</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+        <span class="n">back2</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">Color</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">))</span>
+        <span class="n">back2Brush</span> <span class="o">=</span> <span class="n">Brush</span><span class="p">(</span><span class="n">back2</span><span class="p">)</span>
+        
+        <span class="n">shield</span> <span class="o">=</span> <span class="n">RadialGradient</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">182</span><span class="p">,</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">12.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">15.0</span><span class="p">))</span>
+        <span class="n">shield</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">)</span>
+        <span class="n">shield</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">Color</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">240</span><span class="p">))</span>
+        <span class="n">shield</span><span class="o">.</span><span class="n">setColorAt</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">Color</span><span class="p">(</span><span class="mi">215</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">215</span><span class="p">))</span>
+        <span class="n">shieldBrush</span> <span class="o">=</span> <span class="n">Brush</span><span class="p">(</span><span class="n">shield</span><span class="p">)</span>
+        
+        <span class="n">tickTriangle</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">([</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">141</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">141</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">129</span><span class="p">])</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cache</span> <span class="o">=</span> <span class="p">[</span><span class="n">back1Brush</span><span class="p">,</span> <span class="n">back2Brush</span><span class="p">,</span> <span class="n">shieldBrush</span><span class="p">,</span> <span class="n">tickTriangle</span><span class="p">]</span> 
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cache</span>
+
+<div class="viewcode-block" id="QManoMeter.recalculatePixmap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.recalculatePixmap">[docs]</a>    <span class="k">def</span> <span class="nf">recalculatePixmap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="n">pixmap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">transparent</span><span class="p">)</span>
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPainter</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initCoords</span><span class="p">(</span><span class="n">painter</span><span class="p">)</span>
+        
+        <span class="n">pen</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+        <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        
+        <span class="n">fw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameWidth</span>
+        <span class="n">back1Brush</span><span class="p">,</span> <span class="n">back2Brush</span><span class="p">,</span> <span class="n">shieldBrush</span><span class="p">,</span> <span class="n">tickTriangle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bg_cache</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">back1Brush</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawEllipse</span><span class="p">(</span><span class="o">-</span><span class="mi">162</span><span class="p">,</span> <span class="o">-</span><span class="mi">162</span><span class="p">,</span> <span class="mi">324</span><span class="p">,</span> <span class="mi">324</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">back2Brush</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawEllipse</span><span class="p">(</span><span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># internal scale circle</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">shieldBrush</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawEllipse</span><span class="p">(</span><span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="p">)</span>
+        
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span>
+        <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span>
+        <span class="n">minWarning</span><span class="p">,</span>  <span class="n">maxWarning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimumWarning</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">maximumWarning</span>
+        <span class="n">minAlarm</span><span class="p">,</span>  <span class="n">maxAlarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimumAlarm</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">maximumAlarm</span>
+        <span class="n">fullrange</span> <span class="o">=</span> <span class="n">maximum</span> <span class="o">-</span> <span class="n">minimum</span>
+        <span class="n">min_angle</span> <span class="o">=</span> <span class="p">(</span><span class="mf">360.0</span> <span class="o">-</span> <span class="n">angle</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">max_angle</span> <span class="o">=</span> <span class="mf">360.0</span> <span class="o">-</span> <span class="n">min_angle</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">showScaleColor</span><span class="p">:</span>
+            <span class="n">redBrush</span> <span class="o">=</span> <span class="n">Brush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+            <span class="n">orangeBrush</span> <span class="o">=</span> <span class="n">Brush</span><span class="p">(</span><span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">greenBrush</span> <span class="o">=</span> <span class="n">Brush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">green</span><span class="p">)</span>
+            
+            <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">scale_rect</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">min_alarm_angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="p">(</span><span class="n">minAlarm</span> <span class="o">-</span> <span class="n">minimum</span><span class="p">)</span> <span class="o">/</span> <span class="n">fullrange</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span> <span class="o">+</span> <span class="n">min_angle</span> <span class="o">+</span> <span class="n">min_alarm_angle</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">redBrush</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">minimum</span> <span class="o">&lt;=</span> <span class="n">minAlarm</span> <span class="ow">and</span> <span class="n">minAlarm</span> <span class="o">&lt;</span> <span class="n">minWarning</span><span class="p">:</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawPie</span><span class="p">(</span><span class="n">scale_rect</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_alarm_angle</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span>
+    
+            <span class="n">min_warning_angle</span> <span class="o">=</span>  <span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="p">(</span><span class="n">minWarning</span> <span class="o">-</span> <span class="n">minAlarm</span><span class="p">)</span> <span class="o">/</span> <span class="n">fullrange</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">min_warning_angle</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">orangeBrush</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">minAlarm</span> <span class="o">&lt;=</span> <span class="n">minWarning</span> <span class="ow">and</span> <span class="n">minWarning</span> <span class="o">&lt;</span> <span class="n">maxWarning</span><span class="p">:</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawPie</span><span class="p">(</span><span class="n">scale_rect</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_warning_angle</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span>
+    
+            <span class="n">max_warning_angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="p">(</span><span class="n">maxWarning</span> <span class="o">-</span> <span class="n">minWarning</span><span class="p">)</span> <span class="o">/</span> <span class="n">fullrange</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">max_warning_angle</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">greenBrush</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">minWarning</span> <span class="o">&lt;=</span> <span class="n">maxWarning</span> <span class="ow">and</span> <span class="n">maxWarning</span> <span class="o">&lt;</span> <span class="n">maxAlarm</span><span class="p">:</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawPie</span><span class="p">(</span><span class="n">scale_rect</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_warning_angle</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span>
+    
+            <span class="n">max_alarm_angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="p">(</span><span class="n">maxAlarm</span> <span class="o">-</span> <span class="n">maxWarning</span><span class="p">)</span> <span class="o">/</span> <span class="n">fullrange</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">max_alarm_angle</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">orangeBrush</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">maxWarning</span> <span class="o">&lt;=</span> <span class="n">maxAlarm</span> <span class="ow">and</span> <span class="n">maxAlarm</span> <span class="o">&lt;</span> <span class="n">maximum</span><span class="p">:</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawPie</span><span class="p">(</span><span class="n">scale_rect</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_alarm_angle</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span>
+            
+            <span class="n">max_angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="p">(</span><span class="n">maximum</span> <span class="o">-</span> <span class="n">maxAlarm</span><span class="p">)</span> <span class="o">/</span> <span class="n">fullrange</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">max_angle</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">redBrush</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">maxAlarm</span> <span class="o">&lt;=</span> <span class="n">maximum</span><span class="p">:</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawPie</span><span class="p">(</span><span class="n">scale_rect</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_angle</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span>
+    
+            <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">shieldBrush</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawEllipse</span><span class="p">(</span><span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">162</span><span class="o">+</span><span class="n">fw</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">12</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">24</span><span class="p">,</span> <span class="mi">324</span><span class="o">-</span><span class="n">fw</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">24</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">min_angle</span><span class="p">)</span>
+
+        <span class="c1"># draw ticks</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">showScaleTicks</span><span class="p">:</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Brush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">))</span>
+            <span class="n">line_length</span> <span class="o">=</span> <span class="mi">10</span>
+            <span class="n">tick_steps</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">steps</span>
+            <span class="n">tick_stepsf</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tick_steps</span><span class="p">)</span>
+            <span class="n">angle_step</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">/</span> <span class="n">tick_stepsf</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tick_steps</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">4</span><span class="p">:</span> <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="o">-</span><span class="n">line_length</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawConvexPolygon</span><span class="p">(</span><span class="n">tickTriangle</span><span class="p">)</span>
+    
+                <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">angle_step</span><span class="p">)</span>
+                <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">line_length</span> <span class="o">=</span> <span class="mi">10</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">line_length</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+        
+        <span class="n">digitOffset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">digitOffset</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">showScaleText</span> <span class="ow">and</span> <span class="n">digitOffset</span><span class="p">:</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="n">min_angle</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">digitFont</span><span class="p">)</span>
+            <span class="n">stepsf</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+            <span class="n">angle_step</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">/</span> <span class="n">stepsf</span>
+            <span class="n">min_angle</span> <span class="o">=</span> <span class="mi">90</span> <span class="o">+</span> <span class="n">min_angle</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">minimum</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">fullrange</span><span class="o">/</span> <span class="n">stepsf</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.000001</span><span class="p">:</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+                <span class="n">textSize</span> <span class="o">=</span> <span class="n">painter</span><span class="o">.</span><span class="n">fontMetrics</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextSingleLine</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">ang</span> <span class="o">=</span> <span class="n">min_angle</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_step</span><span class="p">)</span>
+                <span class="n">ang</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">ang</span><span class="o">/</span><span class="mf">180.0</span> <span class="c1"># convert to radians</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">digitOffset</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ang</span><span class="p">),</span> <span class="n">digitOffset</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ang</span><span class="p">))</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="n">textSize</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="o">/-</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">textSize</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="o">/</span><span class="mf">4.0</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pixmap</span></div>
+    
+    <span class="n">_Hand</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">50</span>
+    
+<div class="viewcode-block" id="QManoMeter.paintEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.paintEvent">[docs]</a>    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paintEvent</span><span class="p">):</span>
+        <span class="n">QBaseMeter</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paintEvent</span><span class="p">)</span>
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPainter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initCoords</span><span class="p">(</span><span class="n">painter</span><span class="p">)</span>
+        <span class="n">hand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Hand</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="n">hand</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hand</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="n">hand</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">hand</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+        
+        <span class="n">path</span><span class="o">.</span><span class="n">cubicTo</span><span class="p">(</span> <span class="mf">8.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">51.0</span><span class="p">,</span>  <span class="mf">5.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.0</span><span class="p">)</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">cubicTo</span><span class="p">(</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">51.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">50.0</span><span class="p">)</span>
+        
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span>
+        <span class="n">minWarning</span><span class="p">,</span>  <span class="n">maxWarning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimumWarning</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">maximumWarning</span>
+        <span class="n">minAlarm</span><span class="p">,</span>  <span class="n">maxAlarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimumAlarm</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">maximumAlarm</span>
+        <span class="n">fullrange</span> <span class="o">=</span> <span class="n">maximum</span> <span class="o">-</span> <span class="n">minimum</span>
+        
+        <span class="n">painter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mf">60.0</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Brush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">))</span>
+        
+        <span class="n">painter</span><span class="o">.</span><span class="n">rotate</span><span class="p">(((</span><span class="n">value</span> <span class="o">-</span> <span class="n">minimum</span><span class="p">)</span> <span class="o">*</span> <span class="mf">240.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">fullrange</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawEllipse</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+
+        <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueOffset</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showValueText</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="n">minAlarm</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="n">maxAlarm</span><span class="p">:</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valueFont</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">painter</span><span class="o">.</span><span class="n">fontMetrics</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextSingleLine</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mi">0</span><span class="o">-</span><span class="n">offset</span><span class="p">)),</span> <span class="n">s</span><span class="p">)</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># QT property definition</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="QManoMeter.getAngle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.getAngle">[docs]</a>    <span class="k">def</span> <span class="nf">getAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span></div>
+    
+<div class="viewcode-block" id="QManoMeter.setAngle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.setAngle">[docs]</a>    <span class="k">def</span> <span class="nf">setAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QManoMeter.resetAngle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.resetAngle">[docs]</a>    <span class="k">def</span> <span class="nf">resetAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAngle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultAngle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QManoMeter.getFrameWidth"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.getFrameWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getFrameWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frameWidth</span></div>
+    
+<div class="viewcode-block" id="QManoMeter.setFrameWidth"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.setFrameWidth">[docs]</a>    <span class="k">def</span> <span class="nf">setFrameWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameWidth</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frameWidth</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frameWidth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QManoMeter.resetFrameWidth"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.resetFrameWidth">[docs]</a>    <span class="k">def</span> <span class="nf">resetFrameWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFrameWidth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultFrameWidth</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QManoMeter.getShowScaleColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.getShowScaleColor">[docs]</a>    <span class="k">def</span> <span class="nf">getShowScaleColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleColor</span></div>
+    
+<div class="viewcode-block" id="QManoMeter.setShowScaleColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.setShowScaleColor">[docs]</a>    <span class="k">def</span> <span class="nf">setShowScaleColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showScaleColor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleColor</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">showScaleColor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QManoMeter.resetShowScaleColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.resetShowScaleColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetShowScaleColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setShowScaleColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowScaleColor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QManoMeter.getShowScaleTicks"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.getShowScaleTicks">[docs]</a>    <span class="k">def</span> <span class="nf">getShowScaleTicks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleTicks</span></div>
+    
+<div class="viewcode-block" id="QManoMeter.setShowScaleTicks"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.setShowScaleTicks">[docs]</a>    <span class="k">def</span> <span class="nf">setShowScaleTicks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showScaleTicks</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleTicks</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">showScaleTicks</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">resetShowScaleTicks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setShowScaleTicks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowScaleTicks</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QManoMeter.getShowScaleText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.getShowScaleText">[docs]</a>    <span class="k">def</span> <span class="nf">getShowScaleText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleText</span></div>
+    
+<div class="viewcode-block" id="QManoMeter.setShowScaleText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.setShowScaleText">[docs]</a>    <span class="k">def</span> <span class="nf">setShowScaleText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showScaleText</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showScaleText</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">showScaleText</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoRangeIt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QManoMeter.resetShowScaleText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.resetShowScaleText">[docs]</a>    <span class="k">def</span> <span class="nf">resetShowScaleText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setShowScaleText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowScaleText</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QManoMeter.resetShowScaleTicks"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.resetShowScaleTicks">[docs]</a>    <span class="k">def</span> <span class="nf">resetShowScaleTicks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setShowScaleTicks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowScaleTicks</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QManoMeter.getShowValueText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.getShowValueText">[docs]</a>    <span class="k">def</span> <span class="nf">getShowValueText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showValueText</span></div>
+    
+<div class="viewcode-block" id="QManoMeter.setShowValueText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.setShowValueText">[docs]</a>    <span class="k">def</span> <span class="nf">setShowValueText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">showValueText</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showValueText</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">showValueText</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QManoMeter.resetShowValueText"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.resetShowValueText">[docs]</a>    <span class="k">def</span> <span class="nf">resetShowValueText</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setShowValueText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultShowValueText</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="QManoMeter.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge/_QManoMeter.html#taurus.qt.qtgui.gauge.QManoMeter.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;module&#39;</span> <span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.gauge&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;group&#39;</span> <span class="p">:</span> <span class="s1">&#39;Taurus Display&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s2">&quot;:/designer/circular_gauge.png&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;container&#39;</span> <span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+    <span class="c1">#: This property holds the angle</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QManoMeter.getAngle`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.seAngle`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.resetAngle`</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="n">getAngle</span><span class="p">,</span> <span class="n">setAngle</span><span class="p">,</span> <span class="n">resetAngle</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;angle&quot;</span><span class="p">)</span>
+
+
+    <span class="c1">#: This property holds the frame width</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QManoMeter.getFrameWidth`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.setFrameWidth`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.resetFrameWidth`</span>
+    <span class="n">frameWidth</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">getFrameWidth</span><span class="p">,</span> <span class="n">setFrameWidth</span><span class="p">,</span>
+                                 <span class="n">resetFrameWidth</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;frame width&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds if should show scale color </span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QManoMeter.getShowScaleColor`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.setShowScaleColor`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.resetShowScaleColor`</span>
+    <span class="n">showScaleColor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getShowScaleColor</span><span class="p">,</span>
+                                     <span class="n">setShowScaleColor</span><span class="p">,</span> <span class="n">resetShowScaleColor</span><span class="p">,</span>
+                                     <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;show scale color&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds if should show scale ticks </span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QManoMeter.getShowScaleTicks`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.setShowScaleTicks`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.resetShowScaleTicks`</span>
+    <span class="n">showScaleTicks</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getShowScaleTicks</span><span class="p">,</span>
+                                     <span class="n">setShowScaleTicks</span><span class="p">,</span> <span class="n">resetShowScaleTicks</span><span class="p">,</span>
+                                     <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;show scale ticks&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds if should show scale text </span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QManoMeter.getShowScaleText`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.setShowScaleText`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.resetShowScaleText`</span>
+    <span class="n">showScaleText</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getShowScaleText</span><span class="p">,</span>
+                                    <span class="n">setShowScaleText</span><span class="p">,</span> <span class="n">resetShowScaleText</span><span class="p">,</span>
+                                    <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;show scale text&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: This property holds if should show value text </span>
+    <span class="c1">#:</span>
+    <span class="c1">#: **Access functions:**</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:     * :meth:`QManoMeter.getShowValueText`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.setShowValueText`</span>
+    <span class="c1">#:     * :meth:`QManoMeter.resetShowValueText`</span>
+    <span class="n">showValueText</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">getShowValueText</span><span class="p">,</span>
+                                    <span class="n">setShowValueText</span><span class="p">,</span> <span class="n">resetShowValueText</span><span class="p">,</span>
+                                    <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;show value text&quot;</span><span class="p">)</span></div>
+                            
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/gauge.html#taurus.qt.qtgui.gauge.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">demo.qmeterdemo</span>
+    <span class="n">demo</span><span class="o">.</span><span class="n">qmeterdemo</span><span class="o">.</span><span class="n">demo</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+    
+    
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

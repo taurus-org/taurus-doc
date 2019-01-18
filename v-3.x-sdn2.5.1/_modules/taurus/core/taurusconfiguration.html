@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusconfiguration &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusconfiguration</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusconfiguration</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the base class for a taurus attribute configuration&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusConfigurationProxy&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusConfiguration&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="n">AttrAccess</span><span class="p">,</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusModel</span>
+
+
+<div class="viewcode-block" id="TaurusConfigurationProxy"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfigurationProxy.html#taurus.core.TaurusConfigurationProxy">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigurationProxy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    TaurusAttribute has a reference to TaurusConfiguration and it should also have</span>
+<span class="sd">    a reference to TaurusAttribute. To solve this cyclic dependency,</span>
+<span class="sd">    TaurusConfiguration has a weak reference to TaurusAttribute. But then we must</span>
+<span class="sd">    be sure that no other references to TaurusConfiguration exist so that</span>
+<span class="sd">    no one tries to use it after its TaurusAttribute has disappeared.</span>
+<span class="sd">    That&#39;s why to the outside world we don&#39;t give access to it directly</span>
+<span class="sd">    but to objects of this new TaurusConfigurationProxy class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__parent</span><span class="o">.</span><span class="n">_getRealConfig</span><span class="p">(),</span> <span class="n">name</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="TaurusConfigurationProxy.getRealConfigClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfigurationProxy.html#taurus.core.TaurusConfigurationProxy.getRealConfigClass">[docs]</a>    <span class="k">def</span> <span class="nf">getRealConfigClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span><span class="o">.</span><span class="n">_getRealConfig</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusConfiguration"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfiguration</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">):</span>
+    
+    <span class="n">no_cfg_value</span> <span class="o">=</span> <span class="s1">&#39;-----&#39;</span>
+    <span class="n">no_unit</span> <span class="o">=</span> <span class="s1">&#39;No unit&#39;</span>
+    <span class="n">no_standard_unit</span> <span class="o">=</span> <span class="s1">&#39;No standard unit&#39;</span>
+    <span class="n">no_display_unit</span> <span class="o">=</span> <span class="s1">&#39;No display unit&#39;</span>
+    <span class="n">no_description</span> <span class="o">=</span> <span class="s1">&#39;No description&#39;</span>
+    <span class="n">not_specified</span> <span class="o">=</span> <span class="s1">&#39;Not specified&#39;</span>
+    <span class="n">no_min_value</span> <span class="o">=</span> <span class="n">no_max_value</span> <span class="o">=</span> <span class="n">not_specified</span>
+    <span class="n">no_min_alarm</span> <span class="o">=</span> <span class="n">no_max_alarm</span> <span class="o">=</span> <span class="n">not_specified</span>
+    <span class="n">no_min_warning</span> <span class="o">=</span> <span class="n">no_max_warning</span> <span class="o">=</span> <span class="n">not_specified</span>
+    <span class="n">no_delta_t</span> <span class="o">=</span> <span class="n">no_delta_val</span> <span class="o">=</span> <span class="n">not_specified</span>
+    <span class="n">no_rel_change</span> <span class="o">=</span> <span class="n">no_abs_change</span> <span class="o">=</span> <span class="n">not_specified</span>
+    <span class="n">no_archive_rel_change</span> <span class="o">=</span> <span class="n">no_archive_abs_change</span> <span class="o">=</span> <span class="n">not_specified</span>
+    <span class="n">no_archive_period</span> <span class="o">=</span> <span class="n">not_specified</span>
+    
+    <span class="n">DftTimeToLive</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1"># 10s</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">storeCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    
+        <span class="c1"># the last configuration value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span>  <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># the last time the configuration was read</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr_timestamp</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># the configuration event identifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cfg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        
+        <span class="c1"># Everything went ok so now we are sure we can store the object</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">storeCallback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">storeCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">(),</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dev_hw_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDev</span><span class="p">()</span><span class="o">.</span><span class="n">getHWObj</span><span class="p">()</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeEvents</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">_subscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+<div class="viewcode-block" id="TaurusConfiguration.cleanUp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TaurusConfiguration] cleanUp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeEvents</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dev_hw_obj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">TaurusModel</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>        </div>
+        
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusModel implementation</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusConfiguration.getTaurusElementType"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getTaurusElementType">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusElementType</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Configuration</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusConfiguration.buildModelName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.buildModelName">[docs]</a>    <span class="k">def</span> <span class="nf">buildModelName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent_model</span><span class="p">,</span> <span class="n">relative_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;build an &#39;absolute&#39; model name from the parent model and the &#39;relative&#39;</span>
+<span class="sd">        name. </span>
+<span class="sd">        - If parent_model is a TaurusAttribute, the return is a composition of</span>
+<span class="sd">        the database model name and is device name</span>
+<span class="sd">        - If parent_model is a TaurusConfiguration, the relative name is ignored and</span>
+<span class="sd">        the parent name is returned</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parent_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">relative_name</span>
+        <span class="n">parent_name</span> <span class="o">=</span> <span class="n">parent_model</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">relative_name</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent_model</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">parent_name</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parent_name</span><span class="p">,</span><span class="n">relative_name</span><span class="p">)</span>  </div>
+        
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusConfiguration.getNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getNameValidator</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">taurusvalidator</span>
+        <span class="k">return</span> <span class="n">taurusvalidator</span><span class="o">.</span><span class="n">ConfigurationNameValidator</span><span class="p">()</span></div>
+    
+    <span class="k">def</span> <span class="nf">_getDevName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devicename&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devalias&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_getFullAttrName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devicename&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;devalias&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;attributename&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">_getAttrName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;attributename&#39;</span><span class="p">)</span>
+         
+    <span class="k">def</span> <span class="nf">_getDev</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attrObj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">attrObj</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">devname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDevName</span><span class="p">()</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">devname</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">attrObj</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dev</span>
+    
+    <span class="k">def</span> <span class="nf">_getAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">createAttr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attrObj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attrname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getFullAttrName</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">createAttr</span><span class="p">:</span>
+                <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">attrname</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">getExistingAttribute</span><span class="p">(</span><span class="n">attrname</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attrObj</span>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getValueObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getValueObj">[docs]</a>    <span class="k">def</span> <span class="nf">getValueObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the current configuration for the attribute.</span>
+<span class="sd">            if cache is set to True (default) and the the configuration has </span>
+<span class="sd">            events active then it will return the local cached value. Otherwise</span>
+<span class="sd">            it will read from the tango layer.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;May not be called in abstract TaurusConfiguration&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getDisplayValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">confvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">confvalue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">confvalue</span><span class="o">.</span><span class="n">label</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getDisplayDescription"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getDisplayDescription">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDescription</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getDisplayDescrObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getDisplayDescrObj">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescrObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">attrObj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attrObj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLabel</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">))]</span>
+        <span class="k">return</span> <span class="n">attrObj</span><span class="o">.</span><span class="n">getDisplayDescrObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
+    
+<span class="c1">#    def isWritable(self):</span>
+<span class="c1">#        return True</span>
+    
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for listeners</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    s</span>
+
+<span class="c1">#    def addListener(self, listener):</span>
+<span class="c1">#        &quot;&quot;&quot; Add a TaurusListener object in the listeners list.</span>
+<span class="c1">#            If the listener is already registered nothing happens.&quot;&quot;&quot;</span>
+<span class="c1">#        ret = TaurusModel.addListener(self, listener)</span>
+<span class="c1">#        if not ret:</span>
+<span class="c1">#            return ret</span>
+        
+<span class="c1">#        #fire a first configuration event</span>
+<span class="c1">#        self.fireEvent(TaurusEventType.Config, self._attr_info, listener) </span>
+<span class="c1">#        return ret</span>
+    
+<div class="viewcode-block" id="TaurusConfiguration.hasEvents"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.hasEvents">[docs]</a>    <span class="k">def</span> <span class="nf">hasEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="s2">&quot;Don&#39;t use this anymore. Use isUsingEvents instead&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">isUsingEvents</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.isUsingEvents"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isUsingEvents">[docs]</a>    <span class="k">def</span> <span class="nf">isUsingEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cfg_evt_id</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.isWritable"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isWritable">[docs]</a>    <span class="k">def</span> <span class="nf">isWritable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isReadOnly</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getWritable"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getWritable">[docs]</a>    <span class="k">def</span> <span class="nf">getWritable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">writable</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getType"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getType">[docs]</a>    <span class="k">def</span> <span class="nf">getType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getDataFormat"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getDataFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getDataFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">data_format</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getMaxDim"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMaxDim">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxDim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">max_dim</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getMaxDimX"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMaxDimX">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxDimX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;.. warning: Deprecated. Use :meth:`getMaxDim`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deprecation warning: TaurusConfiguration.getMaxDimX is deprecated. Use getMaxDim&#39;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">max_dim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getMaxDimY"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMaxDimY">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxDimY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;.. warning: Deprecated. Use :meth:`getMaxDim`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deprecation warning: TaurusConfiguration.getMaxDimX is deprecated. Use getMaxDim&#39;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">max_dim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.getShape"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getShape">[docs]</a>    <span class="k">def</span> <span class="nf">getShape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="c1"># force a read if not using cache. Then use cache until the</span>
+        <span class="c1"># end of the method</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cache</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDataFormat</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isScalar</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">isSpectrum</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getMaxDimX</span><span class="p">(),)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getMaxDimX</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMaxDimY</span><span class="p">())</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.getDescription"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getDescription">[docs]</a>    <span class="k">def</span> <span class="nf">getDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">description</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.getLabel"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getLabel">[docs]</a>    <span class="k">def</span> <span class="nf">getLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">label</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getUnit"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getUnit">[docs]</a>    <span class="k">def</span> <span class="nf">getUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">unit</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getStandardUnit"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getStandardUnit">[docs]</a>    <span class="k">def</span> <span class="nf">getStandardUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">standard_unit</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.getDisplayUnit"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getDisplayUnit">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">display_unit</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getFormat"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">format</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.getMinValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMinValue">[docs]</a>    <span class="k">def</span> <span class="nf">getMinValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getMaxValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMaxValue">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.getLimits"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getLimits">[docs]</a>    <span class="k">def</span> <span class="nf">getLimits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;.. warning: Deprecated. Use :meth:`getRange`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deprecation warning: TaurusConfiguration.getLimits is deprecated. Use getRange&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getRange</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getRange"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getRange">[docs]</a>    <span class="k">def</span> <span class="nf">getRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">range</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getRanges"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getRanges">[docs]</a>    <span class="k">def</span> <span class="nf">getRanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;.. warning: Deprecated. Use :meth:`getRange`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deprecation warning: TaurusConfiguration.getRanges is deprecated. Use getRange&#39;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="o">.</span><span class="n">alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="o">.</span><span class="n">warning</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="o">.</span><span class="n">warning</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">.</span><span class="n">alarm</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">.</span><span class="n">range</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getMinAlarm"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMinAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">getMinAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getMaxAlarm"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMaxAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">alarm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getAlarms"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getAlarms">[docs]</a>    <span class="k">def</span> <span class="nf">getAlarms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">alarm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getMinWarning"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMinWarning">[docs]</a>    <span class="k">def</span> <span class="nf">getMinWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">warning</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.getMaxWarning"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getMaxWarning">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">warning</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.getWarnings"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getWarnings">[docs]</a>    <span class="k">def</span> <span class="nf">getWarnings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.getParam"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.getParam">[docs]</a>    <span class="k">def</span> <span class="nf">getParam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.setParam"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setParam">[docs]</a>    <span class="k">def</span> <span class="nf">setParam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.setDescription"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setDescription">[docs]</a>    <span class="k">def</span> <span class="nf">setDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">descr</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">descr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.setLabel"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setLabel">[docs]</a>    <span class="k">def</span> <span class="nf">setLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lbl</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">lbl</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.setUnit"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setUnit">[docs]</a>    <span class="k">def</span> <span class="nf">setUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">unit</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.setStandardUnit"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setStandardUnit">[docs]</a>    <span class="k">def</span> <span class="nf">setStandardUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_unit</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">standard_unit</span> <span class="o">=</span> <span class="n">standard_unit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.setDisplayUnit"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setDisplayUnit">[docs]</a>    <span class="k">def</span> <span class="nf">setDisplayUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">display_unit</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">display_unit</span> <span class="o">=</span> <span class="n">display_unit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.setFormat"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fmt</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">fmt</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="TaurusConfiguration.setLimits"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setLimits">[docs]</a>    <span class="k">def</span> <span class="nf">setLimits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;.. warning: Deprecated. Use :meth:`setRange`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deprecation warning: TaurusConfiguration.setLimits is deprecated. Use setRange&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span></div>
+            
+<div class="viewcode-block" id="TaurusConfiguration.setRange"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setRange">[docs]</a>    <span class="k">def</span> <span class="nf">setRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.setWarnings"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setWarnings">[docs]</a>    <span class="k">def</span> <span class="nf">setWarnings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">warning</span> <span class="o">=</span> <span class="p">[</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.setAlarms"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.setAlarms">[docs]</a>    <span class="k">def</span> <span class="nf">setAlarms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">alarm</span> <span class="o">=</span> <span class="p">[</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_applyConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="TaurusConfiguration.isBoolean"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isBoolean">[docs]</a>    <span class="k">def</span> <span class="nf">isBoolean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.isScalar"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isScalar">[docs]</a>    <span class="k">def</span> <span class="nf">isScalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">numpy</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.isSpectrum"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isSpectrum">[docs]</a>    <span class="k">def</span> <span class="nf">isSpectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">numpy</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="ow">and</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.isImage"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isImage">[docs]</a>    <span class="k">def</span> <span class="nf">isImage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">numpy</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="ow">and</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.isWrite"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isWrite">[docs]</a>    <span class="k">def</span> <span class="nf">isWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getWritable</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">AttrAccess</span><span class="o">.</span><span class="n">WRITE</span></div>
+    
+<div class="viewcode-block" id="TaurusConfiguration.isReadOnly"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getWritable</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">AttrAccess</span><span class="o">.</span><span class="n">READ</span></div>
+
+<div class="viewcode-block" id="TaurusConfiguration.isReadWrite"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfiguration.html#taurus.core.TaurusConfiguration.isReadWrite">[docs]</a>    <span class="k">def</span> <span class="nf">isReadWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getWritable</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">AttrAccess</span><span class="o">.</span><span class="n">READ_WRITE</span></div></div>
+
+<span class="c1">#del AttrAccess</span>
+<span class="c1">#del TaurusModel</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

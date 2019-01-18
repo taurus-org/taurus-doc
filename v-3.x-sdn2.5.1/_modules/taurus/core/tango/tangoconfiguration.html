@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.tango.tangoconfiguration &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.tango.tangoconfiguration</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.tango.tangoconfiguration</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains all taurus tango attribute configuration&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoConfiguration&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">PyTango</span>
+
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Factory</span><span class="p">,</span> <span class="n">Manager</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusEventType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfiguration</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="k">import</span> <span class="n">EVENT_TO_POLLING_EXCEPTIONS</span>
+
+<div class="viewcode-block" id="TangoConfiguration"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration">[docs]</a><span class="k">class</span> <span class="nc">TangoConfiguration</span><span class="p">(</span><span class="n">TaurusConfiguration</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">storeCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_events_working</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusConfiguration</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">storeCallback</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusModel necessary overwrite</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+    <span class="c1"># helper class property that stores a reference to the corresponding factory</span>
+    <span class="n">_factory</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TangoConfiguration.factory"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.factory">[docs]</a>    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="s2">&quot;tango&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_factory</span></div>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span><span class="o">.</span><span class="n">alarms</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span><span class="o">.</span><span class="n">events</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">AttributeError</span>
+                    
+<div class="viewcode-block" id="TangoConfiguration.isWrite"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.isWrite">[docs]</a>    <span class="k">def</span> <span class="nf">isWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getWritable</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrWriteType</span><span class="o">.</span><span class="n">WRITE</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.isReadOnly"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getWritable</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrWriteType</span><span class="o">.</span><span class="n">READ</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.isReadWrite"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.isReadWrite">[docs]</a>    <span class="k">def</span> <span class="nf">isReadWrite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getWritable</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrWriteType</span><span class="o">.</span><span class="n">READ_WRITE</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.isScalar"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.isScalar">[docs]</a>    <span class="k">def</span> <span class="nf">isScalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDataFormat</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrDataFormat</span><span class="o">.</span><span class="n">SCALAR</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.isSpectrum"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.isSpectrum">[docs]</a>    <span class="k">def</span> <span class="nf">isSpectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDataFormat</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrDataFormat</span><span class="o">.</span><span class="n">SPECTRUM</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.isImage"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.isImage">[docs]</a>    <span class="k">def</span> <span class="nf">isImage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDataFormat</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">AttrDataFormat</span><span class="o">.</span><span class="n">IMAGE</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.encode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Translates the given value into a tango compatible value according to</span>
+<span class="sd">        the attribute data type</span>
+<span class="sd">        value must be a valid &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.getValueObj"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getValueObj">[docs]</a>    <span class="k">def</span> <span class="nf">getValueObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the current configuration for the attribute.</span>
+<span class="sd">            if cache is set to True (default) and the the configuration has </span>
+<span class="sd">            events active then it will return the local cached value. Otherwise</span>
+<span class="sd">            it will read from the tango layer.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cache</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span>
+        
+        <span class="n">curr_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        
+        <span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">curr_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr_timestamp</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span>
+        <span class="k">if</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="n">TangoConfiguration</span><span class="o">.</span><span class="n">DftTimeToLive</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr_timestamp</span> <span class="o">=</span> <span class="n">curr_time</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDev</span><span class="p">()</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">attribute_query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_getAttrName</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[Tango] read configuration failed (</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">desc</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[Tango] read configuration failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># API for listeners</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+
+    <span class="k">def</span> <span class="nf">__fireRegisterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">listener</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TangoConfiguration.addListener"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.addListener">[docs]</a>    <span class="k">def</span> <span class="nf">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a TaurusListener object in the listeners list.</span>
+<span class="sd">            If the listener is already registered nothing happens.&quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusConfiguration</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        
+        <span class="c1">#fire a first configuration event</span>
+        <span class="c1">#if len(self._listeners) &gt; 1 or not self._events_working:</span>
+        <span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">addJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fireRegisterEvent</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">listener</span><span class="p">,))</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.removeListener"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.removeListener">[docs]</a>    <span class="k">def</span> <span class="nf">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Remove a TaurusListener from the listeners list.</span>
+<span class="sd">        If it is the last listener, unsubscribe from events.&quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusConfiguration</span><span class="o">.</span><span class="n">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasListeners</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeEvents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># PyTango event handling (private) </span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+
+    <span class="k">def</span> <span class="nf">_subscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Enable subscription to the attribute configuration events.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;Subscribing to configuration events...&quot;</span><span class="p">)</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDev</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;failed to subscribe config events: device is None&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">getHWObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;failed to subscribe config events: HW is None&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        
+        <span class="n">attrname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttrName</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cfg_evt_id</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">subscribe_event</span><span class="p">(</span><span class="n">attrname</span><span class="p">,</span>
+                                                  <span class="n">PyTango</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">ATTR_CONF_EVENT</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="p">,</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Unexpected exception trying to subscribe to CONFIGURATION events.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
+            <span class="c1"># Subscription failed either because event mechanism is not available</span>
+            <span class="c1"># or because the device server is not running.</span>
+            <span class="c1"># The first possibility is assumed so an attempt to get the configuration</span>
+            <span class="c1"># manually is done </span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Error getting attribute configuration&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">_unsubscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Careful in this method: This is intended to be executed in the cleanUp</span>
+        <span class="c1"># so we should not access external objects from the factory, like the </span>
+        <span class="c1"># parent object</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cfg_evt_id</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_hw_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;Unsubscribing to configuration events (ID=</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cfg_evt_id</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dev_hw_obj</span><span class="o">.</span><span class="n">unsubscribe_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cfg_evt_id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cfg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Exception trying to unsubscribe configuration events&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                
+<div class="viewcode-block" id="TangoConfiguration.decode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
+        
+        <span class="n">i</span><span class="o">.</span><span class="n">climits</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">max_value</span><span class="p">]</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">calarms</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">min_alarm</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">max_alarm</span><span class="p">]</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">cwarnings</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span><span class="p">]</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">cranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">min_alarm</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span><span class="p">,</span>
+                    <span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">max_alarm</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">max_value</span><span class="p">]</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">max_value</span><span class="p">]</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">alarm</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">min_alarm</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">max_alarm</span><span class="p">]</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">warning</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span><span class="p">]</span>
+        <span class="c1"># add dev_name, dev_alias, attr_name, attr_full_name</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">dev_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDev</span><span class="p">()</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">dev_alias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDev</span><span class="p">()</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttr</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">attr_fullname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttr</span><span class="p">()</span><span class="o">.</span><span class="n">getNormalName</span><span class="p">()</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">attr_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttr</span><span class="p">()</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">((</span><span class="s1">&#39;TangoConfiguration.decode(</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">): &#39;</span> <span class="o">+</span>
+                              <span class="s1">&#39;self._getAttr() returned None (failed detach?)&#39;</span><span class="p">),</span> 
+                           <span class="n">i</span><span class="o">.</span><span class="n">dev_name</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">traceback</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;at TangoConfiguration.decode(</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">dev_name</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">attr_name</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">attr_fullname</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        
+        <span class="c1"># %6.2f is the default value that Tango sets when the format is</span>
+        <span class="c1"># unassigned. This is only good for float types! So for other</span>
+        <span class="c1"># types I am changing this value.</span>
+        <span class="c1"># There&#39;s a bug about this in the core TangoC++ project, so</span>
+        <span class="c1"># this code may become useless someday.</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="si">%6.2f</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_float_type</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">data_type</span><span class="p">,</span> <span class="n">inc_array</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_int_type</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">data_type</span><span class="p">,</span> <span class="n">inc_array</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span>
+            <span class="k">elif</span> <span class="n">i</span><span class="o">.</span><span class="n">data_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevString</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevVarStringArray</span><span class="p">):</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">i</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.push_event"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.push_event">[docs]</a>    <span class="k">def</span> <span class="nf">push_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">err</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reason</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">EVENT_TO_POLLING_EXCEPTIONS</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_attr_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_events_working</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_events_working</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAttr</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
+            <span class="c1">#===================================================================</span>
+            <span class="c1"># This is a safety net to catch &quot;zombie&quot; TangoConfiguration objects</span>
+            <span class="c1"># when they get called.</span>
+            <span class="c1"># If you get here, there is some bug elsewhere which should be</span>
+            <span class="c1"># investigated.</span>
+            <span class="c1"># Without this safety net, you would get exceptions.</span>
+            <span class="c1"># We assume that a TangoConfiguration object which has no listeners</span>
+            <span class="c1"># and which is not associated to a TangoAttribute, is a &quot;zombie&quot;.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;&quot;Zombie&quot; object (</span><span class="si">%s</span><span class="s1">) received an event. Unsubscribing it.&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeEvents</span><span class="p">()</span>
+            <span class="k">return</span>
+            <span class="c1">#===================================================================</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_events_working</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">attr_conf</span><span class="p">)</span>
+        <span class="n">listeners</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">)</span>
+        <span class="c1">#Manager().addJob(self._push_event, None, event)</span>
+        <span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">addJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr_info</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span></div>
+        
+    
+    <span class="c1">#===========================================================================</span>
+    <span class="c1"># Some methods reimplemented from TaurusConfiguration</span>
+    <span class="c1">#===========================================================================</span>
+    
+<div class="viewcode-block" id="TangoConfiguration.getMaxDimX"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getMaxDimX">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxDimX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">max_dim_x</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.getMaxDimY"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getMaxDimY">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxDimY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">max_dim_y</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.getType"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getType">[docs]</a>    <span class="k">def</span> <span class="nf">getType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">data_type</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.getRange"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getRange">[docs]</a>    <span class="k">def</span> <span class="nf">getRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLimits</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.getLimits"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getLimits">[docs]</a>    <span class="k">def</span> <span class="nf">getLimits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">climits</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.getRanges"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getRanges">[docs]</a>    <span class="k">def</span> <span class="nf">getRanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">cranges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.getMinAlarm"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getMinAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">getMinAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">min_alarm</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.getMaxAlarm"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getMaxAlarm">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">max_alarm</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TangoConfiguration.getAlarms"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getAlarms">[docs]</a>    <span class="k">def</span> <span class="nf">getAlarms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">calarms</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.getMinWarning"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getMinWarning">[docs]</a>    <span class="k">def</span> <span class="nf">getMinWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.getMaxWarning"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getMaxWarning">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+        
+<div class="viewcode-block" id="TangoConfiguration.getWarnings"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getWarnings">[docs]</a>    <span class="k">def</span> <span class="nf">getWarnings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">cwarnings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.getParam"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.getParam">[docs]</a>    <span class="k">def</span> <span class="nf">getParam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">param_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;warning&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">param_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;alarm&#39;</span><span class="p">):</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">alarms</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span></div>
+            
+<div class="viewcode-block" id="TangoConfiguration.setParam"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setParam">[docs]</a>    <span class="k">def</span> <span class="nf">setParam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">param_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;warning&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">param_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;alarm&#39;</span><span class="p">):</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">alarms</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.setDescription"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setDescription">[docs]</a>    <span class="k">def</span> <span class="nf">setDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">descr</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">descr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.setLabel"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setLabel">[docs]</a>    <span class="k">def</span> <span class="nf">setLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lbl</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">lbl</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.setUnit"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setUnit">[docs]</a>    <span class="k">def</span> <span class="nf">setUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">unit</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.setStandardUnit"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setStandardUnit">[docs]</a>    <span class="k">def</span> <span class="nf">setStandardUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_unit</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">standard_unit</span> <span class="o">=</span> <span class="n">standard_unit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="TangoConfiguration.setDisplayUnit"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setDisplayUnit">[docs]</a>    <span class="k">def</span> <span class="nf">setDisplayUnit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">display_unit</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">display_unit</span> <span class="o">=</span> <span class="n">display_unit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TangoConfiguration.setFormat"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setFormat">[docs]</a>    <span class="k">def</span> <span class="nf">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fmt</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">fmt</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="TangoConfiguration.setLimits"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setLimits">[docs]</a>    <span class="k">def</span> <span class="nf">setLimits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">l_str</span><span class="p">,</span> <span class="n">h_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">low</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">high</span><span class="p">)</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">cranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">min_value</span> <span class="o">=</span> <span class="n">l_str</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">cranges</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">max_value</span> <span class="o">=</span> <span class="n">h_str</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">climits</span> <span class="o">=</span> <span class="p">[</span><span class="n">l_str</span><span class="p">,</span> <span class="n">h_str</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.setWarnings"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setWarnings">[docs]</a>    <span class="k">def</span> <span class="nf">setWarnings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">l_str</span><span class="p">,</span> <span class="n">h_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">low</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">high</span><span class="p">)</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">cranges</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_warning</span> <span class="o">=</span> <span class="n">l_str</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">cranges</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_warning</span> <span class="o">=</span> <span class="n">h_str</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">cwarnings</span> <span class="o">=</span> <span class="p">[</span><span class="n">l_str</span><span class="p">,</span> <span class="n">h_str</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TangoConfiguration.setAlarms"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoConfiguration.html#taurus.core.tango.TangoConfiguration.setAlarms">[docs]</a>    <span class="k">def</span> <span class="nf">setAlarms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">l_str</span><span class="p">,</span> <span class="n">h_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">low</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">high</span><span class="p">)</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">cranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">min_alarm</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">min_alarm</span> <span class="o">=</span> <span class="n">l_str</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">cranges</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">max_alarm</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">max_alarm</span> <span class="o">=</span> <span class="n">h_str</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">calarms</span> <span class="o">=</span> <span class="p">[</span><span class="n">l_str</span><span class="p">,</span> <span class="n">h_str</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_applyConfig</span><span class="p">()</span></div>
+    
+    <span class="k">def</span> <span class="nf">_applyConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValueObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span><span class="o">.</span><span class="n">setConfigEx</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

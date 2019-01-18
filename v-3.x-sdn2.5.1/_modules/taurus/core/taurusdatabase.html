@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.taurusdatabase &mdash; taurus 3.7.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 3.7.5 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 3.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.taurusdatabase</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.taurusdatabase</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1">## This file is part of Taurus</span>
+<span class="c1">## </span>
+<span class="c1">## http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">## (at your option) any later version.</span>
+<span class="c1">## </span>
+<span class="c1">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">## GNU Lesser General Public License for more details.</span>
+<span class="c1">## </span>
+<span class="c1">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the base class for a taurus database&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusServInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevClassInfo&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusAttrInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevTree&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusServerTree&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusDatabaseCache&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDatabase&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+
+<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusEventType</span><span class="p">,</span> <span class="n">TaurusSWDevHealth</span><span class="p">,</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusModel</span>
+<span class="kn">from</span> <span class="nn">.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
+
+<span class="n">DFT_DATABASE_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;A database&quot;</span>
+
+
+<div class="viewcode-block" id="TaurusInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusInfo.html#taurus.core.TaurusInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_full_name</span> <span class="o">=</span> <span class="n">full_name</span>
+    
+<div class="viewcode-block" id="TaurusInfo.container"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusInfo.html#taurus.core.TaurusInfo.container">[docs]</a>    <span class="k">def</span> <span class="nf">container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusInfo.name"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusInfo.html#taurus.core.TaurusInfo.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
+
+<div class="viewcode-block" id="TaurusInfo.fullName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusInfo.html#taurus.core.TaurusInfo.fullName">[docs]</a>    <span class="k">def</span> <span class="nf">fullName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_full_name</span></div>
+    
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+    <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span></div>
+
+
+<div class="viewcode-block" id="TaurusDevInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevInfo</span><span class="p">(</span><span class="n">TaurusInfo</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exported</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusDevInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="n">full_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alias</span> <span class="o">=</span> <span class="n">alias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">klass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exported</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">exported</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_health</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_domain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_family</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_member</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="TaurusDevInfo.domain"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.domain">[docs]</a>    <span class="k">def</span> <span class="nf">domain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_domain</span></div>
+
+<div class="viewcode-block" id="TaurusDevInfo.family"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.family">[docs]</a>    <span class="k">def</span> <span class="nf">family</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_family</span></div>
+
+<div class="viewcode-block" id="TaurusDevInfo.member"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.member">[docs]</a>    <span class="k">def</span> <span class="nf">member</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_member</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.alias"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.alias">[docs]</a>    <span class="k">def</span> <span class="nf">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alias</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.server"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.server">[docs]</a>    <span class="k">def</span> <span class="nf">server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.klass"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.klass">[docs]</a>    <span class="k">def</span> <span class="nf">klass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.exported"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.exported">[docs]</a>    <span class="k">def</span> <span class="nf">exported</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exported</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.alive"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.alive">[docs]</a>    <span class="k">def</span> <span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.health"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.health">[docs]</a>    <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_health</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exported</span><span class="p">():</span>
+                <span class="n">alive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alive</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">alive</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_health</span> <span class="o">=</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">ExportedAlive</span>
+                <span class="k">elif</span> <span class="n">alive</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_health</span> <span class="o">=</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">ExportedNotAlive</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_health</span> <span class="o">=</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">Exported</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_health</span> <span class="o">=</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">NotExported</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_health</span></div>
+        
+<div class="viewcode-block" id="TaurusDevInfo.host"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.host">[docs]</a>    <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.attributes"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.getAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.getAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">getAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrname</span><span class="p">):</span>
+        <span class="n">attrname</span><span class="o">=</span> <span class="n">attrname</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="n">attrname</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="TaurusDevInfo.setAttributes"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevInfo.html#taurus.core.TaurusDevInfo.setAttributes">[docs]</a>    <span class="k">def</span> <span class="nf">setAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span> <span class="o">=</span> <span class="n">attributes</span></div></div>
+    
+
+<div class="viewcode-block" id="TaurusServInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusServInfo</span><span class="p">(</span><span class="n">TaurusInfo</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusServInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="n">full_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exported</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_instance</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="TaurusServInfo.devices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.devices">[docs]</a>    <span class="k">def</span> <span class="nf">devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span></div>
+
+<div class="viewcode-block" id="TaurusServInfo.getDeviceNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.getDeviceNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_device_name_list&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusDevInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span></div>
+
+<div class="viewcode-block" id="TaurusServInfo.getClassNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.getClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_klass_name_list&quot;</span><span class="p">):</span>
+            <span class="n">klasses</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusDevInfo</span><span class="o">.</span><span class="n">klass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_klass_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusDevClassInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">klasses</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass_name_list</span></div>
+
+<div class="viewcode-block" id="TaurusServInfo.exported"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.exported">[docs]</a>    <span class="k">def</span> <span class="nf">exported</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exported</span></div>
+
+<div class="viewcode-block" id="TaurusServInfo.alive"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.alive">[docs]</a>    <span class="k">def</span> <span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span></div>
+
+<div class="viewcode-block" id="TaurusServInfo.health"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.health">[docs]</a>    <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">exported</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exported</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">exported</span><span class="p">:</span>
+            <span class="n">alive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alive</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">alive</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">ExportedAlive</span>
+            <span class="k">elif</span> <span class="n">alive</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">ExportedNotAlive</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">Exported</span>
+        <span class="k">return</span> <span class="n">TaurusSWDevHealth</span><span class="o">.</span><span class="n">NotExported</span></div>
+    
+<div class="viewcode-block" id="TaurusServInfo.host"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.host">[docs]</a>    <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span></div>
+    
+<div class="viewcode-block" id="TaurusServInfo.serverName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.serverName">[docs]</a>    <span class="k">def</span> <span class="nf">serverName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_name</span></div>
+
+<div class="viewcode-block" id="TaurusServInfo.serverInstance"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.serverInstance">[docs]</a>    <span class="k">def</span> <span class="nf">serverInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_instance</span></div>
+    
+<div class="viewcode-block" id="TaurusServInfo.addDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServInfo.html#taurus.core.TaurusServInfo.addDevice">[docs]</a>    <span class="k">def</span> <span class="nf">addDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exported</span> <span class="o">|=</span> <span class="n">dev</span><span class="o">.</span><span class="n">exported</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">host</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="p">[</span><span class="n">dev</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span> <span class="o">=</span> <span class="n">dev</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDevClassInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevClassInfo.html#taurus.core.TaurusDevClassInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevClassInfo</span><span class="p">(</span><span class="n">TaurusInfo</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusDevClassInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="n">full_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="TaurusDevClassInfo.devices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevClassInfo.html#taurus.core.TaurusDevClassInfo.devices">[docs]</a>    <span class="k">def</span> <span class="nf">devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span></div>
+    
+<div class="viewcode-block" id="TaurusDevClassInfo.getDeviceNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevClassInfo.html#taurus.core.TaurusDevClassInfo.getDeviceNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_device_name_list&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusDevInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span></div>
+    
+<div class="viewcode-block" id="TaurusDevClassInfo.addDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevClassInfo.html#taurus.core.TaurusDevClassInfo.addDevice">[docs]</a>    <span class="k">def</span> <span class="nf">addDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="p">[</span><span class="n">dev</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span> <span class="o">=</span> <span class="n">dev</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusAttrInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttrInfo.html#taurus.core.TaurusAttrInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttrInfo</span><span class="p">(</span><span class="n">TaurusInfo</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusAttrInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">full_name</span><span class="o">=</span><span class="n">full_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_info</span> <span class="o">=</span> <span class="n">info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusAttrInfo.device"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttrInfo.html#taurus.core.TaurusAttrInfo.device">[docs]</a>    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusAttrInfo.info"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttrInfo.html#taurus.core.TaurusAttrInfo.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span></div>
+    
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TaurusDevTree"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevTree.html#taurus.core.TaurusDevTree">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevTree</span><span class="p">(</span><span class="n">CaselessDict</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusDevTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">isMappingType</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+                <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">addDevice</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="n">e</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Must give dict&lt;obj, TaurusDevInfo&gt; or sequence&lt;TaurusDevInfo&gt;&quot;</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="TaurusDevTree.addDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevTree.html#taurus.core.TaurusDevTree.addDevice">[docs]</a>    <span class="k">def</span> <span class="nf">addDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_info</span><span class="p">):</span>
+        <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">,</span> <span class="n">member</span> <span class="o">=</span> <span class="n">dev_info</span><span class="o">.</span><span class="n">domain</span><span class="p">(),</span> <span class="n">dev_info</span><span class="o">.</span><span class="n">family</span><span class="p">(),</span> <span class="n">dev_info</span><span class="o">.</span><span class="n">member</span><span class="p">()</span>
+        
+        <span class="n">families</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">domain</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">CaselessDict</span><span class="p">())</span>
+        <span class="n">devs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="p">[</span><span class="n">domain</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">CaselessDict</span><span class="p">())</span>
+        <span class="n">devs</span><span class="p">[</span><span class="n">dev_info</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span> <span class="o">=</span> <span class="n">dev_info</span>
+        
+        <span class="n">families</span><span class="p">[</span><span class="n">family</span><span class="p">]</span> <span class="o">=</span> <span class="n">members</span> <span class="o">=</span> <span class="n">families</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">CaselessDict</span><span class="p">())</span>
+        
+        <span class="n">members</span><span class="p">[</span><span class="n">member</span><span class="p">]</span> <span class="o">=</span> <span class="n">dev_info</span></div>
+
+<div class="viewcode-block" id="TaurusDevTree.getDomainDevices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevTree.html#taurus.core.TaurusDevTree.getDomainDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getDomainDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all devices under the given domain. Returns empty list if</span>
+<span class="sd">        the domain doesn&#39;t exist or doesn&#39;t contain any devices&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDevTree.getFamilyDevices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevTree.html#taurus.core.TaurusDevTree.getFamilyDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getFamilyDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all devices under the given domain/family. Returns empty list if</span>
+<span class="sd">        the domain/family doesn&#39;t exist or doesn&#39;t contain any devices&quot;&quot;&quot;</span>
+        <span class="n">families</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">families</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> 
+        <span class="k">return</span> <span class="n">families</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusServerTree"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServerTree.html#taurus.core.TaurusServerTree">[docs]</a><span class="k">class</span> <span class="nc">TaurusServerTree</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusServerTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">isMappingType</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+                <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">serv</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">addServer</span><span class="p">(</span><span class="n">serv</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="n">e</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Must give dict&lt;obj, TaurusServInfo&gt; or sequence&lt;TaurusServInfo&gt;&quot;</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="TaurusServerTree.addServer"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServerTree.html#taurus.core.TaurusServerTree.addServer">[docs]</a>    <span class="k">def</span> <span class="nf">addServer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serv_info</span><span class="p">):</span>
+        <span class="n">serverName</span><span class="p">,</span> <span class="n">serverInstance</span> <span class="o">=</span> <span class="n">serv_info</span><span class="o">.</span><span class="n">serverName</span><span class="p">(),</span> <span class="n">serv_info</span><span class="o">.</span><span class="n">serverInstance</span><span class="p">()</span>
+        
+        <span class="n">serverInstances</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">serverName</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">serverName</span><span class="p">,</span> <span class="p">{})</span>
+        
+        <span class="n">serverInstances</span><span class="p">[</span><span class="n">serverInstance</span><span class="p">]</span> <span class="o">=</span> <span class="n">serv_info</span></div>
+
+<div class="viewcode-block" id="TaurusServerTree.getServerNameInstances"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusServerTree.html#taurus.core.TaurusServerTree.getServerNameInstances">[docs]</a>    <span class="k">def</span> <span class="nf">getServerNameInstances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serverName</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all servers under the given serverName. Returns empty list if</span>
+<span class="sd">        the server name doesn&#39;t exist or doesn&#39;t contain any instances&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">serverName</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDatabaseCache"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache">[docs]</a><span class="k">class</span> <span class="nc">TaurusDatabaseCache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_tree</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_servers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_name_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_klasses</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_klass_name_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_aliases</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alias_name_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.refresh"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Must be implemented in subclass&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.refreshAttributes"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.refreshAttributes">[docs]</a>    <span class="k">def</span> <span class="nf">refreshAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Must be implemented in subclass&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a :class:`taurus.core.taurusdatabase.TaurusDevInfo` object with information </span>
+<span class="sd">        about the given device name</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: (str) the device name</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (TaurusDevInfo) information about the device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getDeviceNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getDeviceNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of registered device names</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (sequence&lt;str&gt;) a sequence with all registered device names&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusDevInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span></div>
+
+<div class="viewcode-block" id="TaurusDatabaseCache.getAliasNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getAliasNames">[docs]</a>    <span class="k">def</span> <span class="nf">getAliasNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alias_name_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_alias_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusDevInfo</span><span class="o">.</span><span class="n">alias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aliases</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alias_name_list</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getServerNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getServerNames">[docs]</a>    <span class="k">def</span> <span class="nf">getServerNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of registered server names</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (sequence&lt;str&gt;) a sequence with all registered server names&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_name_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_server_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusServInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">servers</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_name_list</span></div>
+
+<div class="viewcode-block" id="TaurusDatabaseCache.getClassNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of registered device classes</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (sequence&lt;str&gt;) a sequence with all registered device classes&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass_name_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_klass_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TaurusDevClassInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">klasses</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass_name_list</span></div>
+
+<div class="viewcode-block" id="TaurusDatabaseCache.deviceTree"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.deviceTree">[docs]</a>    <span class="k">def</span> <span class="nf">deviceTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a tree container with all devices in three levels: domain,</span>
+<span class="sd">           family and member</span>
+<span class="sd">           </span>
+<span class="sd">           :return: (TaurusDevTree) a tree containning all devices&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.serverTree"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.serverTree">[docs]</a>    <span class="k">def</span> <span class="nf">serverTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a tree container with all servers in two levels: server name</span>
+<span class="sd">        and server instance</span>
+<span class="sd">           </span>
+<span class="sd">           :return: (TaurusServerTree) a tree containning all servers&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_tree</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.servers"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.servers">[docs]</a>    <span class="k">def</span> <span class="nf">servers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_servers</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.devices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.devices">[docs]</a>    <span class="k">def</span> <span class="nf">devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.klasses"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.klasses">[docs]</a>    <span class="k">def</span> <span class="nf">klasses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klasses</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getDeviceDomainNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getDeviceDomainNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceDomainNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getDeviceFamilyNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getDeviceFamilyNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceFamilyNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="n">families</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">families</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">families</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getDeviceMemberNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getDeviceMemberNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceMemberNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">):</span>
+        <span class="n">families</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">families</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">members</span> <span class="o">=</span> <span class="n">families</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">family</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">members</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">members</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getDomainDevices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getDomainDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getDomainDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">()</span><span class="o">.</span><span class="n">getDomainDevices</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabaseCache.getFamilyDevices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getFamilyDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getFamilyDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">()</span><span class="o">.</span><span class="n">getFamilyDevices</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDatabaseCache.getServerNameInstances"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabaseCache.html#taurus.core.TaurusDatabaseCache.getServerNameInstances">[docs]</a>    <span class="k">def</span> <span class="nf">getServerNameInstances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serverName</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">serverTree</span><span class="p">()</span><span class="o">.</span><span class="n">getServerNameInstances</span><span class="p">(</span><span class="n">serverName</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TaurusDatabase"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase">[docs]</a><span class="k">class</span> <span class="nc">TaurusDatabase</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">complete_name</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_descr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">,</span> <span class="n">complete_name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># TaurusModel implementation</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+<div class="viewcode-block" id="TaurusDatabase.cleanUp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TaurusDatabase] cleanUp&quot;</span><span class="p">)</span>
+        <span class="n">TaurusModel</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusDatabase.getTaurusElementType"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getTaurusElementType">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusElementType</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Database</span></div>
+    
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusDatabase.buildModelName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.buildModelName">[docs]</a>    <span class="k">def</span> <span class="nf">buildModelName</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent_model</span><span class="p">,</span> <span class="n">relative_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;build an &#39;absolute&#39; model name from the parent name and the &#39;relative&#39;</span>
+<span class="sd">        name. parent_model is ignored since there is nothing above the Database</span>
+<span class="sd">        object&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">relative_name</span></div>
+    
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusDatabase.getNameValidator"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getNameValidator">[docs]</a>    <span class="k">def</span> <span class="nf">getNameValidator</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.taurusvalidator</span> <span class="k">import</span> <span class="n">DatabaseNameValidator</span>
+        <span class="k">return</span> <span class="n">DatabaseNameValidator</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getDescription"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDescription">[docs]</a>    <span class="k">def</span> <span class="nf">getDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_descr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">cache</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_descr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_descr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDefaultDescription</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_descr</span></div>
+
+<div class="viewcode-block" id="TaurusDatabase.getDisplayValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDisplayValue">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayDescription</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDatabase.getDisplayDescription"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDisplayDescription">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getDisplayDescrObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDisplayDescrObj">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescrObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayName</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)))</span>
+        <span class="n">descr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDescription</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="n">descr</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.addListener"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.addListener">[docs]</a>    <span class="k">def</span> <span class="nf">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusModel</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(),</span> <span class="n">listener</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TaurusDatabase.getChildObj"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getChildObj">[docs]</a>    <span class="k">def</span> <span class="nf">getChildObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">child_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">child_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span></div>
+        
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Device access methods</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+    
+    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">devname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the device object given its name&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">taurusdevice</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="n">taurusdevice</span><span class="o">.</span><span class="n">TaurusDevice</span><span class="p">,</span> <span class="n">devname</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Query capabilities built on top of a cache</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    
+<div class="viewcode-block" id="TaurusDatabase.refreshCache"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.refreshCache">[docs]</a>    <span class="k">def</span> <span class="nf">refreshCache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getDevice"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a :class:`taurus.core.tango.TangoDevInfo` object with information </span>
+<span class="sd">        about the given device name</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: (str) the device name</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (TangoDevInfo) information about the tango device&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getDeviceNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDeviceNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of registered tango device names</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (sequence&lt;str&gt;) a sequence with all registered tango device names&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getDeviceNames</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusDatabase.getAliasNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getAliasNames">[docs]</a>    <span class="k">def</span> <span class="nf">getAliasNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of registered tango device alias</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (sequence&lt;str&gt;) a sequence with all registered tango device alias&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getAliasNames</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getServerNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getServerNames">[docs]</a>    <span class="k">def</span> <span class="nf">getServerNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of registered tango device servers in format&lt;name&gt;/&lt;instance&gt;</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (sequence&lt;str&gt;) a sequence with all registered tango device servers&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getServerNames</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusDatabase.getClassNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of registered tango device classes</span>
+<span class="sd">        </span>
+<span class="sd">        :return: (sequence&lt;str&gt;) a sequence with all registered tango device classes&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getClassNames</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusDatabase.getDeviceDomainNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDeviceDomainNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceDomainNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getDeviceDomainNames</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getDeviceFamilyNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDeviceFamilyNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceFamilyNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getDeviceFamilyNames</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getDeviceMemberNames"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDeviceMemberNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceMemberNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getDeviceMemberNames</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getDomainDevices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getDomainDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getDomainDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getDomainDevices</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getFamilyDevices"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getFamilyDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getFamilyDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getFamilyDevices</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.getServerNameInstances"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getServerNameInstances">[docs]</a>    <span class="k">def</span> <span class="nf">getServerNameInstances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serverName</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">getServerNameInstances</span><span class="p">(</span><span class="n">serverName</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaurusDatabase.deviceTree"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.deviceTree">[docs]</a>    <span class="k">def</span> <span class="nf">deviceTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a tree container with all devices in three levels : domain,</span>
+<span class="sd">           family and member</span>
+<span class="sd">           </span>
+<span class="sd">           :return: (TangoDevTree) a tree containning all devices&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">()</span></div>
+    
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Mandatory methods to overwrite</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-    </span>
+<div class="viewcode-block" id="TaurusDatabase.cache"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.cache">[docs]</a>    <span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;TaurusDatabase.cache cannot be called&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDatabase.getElementAlias"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getElementAlias">[docs]</a>    <span class="k">def</span> <span class="nf">getElementAlias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full_name</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;TaurusDatabase.getElementAlias cannot be called&quot;</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TaurusDatabase.getElementFullName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDatabase.html#taurus.core.TaurusDatabase.getElementFullName">[docs]</a>    <span class="k">def</span> <span class="nf">getElementFullName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;TaurusDatabase.getElementFullName cannot be called&quot;</span><span class="p">)</span></div>
+    
+    <span class="k">def</span> <span class="nf">_getDefaultDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DFT_DATABASE_DESCRIPTION</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'3.7.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
