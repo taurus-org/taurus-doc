@@ -165,7 +165,7 @@
 <span class="sd">&quot;&quot;&quot;This module provides widgets that display the database in a tree format&quot;&quot;&quot;</span>
 <span class="c1"># TODO: tango-centric</span>
 
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusDevState</span>
@@ -563,13 +563,15 @@
             <span class="n">mime_data_item</span> <span class="o">=</span> <span class="n">tree_item</span><span class="o">.</span><span class="n">mimeData</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">mime_data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mime_data_item</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">mime_data_item</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
         <span class="n">ret</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
-            <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-        <span class="n">ret</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+            <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span>
+            <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">)))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">ret</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
-                <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TaurusDbBaseModel.pyData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbBaseModel.html#taurus.qt.qtcore.model.TaurusDbBaseModel.pyData">[docs]</a>    <span class="k">def</span> <span class="nf">pyData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
@@ -873,13 +875,11 @@
 <div class="viewcode-block" id="TaurusDbDeviceProxyModel.deviceMatches"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusDbDeviceProxyModel.html#taurus.qt.qtcore.model.TaurusDbDeviceProxyModel.deviceMatches">[docs]</a>    <span class="k">def</span> <span class="nf">deviceMatches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">regexp</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
 
-        <span class="c1"># if Qt.QString(name).contains(regexp):</span>
         <span class="k">if</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="c1"># return Qt.QString(name).contains(regexp)</span>
         <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span></div></div>
 
 
@@ -897,14 +897,13 @@
             <span class="n">serverName</span> <span class="o">=</span> <span class="n">treeItem</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
             <span class="n">serverInstances</span> <span class="o">=</span> <span class="n">sourceModel</span><span class="o">.</span><span class="n">getServerNameInstances</span><span class="p">(</span><span class="n">serverName</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">serverInstance</span> <span class="ow">in</span> <span class="n">serverInstances</span><span class="p">:</span>
-                <span class="c1"># if Qt.QString(serverInstance.name()).contains(regexp):</span>
                 <span class="k">if</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">serverInstance</span><span class="o">.</span><span class="n">name</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">True</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">treeItem</span><span class="p">,</span> <span class="n">TaurusTreeServerItem</span><span class="p">):</span>
             <span class="c1"># return treeItem.qdisplay().contains(regexp)</span>
-            <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">treeItem</span><span class="o">.</span><span class="n">qdisplay</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">treeItem</span><span class="o">.</span><span class="n">display</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
 
         <span class="k">return</span> <span class="kc">True</span></div></div>
 
@@ -923,7 +922,7 @@
         <span class="n">regexp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterRegExp</span><span class="p">()</span>
 
         <span class="c1"># return treeItem.qdisplay().contains(regexp)</span>
-        <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">treeItem</span><span class="o">.</span><span class="n">qdisplay</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span></div></div>
+        <span class="k">return</span> <span class="n">regexp</span><span class="o">.</span><span class="n">indexIn</span><span class="p">(</span><span class="n">treeItem</span><span class="o">.</span><span class="n">display</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span></div></div>
 </pre></div>
 
            </div>

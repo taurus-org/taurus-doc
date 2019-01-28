@@ -173,11 +173,13 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
 <span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
 <span class="kn">from</span> <span class="nn">.taurusbasecontainer</span> <span class="k">import</span> <span class="n">TaurusBaseContainer</span>
 
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
@@ -199,7 +201,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">textEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setCmdText</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setCmdText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">cmdargs</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_extapp</span><span class="o">.</span><span class="n">setCmdArgs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getCmdArgs</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
@@ -494,13 +496,23 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPerspectivesList</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
                 <span class="n">pname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__onPerspectiveSelected</span><span class="p">)</span>
+            <span class="c1"># -------------------------------------------------------</span>
+            <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+            <span class="c1"># TODO: make better solution for this</span>
+            <span class="n">a</span><span class="o">.</span><span class="n">perspective_name</span> <span class="o">=</span> <span class="n">pname</span>  <span class="c1"># &lt;-- ugly monkey-patch!</span>
+            <span class="c1"># -------------------------------------------------------</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span></div>
 
     <span class="k">def</span> <span class="nf">__onPerspectiveSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;slot to be called by the actions in the perspectivesMenu&#39;&#39;&#39;</span>
-        <span class="n">pname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="c1"># -------------------------------------------------------</span>
+        <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+        <span class="c1"># TODO: make better solution for this</span>
+        <span class="c1"># pname = self.sender().text()  # &lt;-- this fails because of added &quot;&amp;&quot;</span>
+        <span class="n">pname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">perspective_name</span>  <span class="c1"># &lt;-- this was monkey-patched</span>
+        <span class="c1"># -------------------------------------------------------</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspective</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">pname</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusMainWindow.splashScreen"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.splashScreen">[docs]</a>    <span class="k">def</span> <span class="nf">splashScreen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -529,39 +541,45 @@
         <span class="sd">&#39;&#39;&#39;initializes the application-wide actions&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quitApplicationAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;process-stop&quot;</span><span class="p">),</span> <span class="s1">&#39;Exit Application&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">quitApplicationAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quitApplicationAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
             <span class="s2">&quot;network-server&quot;</span><span class="p">),</span> <span class="s1">&#39;Change Tango Host ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onChangeTangoHostAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onChangeTangoHostAction</span><span class="p">)</span>
         <span class="c1"># make this action invisible since it is deprecated</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">changeTangoHostAction</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspectiveAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
             <span class="s2">&quot;document-open&quot;</span><span class="p">),</span> <span class="s1">&#39;Load Perspective ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loadPerspective</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadPerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loadPerspective</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
             <span class="s2">&quot;document-save&quot;</span><span class="p">),</span> <span class="s1">&#39;Save Perspective ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">savePerspective</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">savePerspective</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">deletePerspectiveAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;actions:edit-delete.svg&quot;</span><span class="p">),</span> <span class="s1">&#39;Delete Perspective ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">deletePerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removePerspective</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deletePerspectiveAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removePerspective</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFileAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;document-save&quot;</span><span class="p">),</span> <span class="s1">&#39;Export Settings ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFileAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFileAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFile</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFileAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;document-open&quot;</span><span class="p">),</span> <span class="s1">&#39;Import Settings ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFileAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFileAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFile</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
 
         <span class="c1">#self.resetSettingsAction = Qt.QAction(Qt.QIcon.fromTheme(&quot;edit-undo&quot;),&#39;Reset Settings&#39;, self)</span>
         <span class="c1">#self.connect(self.resetSettingsAction, Qt.SIGNAL(&quot;triggered()&quot;), self.resetSettings)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
             <span class="s2">&quot;preferences-system&quot;</span><span class="p">),</span> <span class="s1">&#39;Configurations ...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span><span class="o">.</span><span class="n">show</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span><span class="o">.</span><span class="n">show</span><span class="p">)</span>
 
         <span class="c1">#self.rpdb2Action = Qt.QAction(&quot;Spawn rpdb2&quot;, self)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spawnRpdb2Shortcut</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -755,16 +773,11 @@
         <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ignoreGeometry</span><span class="p">:</span>
-            <span class="c1"># With API2, from_qvariant is returning None instead</span>
-            <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
-                <span class="s2">&quot;MainWindow/Geometry&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
-            <span class="c1"># of an empty QByTeArray</span>
-            <span class="c1"># and this caused an exception later on. Hence the &quot;or&quot;</span>
+            <span class="n">ba</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;MainWindow/Geometry&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
         <span class="c1"># restore the Taurus config</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
-                <span class="s2">&quot;TaurusConfig&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
+            <span class="n">ba</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;TaurusConfig&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">applyQConfig</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Problem loading configuration from &quot;</span><span class="si">%s</span><span class="s1">&quot;. Some settings may not be restored.</span><span class="se">\n</span><span class="s1"> Details: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
@@ -772,8 +785,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Error Loading settings&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
-        <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
-            <span class="s2">&quot;MainWindow/State&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
+        <span class="n">ba</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;MainWindow/State&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
         <span class="c1"># hide all dockwidgets (so that they are shown only if they were</span>
         <span class="c1"># present in the settings)</span>
@@ -782,8 +794,7 @@
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dockwidgets</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">restoreDockWidget</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
             <span class="n">d</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
-        <span class="n">ba</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span>
-            <span class="s2">&quot;MainWindow/State&quot;</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
+        <span class="n">ba</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;MainWindow/State&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -804,16 +815,17 @@
         <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
         <span class="c1"># main window geometry</span>
-        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;MainWindow/State&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">()))</span>
-        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;MainWindow/Geometry&quot;</span><span class="p">,</span>
-                          <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">()))</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;MainWindow/State&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">())</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;MainWindow/Geometry&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">())</span>
 
         <span class="c1"># store the config dict</span>
-        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;TaurusConfig&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">createQConfig</span><span class="p">()))</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;TaurusConfig&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">createQConfig</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MainWindow settings saved in &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">settings</span><span class="o">.</span><span class="n">fileName</span><span class="p">())</span></div>
 
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusMainWindow.savePerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.savePerspective">[docs]</a>    <span class="k">def</span> <span class="nf">savePerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Stores current state of the application as a perspective with the given name</span>
 
@@ -839,6 +851,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">saveSettings</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s2">&quot;Perspectives/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updatePerspectivesMenu</span><span class="p">()</span></div>
 
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusMainWindow.loadPerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.loadPerspective">[docs]</a>    <span class="k">def</span> <span class="nf">loadPerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Loads the settings saved for the given perspective.</span>
 <span class="sd">        It emits a &#39;perspectiveChanged&#39; signal with name as its parameter</span>
@@ -877,6 +891,8 @@
         <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">names</span></div>
 
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusMainWindow.removePerspective"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.removePerspective">[docs]</a>    <span class="k">def</span> <span class="nf">removePerspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;removes the given perspective from the settings</span>
 
@@ -904,15 +920,17 @@
         <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updatePerspectivesMenu</span><span class="p">()</span></div>
 
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusMainWindow.exportSettingsFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.exportSettingsFile">[docs]</a>    <span class="k">def</span> <span class="nf">exportSettingsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;copies the current settings file into the given file name.</span>
 
 <span class="sd">        :param fname: (str) name of output file. If None given, a file dialog will be shown.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
+            <span class="n">fname</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Choose file where the current settings should be saved&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s2">&quot;Ini files (*.ini);;All files (*)&quot;</span><span class="p">)</span>
+                <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s2">&quot;Ini files (*.ini);;All files (*)&quot;</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="p">:</span>
                 <span class="k">return</span>
@@ -924,6 +942,8 @@
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Settings could not be exported to </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export error&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
 
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">()</span>
+    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusMainWindow.importSettingsFile"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.importSettingsFile">[docs]</a>    <span class="k">def</span> <span class="nf">importSettingsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        loads settings (including importing all perspectives) from a given ini</span>
@@ -932,9 +952,9 @@
 <span class="sd">        :param fname: (str) name of ini file. If None given, a file dialog will be shown.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+            <span class="n">fname</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Select a ini-format settings file&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s2">&quot;Ini files (*.ini);;All files (*)&quot;</span><span class="p">)</span>
+                <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s2">&quot;Ini files (*.ini);;All files (*)&quot;</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="p">:</span>
                 <span class="k">return</span>

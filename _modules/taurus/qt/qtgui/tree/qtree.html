@@ -375,7 +375,11 @@
         <span class="n">tree</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onClicked</span><span class="p">)</span>
         <span class="n">tree</span><span class="o">.</span><span class="n">doubleClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_onDoubleClicked</span><span class="p">)</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">header</span><span class="p">()</span>
-        <span class="n">h</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tree</span></div>
 
 <div class="viewcode-block" id="QBaseTreeWidget.treeView"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/tree/_QBaseTreeWidget.html#taurus.qt.qtgui.tree.QBaseTreeWidget.treeView">[docs]</a>    <span class="k">def</span> <span class="nf">treeView</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

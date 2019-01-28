@@ -168,7 +168,7 @@
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">deprecation_decorator</span>
 
 <span class="n">QtQt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span>
 
@@ -280,16 +280,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_display</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DisplayFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_itemData</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display</span></div>
 
-<div class="viewcode-block" id="TaurusBaseTreeItem.qdisplay"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.qdisplay">[docs]</a>    <span class="k">def</span> <span class="nf">qdisplay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the display QString for this node</span>
-
-<span class="sd">        :return: (Qt.QString) the node&#39;s display string&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_qdisplay&quot;</span><span class="p">):</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_qdisplay</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qdisplay</span></div>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;display&#39;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">qdisplay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>
 
 <div class="viewcode-block" id="TaurusBaseTreeItem.mimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseTreeItem.html#taurus.qt.qtcore.model.TaurusBaseTreeItem.mimeData">[docs]</a>    <span class="k">def</span> <span class="nf">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
@@ -319,12 +312,6 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemModel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="n">Logger</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="c1"># if qt &lt; 4.6, beginResetModel and endResetModel don&#39;t exist. In this</span>
-        <span class="c1"># case we set beginResetModel to be an empty function and endResetModel</span>
-        <span class="c1"># to be reset.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractItemModel</span><span class="p">,</span> <span class="s2">&quot;beginResetModel&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_src</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rootItem</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filters</span> <span class="o">=</span> <span class="p">[]</span>
@@ -417,24 +404,16 @@
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftFont</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">item</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TaurusBaseModel.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">QtQt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
     <span class="k">def</span> <span class="nf">_setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">qvalue</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">QtQt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
         <span class="n">item</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalPointer</span><span class="p">()</span>
-        <span class="n">pyobj</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">qvalue</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">pyobj</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;Failed attempt to convert a QValue. Maybe it is due to Qt&lt;4.6&quot;</span><span class="p">)</span>
-        <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">pyobj</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">qvalue</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="TaurusBaseModel.flags"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.flags">[docs]</a>    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -466,7 +445,7 @@
             <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">QtQt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
                 <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnIcon</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TaurusBaseModel.index"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/model/_TaurusBaseModel.html#taurus.qt.qtcore.model.TaurusBaseModel.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasIndex</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>

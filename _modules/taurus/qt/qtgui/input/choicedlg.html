@@ -164,8 +164,7 @@
 
 <span class="sd">&quot;&quot;&quot;This package provides a dialog for graphically choosing a Taurus class&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
-
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">future.builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 
@@ -334,11 +333,21 @@
         <span class="n">button</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iconSize</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iconSize</span><span class="p">))</span>
         <span class="n">button</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">tooltip</span><span class="p">)</span>
         <span class="n">button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onClick</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+        <span class="c1"># -------------------------------------------------------</span>
+        <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+        <span class="c1"># TODO: make better solution for this</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">text</span>  <span class="c1"># &lt;-- ugly monkey-patch!</span></div>
+        <span class="c1"># -------------------------------------------------------</span>
 
 <div class="viewcode-block" id="GraphicalChoiceWidget.onClick"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget.onClick">[docs]</a>    <span class="k">def</span> <span class="nf">onClick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;slot called when a button is clicked&#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="c1"># -------------------------------------------------------</span>
+        <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+        <span class="c1"># TODO: make better solution for this</span>
+        <span class="c1"># self._chosen = str(self.sender().text())  # &lt;-- fails due to added &quot;&amp;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">_id</span>  <span class="c1"># &lt;-- this was monkey-patched</span>
+        <span class="c1"># -------------------------------------------------------</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">choiceMade</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chosen</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GraphicalChoiceWidget.getChosen"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_GraphicalChoiceWidget.html#taurus.qt.qtgui.input.GraphicalChoiceWidget.getChosen">[docs]</a>    <span class="k">def</span> <span class="nf">getChosen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

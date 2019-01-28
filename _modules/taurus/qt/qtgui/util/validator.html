@@ -227,7 +227,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bottom</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">bottom</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<div class="viewcode-block" id="PintValidator.validate"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_PintValidator.html#taurus.qt.qtgui.util.PintValidator.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reimplemented from :class:`QValidator` to validate if the input</span>
 <span class="sd">        string is a representation of a quantity within the set bottom and top</span>
 <span class="sd">        limits</span>
@@ -250,16 +250,7 @@
                 <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
         <span class="k">except</span> <span class="n">DimensionalityError</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Acceptable</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span>
-
-    <span class="k">def</span> <span class="nf">_validate_oldQt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Old Qt (v4.4.) -compatible implementation of validate&quot;&quot;&quot;</span>
-        <span class="n">state</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="n">pos</span>
-
-    <span class="c1"># select the appropriate implementation of validate. See:</span>
-    <span class="c1"># https://www.mail-archive.com/pyqt@riverbankcomputing.com/msg26344.html</span>
-    <span class="n">validate</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">PYQT_QSTRING_API_1</span> <span class="ow">and</span> <span class="n">_validate_oldQt</span> <span class="ow">or</span> <span class="n">_validate</span></div>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QValidator</span><span class="o">.</span><span class="n">Acceptable</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">pos</span></div></div>
 </pre></div>
 
            </div>

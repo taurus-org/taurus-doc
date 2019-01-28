@@ -173,10 +173,20 @@
             
   <div class="section" id="module-taurus.qt.qtgui.plot">
 <span id="taurus-qt-qtgui-plot"></span><h1><a class="reference internal" href="#module-taurus.qt.qtgui.plot" title="taurus.qt.qtgui.plot"><code class="xref py py-mod docutils literal"><span class="pre">taurus.qt.qtgui.plot</span></code></a><a class="headerlink" href="#module-taurus.qt.qtgui.plot" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="taurus-widget-plot-module">
-<h2>Taurus Widget Plot module<a class="headerlink" href="#taurus-widget-plot-module" title="Permalink to this headline">¶</a></h2>
-<p>This module is part of Taurus Widgets. It contains specialized widgets for 2D plotting
-in Taurus. It depends on the <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt module</a></p>
+<div class="section" id="taurus-plot-module-old">
+<h2>Taurus Plot module (old)<a class="headerlink" href="#taurus-plot-module-old" title="Permalink to this headline">¶</a></h2>
+<p>This module is now deprecated.</p>
+<p>If available, it exposes the plot API now implemented in
+<cite>taurus.qt.qtgui.qwt5</cite>. Otherwise it tries to provide a minimal API
+(essentially the TaurusPlot and TaurusTrend classes from taurus_pyqtgraph)
+to help with the transition to another plotting module such as
+taurus.qt.qtgui.tpg.</p>
+<p>Note that if you really want to continue using the old Qwt5-based widgets and
+avoid deprecation warnings, you can import the old API from
+taurus.qt.qtgui.qwt5</p>
+<p>Note that <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt5 module</a>
+only works with Python2 and PyQt4 and is no longer supported,
+so taurus is moving to other modules for plotting (pyqtgraph, silx, ...)</p>
 </div>
 <p class="rubric">Classes</p>
 <div class="toctree-wrapper compound">
@@ -211,7 +221,7 @@ in Taurus. It depends on the <a class="reference external" href="http://pyqwt.so
 <p class="rubric">Functions</p>
 <dl class="function">
 <dt id="taurus.qt.qtgui.plot.isodatestr2float">
-<code class="descname">isodatestr2float</code><span class="sig-paren">(</span><em>s</em>, <em>sep='_'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/qt/qtgui/plot/taurusplot.html#isodatestr2float"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.isodatestr2float" title="Permalink to this definition">¶</a></dt>
+<code class="descname">isodatestr2float</code><span class="sig-paren">(</span><em>s</em>, <em>sep='_'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/qt/qtgui/qwt5/taurusplot.html#isodatestr2float"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.plot.isodatestr2float" title="Permalink to this definition">¶</a></dt>
 <dd><p>converts a date string in iso format to a timestamp (seconds since epoch)
 with microseconds precision if available</p>
 </dd></dl>

@@ -325,15 +325,22 @@
         <span class="n">headerItem1</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span>
             <span class="s2">&quot;PLCTabWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;Value&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setHorizontalHeaderItem</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">headerItem1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>  <span class="c1"># .Stretch)</span></div>
+        <span class="n">hh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">hh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusPropTable.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusPropTable.html#taurus.qt.qtgui.table.TaurusPropTable.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resizeRowsToContents</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>  <span class="c1"># .Stretch)</span>
-        <span class="c1"># self.resizeColumnsToContents()</span>
-        <span class="k">pass</span></div>
+        <span class="n">hh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">hh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span></div>
+            <span class="c1"># self.resizeColumnsToContents()</span>
 
 <div class="viewcode-block" id="TaurusPropTable.contextMenuEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusPropTable.html#taurus.qt.qtgui.table.TaurusPropTable.contextMenuEvent">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; This function is called when right clicking on qwt plot area. A pop up menu will be</span>
@@ -341,11 +348,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;TaurusPropTable.contextMenuEvent()&#39;</span><span class="p">)</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">configDialogAction</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Add new property&quot;</span><span class="p">)</span>
-        <span class="n">configDialogAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addProperty</span><span class="p">)</span>
+        <span class="n">configDialogAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addProperty</span><span class="p">)</span>
         <span class="n">configDialogAction</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Delete property&quot;</span><span class="p">)</span>
-        <span class="n">configDialogAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deleteProperty</span><span class="p">)</span>
+        <span class="n">configDialogAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deleteProperty</span><span class="p">)</span>
         <span class="n">configDialogAction</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Edit property&quot;</span><span class="p">)</span>
-        <span class="n">configDialogAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editProperty</span><span class="p">)</span>
+        <span class="n">configDialogAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editProperty</span><span class="p">)</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span>
         <span class="k">del</span> <span class="n">menu</span></div>

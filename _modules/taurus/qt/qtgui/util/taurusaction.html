@@ -171,6 +171,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">xml.dom.minidom</span>
 
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
 <span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
@@ -214,7 +215,7 @@
 <span class="sd">        :param icon: (QIcon or any other object that can be passed to QIcon creator) see :class:`Qt.QAction`</span>
 <span class="sd">        :param parent: (QObject) The parent object</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="kn">import</span> <span class="nn">shlex</span>
             <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">cmdargs</span> <span class="ow">and</span> <span class="n">cmdargs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -232,7 +233,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">interactive</span> <span class="o">=</span> <span class="n">interactive</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_process</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCmdArgs</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionTriggered</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionTriggered</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Launches </span><span class="si">%s</span><span class="s2"> (external application)&quot;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmdArgs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCmdArgs</span><span class="p">,</span> <span class="s1">&#39;cmdArgs&#39;</span><span class="p">)</span>
 
@@ -246,7 +247,7 @@
 <span class="sd">                        application. It can also be a string containing a</span>
 <span class="sd">                        command, which will be automatically converted to a list</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="kn">import</span> <span class="nn">shlex</span>
             <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__cmdargs</span> <span class="o">=</span> <span class="n">cmdargs</span>
@@ -262,7 +263,7 @@
         <span class="kn">import</span> <span class="nn">subprocess</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,)):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                     <span class="kn">import</span> <span class="nn">shlex</span>
                     <span class="n">args</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
                 <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmdArgs</span><span class="p">()</span> <span class="o">+</span> <span class="n">args</span>

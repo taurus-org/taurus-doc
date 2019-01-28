@@ -189,17 +189,33 @@
     <span class="k">return</span> <span class="n">qtLogger</span></div>
 
 
-<span class="k">def</span> <span class="nf">qtTaurusMsgHandler</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">qtTaurusMessageHandler</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">log_ctx</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="c1"># Qt5 version</span>
     <span class="k">global</span> <span class="n">qtLogger</span>
     <span class="k">if</span> <span class="n">qtLogger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">caller</span> <span class="o">=</span> <span class="n">QT_LEVEL_MATCHER</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+        <span class="n">caller</span> <span class="o">=</span> <span class="n">QT_LEVEL_MATCHER</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">msg_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">caller</span><span class="p">(</span><span class="s2">&quot;Qt</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">[</span><span class="si">%s</span><span class="s2">]: %a&quot;</span><span class="p">,</span> <span class="n">log_ctx</span><span class="o">.</span><span class="n">category</span><span class="p">,</span> <span class="n">log_ctx</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
+                 <span class="n">log_ctx</span><span class="o">.</span><span class="n">function</span><span class="p">,</span> <span class="n">log_ctx</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">qtTaurusMsgHandler</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="c1"># Qt4 version</span>
+    <span class="k">global</span> <span class="n">qtLogger</span>
+    <span class="k">if</span> <span class="n">qtLogger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">caller</span> <span class="o">=</span> <span class="n">QT_LEVEL_MATCHER</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">msg_type</span><span class="p">)</span>
         <span class="n">caller</span><span class="p">(</span><span class="n">qtLogger</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="initTaurusQtLogger"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util.html#taurus.qt.qtcore.util.initTaurusQtLogger">[docs]</a><span class="k">def</span> <span class="nf">initTaurusQtLogger</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">qtLogger</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">qtLogger</span><span class="p">:</span>
-        <span class="n">Qt</span><span class="o">.</span><span class="n">qInstallMsgHandler</span><span class="p">(</span><span class="n">qtTaurusMsgHandler</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Qt</span><span class="p">,</span> <span class="s2">&quot;qInstallMessageHandler&quot;</span><span class="p">):</span>
+            <span class="c1"># Qt5</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">qInstallMessageHandler</span><span class="p">(</span><span class="n">qtTaurusMessageHandler</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Qt</span><span class="p">,</span> <span class="s2">&quot;qInstallMsgHandler&quot;</span><span class="p">):</span>
+            <span class="c1"># Qt4</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">qInstallMsgHandler</span><span class="p">(</span><span class="n">qtTaurusMsgHandler</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

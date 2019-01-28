@@ -176,7 +176,7 @@
 
 <span class="kn">import</span> <span class="nn">taurus</span>
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.communication</span> <span class="k">import</span> <span class="n">SharedDataManager</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">TaurusWidgetFactory</span>
@@ -1241,7 +1241,7 @@
             <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MACRO_PANELS&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
         <span class="c1"># macro infrastructure will only be created if MACROSERVER_NAME is set</span>
         <span class="k">if</span> <span class="n">MACRO_PANELS</span> <span class="ow">and</span> <span class="n">MACROSERVER_NAME</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui</span> <span class="k">import</span> <span class="n">MacroBroker</span>
+            <span class="kn">from</span> <span class="nn">sardana.taurus.qt.qtgui.macrolistener</span> <span class="k">import</span> <span class="n">MacroBroker</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__macroBroker</span> <span class="o">=</span> <span class="n">MacroBroker</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">MACROSERVER_NAME</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">macroserverNameChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">MACROSERVER_NAME</span><span class="p">)</span>
@@ -1691,8 +1691,10 @@
         <span class="c1"># write to file</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">fname</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Open File&quot;</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;XML files (*.xml)&quot;</span><span class="p">))</span>
+                <span class="n">fname</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Open File&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;XML files (*.xml)&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="p">:</span>
                     <span class="k">return</span>
             <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>

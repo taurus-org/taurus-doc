@@ -223,8 +223,7 @@
         <span class="c1">##self.debug( &#39;expressions as string separated by commas ...&#39;)</span>
         <span class="n">expressions</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
-    <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">klass</span><span class="p">)</span> <span class="k">for</span> <span class="n">klass</span> <span class="ow">in</span>
-             <span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QStringList</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
         <span class="c1"># self.debug( &#39;expressions converted from list ...&#39;)</span>
         <span class="n">expressions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">expressions</span><span class="p">)</span>
 
@@ -298,8 +297,7 @@
             <span class="c1"># self.trace( &#39;expressions as string separated by commas ...&#39;)</span>
             <span class="n">expressions</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
-    <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">klass</span><span class="p">)</span> <span class="k">for</span> <span class="n">klass</span> <span class="ow">in</span>
-             <span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QStringList</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
         <span class="n">expressions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">expressions</span><span class="p">)</span>
 
     <span class="n">taurus_db</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Authority</span><span class="p">()</span>
@@ -503,10 +501,6 @@
         <span class="c1"># Write your own code here before attaching widget to attribute connect</span>
         <span class="c1"># the proper signal so that the first event is correctly received by the</span>
         <span class="c1"># widget</span>
-        <span class="c1">#</span>
-        <span class="c1"># Typical code is:</span>
-        <span class="c1"># self.connect(self, QtCore.SIGNAL(&#39;valueChangedDueToEvent(QString)&#39;),</span>
-        <span class="c1">#             self.setTextValue)</span>
 
         <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -521,12 +515,6 @@
 
         <span class="c1"># ----------------------------------------------------------------------</span>
         <span class="c1"># Write your own code here after detaching the widget from the model</span>
-        <span class="c1">#</span>
-        <span class="c1"># Typical code is:</span>
-        <span class="c1"># self.emit(QtCore.SIGNAL(&#39;valueChangedDueToEvent(QString)&#39;),</span>
-        <span class="c1">#          QtCore.QString(value_str))</span>
-        <span class="c1"># self.disconnect(self, QtCore.SIGNAL(&#39;valueChangedDueToEvent(QString)&#39;),</span>
-        <span class="c1">#                self.setTextValue)</span>
 
         <span class="c1"># by default disable widget when dettached</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
@@ -574,8 +562,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">model</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QString</span><span class="p">,))</span> <span class="ow">and</span> <span class="p">[</span>
-                <span class="n">model</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span> <span class="ow">and</span> <span class="p">[</span><span class="n">model</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;In TaurusGrid.setModel(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)[:</span><span class="mi">100</span><span class="p">])</span>
 
@@ -936,7 +923,14 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">)):</span>
             <span class="n">section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">checkbox</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+
+            <span class="c1"># -------------------------------------------------------</span>
+            <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+            <span class="c1"># TODO: make better solution for this</span>
+            <span class="n">checkbox</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">section</span>  <span class="c1"># &lt;-- ugly monkey-patch!</span>
+            <span class="c1"># -------------------------------------------------------</span>
+
+            <span class="k">if</span> <span class="n">section</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
                 <span class="n">checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
                     <span class="n">checkbox</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
@@ -957,7 +951,14 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
             <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">checkbox</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+
+            <span class="c1"># -------------------------------------------------------</span>
+            <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+            <span class="c1"># TODO: make better solution for this</span>
+            <span class="n">checkbox</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">column</span>  <span class="c1"># &lt;-- ugly monkey-patch!</span>
+            <span class="c1"># -------------------------------------------------------</span>
+
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
                 <span class="n">checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
                     <span class="n">checkbox</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
@@ -981,7 +982,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">):</span>
-                <span class="n">table_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="c1"># -------------------------------------------------------</span>
+                <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+                <span class="c1"># TODO: make better solution for this</span>
+                <span class="c1"># checkbox.text()  &lt;-- fails due to added &quot;&amp;</span>
+                <span class="n">table_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">checkbox</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
+                <span class="c1"># -------------------------------------------------------</span>
                 <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">showRow</span><span class="p">(</span><span class="n">table_row</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -993,7 +999,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">):</span>
-                <span class="n">table_col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="c1"># -------------------------------------------------------</span>
+                <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+                <span class="c1"># TODO: make better solution for this</span>
+                <span class="c1"># checkbox.text()  &lt;-- fails due to added &quot;&amp;</span>
+                <span class="n">table_col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">checkbox</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
+                <span class="c1"># -------------------------------------------------------</span>
                 <span class="k">if</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">showColumn</span><span class="p">(</span><span class="n">table_col</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1003,16 +1014,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span> <span class="o">=</span> <span class="n">boolean</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;rows_frame&#39;</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span>
-                              <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">)</span> <span class="ow">and</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">)</span>
+                <span class="c1"># -------------------------------------------------------</span>
+                <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+                <span class="c1"># TODO: make better solution for this</span>
+                <span class="c1"># checkbox.text()  &lt;-- fails due to added &quot;&amp;</span>
+                        <span class="ow">and</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">):</span>
+                <span class="c1"># -------------------------------------------------------</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
                         <span class="n">checkbox</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">checkbox</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;columns_frame&#39;</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">checkbox</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns_frame</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span>
-                              <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">)</span> <span class="ow">and</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">checkbox</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">)</span>
+                <span class="c1"># -------------------------------------------------------</span>
+                <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+                <span class="c1"># TODO: make better solution for this</span>
+                <span class="c1"># checkbox.text()  &lt;-- fails due to added &quot;&amp;</span>
+                        <span class="ow">and</span> <span class="n">checkbox</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="s1">&#39;Others&#39;</span><span class="p">):</span>
+                <span class="c1"># -------------------------------------------------------</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_others</span><span class="p">:</span>
                         <span class="n">checkbox</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -1044,11 +1065,20 @@
 
         <span class="c1"># table.resizeColumnsToContents()</span>
         <span class="c1"># table.resizeRowsToContents()</span>
-        <span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="n">hh</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">hh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
         <span class="c1"># table.verticalHeader().setSectionResizeMode(QtGui.QHeaderView.Stretch)</span>
         <span class="c1"># table.horizontalHeader().setSectionResizeMode(QtGui.QHeaderView.ResizeToContents)</span>
-        <span class="n">table</span><span class="o">.</span><span class="n">verticalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+        <span class="n">vh</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">verticalHeader</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">vh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">vh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">vh</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">vh</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">table</span></div>
 

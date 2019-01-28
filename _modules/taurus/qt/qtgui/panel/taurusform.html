@@ -168,8 +168,9 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
 
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span><span class="p">,</span> <span class="n">binary_type</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 
@@ -276,7 +277,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Modify Contents&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModels</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">showButtonsAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Show Buttons&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">showButtonsAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -286,7 +287,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Change labels (all items)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onChangeLabelsAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onChangeLabelsAction</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">compactModeAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Compact mode (all items)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compactModeAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -295,7 +296,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Set formatter (all items)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">resetModifiableByUser</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSupportedMimeTypes</span><span class="p">([</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span>
@@ -318,7 +319,9 @@
 
     <span class="k">def</span> <span class="nf">_splitModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelNames</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;convert str to list if needed (commas and whitespace are considered as separators)&#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">string_types</span> <span class="o">+</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">,)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">):</span>
+            <span class="n">modelNames</span> <span class="o">=</span> <span class="n">modelNames</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">modelNames</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="n">modelNames</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">modelNames</span>
@@ -1215,15 +1218,16 @@
 
     <span class="n">quitApplicationAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;process-stop&quot;</span><span class="p">),</span> <span class="s1">&#39;Close Form&#39;</span><span class="p">,</span> <span class="n">dialog</span><span class="p">)</span>
-    <span class="n">quitApplicationAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+    <span class="n">quitApplicationAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
 
     <span class="n">saveConfigAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Save current settings...&quot;</span><span class="p">,</span> <span class="n">dialog</span><span class="p">)</span>
     <span class="n">saveConfigAction</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span>
-    <span class="n">saveConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">saveConfigFile</span><span class="p">)</span>
-
+    <span class="n">saveConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+        <span class="n">partial</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">saveConfigFile</span><span class="p">,</span> <span class="n">ofile</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
     <span class="n">loadConfigAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;&amp;Retrieve saved settings...&quot;</span><span class="p">,</span> <span class="n">dialog</span><span class="p">)</span>
     <span class="n">loadConfigAction</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="o">.</span><span class="n">Open</span><span class="p">)</span>
-    <span class="n">loadConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">)</span>
+    <span class="n">loadConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+        <span class="n">partial</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">,</span> <span class="n">ifile</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
 
     <span class="n">dialog</span><span class="o">.</span><span class="n">addActions</span><span class="p">(</span>
         <span class="p">(</span><span class="n">saveConfigAction</span><span class="p">,</span> <span class="n">loadConfigAction</span><span class="p">,</span> <span class="n">quitApplicationAction</span><span class="p">))</span>

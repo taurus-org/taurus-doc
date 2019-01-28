@@ -251,7 +251,14 @@
         <span class="sd">&quot;&quot;&quot;Reimplemented :class:`GraphicalChoiceWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># From all alternatives, extract the one with the shortest name</span>
-        <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="c1"># -------------------------------------------------------</span>
+        <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+        <span class="c1"># TODO: make better solution for this</span>
+        <span class="c1"># self._chosen = str(self.sender().text())</span>
+        <span class="c1"># it fails due to added &quot;&amp;&quot;</span>
+        <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">_id</span>  <span class="c1"># &lt;-- this was monkey-patched</span>
+        <span class="c1"># -------------------------------------------------------</span>
+
         <span class="n">alts</span> <span class="o">=</span> <span class="n">chosen</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
         <span class="n">alts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">alts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">absname</span> <span class="o">=</span> <span class="n">alts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>

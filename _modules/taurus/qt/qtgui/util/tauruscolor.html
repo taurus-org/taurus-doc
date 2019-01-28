@@ -176,6 +176,7 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.colors</span> <span class="k">import</span> <span class="n">ColorPalette</span><span class="p">,</span> \
     <span class="n">DEVICE_STATE_DATA</span><span class="p">,</span> <span class="n">ATTRIBUTE_QUALITY_DATA</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">AttrQuality</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
 
 
 <div class="viewcode-block" id="QtColorPalette"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_QtColorPalette.html#taurus.qt.qtgui.util.QtColorPalette">[docs]</a><span class="k">class</span> <span class="nc">QtColorPalette</span><span class="p">(</span><span class="n">ColorPalette</span><span class="p">):</span>
@@ -186,8 +187,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_qcolor_cache_bg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_qbrush_cache_fg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_qbrush_cache_bg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_qvariant_cache_fg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_qvariant_cache_bg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
 <div class="viewcode-block" id="QtColorPalette.qbrush"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_QtColorPalette.html#taurus.qt.qtgui.util.QtColorPalette.qbrush">[docs]</a>    <span class="k">def</span> <span class="nf">qbrush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stoq</span><span class="p">):</span>
         <span class="c1"># print stoq</span>
@@ -220,18 +219,10 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="n">name</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="QtColorPalette.qvariant"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_QtColorPalette.html#taurus.qt.qtgui.util.QtColorPalette.qvariant">[docs]</a>    <span class="k">def</span> <span class="nf">qvariant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stoq</span><span class="p">):</span>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;QtColorPalette.qcolor()&#39;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">qvariant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stoq</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the color for the specified state or quality&quot;&quot;&quot;</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decoder</span><span class="p">(</span><span class="n">stoq</span><span class="p">)</span>
-
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qvariant_cache_fg</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qvariant_cache_bg</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-            <span class="p">(</span><span class="n">back</span><span class="p">,</span> <span class="n">fore</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qcolor</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-            <span class="n">f</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">fore</span><span class="p">)</span>
-            <span class="n">b</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">back</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="n">name</span><span class="p">])</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qcolor</span><span class="p">(</span><span class="n">stoq</span><span class="p">)</span></div>
 
 
 
