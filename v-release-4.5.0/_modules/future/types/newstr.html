@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>future.types.newstr &mdash; taurus 4.5.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>future.types.newstr</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for future.types.newstr</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module redefines ``str`` on Python 2.x to be a subclass of the Py2</span>
+<span class="sd">``unicode`` type that behaves like the Python 3.x ``str``.</span>
+
+<span class="sd">The main differences between ``newstr`` and Python 2.x&#39;s ``unicode`` type are</span>
+<span class="sd">the stricter type-checking and absence of a `u&#39;&#39;` prefix in the representation.</span>
+
+<span class="sd">It is designed to be used together with the ``unicode_literals`` import</span>
+<span class="sd">as follows:</span>
+
+<span class="sd">    &gt;&gt;&gt; from __future__ import unicode_literals</span>
+<span class="sd">    &gt;&gt;&gt; from builtins import str, isinstance</span>
+
+<span class="sd">On Python 3.x and normally on Python 2.x, these expressions hold</span>
+
+<span class="sd">    &gt;&gt;&gt; str(&#39;blah&#39;) is &#39;blah&#39;</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(&#39;blah&#39;, str)</span>
+<span class="sd">    True</span>
+
+<span class="sd">However, on Python 2.x, with this import:</span>
+
+<span class="sd">    &gt;&gt;&gt; from __future__ import unicode_literals</span>
+
+<span class="sd">the same expressions are False:</span>
+
+<span class="sd">    &gt;&gt;&gt; str(&#39;blah&#39;) is &#39;blah&#39;</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(&#39;blah&#39;, str)</span>
+<span class="sd">    False</span>
+
+<span class="sd">This module is designed to be imported together with ``unicode_literals`` on</span>
+<span class="sd">Python 2 to bring the meaning of ``str`` back into alignment with unprefixed</span>
+<span class="sd">string literals (i.e. ``unicode`` subclasses).</span>
+
+<span class="sd">Note that ``str()`` (and ``print()``) would then normally call the</span>
+<span class="sd">``__unicode__`` method on objects in Python 2. To define string</span>
+<span class="sd">representations of your objects portably across Py3 and Py2, use the</span>
+<span class="sd">:func:`python_2_unicode_compatible` decorator in  :mod:`future.utils`.</span>
+<span class="sd">    </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Number</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">PY3</span><span class="p">,</span> <span class="n">istext</span><span class="p">,</span> <span class="n">with_metaclass</span><span class="p">,</span> <span class="n">isnewbytes</span>
+<span class="kn">from</span> <span class="nn">future.types</span> <span class="k">import</span> <span class="n">no</span><span class="p">,</span> <span class="n">issubset</span>
+<span class="kn">from</span> <span class="nn">future.types.newobject</span> <span class="k">import</span> <span class="n">newobject</span>
+
+
+<span class="k">if</span> <span class="n">PY3</span><span class="p">:</span>
+    <span class="c1"># We&#39;ll probably never use newstr on Py3 anyway...</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<span class="k">class</span> <span class="nc">BaseNewStr</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__instancecheck__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">newstr</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">newstr</span><span class="p">(</span><span class="n">with_metaclass</span><span class="p">(</span><span class="n">BaseNewStr</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A backport of the Python 3 str object to Py2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">no_convert_msg</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t convert &#39;</span><span class="si">{0}</span><span class="s2">&#39; object to str implicitly&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From the Py3 str docstring:</span>
+
+<span class="sd">          str(object=&#39;&#39;) -&gt; str</span>
+<span class="sd">          str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</span>
+<span class="sd">          </span>
+<span class="sd">          Create a new string object from the given object. If encoding or</span>
+<span class="sd">          errors is specified, then the object must expose a data buffer</span>
+<span class="sd">          that will be decoded using the given encoding and error handler.</span>
+<span class="sd">          Otherwise, returns the result of object.__str__() (if defined)</span>
+<span class="sd">          or repr(object).</span>
+<span class="sd">          encoding defaults to sys.getdefaultencoding().</span>
+<span class="sd">          errors defaults to &#39;strict&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="c1"># Special case: If someone requests str(str(u&#39;abc&#39;)), return the same</span>
+        <span class="c1"># object (same id) for consistency with Py3.3. This is not true for</span>
+        <span class="c1"># other objects like list or dict.</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">newstr</span> <span class="ow">and</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">newstr</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">unicode</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">bytes</span><span class="p">):</span>   <span class="c1"># i.e. Py2 bytes or newbytes</span>
+            <span class="k">if</span> <span class="s1">&#39;encoding&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Without the u prefix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+        <span class="c1"># assert value[0] == u&#39;u&#39;</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Warning: Python &lt;= 2.7.6 has a bug that causes this method never to be called</span>
+<span class="sd">        when y is a slice object. Therefore the type of newstr()[:2] is wrong</span>
+<span class="sd">        (unicode instead of newstr).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">errmsg</span> <span class="o">=</span> <span class="s2">&quot;&#39;in &lt;string&gt;&#39; requires string as left operand, not </span><span class="si">{0}</span><span class="s2">&quot;</span>
+        <span class="c1"># Don&#39;t use isinstance() here because we only want to catch</span>
+        <span class="c1"># newstr, not Python 2 unicode:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">newstr</span><span class="p">:</span>
+            <span class="n">newkey</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isnewbytes</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">newkey</span> <span class="o">=</span> <span class="n">newstr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">errmsg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">issubset</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">newkey</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">):</span>
+        <span class="s2">&quot; left + self &quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="n">left</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__rmul__</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="n">errmsg</span> <span class="o">=</span> <span class="s1">&#39;sequence item </span><span class="si">{0}</span><span class="s1">: expected unicode string, found bytes&#39;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+            <span class="c1"># Here we use type() rather than isinstance() because</span>
+            <span class="c1"># __instancecheck__ is being overridden. E.g.</span>
+            <span class="c1"># isinstance(b&#39;abc&#39;, newbytes) is True on Py2.</span>
+            <span class="k">if</span> <span class="n">isnewbytes</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">errmsg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="c1"># Support use as a staticmethod: str.join(&#39;-&#39;, [&#39;a&#39;, &#39;b&#39;])</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="n">newstr</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">iterable</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="n">newstr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">iterable</span><span class="p">))</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">rfind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">newstr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;decode method has been disabled in newstr&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns bytes</span>
+
+<span class="sd">        Encode S using the codec registered for encoding. Default encoding</span>
+<span class="sd">        is &#39;utf-8&#39;. errors may be given to set a different error</span>
+<span class="sd">        handling scheme. Default is &#39;strict&#39; meaning that encoding errors raise</span>
+<span class="sd">        a UnicodeEncodeError. Other possible values are &#39;ignore&#39;, &#39;replace&#39; and</span>
+<span class="sd">        &#39;xmlcharrefreplace&#39; as well as any other name registered with</span>
+<span class="sd">        codecs.register_error that can handle UnicodeEncodeErrors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">future.types.newbytes</span> <span class="k">import</span> <span class="n">newbytes</span>
+        <span class="c1"># Py2 unicode.encode() takes encoding and errors as optional parameter,</span>
+        <span class="c1"># not keyword arguments as in Python 3 str.</span>
+
+        <span class="c1"># For the surrogateescape error handling mechanism, the</span>
+        <span class="c1"># codecs.register_error() function seems to be inadequate for an</span>
+        <span class="c1"># implementation of it when encoding. (Decoding seems fine, however.)</span>
+        <span class="c1"># For example, in the case of</span>
+        <span class="c1">#     u&#39;\udcc3&#39;.encode(&#39;ascii&#39;, &#39;surrogateescape_handler&#39;)</span>
+        <span class="c1"># after registering the ``surrogateescape_handler`` function in</span>
+        <span class="c1"># future.utils.surrogateescape, both Python 2.x and 3.x raise an</span>
+        <span class="c1"># exception anyway after the function is called because the unicode</span>
+        <span class="c1"># string it has to return isn&#39;t encodable strictly as ASCII.</span>
+
+        <span class="k">if</span> <span class="n">errors</span> <span class="o">==</span> <span class="s1">&#39;surrogateescape&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;utf-16&#39;</span><span class="p">:</span>
+                <span class="c1"># Known to fail here. See test_encoding_works_normally()</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;FIXME: surrogateescape handling is &#39;</span>
+                                          <span class="s1">&#39;not yet implemented properly&#39;</span><span class="p">)</span>
+            <span class="c1"># Encode char by char, building up list of byte-strings</span>
+            <span class="n">mybytes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="n">code</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="k">if</span> <span class="mh">0xD800</span> <span class="o">&lt;=</span> <span class="n">code</span> <span class="o">&lt;=</span> <span class="mh">0xDCFF</span><span class="p">:</span>
+                    <span class="n">mybytes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newbytes</span><span class="p">([</span><span class="n">code</span> <span class="o">-</span> <span class="mh">0xDC00</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">mybytes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">newbytes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mybytes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">newbytes</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="n">errors</span><span class="p">))</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">startswith</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">prefix</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">isnewbytes</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_convert_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">thing</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">endswith</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="c1"># Note we need the decorator above as well as the isnewbytes()</span>
+        <span class="c1"># check because prefix can be either a bytes object or e.g. a</span>
+        <span class="c1"># tuple of possible prefixes. (If it&#39;s a bytes object, each item</span>
+        <span class="c1"># in it is an int.)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">prefix</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">isnewbytes</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_convert_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">thing</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># Py2 unicode.split() takes maxsplit as an optional parameter,</span>
+        <span class="c1"># not as a keyword argument as in Python 3 str.</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">newstr</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">rsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># Py2 unicode.rsplit() takes maxsplit as an optional parameter,</span>
+        <span class="c1"># not as a keyword argument as in Python 3 str.</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">newstr</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sep</span><span class="p">):</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">newstr</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">)</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">rpartition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sep</span><span class="p">):</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">newstr</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">)</span>
+
+    <span class="nd">@no</span><span class="p">(</span><span class="s1">&#39;newbytes&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Like newstr.find() but raise ValueError when the substring is not</span>
+<span class="sd">        found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;substring not found&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pos</span>
+
+    <span class="k">def</span> <span class="nf">splitlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keepends</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        S.splitlines(keepends=False) -&gt; list of strings</span>
+
+<span class="sd">        Return a list of the lines in S, breaking at line boundaries.</span>
+<span class="sd">        Line breaks are not included in the resulting list unless keepends</span>
+<span class="sd">        is given and true.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Py2 unicode.splitlines() takes keepends as an optional parameter,</span>
+        <span class="c1"># not as a keyword argument as in Python 3 str.</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="n">keepends</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">newstr</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)</span> <span class="ow">or</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isnewbytes</span><span class="p">(</span><span class="n">other</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)</span> <span class="ow">or</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isnewbytes</span><span class="p">(</span><span class="n">other</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__ne__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">unorderable_err</span> <span class="o">=</span> <span class="s1">&#39;unorderable types: str() and </span><span class="si">{0}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">istext</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unorderable_err</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__lt__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">istext</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unorderable_err</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__le__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">istext</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unorderable_err</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__gt__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">istext</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unorderable_err</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__ge__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A trick to cause the ``hasattr`` builtin-fn to return False for</span>
+<span class="sd">        the &#39;decode&#39; method on Py2.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;decode&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;decode&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;decode method has been disabled in newstr&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">newstr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__native__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A hook for the future.utils.native() function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">maketrans</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a translation table usable for str.translate().</span>
+
+<span class="sd">        If there is only one argument, it must be a dictionary mapping Unicode</span>
+<span class="sd">        ordinals (integers) or characters to Unicode ordinals, strings or None.</span>
+<span class="sd">        Character keys will be then converted to ordinals.</span>
+<span class="sd">        If there are two arguments, they must be strings of equal length, and</span>
+<span class="sd">        in the resulting dictionary, each character in x will be mapped to the</span>
+<span class="sd">        character at the same position in y. If there is a third argument, it</span>
+<span class="sd">        must be a string, whose characters will be mapped to None in the result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;if you give only one argument to maketrans it must be a dict&#39;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;keys in translate table must be strings or integers&#39;</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;x and y must be unicode strings&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;the first two maketrans arguments must have equal length&#39;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;keys in translate table must be strings or integers&#39;</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">xi</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">yi</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">z</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        S.translate(table) -&gt; str</span>
+
+<span class="sd">        Return a copy of the string S, where all characters have been mapped</span>
+<span class="sd">        through the given translation table, which must be a mapping of</span>
+<span class="sd">        Unicode ordinals to Unicode ordinals, strings, or None.</span>
+<span class="sd">        Unmapped characters are left untouched. Characters mapped to None</span>
+<span class="sd">        are deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="n">table</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)]</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">isprintable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;fixme&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">isidentifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;fixme&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">format_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;fixme&#39;</span><span class="p">)</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;newstr&#39;</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'4.5.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
