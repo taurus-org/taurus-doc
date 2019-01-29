@@ -752,9 +752,6 @@
            <span class="p">):</span>
             <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span>
             <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">TangoSerial</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TaurusSerializationMode.TangoSerial mode&#39;</span><span class="p">,</span>
-                                <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TaurusSerializationMode.Serial&#39;</span><span class="p">,</span>
-                                <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.3.2&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__fireRegisterEvent</span><span class="p">((</span><span class="n">listener</span><span class="p">,))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">enqueueJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fireRegisterEvent</span><span class="p">,</span>
@@ -959,9 +956,6 @@
             <span class="n">listeners</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">)</span>
             <span class="n">sm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span>
             <span class="k">if</span> <span class="n">sm</span> <span class="o">==</span> <span class="n">TaurusSerializationMode</span><span class="o">.</span><span class="n">TangoSerial</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TaurusSerializationMode.TangoSerial mode&#39;</span><span class="p">,</span>
-                                <span class="n">alt</span><span class="o">=</span><span class="s2">&quot;TaurusSerializationMode.Serial&quot;</span><span class="p">,</span>
-                                <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.3.2&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">listeners</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">manager</span><span class="o">.</span><span class="n">enqueueJob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">,</span> <span class="n">job_args</span><span class="o">=</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">),</span>
