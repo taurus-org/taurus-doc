@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.display.tauruslabel &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.display.tauruslabel &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -163,12 +163,12 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module provides a set of basic Taurus widgets based on QLabel&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusLabel&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
-<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
@@ -179,6 +179,11 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusScalarAttributeControllerHelper</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusConfigurationControllerHelper</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">updateLabelBackground</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusLabel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 <span class="n">_QT_PLUGIN_INFO</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.display&#39;</span><span class="p">,</span>
@@ -252,9 +257,7 @@
             <span class="k">return</span>
         <span class="n">toolTip</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">getFormatedToolTip</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trimmedText</span><span class="p">:</span>
-            <span class="n">toolTip</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&lt;p&gt;&lt;b&gt;Value:&lt;/b&gt; </span><span class="si">%s</span><span class="s2">&lt;/p&gt;&lt;hr&gt;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>\
-                      <span class="p">(</span><span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">),</span>
-                       <span class="n">unicode</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">toolTip</span><span class="p">),</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">))</span>
+            <span class="n">toolTip</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&lt;p&gt;&lt;b&gt;Value:&lt;/b&gt; </span><span class="si">%s</span><span class="s2">&lt;/p&gt;&lt;hr&gt;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="p">,</span> <span class="n">toolTip</span><span class="p">)</span>
         <span class="n">label</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">toolTip</span><span class="p">)</span>
 
     <span class="n">_updateBackground</span> <span class="o">=</span> <span class="n">updateLabelBackground</span>
@@ -483,7 +486,7 @@
                 <span class="k">return</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">mi_value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
                 <span class="n">mi_value</span> <span class="o">=</span> <span class="n">mi_value</span><span class="p">,</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">operator</span><span class="o">.</span><span class="n">isSequenceType</span><span class="p">(</span><span class="n">mi_value</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mi_value</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
                 <span class="k">return</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndex</span> <span class="o">=</span> <span class="n">mi_value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndexStr</span> <span class="o">=</span> <span class="n">mi</span>
@@ -626,8 +629,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span>
 
-        <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
-        <span class="n">dev</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">modeltype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelType</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">modeltype</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">modeltype</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dev</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span>
@@ -780,8 +790,8 @@
 
 <span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
     <span class="s2">&quot;Label&quot;</span>
-    <span class="kn">import</span> <span class="nn">demo.tauruslabeldemo</span>
-    <span class="k">return</span> <span class="n">demo</span><span class="o">.</span><span class="n">tauruslabeldemo</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+    <span class="kn">from</span> <span class="nn">.demo</span> <span class="k">import</span> <span class="n">tauruslabeldemo</span>
+    <span class="k">return</span> <span class="n">tauruslabeldemo</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -855,7 +865,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

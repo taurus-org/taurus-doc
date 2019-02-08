@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Taurus development guidelines &mdash; taurus 4.4.0 documentation</title>
+  <title>Taurus development guidelines &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../index.html"/>
         <link rel="up" title="Developer’s Guide" href="index.html"/>
         <link rel="next" title="Creating GUIs with the TaurusGUI framework" href="taurusgui_newgui.html"/>
         <link rel="prev" title="Taurus 3.x to 4.x migration guide" href="taurus3to4.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.4 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -141,7 +141,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../docs.html">Taurus 4.4 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
       
           <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -199,9 +199,8 @@ word <code class="docutils literal"><span class="pre">taurus</span></code> (like
 where the prevailing convention is <code class="docutils literal"><span class="pre">mixedCase</span></code> due to influence from PyQt</li>
 </ul>
 </li>
-<li>Code must be python 2.7 compatible, and, if possible, new contributions
-should also consider being compatible with python3.5 (to prepare for
-python3 support)</li>
+<li>Code must be simultaneously compatible with python 2.7 and &gt;=3.5. If required,
+the <a class="reference external" href="https://python-future.org/">future</a> module can be used for helping in writing python 2+3 compatible code.</li>
 <li>Every python module file should contain license information (see template below).
 The preferred license is the <a class="reference external" href="http://www.gnu.org/licenses/lgpl.html">LGPL</a>. If you need/want to use a different one,
 it should be compatible with the LGPL v3+.</li>
@@ -281,9 +280,8 @@ PyQt4, PyQt5 and PySide versions.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Since Taurus v&gt;=4.0, Qt-based code in Taurus may assume
-that <a class="reference external" href="http://pyqt.sourceforge.net/Docs/PyQt4/incompatible_apis.html">PyQt API v2</a> is used. PyQt API 1 code, which was supported by Taurus 3,
-is no longer guaranteed to work.</p>
+<li><p class="first">Since Taurus v&gt;=4.0, Qt-based code in Taurus assumes
+that <a class="reference external" href="http://pyqt.sourceforge.net/Docs/PyQt4/incompatible_apis.html">PyQt API v2</a> is used. PyQt API 1 code is not accepted in taurus.</p>
 <ul>
 <li><p class="first">Use standard python strings (e.g., use <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> for Qt strings instead of
 <code class="xref py py-class docutils literal"><span class="pre">QString</span></code>). Code like:</p>
@@ -297,8 +295,7 @@ is no longer guaranteed to work.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Do not use <code class="xref py py-class docutils literal"><span class="pre">QVariant</span></code>. QVariant objects don&#8217;t exist in
-PySide or in the new PyQt4 API 2. Code like:</p>
+<li><p class="first">Do not use <code class="xref py py-class docutils literal"><span class="pre">QVariant</span></code>. Code like:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">qvalue</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">qvalue</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span>  <span class="c1"># this assumes qvalue to be a :class:`QVariant`</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span> <span class="o">=</span> <span class="n">value</span>
@@ -325,9 +322,9 @@ PySide or in the new PyQt4 API 2. Code like:</p>
         <span class="k">return</span> <span class="kc">None</span>
 </pre></div>
 </div>
-<p>For compatibility reasons, <code class="xref py py-func docutils literal"><span class="pre">Qt()</span></code> defines <cite>QVariant</cite> and
-<cite>from_qvariant</cite> which is internally used used to write code that supports both
-API v1 and v2 for QVariant. But new code in Taurus v&gt;=4 may assume v2 only.</p>
+<p>For backwards-compatibility reasons, <cite>taurus.external.qt.QtCore</cite> defines <cite>QVariant</cite>,
+<cite>from_qvariant()</cite> and <cite>to_qvariant()</cite>, but they are deprecated and should not be used
+anymore.</p>
 </li>
 </ul>
 </li>
@@ -350,6 +347,9 @@ Old-style code like the following:</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">mySignal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">The <cite>taurus.external.qt.compat</cite> module defines some convenience utilities
+that help in writing Qt-binding agnostic code</p>
 </li>
 <li><p class="first">Use of <a class="reference internal" href="api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication" title="taurus.qt.qtgui.application.TaurusApplication"><code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.application.TaurusApplication</span></code></a> instead of
 <code class="xref py py-class docutils literal"><span class="pre">QApplication</span></code> is recommended (it takes care of various
@@ -401,7 +401,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

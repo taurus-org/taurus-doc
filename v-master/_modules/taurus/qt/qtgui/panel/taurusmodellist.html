@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusmodellist &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusmodellist &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -165,19 +165,25 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">itemsmodel Model and view for new CurveItem configuration</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TaurusModelModel&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusModelItem&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusModelList&#39;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 <span class="c1">#raise UnimplementedError(&#39;Under Construction!&#39;)</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">import</span> <span class="nn">taurus</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurushelper</span> <span class="k">import</span> <span class="n">getSchemeFromName</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getElementTypeIcon</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util.signal</span> <span class="k">import</span> <span class="n">baseSignal</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TaurusModelModel&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusModelItem&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusModelList&#39;</span><span class="p">]</span>
 
 <span class="c1"># set some named constants</span>
 <span class="n">SRC_ROLE</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">1</span>
@@ -281,24 +287,24 @@
 <div class="viewcode-block" id="TaurusModelModel.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelModel.html#taurus.qt.qtgui.panel.TaurusModelModel.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`Qt.QAbstractListModel`&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
         <span class="c1"># Display Role</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">display</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">display</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">icon</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextColorRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">))</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">ok</span> <span class="ow">and</span> <span class="s1">&#39;green&#39;</span> <span class="ow">or</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">ok</span> <span class="ow">and</span> <span class="s1">&#39;green&#39;</span> <span class="ow">or</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">SRC_ROLE</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="TaurusModelModel.flags"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelModel.html#taurus.qt.qtgui.panel.TaurusModelModel.flags">[docs]</a>    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`Qt.QAbstractListModel`&#39;&#39;&#39;</span>
@@ -311,7 +317,6 @@
         <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
             <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">:</span>
                 <span class="n">item</span><span class="o">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">value</span>
             <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
@@ -327,7 +332,7 @@
         <span class="k">if</span> <span class="n">parentindex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parentindex</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">items</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">slice</span> <span class="o">=</span> <span class="p">[</span><span class="n">TaurusModelItem</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">rows</span><span class="p">)]</span>
+            <span class="nb">slice</span> <span class="o">=</span> <span class="p">[</span><span class="n">TaurusModelItem</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">slice</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
             <span class="c1"># note that the rows parameter is ignored if items is passed</span>
@@ -341,10 +346,11 @@
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`Qt.QAbstractListModel`&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">parentindex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parentindex</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beginRemoveRows</span><span class="p">(</span><span class="n">parentindex</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">position</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[:</span><span class="n">position</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">position</span> <span class="o">+</span> <span class="n">rows</span><span class="p">:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endRemoveRows</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="TaurusModelModel.clearAll"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelModel.html#taurus.qt.qtgui.panel.TaurusModelModel.clearAll">[docs]</a>    <span class="k">def</span> <span class="nf">clearAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -394,7 +400,7 @@
         <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">TaurusModelItem</span><span class="p">):</span>
                 <span class="n">itemobjs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                 <span class="n">itemobjs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaurusModelItem</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">e</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>  <span class="c1"># assuming it is a sequence of arguments that can be passed to the constructor of TaurusModelItem</span>
                 <span class="n">itemobjs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaurusModelItem</span><span class="p">(</span><span class="o">*</span><span class="n">e</span><span class="p">))</span>
@@ -404,9 +410,8 @@
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`Qt.QAbstractListModel`&#39;&#39;&#39;</span>
         <span class="n">mimedata</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractListModel</span><span class="o">.</span><span class="n">mimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexes</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># mimedata.setData(TAURUS_ATTR_MIME_TYPE,</span>
-            <span class="c1"># Qt.from_qvariant(self.data(indexes[0]), str)))</span>
-            <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">indexes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">role</span><span class="o">=</span><span class="n">SRC_ROLE</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="c1"># mimedata.setData(TAURUS_ATTR_MIME_TYPE, self.data(indexes[0]))</span>
+            <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">indexes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">role</span><span class="o">=</span><span class="n">SRC_ROLE</span><span class="p">)</span>
             <span class="n">mimedata</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">mimedata</span></div></div>
         <span class="c1"># mimedata.setData()</span>
@@ -469,14 +474,13 @@
             <span class="n">idx</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
-            <span class="n">idx</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="n">src</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">SRC_ROLE</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">SRC_ROLE</span><span class="p">)</span>
         <span class="n">value</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QInputDialog</span><span class="o">.</span><span class="n">getText</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Display Value&quot;</span><span class="p">,</span> <span class="s2">&quot;Display value for </span><span class="si">%s</span><span class="s2">?&quot;</span> <span class="o">%</span> <span class="n">src</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_onSelectionChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">deselected</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;updates the status of the actions that depend on the selection&#39;&#39;&#39;</span>
@@ -563,7 +567,7 @@
 
 <span class="sd">        .. seealso:: :meth:`getModelItems`</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">unicode</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">src</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelItems</span><span class="p">()]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">src</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelItems</span><span class="p">()]</span></div>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="TaurusModelList.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelList.html#taurus.qt.qtgui.panel.TaurusModelList.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
@@ -617,7 +621,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

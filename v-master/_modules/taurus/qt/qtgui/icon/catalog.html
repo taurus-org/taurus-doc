@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.icon.catalog &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.icon.catalog &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -164,6 +164,10 @@
 <span class="sd">This module provides an icon catalog widget</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
@@ -196,7 +200,7 @@
 
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDir</span><span class="o">.</span><span class="n">searchPaths</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-                <span class="nb">print</span> <span class="s2">&quot; </span><span class="si">%s</span><span class="s2"> not found. Skipping.!&quot;</span> <span class="o">%</span> <span class="n">path</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="si">%s</span><span class="s2"> not found. Skipping.!&quot;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
                 <span class="k">continue</span>
 
             <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -247,7 +251,14 @@
         <span class="sd">&quot;&quot;&quot;Reimplemented :class:`GraphicalChoiceWidget`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># From all alternatives, extract the one with the shortest name</span>
-        <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="c1"># -------------------------------------------------------</span>
+        <span class="c1"># Work around for https://bugs.kde.org/show_bug.cgi?id=345023</span>
+        <span class="c1"># TODO: make better solution for this</span>
+        <span class="c1"># self._chosen = str(self.sender().text())</span>
+        <span class="c1"># it fails due to added &quot;&amp;&quot;</span>
+        <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">_id</span>  <span class="c1"># &lt;-- this was monkey-patched</span>
+        <span class="c1"># -------------------------------------------------------</span>
+
         <span class="n">alts</span> <span class="o">=</span> <span class="n">chosen</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
         <span class="n">alts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">alts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">absname</span> <span class="o">=</span> <span class="n">alts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -275,7 +286,7 @@
 <span class="sd">    application.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">iconSelected</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">iconSelected</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QTabWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -341,7 +352,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

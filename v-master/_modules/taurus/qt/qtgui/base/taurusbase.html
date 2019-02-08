@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.base.taurusbase &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.base.taurusbase &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -166,14 +166,11 @@
 <span class="sd">&quot;&quot;&quot;This module provides the set of base classes from which the Qt taurus widgets</span>
 <span class="sd">should inherit to be considered valid taurus widgets.&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseComponent&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusBaseWidget&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;TaurusBaseWritableWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;defaultFormatter&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="n">MethodType</span>
+<span class="kn">from</span> <span class="nn">future.builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
@@ -184,18 +181,26 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusconfiguration</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusConfiguration</span><span class="p">,</span>
-                                             <span class="n">TaurusConfigurationProxy</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfigurationProxy</span>
 <span class="kn">from</span> <span class="nn">taurus.core.tauruslistener</span> <span class="k">import</span> <span class="n">TaurusListener</span><span class="p">,</span> <span class="n">TaurusExceptionListener</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusoperation</span> <span class="k">import</span> <span class="n">WriteAttrOperation</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.eventfilters</span> <span class="k">import</span> <span class="n">filterEvent</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util.signal</span> <span class="k">import</span> <span class="n">baseSignal</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_DEV_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ActionFactory</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseComponent&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusBaseWidget&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusBaseWritableWidget&quot;</span><span class="p">,</span> <span class="s2">&quot;defaultFormatter&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
 
 <span class="n">DefaultNoneValue</span> <span class="o">=</span> <span class="s2">&quot;-----&quot;</span>
 
@@ -244,7 +249,7 @@
 
     <span class="n">taurusEvent</span> <span class="o">=</span> <span class="n">baseSignal</span><span class="p">(</span><span class="s1">&#39;taurusEvent&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialization of TaurusBaseComponent&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -878,7 +883,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_updateFormat</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">((</span><span class="s1">&#39;Cannot update format. Reverting to default.&#39;</span> <span class="o">+</span>
                               <span class="s1">&#39; Reason: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="n">defaultFormatter</span><span class="p">)</span>
@@ -901,7 +906,7 @@
 <span class="sd">        :param kwargs: keyword arguments that will be passed to</span>
 <span class="sd">                       :attribute:`FORMAT` if it is a callable</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="c1"># unbound method to callable</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">MethodType</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="o">.</span><span class="vm">__func__</span>
@@ -920,7 +925,7 @@
 <span class="sd">                       &quot;full.module.callable&quot; format)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Check if the format is a callable string representation</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">moduleName</span><span class="p">,</span> <span class="n">formatterName</span> <span class="o">=</span> <span class="nb">format</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="nb">__import__</span><span class="p">(</span><span class="n">moduleName</span><span class="p">)</span>
@@ -937,7 +942,7 @@
 <span class="sd">        :return: (str) a string of the current format. It could be a python</span>
 <span class="sd">                 format string or a callable string representation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">formatter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">formatter</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
@@ -1440,7 +1445,7 @@
 
     <span class="n">_dragEnabled</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_disconnect_on_hide</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_supportedMimeTypes</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_autoTooltip</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1861,7 +1866,7 @@
         <span class="n">formats</span> <span class="o">=</span> <span class="n">mimeData</span><span class="o">.</span><span class="n">formats</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">mtype</span> <span class="ow">in</span> <span class="n">supported</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">mtype</span> <span class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
-                <span class="n">d</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mimeData</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">mtype</span><span class="p">))</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">mimeData</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">mtype</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">None</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -1882,7 +1887,7 @@
 <span class="sd">        :return: (QMimeData)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">mimeData</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMimeData</span><span class="p">()</span>
-        <span class="n">modelname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">()</span>
+        <span class="n">modelname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">())</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
         <span class="n">mimeData</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">,</span> <span class="n">modelname</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">modelclass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelClass</span><span class="p">()</span>
@@ -2044,7 +2049,7 @@
 
     <span class="n">applied</span> <span class="o">=</span> <span class="n">baseSignal</span><span class="p">(</span><span class="s1">&#39;applied&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">taurus_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">taurus_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
                           <span class="n">parent</span><span class="o">=</span><span class="n">taurus_parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
 
@@ -2286,31 +2291,6 @@
                     <span class="n">v_str</span><span class="p">,</span> <span class="n">model_v_str</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">toolTip</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_updateValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>  <span class="c1"># TODO: Remove this method</span>
-        <span class="c1"># re-set the validator ranges if applicable</span>
-        <span class="k">if</span> <span class="n">evt_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIntValidator</span><span class="p">):</span>
-            <span class="n">bottom</span> <span class="o">=</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">min_value</span>
-            <span class="n">top</span> <span class="o">=</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">max_value</span>
-            <span class="n">bottom</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-                <span class="n">bottom</span><span class="p">)</span> <span class="k">if</span> <span class="n">bottom</span> <span class="o">!=</span> <span class="n">TaurusConfiguration</span><span class="o">.</span><span class="n">no_min_value</span> <span class="k">else</span> <span class="o">-</span><span class="n">sys</span><span class="o">.</span><span class="n">maxint</span>
-            <span class="n">top</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-                <span class="n">top</span><span class="p">)</span> <span class="k">if</span> <span class="n">top</span> <span class="o">!=</span> <span class="n">TaurusConfiguration</span><span class="o">.</span><span class="n">no_max_value</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span>
-            <span class="n">v</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">bottom</span><span class="p">,</span> <span class="n">top</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validator range set to </span><span class="si">%i</span><span class="s2">-</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bottom</span><span class="p">,</span> <span class="n">top</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">):</span>
-            <span class="n">bottom</span> <span class="o">=</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">min_value</span>
-            <span class="n">top</span> <span class="o">=</span> <span class="n">evt_value</span><span class="o">.</span><span class="n">max_value</span>
-            <span class="n">bottom</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
-                <span class="n">bottom</span><span class="p">)</span> <span class="k">if</span> <span class="n">bottom</span> <span class="o">!=</span> <span class="n">TaurusConfiguration</span><span class="o">.</span><span class="n">no_min_value</span> <span class="k">else</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
-            <span class="n">top</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
-                <span class="n">top</span><span class="p">)</span> <span class="k">if</span> <span class="n">top</span> <span class="o">!=</span> <span class="n">TaurusConfiguration</span><span class="o">.</span><span class="n">no_max_value</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
-            <span class="n">v</span><span class="o">.</span><span class="n">setBottom</span><span class="p">(</span><span class="n">bottom</span><span class="p">)</span>
-            <span class="n">v</span><span class="o">.</span><span class="n">setTop</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validator range set to </span><span class="si">%f</span><span class="s2">-</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bottom</span><span class="p">,</span> <span class="n">top</span><span class="p">))</span>
-
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="TaurusBaseWritableWidget.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseWritableWidget.html#taurus.qt.qtgui.base.TaurusBaseWritableWidget.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWidget`&#39;&#39;&#39;</span>
@@ -2352,7 +2332,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

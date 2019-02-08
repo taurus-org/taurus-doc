@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusform &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusform &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -164,11 +164,13 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains taurus Qt form widgets&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusAttrForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusCommandsForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusForm&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span><span class="p">,</span> <span class="n">binary_type</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 
@@ -179,7 +181,11 @@
                                         <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span><span class="p">,</span> <span class="n">TaurusScrollArea</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.button</span> <span class="k">import</span> <span class="n">QButtonBox</span><span class="p">,</span> <span class="n">TaurusCommandButton</span>
-<span class="kn">from</span> <span class="nn">taurusmodelchooser</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
+<span class="kn">from</span> <span class="nn">.taurusmodelchooser</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusAttrForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusCommandsForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusForm&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <span class="k">def</span> <span class="nf">_normalize_model_name_case</span><span class="p">(</span><span class="n">modelname</span><span class="p">):</span>
@@ -271,7 +277,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Modify Contents&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModels</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">showButtonsAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Show Buttons&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">showButtonsAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -281,7 +287,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Change labels (all items)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onChangeLabelsAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeLabelsAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onChangeLabelsAction</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">compactModeAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Compact mode (all items)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compactModeAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -290,7 +296,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;Set formatter (all items)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFormatterAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">resetModifiableByUser</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSupportedMimeTypes</span><span class="p">([</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span>
@@ -313,7 +319,9 @@
 
     <span class="k">def</span> <span class="nf">_splitModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelNames</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;convert str to list if needed (commas and whitespace are considered as separators)&#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">):</span>
+            <span class="n">modelNames</span> <span class="o">=</span> <span class="n">modelNames</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">modelNames</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="n">modelNames</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">modelNames</span>
@@ -355,7 +363,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__modelChooserDlg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__modelChooserDlg</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__modelChooserDlg</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> - Model Chooser&quot;</span> <span class="o">%</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windowTitle</span><span class="p">()))</span>
+                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> - Model Chooser&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windowTitle</span><span class="p">()))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__modelChooserDlg</span><span class="o">.</span><span class="n">modelChooser</span> <span class="o">=</span> <span class="n">TaurusModelChooser</span><span class="p">()</span>
             <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
             <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__modelChooserDlg</span><span class="o">.</span><span class="n">modelChooser</span><span class="p">)</span>
@@ -525,7 +533,7 @@
         <span class="nb">format</span> <span class="o">=</span> <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">onSetFormatter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItems</span><span class="p">():</span>
-                <span class="n">rw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">readWidget</span><span class="p">()</span>
+                <span class="n">rw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">readWidget</span><span class="p">(</span><span class="n">followCompact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
                     <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">format</span></div>
@@ -536,9 +544,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">TaurusWidget</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getItems</span><span class="p">():</span>
-            <span class="n">rw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">readWidget</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
-                <span class="n">rw</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;setFormat&#39;</span><span class="p">):</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusForm.setCompact"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm.setCompact">[docs]</a>    <span class="k">def</span> <span class="nf">setCompact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compact</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compact</span> <span class="o">=</span> <span class="n">compact</span>
@@ -817,7 +824,7 @@
             <span class="k">return</span>
 
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getViewFilters</span><span class="p">():</span>
-            <span class="n">commands</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">commands</span><span class="p">)</span>
+            <span class="n">commands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">commands</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_clearFrame</span><span class="p">()</span>
 
@@ -1004,7 +1011,7 @@
             <span class="k">return</span>
         <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">attribute_list_query</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sortKey</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getViewFilters</span><span class="p">():</span>
-            <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">attrlist</span><span class="p">)</span>
+            <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">attrlist</span><span class="p">))</span>
         <span class="n">attrnames</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">devname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attrlist</span><span class="p">:</span>
@@ -1153,7 +1160,7 @@
     <span class="k">class</span> <span class="nc">DummyCW</span><span class="p">(</span><span class="n">TaurusValue</span><span class="p">):</span>
 
         <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-            <span class="nb">print</span> <span class="s2">&quot;!!!!! IN DUMMYCW.SETMODEL&quot;</span><span class="p">,</span> <span class="n">model</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;!!!!! IN DUMMYCW.SETMODEL&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
             <span class="n">TaurusValue</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;/double_scalar&#39;</span><span class="p">)</span>
 
     <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sys/database/2&#39;</span><span class="p">,</span> <span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">,</span> <span class="s1">&#39;sys/tg_test/1/short_spectrum&#39;</span><span class="p">,</span>
@@ -1211,15 +1218,16 @@
 
     <span class="n">quitApplicationAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s2">&quot;process-stop&quot;</span><span class="p">),</span> <span class="s1">&#39;Close Form&#39;</span><span class="p">,</span> <span class="n">dialog</span><span class="p">)</span>
-    <span class="n">quitApplicationAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+    <span class="n">quitApplicationAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
 
     <span class="n">saveConfigAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Save current settings...&quot;</span><span class="p">,</span> <span class="n">dialog</span><span class="p">)</span>
     <span class="n">saveConfigAction</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span>
-    <span class="n">saveConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">saveConfigFile</span><span class="p">)</span>
-
+    <span class="n">saveConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+        <span class="n">partial</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">saveConfigFile</span><span class="p">,</span> <span class="n">ofile</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
     <span class="n">loadConfigAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;&amp;Retrieve saved settings...&quot;</span><span class="p">,</span> <span class="n">dialog</span><span class="p">)</span>
     <span class="n">loadConfigAction</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QKeySequence</span><span class="o">.</span><span class="n">Open</span><span class="p">)</span>
-    <span class="n">loadConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">)</span>
+    <span class="n">loadConfigAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+        <span class="n">partial</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">,</span> <span class="n">ifile</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
 
     <span class="n">dialog</span><span class="o">.</span><span class="n">addActions</span><span class="p">(</span>
         <span class="p">(</span><span class="n">saveConfigAction</span><span class="p">,</span> <span class="n">loadConfigAction</span><span class="p">,</span> <span class="n">quitApplicationAction</span><span class="p">))</span>
@@ -1286,7 +1294,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

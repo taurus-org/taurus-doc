@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.dialog.taurusmessagebox &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.dialog.taurusmessagebox &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -164,18 +164,23 @@
 
 <span class="sd">&quot;&quot;&quot;This module provides a set of dialog based widgets&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusMessageBox&quot;</span><span class="p">,</span> <span class="s2">&quot;protectTaurusMessageBox&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;ProtectTaurusMessageBox&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusExceptHookMessageBox&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-
 <span class="kn">from</span> <span class="nn">taurus.core.util.excepthook</span> <span class="k">import</span> <span class="n">BaseExceptHook</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">LogExceptHook</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.wrap</span> <span class="k">import</span> <span class="n">wraps</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusMessageBox&quot;</span><span class="p">,</span> <span class="s2">&quot;protectTaurusMessageBox&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;ProtectTaurusMessageBox&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusExceptHookMessageBox&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <div class="viewcode-block" id="TaurusMessageBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/dialog/_TaurusMessageBox.html#taurus.qt.qtgui.dialog.TaurusMessageBox">[docs]</a><span class="k">class</span> <span class="nc">TaurusMessageBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
@@ -473,11 +478,18 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">PyTango</span><span class="o">.</span><span class="n">Except</span><span class="o">.</span><span class="n">throw_exception</span><span class="p">(</span><span class="s1">&#39;TangoException&#39;</span><span class="p">,</span>
                                        <span class="s1">&#39;A simple tango exception&#39;</span><span class="p">,</span> <span class="s1">&#39;right here&#39;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df1</span><span class="p">:</span>
+    <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">df1</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">traceback</span>
-            <span class="kn">import</span> <span class="nn">StringIO</span>
-            <span class="n">origin</span> <span class="o">=</span> <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+            <span class="c1"># ---------------------------------------------------------------</span>
+            <span class="c1"># workaround for unicode issues on py2 when using io instead of</span>
+            <span class="c1"># StringIO</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">StringIO</span> <span class="k">as</span> <span class="nn">io</span>  <span class="c1"># py2</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">io</span>  <span class="c1"># py3</span>
+            <span class="c1"># ----------------------------------------------------------------</span>
+            <span class="n">origin</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
             <span class="n">traceback</span><span class="o">.</span><span class="n">print_stack</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
             <span class="n">origin</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -571,7 +583,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

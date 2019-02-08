@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.taurushelper &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.taurushelper &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -164,6 +164,14 @@
 
 <span class="sd">&quot;&quot;&quot;a list of helper methods&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;check_dependencies&#39;</span><span class="p">,</span> <span class="s1">&#39;log_dependencies&#39;</span><span class="p">,</span> <span class="s1">&#39;getSchemeFromName&#39;</span><span class="p">,</span>
            <span class="s1">&#39;getValidTypesForName&#39;</span><span class="p">,</span> <span class="s1">&#39;isValidName&#39;</span><span class="p">,</span> <span class="s1">&#39;makeSchemeExplicit&#39;</span><span class="p">,</span>
            <span class="s1">&#39;Manager&#39;</span><span class="p">,</span> <span class="s1">&#39;Factory&#39;</span><span class="p">,</span> <span class="s1">&#39;Device&#39;</span><span class="p">,</span> <span class="s1">&#39;Attribute&#39;</span><span class="p">,</span> <span class="s1">&#39;Configuration&#39;</span><span class="p">,</span>
@@ -176,12 +184,6 @@
            <span class="s1">&#39;critical&#39;</span><span class="p">,</span> <span class="s1">&#39;deprecated&#39;</span><span class="p">,</span> <span class="s1">&#39;changeDefaultPollingPeriod&#39;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
-<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
-
 
 <span class="c1"># regexp for finding the scheme</span>
 <span class="n">__SCHEME_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;([^:/?#]+):.*&#39;</span><span class="p">)</span>
@@ -213,36 +215,36 @@
                 <span class="p">}</span>
     <span class="kn">import</span> <span class="nn">pkg_resources</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="s1">&#39;taurus&#39;</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="s2">&quot;Dependencies for </span><span class="si">%s</span><span class="s2">:&quot;</span> <span class="o">%</span> <span class="n">d</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dependencies for </span><span class="si">%s</span><span class="s2">:&quot;</span> <span class="o">%</span> <span class="n">d</span><span class="p">)</span>
     <span class="c1"># minimum requirements (without extras)</span>
     <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">requires</span><span class="p">():</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">pkg_resources</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
-            <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[*]&#39;</span><span class="p">,</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[*]&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[ ]&#39;</span><span class="p">,</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">r</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[ ]&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">r</span><span class="p">)</span>
     <span class="c1"># requirements for the extras</span>
-    <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Extras:&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Extras:&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">extras</span><span class="p">):</span>
-        <span class="nb">print</span> <span class="s2">&quot;Dependencies for taurus[</span><span class="si">%s</span><span class="s2">]:&quot;</span> <span class="o">%</span> <span class="n">extra</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dependencies for taurus[</span><span class="si">%s</span><span class="s2">]:&quot;</span> <span class="o">%</span> <span class="n">extra</span><span class="p">)</span>
         <span class="c1"># requirements from PyPI</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">requires</span><span class="p">(</span><span class="n">extras</span><span class="o">=</span><span class="p">[</span><span class="n">extra</span><span class="p">]):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># remove marker if present (see #612)</span>
                 <span class="n">pkg_resources</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-                <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[*]&#39;</span><span class="p">,</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[*]&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[ ]&#39;</span><span class="p">,</span>
-            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">r</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[ ]&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">r</span><span class="p">)</span>
         <span class="c1"># requirements outside PyPI</span>
         <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">non_pypi</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">extra</span><span class="p">,</span> <span class="p">()):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">check</span><span class="p">()</span>
-                <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[*]&#39;</span><span class="p">,</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[*]&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[ ]&#39;</span><span class="p">,</span>
-            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> (not in PyPI)&#39;</span> <span class="o">%</span> <span class="n">r</span></div>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">[ ]&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> (not in PyPI)&#39;</span> <span class="o">%</span> <span class="n">r</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="log_dependencies"><a class="viewcode-back" href="../../../devel/api/taurus.html#taurus.log_dependencies">[docs]</a><span class="k">def</span> <span class="nf">log_dependencies</span><span class="p">():</span>
@@ -435,7 +437,7 @@
     <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Factory</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">getSchemeFromName</span><span class="p">(</span><span class="n">dev_or_attr_name</span><span class="p">))</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">dev_or_attr_name</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dev_or_attr_name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">types</span><span class="o">.</span><span class="n">StringTypes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dev_or_attr_name</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">dev</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">dev_or_attr_name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">dev</span> <span class="o">=</span> <span class="n">dev_or_attr_name</span>
@@ -601,7 +603,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

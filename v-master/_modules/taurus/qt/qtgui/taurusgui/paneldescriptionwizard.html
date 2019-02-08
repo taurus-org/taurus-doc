@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.taurusgui.paneldescriptionwizard &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.taurusgui.paneldescriptionwizard &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -162,10 +162,11 @@
 <span class="c1">##</span>
 <span class="c1">###########################################################################</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PanelDescriptionWizard&quot;</span><span class="p">]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">paneldescriptionwizard.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -181,6 +182,9 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PanelDescriptionWizard&quot;</span><span class="p">]</span>
 
 
 <span class="k">class</span> <span class="nc">ExpertWidgetChooserDlg</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
@@ -238,7 +242,7 @@
             <span class="c1"># We use this because __import__(&#39;x.y&#39;) returns x instead of y !!</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">modulename</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;QLineEdit {color: green}&#39;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">moduleNameLE</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;QLineEdit {color: red}&#39;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -268,7 +272,7 @@
             <span class="n">membername</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">membersCB</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
             <span class="n">member</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="p">,</span> <span class="n">membername</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;modulename&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">}</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot get member description: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">member</span><span class="p">):</span>
@@ -360,7 +364,7 @@
         <span class="n">Qt</span><span class="o">.</span><span class="n">QWizardPage</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;WidgetPage&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">extraWidgets</span><span class="p">:</span>
-            <span class="n">customWidgets</span><span class="p">,</span> <span class="n">customWidgetScreenshots</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">extraWidgets</span><span class="p">)</span>
+            <span class="n">customWidgets</span><span class="p">,</span> <span class="n">customWidgetScreenshots</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">extraWidgets</span><span class="p">))</span>
             <span class="n">pixmaps</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">extraWidgets</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -443,10 +447,10 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span>
             <span class="c1"># set the name now because it might have changed since the</span>
             <span class="c1"># PanelDescription was created</span>
-            <span class="n">paneldesc</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s1">&#39;panelname&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="n">paneldesc</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s1">&#39;panelname&#39;</span><span class="p">)</span>
             <span class="c1"># allow the wizard to proceed</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Invalid panel&#39;</span><span class="p">,</span> <span class="s1">&#39;The requested panel cannot be created. </span><span class="se">\n</span><span class="s1">Reason:</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -545,7 +549,7 @@
     <span class="k">def</span> <span class="nf">initializePage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wizard</span><span class="p">()</span><span class="o">.</span><span class="n">getPanelDescription</span><span class="p">()</span><span class="o">.</span><span class="n">getWidget</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># prevent the user from changing the model if it was already set</span>
@@ -556,7 +560,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="p">,</span> <span class="n">SharedDataManager</span><span class="p">):</span>
                 <span class="n">sdm</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="n">sdm</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1">#@todo set selection filter in modelChooser based on the widget&#39;s modelclass</span>
@@ -600,7 +604,7 @@
 
 <span class="k">class</span> <span class="nc">CommTableModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="p">):</span>
     <span class="n">NUMCOLS</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">UID</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUMCOLS</span><span class="p">)</span>
+    <span class="n">UID</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">NUMCOLS</span><span class="p">))</span>
 
     <span class="n">dataChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
 
@@ -620,25 +624,25 @@
     <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">!=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="c1"># So this is DisplayRole...</span>
         <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">section</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">UID</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Data UID&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s2">&quot;Data UID&quot;</span>
             <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Reader (slot)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s2">&quot;Reader (slot)&quot;</span>
             <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Writer (signal)&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+                <span class="k">return</span> <span class="s2">&quot;Writer (signal)&quot;</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">section</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">section</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
         <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
         <span class="c1"># Display Role</span>
@@ -649,8 +653,8 @@
                     <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;(enter UID)&#39;</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;(not registered)&#39;</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEditable</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsDragEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsDropEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span><span class="p">)</span>
@@ -659,7 +663,6 @@
         <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
             <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -680,10 +683,11 @@
     <span class="k">def</span> <span class="nf">removeRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parentindex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">parentindex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parentindex</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beginRemoveRows</span><span class="p">(</span><span class="n">parentindex</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">position</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[:</span><span class="n">position</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table</span><span class="p">[</span><span class="n">position</span> <span class="o">+</span> <span class="n">rows</span><span class="p">:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endRemoveRows</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@staticmethod</span>
@@ -693,7 +697,7 @@
 
 <span class="k">class</span> <span class="nc">CommItemDelegate</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStyledItemDelegate</span><span class="p">):</span>
     <span class="n">NUMCOLS</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">UID</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUMCOLS</span><span class="p">)</span>
+    <span class="n">UID</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">NUMCOLS</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sdm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CommItemDelegate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -724,7 +728,7 @@
         <span class="n">editor</span><span class="o">.</span><span class="n">setEditText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">editor</span><span class="o">.</span><span class="n">currentText</span><span class="p">()))</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">editor</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
 
 
 <div class="viewcode-block" id="PanelDescriptionWizard"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_PanelDescriptionWizard.html#taurus.qt.qtgui.taurusgui.PanelDescriptionWizard">[docs]</a><span class="k">class</span> <span class="nc">PanelDescriptionWizard</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWizard</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
@@ -791,7 +795,7 @@
     <span class="n">form</span> <span class="o">=</span> <span class="n">PanelDescriptionWizard</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">kk</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-        <span class="nb">print</span> <span class="n">d</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span> <span class="o">=</span> <span class="n">SharedDataManager</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
     <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s1">&#39;111111&#39;</span><span class="p">,</span> <span class="n">kk</span><span class="p">)</span>
     <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectWriter</span><span class="p">(</span><span class="s1">&#39;222222&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="s1">&#39;thisisasignalname&#39;</span><span class="p">)</span>
@@ -803,7 +807,7 @@
 <span class="k">def</span> <span class="nf">test2</span><span class="p">():</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="n">ExpertWidgetChooserDlg</span><span class="o">.</span><span class="n">getDialog</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ExpertWidgetChooserDlg</span><span class="o">.</span><span class="n">getDialog</span><span class="p">())</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
 
@@ -814,7 +818,7 @@
     <span class="n">form</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">kk</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-        <span class="nb">print</span> <span class="n">d</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span> <span class="o">=</span> <span class="n">SharedDataManager</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
     <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s1">&#39;someUID&#39;</span><span class="p">,</span> <span class="n">kk</span><span class="p">)</span>
     <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">connectWriter</span><span class="p">(</span><span class="s1">&#39;anotherUID&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="s1">&#39;thisisasignalname&#39;</span><span class="p">)</span>
@@ -827,13 +831,12 @@
         <span class="n">w</span> <span class="o">=</span> <span class="n">paneldesc</span><span class="o">.</span><span class="n">getWidget</span><span class="p">(</span><span class="n">sdm</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="p">)</span>
         <span class="n">form</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
         <span class="n">form</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">paneldesc</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
 
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
     <span class="c1"># test2()</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
@@ -870,7 +873,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

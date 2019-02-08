@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.base.tauruscontroller &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.base.tauruscontroller &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -165,12 +165,8 @@
 
 <span class="sd">&quot;&quot;&quot;This module provides the set of base class taurus controllers.&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseController&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusAttributeControllerHelper&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;TaurusScalarAttributeControllerHelper&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;TaurusConfigurationControllerHelper&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;updateLabelBackground&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">weakref</span>
 
@@ -180,6 +176,14 @@
 
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">QT_DEVICE_STATE_PALETTE</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusBaseController&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusAttributeControllerHelper&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusScalarAttributeControllerHelper&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusConfigurationControllerHelper&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;updateLabelBackground&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <div class="viewcode-block" id="TaurusBaseController"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseController.html#taurus.qt.qtgui.base.TaurusBaseController">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -343,7 +347,7 @@
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">displayValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TaurusScalarAttributeControllerHelper.displayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusScalarAttributeControllerHelper.html#taurus.qt.qtgui.base.TaurusScalarAttributeControllerHelper.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -533,7 +537,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

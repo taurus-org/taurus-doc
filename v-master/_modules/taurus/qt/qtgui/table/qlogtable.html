@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.table.qlogtable &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.table.qlogtable &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -165,10 +165,10 @@
 <span class="sd">&quot;&quot;&quot;This module provides Qt table widgets which display logging messages from the</span>
 <span class="sd">python :mod:`logging` module&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QLoggingTableModel&quot;</span><span class="p">,</span> <span class="s2">&quot;QLoggingTable&quot;</span><span class="p">,</span> <span class="s2">&quot;QLoggingWidget&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;QRemoteLoggingTableModel&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">logging.handlers</span>
@@ -186,9 +186,15 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.model</span> <span class="k">import</span> <span class="n">FilterToolBar</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ActionFactory</span>
 
-<span class="kn">from</span> <span class="nn">qtable</span> <span class="k">import</span> <span class="n">QBaseTableWidget</span>
+<span class="kn">from</span> <span class="nn">.qtable</span> <span class="k">import</span> <span class="n">QBaseTableWidget</span>
 
-<span class="n">LEVEL</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">MSG</span><span class="p">,</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QLoggingTableModel&quot;</span><span class="p">,</span> <span class="s2">&quot;QLoggingTable&quot;</span><span class="p">,</span> <span class="s2">&quot;QLoggingWidget&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;QRemoteLoggingTableModel&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="n">LEVEL</span><span class="p">,</span> <span class="n">TIME</span><span class="p">,</span> <span class="n">MSG</span><span class="p">,</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">HORIZ_HEADER</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="s1">&#39;Message&#39;</span><span class="p">,</span> <span class="s1">&#39;By&#39;</span><span class="p">,</span> <span class="s1">&#39;Origin&#39;</span>
 
 <span class="n">__LEVEL_BRUSH</span> <span class="o">=</span> <span class="p">{</span>
@@ -215,18 +221,9 @@
         <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Error</span>
     <span class="k">elif</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Critical</span><span class="p">:</span>
         <span class="n">elevel</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Critical</span>
-    <span class="n">f</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">,</span> <span class="n">__LEVEL_BRUSH</span><span class="p">[</span><span class="n">elevel</span><span class="p">])</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">,</span> <span class="n">__LEVEL_BRUSH</span><span class="p">[</span><span class="n">elevel</span><span class="p">]))</span>
     <span class="k">return</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span>
 
-
-<span class="k">def</span> <span class="nf">_origin_cmp</span><span class="p">(</span><span class="n">rec1</span><span class="p">,</span> <span class="n">rec2</span><span class="p">):</span>
-    <span class="n">c1</span> <span class="o">=</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">rec1</span><span class="o">.</span><span class="n">process</span><span class="p">,</span> <span class="n">rec2</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">c1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">c2</span> <span class="o">=</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">rec1</span><span class="o">.</span><span class="n">thread</span><span class="p">,</span> <span class="n">rec2</span><span class="o">.</span><span class="n">thread</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">c2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">rec1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">rec2</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">c2</span>
-    <span class="k">return</span> <span class="n">c1</span>
 
 <span class="n">gethostname</span> <span class="o">=</span> <span class="n">memoized</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">)</span>
 
@@ -258,7 +255,7 @@
     <span class="n">host</span><span class="p">,</span> <span class="n">procName</span><span class="p">,</span> <span class="n">procID</span><span class="p">,</span> <span class="n">threadName</span><span class="p">,</span> <span class="n">threadID</span> <span class="o">=</span> <span class="n">_get_record_origin</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
     <span class="n">pathname</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">modulename</span><span class="p">,</span> <span class="n">funcname</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="n">_get_record_trace</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
     <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">created</span><span class="p">))</span>
-    <span class="n">bgcolor</span><span class="p">,</span> <span class="n">fgcolor</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">levelno</span><span class="p">))</span>
+    <span class="n">bgcolor</span><span class="p">,</span> <span class="n">fgcolor</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">levelno</span><span class="p">)))</span>
     <span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;#</span><span class="si">%02x%02x%02x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
         <span class="n">bgcolor</span><span class="o">.</span><span class="n">red</span><span class="p">(),</span> <span class="n">bgcolor</span><span class="o">.</span><span class="n">green</span><span class="p">(),</span> <span class="n">bgcolor</span><span class="o">.</span><span class="n">blue</span><span class="p">())</span>
     <span class="n">fgcolor</span> <span class="o">=</span> <span class="s2">&quot;#</span><span class="si">%02x%02x%02x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
@@ -289,7 +286,7 @@
     <span class="n">DftColSize</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> \
         <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">500000</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">500000</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span> <span class="o">=</span> <span class="n">capacity</span>
@@ -303,17 +300,13 @@
     <span class="c1"># ---------------------------------</span>
 
 <div class="viewcode-block" id="QLoggingTableModel.sort"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.sort">[docs]</a>    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AscendingOrder</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">levelno</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">levelno</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">created</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">created</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">MSG</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">msg</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">NAME</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">ORIGIN</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">_origin_cmp</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_records</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">,</span> <span class="nb">cmp</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+        <span class="n">column2key_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">LEVEL</span><span class="p">:</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;levelno&#39;</span><span class="p">),</span>
+                          <span class="n">TIME</span><span class="p">:</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;created&#39;</span><span class="p">),</span>
+                          <span class="n">MSG</span><span class="p">:</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;msg&#39;</span><span class="p">),</span>
+                          <span class="n">NAME</span><span class="p">:</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+                          <span class="n">ORIGIN</span><span class="p">:</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;process&#39;</span><span class="p">,</span> <span class="s1">&#39;thread&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_records</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">column2key_map</span><span class="p">[</span><span class="n">column</span><span class="p">],</span>
                                <span class="n">reverse</span><span class="o">=</span><span class="n">order</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DescendingOrder</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="QLoggingTableModel.rowCount"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.rowCount">[docs]</a>    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
@@ -327,74 +320,74 @@
 
 <div class="viewcode-block" id="QLoggingTableModel.data"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_records</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRecord</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
         <span class="n">column</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">record</span><span class="o">.</span><span class="n">levelname</span>
             <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">:</span>
                 <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">created</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
-                <span class="c1"># return Qt.QVariant(dt.strftime(&quot;%Y-%m-%d %H:%m:%S.%f&quot;))</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+                <span class="c1"># return dt.strftime(&quot;%Y-%m-%d %H:%m:%S.%f&quot;)</span>
             <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">MSG</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">())</span>
+                <span class="k">return</span> <span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">()</span>
             <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">NAME</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">record</span><span class="o">.</span><span class="n">name</span>
             <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="n">ORIGIN</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">_get_record_origin_str</span><span class="p">(</span><span class="n">record</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">_get_record_origin_str</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">(</span><span class="n">LEVEL</span><span class="p">,</span> <span class="n">MSG</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BackgroundRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">return</span> <span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ForegroundRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">return</span> <span class="n">getBrushForLevel</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelno</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">_get_record_origin_tooltip</span><span class="p">(</span><span class="n">record</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">_get_record_origin_tooltip</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SizeHintRole</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getSizeHint</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
         <span class="c1"># elif role == Qt.Qt.StatusTipRole:</span>
         <span class="c1"># elif role == Qt.Qt.CheckStateRole:</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DftFont</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DftFont</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
     <span class="k">def</span> <span class="nf">_getSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">QLoggingTableModel</span><span class="o">.</span><span class="n">DftColSize</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">QLoggingTableModel</span><span class="o">.</span><span class="n">DftColSize</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
 
 <div class="viewcode-block" id="QLoggingTableModel.headerData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.headerData">[docs]</a>    <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TextAlignmentRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">))</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SizeHintRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Vertical</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getSizeHint</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Mono&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Mono&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">section</span> <span class="o">==</span> <span class="n">LEVEL</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;log level&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s2">&quot;log level&quot;</span>
             <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">TIME</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;log time stamp&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s2">&quot;log time stamp&quot;</span>
             <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">MSG</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;log message&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s2">&quot;log message&quot;</span>
             <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">NAME</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;object who recorded the log&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s2">&quot;object who recorded the log&quot;</span>
             <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="n">ORIGIN</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;the host, process and thread where the &quot;</span>
-                                   <span class="s2">&quot;log was executed from&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;the host, process and thread where the&quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot; log was executed from&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">role</span> <span class="o">!=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">HORIZ_HEADER</span><span class="p">[</span><span class="n">section</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">section</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span></div>
+            <span class="k">return</span> <span class="n">HORIZ_HEADER</span><span class="p">[</span><span class="n">section</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">section</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="QLoggingTableModel.insertRows"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_QLoggingTableModel.html#taurus.qt.qtgui.table.QLoggingTableModel.insertRows">[docs]</a>    <span class="k">def</span> <span class="nf">insertRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beginInsertRows</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">(),</span> <span class="n">position</span><span class="p">,</span> <span class="n">position</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -484,7 +477,7 @@
         <span class="sd">&quot;&quot;&quot;Overwrite of slot rows inserted to do proper resize and scroll to</span>
 <span class="sd">        bottom if desired&quot;&quot;&quot;</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QTableView</span><span class="o">.</span><span class="n">rowsInserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resizeRowToContents</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resizeColumnsToContents</span><span class="p">()</span>
@@ -515,8 +508,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_logLevelComboBox</span> <span class="o">=</span> <span class="n">logLevelComboBox</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
         <span class="n">levels</span> <span class="o">=</span> <span class="s2">&quot;Trace&quot;</span><span class="p">,</span> <span class="s2">&quot;Debug&quot;</span><span class="p">,</span> <span class="s2">&quot;Info&quot;</span><span class="p">,</span> <span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Critical&quot;</span>
         <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">levels</span><span class="p">:</span>
-            <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span>
-                <span class="n">level</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">taurus</span><span class="p">,</span> <span class="n">level</span><span class="p">)))</span>
+            <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">taurus</span><span class="p">,</span> <span class="n">level</span><span class="p">))</span>
         <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onLogLevelChanged</span><span class="p">)</span>
         <span class="n">logLevelComboBox</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Filter by log level&quot;</span><span class="p">)</span>
@@ -544,12 +536,12 @@
 
     <span class="k">def</span> <span class="nf">getLogLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLogLevelComboBox</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">setLogLevel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
         <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLogLevelComboBox</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
-            <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">level</span><span class="p">:</span>
                 <span class="n">combo</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
@@ -628,7 +620,11 @@
             <span class="n">klass</span> <span class="o">=</span> <span class="n">QLoggingTable</span>
         <span class="n">view</span> <span class="o">=</span> <span class="n">QBaseTableWidget</span><span class="o">.</span><span class="n">createViewWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="n">klass</span><span class="p">)</span>
         <span class="n">hh</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
-        <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
         <span class="n">view</span><span class="o">.</span><span class="n">setShowGrid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">view</span><span class="o">.</span><span class="n">sortByColumn</span><span class="p">(</span><span class="n">TIME</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AscendingOrder</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">view</span></div>
@@ -701,7 +697,7 @@
     <span class="kn">import</span> <span class="nn">time</span>
     <span class="kn">import</span> <span class="nn">random</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
         <span class="n">taurus</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello world </span><span class="si">%04d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
 
     <span class="n">loggers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Object</span><span class="si">%02d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
@@ -776,7 +772,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

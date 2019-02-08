@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.tango.img.img &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.tango.img.img &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="taurus.core.tango.img" href="../img.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -166,17 +166,17 @@
 
 <span class="sd">&quot;&quot;&quot;The img submodule. It contains specific device implementation for CCDs and</span>
 <span class="sd">2D detectors&quot;&quot;&quot;</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ImageDevice&#39;</span><span class="p">,</span> <span class="s1">&#39;ImageCounterDevice&#39;</span><span class="p">,</span> <span class="s1">&#39;PyImageViewer&#39;</span><span class="p">,</span> <span class="s1">&#39;ImgGrabber&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;CCDPVCAM&#39;</span><span class="p">,</span> <span class="s1">&#39;ImgBeamAnalyzer&#39;</span><span class="p">,</span> <span class="s1">&#39;Falcon&#39;</span><span class="p">,</span> <span class="s1">&#39;LimaCCDs&#39;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusEventType</span>
 <span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">TangoDevice</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span><span class="p">,</span> <span class="n">CaselessList</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Lock</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ImageDevice&#39;</span><span class="p">,</span> <span class="s1">&#39;ImageCounterDevice&#39;</span><span class="p">,</span> <span class="s1">&#39;PyImageViewer&#39;</span><span class="p">,</span> <span class="s1">&#39;ImgGrabber&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;CCDPVCAM&#39;</span><span class="p">,</span> <span class="s1">&#39;ImgBeamAnalyzer&#39;</span><span class="p">,</span> <span class="s1">&#39;Falcon&#39;</span><span class="p">,</span> <span class="s1">&#39;LimaCCDs&#39;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <div class="viewcode-block" id="ImageDevice"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_ImageDevice.html#taurus.core.tango.img.ImageDevice">[docs]</a><span class="k">class</span> <span class="nc">ImageDevice</span><span class="p">(</span><span class="n">TangoDevice</span><span class="p">):</span>
@@ -279,7 +279,7 @@
 <div class="viewcode-block" id="ImageCounterDevice.getImageData"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_ImageCounterDevice.html#taurus.core.tango.img.ImageCounterDevice.getImageData">[docs]</a>    <span class="k">def</span> <span class="nf">getImageData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImageAttrNames</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">names</span><span class="p">,)</span>
 
         <span class="n">fetch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getDirty</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
@@ -317,9 +317,9 @@
 <div class="viewcode-block" id="Falcon.getImageData"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_Falcon.html#taurus.core.tango.img.Falcon.getImageData">[docs]</a>    <span class="k">def</span> <span class="nf">getImageData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ImageCounterDevice</span><span class="o">.</span><span class="n">getImageData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_color</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
                 <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span>
-                <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">data</span></div></div>
 
 
@@ -370,7 +370,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

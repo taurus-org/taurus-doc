@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusmessagepanel &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusmessagepanel &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -164,10 +164,9 @@
 
 <span class="sd">&quot;&quot;&quot;This module provides a panel to display taurus messages&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusMessagePanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusMessageErrorHandler&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;TangoMessageErrorHandler&quot;</span><span class="p">,</span> <span class="s2">&quot;MacroServerMessageErrorHandler&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
@@ -184,6 +183,12 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.report</span> <span class="k">import</span> <span class="n">TaurusMessageReportHandler</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusMessagePanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusMessageErrorHandler&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TangoMessageErrorHandler&quot;</span><span class="p">,</span> <span class="s2">&quot;MacroServerMessageErrorHandler&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <div class="viewcode-block" id="TaurusMessageErrorHandler"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusMessageErrorHandler.html#taurus.qt.qtgui.panel.TaurusMessageErrorHandler">[docs]</a><span class="k">class</span> <span class="nc">TaurusMessageErrorHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -246,7 +251,7 @@
             <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">()</span>
             <span class="n">style</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
         <span class="n">html</span> <span class="o">=</span> <span class="n">html_orig</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">de</span> <span class="ow">in</span> <span class="n">err_value</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">de</span> <span class="ow">in</span> <span class="n">err_value</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
             <span class="n">e_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;pre&gt;</span><span class="si">{reason}</span><span class="s2">: </span><span class="si">{desc}</span><span class="s2">&lt;/pre&gt;</span><span class="si">{origin}</span><span class="s2">&lt;hr&gt;&quot;&quot;&quot;</span>
             <span class="n">origin</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="n">de</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">de</span><span class="o">.</span><span class="n">desc</span>
             <span class="k">if</span> <span class="n">reason</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;PyDs_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pygments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -255,7 +260,7 @@
                 <span class="n">origin</span> <span class="o">=</span> <span class="s2">&quot;&lt;pre&gt;</span><span class="si">%s</span><span class="s2">&lt;/pre&gt;&quot;</span> <span class="o">%</span> <span class="n">origin</span>
             <span class="n">html</span> <span class="o">+=</span> <span class="n">e_html</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">)</span>
         <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
-        <span class="n">msgbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">err_value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+        <span class="n">msgbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">err_value</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
         <span class="n">msgbox</span><span class="o">.</span><span class="n">setDetailedHtml</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
 
         <span class="n">exc_info</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">err_type</span><span class="p">,</span> <span class="n">err_value</span><span class="p">,</span>
@@ -343,7 +348,7 @@
             <span class="n">elem</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
             <span class="n">_is_report_handler</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
                 <span class="n">is_report_handler</span><span class="p">,</span> <span class="n">abs_file</span><span class="o">=</span><span class="n">full_elem</span><span class="p">)</span>
-            <span class="n">report_lib</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">report_lib</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">report_lib</span><span class="p">,</span> <span class="n">_is_report_handler</span><span class="p">):</span>
                 <span class="n">_REPORT_HANDLERS</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
     <span class="k">finally</span><span class="p">:</span>
@@ -418,13 +423,12 @@
         <span class="n">report_handlers</span> <span class="o">=</span> <span class="n">get_report_handlers</span><span class="p">()</span>
         <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reportComboBox</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">report_handler</span> <span class="ow">in</span> <span class="n">report_handlers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
             <span class="n">combo</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">report_handler</span><span class="o">.</span><span class="n">Label</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_onReportTriggered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="n">report_handlers</span> <span class="o">=</span> <span class="n">get_report_handlers</span><span class="p">()</span>
         <span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reportComboBox</span><span class="p">()</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">combo</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
         <span class="n">report_handler</span> <span class="o">=</span> <span class="n">report_handlers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="n">report</span> <span class="o">=</span> <span class="n">report_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
@@ -725,11 +729,18 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">PyTango</span><span class="o">.</span><span class="n">Except</span><span class="o">.</span><span class="n">throw_exception</span><span class="p">(</span>
             <span class="s1">&#39;TangoException&#39;</span><span class="p">,</span> <span class="s1">&#39;A simple tango exception&#39;</span><span class="p">,</span> <span class="s1">&#39;right here&#39;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">,</span> <span class="n">df1</span><span class="p">:</span>
+    <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span> <span class="k">as</span> <span class="n">df1</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">traceback</span>
-            <span class="kn">import</span> <span class="nn">StringIO</span>
-            <span class="n">origin</span> <span class="o">=</span> <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+            <span class="c1"># ---------------------------------------------------------------</span>
+            <span class="c1"># workaround for unicode issues on py2 when using io instead of</span>
+            <span class="c1"># StringIO</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">StringIO</span> <span class="k">as</span> <span class="nn">io</span>  <span class="c1"># py2</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">io</span>  <span class="c1"># py3</span>
+            <span class="c1"># ----------------------------------------------------------------</span>
+            <span class="n">origin</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
             <span class="n">traceback</span><span class="o">.</span><span class="n">print_stack</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
             <span class="n">origin</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -822,7 +833,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

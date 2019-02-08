@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.table.taurusvaluestable &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.table.taurusvaluestable &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -162,9 +162,7 @@
 <span class="c1">##</span>
 <span class="c1">#############################################################################</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusValuesTable&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span>
@@ -178,6 +176,11 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusValuesTable&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
 <span class="k">def</span> <span class="nf">_value2Quantity</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
@@ -197,7 +200,7 @@
 
 <span class="k">class</span> <span class="nc">TaurusValuesIOTableModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QAbstractTableModel</span><span class="p">):</span>
     <span class="n">typeCastingMap</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-                      <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">:</span> <span class="n">unicode</span><span class="p">}</span>
+                      <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span>
     <span class="c1"># Need to have an array</span>
 
     <span class="n">dataChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QModelIndex&#39;</span><span class="p">,</span> <span class="s1">&#39;QModelIndex&#39;</span><span class="p">)</span>
@@ -239,7 +242,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tabledata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wtabledata</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tabledata</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">rc</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span>
@@ -254,10 +257,10 @@
                     <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">magnitude</span>
             <span class="c1"># cast the value to a standard python type</span>
             <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">typeCastingMap</span><span class="p">[</span><span class="n">tabledata</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span><span class="p">](</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">value</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())))</span> <span class="ow">and</span>\
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span>
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttr</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())]</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inAlarmRange</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
@@ -266,46 +269,46 @@
                         <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;emblem-important&#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;document-save&#39;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">icon</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span>
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">tabledata</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]</span>
                 <span class="k">if</span> <span class="n">tabledata</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">value</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BackgroundRole</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">223</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">223</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ForegroundRole</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span>
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAttr</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">]:</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())]</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inAlarmRange</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-                        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">))</span>
+                        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;orange&#39;</span><span class="p">))</span>
+                        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">))</span>
-            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">))</span>
+                    <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">))</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span>
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span> <span class="ow">and</span>\
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span>
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">):</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">[(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())])</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Original value: </span><span class="si">%s</span><span class="s1">.</span><span class="se">\n</span><span class="s1">New value that will be saved: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>\
                       <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tabledata</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()]),</span> <span class="n">value</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">msg</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">getAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span>
@@ -330,7 +333,8 @@
                             <span class="nb">repr</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">data_format</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span> <span class="o">!=</span> <span class="n">rows</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span> <span class="o">!=</span> <span class="n">columns</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_rowCount</span> <span class="o">=</span> <span class="n">rows</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_columnCount</span> <span class="o">=</span> <span class="n">columns</span>
@@ -382,7 +386,7 @@
 
 <span class="sd">        :param index:  (QModelIndex) table index</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()))</span>
 
     <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -405,7 +409,7 @@
         <span class="k">if</span> <span class="n">kind</span> <span class="ow">in</span> <span class="s1">&#39;SU&#39;</span><span class="p">:</span>
             <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># we want to allow the strings to be larger than the original ones</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">table</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+                <span class="n">table</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
             <span class="n">table</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modifiedDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -414,7 +418,6 @@
                     <span class="n">q</span> <span class="o">=</span> <span class="n">_value2Quantity</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
                     <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">q</span>
                 <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span>
-                    <span class="c1"># TODO: This does not work Qt.from_qvariant(v, bool)</span>
                     <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
                         <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -624,13 +627,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
             <span class="n">editor</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">])</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="nb">bool</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">())</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="n">a</span>
 
             <span class="n">editor</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">editor</span><span class="o">.</span><span class="n">findText</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span> <span class="o">=</span> <span class="n">data</span>
             <span class="n">editor</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -654,11 +657,19 @@
                 <span class="n">text</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
             <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">text</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialText</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">text</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
             <span class="n">hh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
-            <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">hh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                    <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
             <span class="n">vh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">verticalHeader</span><span class="p">()</span>
-            <span class="n">vh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">vh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">vh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">vh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                    <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">vh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
 
         <span class="n">index</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">editedIndex</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -797,7 +808,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Choose &amp;Model&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="o">.</span><span class="n">triggered</span><span class="p">[()]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chooseModelAction</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chooseModel</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusValuesTable.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/table/_TaurusValuesTable.html#taurus.qt.qtgui.table.TaurusValuesTable.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;see :meth:`TaurusWidget.getModelClass`&#39;&#39;&#39;</span>
@@ -862,9 +873,17 @@
             <span class="n">model</span><span class="o">.</span><span class="n">setWriteMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeMode</span><span class="p">)</span>
 
             <span class="n">hh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
-            <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">hh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">hh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                    <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">hh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
             <span class="n">vh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">verticalHeader</span><span class="p">()</span>
-            <span class="n">vh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">vh</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">vh</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">vh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># PyQt4</span>
+                    <span class="n">hh</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">vh</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultWriteMode</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
                 <span class="n">isWritable</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">else</span><span class="p">:</span>
@@ -887,7 +906,7 @@
             <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
                 <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getReadValue</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getModifiedDict</span><span class="p">()</span><span class="o">.</span><span class="n">has_key</span><span class="p">((</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">())</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">getModifiedDict</span><span class="p">():</span>
                     <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
                         <span class="s1">&#39;edit-undo&#39;</span><span class="p">),</span> <span class="s2">&quot;Reset to original value (</span><span class="si">%s</span><span class="s2">) &quot;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tableView</span><span class="o">.</span><span class="n">removeChange</span><span class="p">)</span>
                     <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
@@ -1105,7 +1124,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

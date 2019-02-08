@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.util.tauruswidgetfactory &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.util.tauruswidgetfactory &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -166,6 +166,7 @@
 <span class="sd">tauruswidgetfactory.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusWidgetFactory&quot;</span><span class="p">,</span> <span class="s2">&quot;getWidgetsOfType&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
@@ -205,6 +206,8 @@
     <span class="n">_getWidgetsOfType</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">widgets</span><span class="p">,</span> <span class="n">class_or_type_or_tuple</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">widgets</span></div>
 
+
+<span class="c1"># TODO: TaurusWidgetFactory should be deprecated in favor of using importlib</span>
 
 <div class="viewcode-block" id="TaurusWidgetFactory"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusWidgetFactory</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The TaurusWidgetFactory is a utility class that provides information</span>
@@ -260,9 +263,9 @@
                         <span class="n">qt_ret</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">package</span><span class="p">,</span> <span class="n">attr</span>
                         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">TaurusBaseWidget</span><span class="p">):</span>
                             <span class="n">taurus_ret</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">package</span><span class="p">,</span> <span class="n">attr</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">pass</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">taurus_ret</span><span class="p">,</span> <span class="n">qt_ret</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">recursive</span><span class="p">:</span>
@@ -301,13 +304,13 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying to find extra module </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">)</span>
                 <span class="n">f</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">m_name</span><span class="p">,</span> <span class="p">[</span><span class="n">path</span><span class="p">])</span>
-            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">ie</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">ie</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not find extra module </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">,</span> <span class="n">ie</span><span class="p">)</span>
                 <span class="k">continue</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying to load extra module </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">)</span>
                 <span class="n">mod</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">m_name</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">ie</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">ie</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not load extra module </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">m_name</span><span class="p">,</span> <span class="n">ie</span><span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">dir_names</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
@@ -324,7 +327,7 @@
                             <span class="n">taurus_ret</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">qt_info</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">],</span> <span class="n">attr</span>
                             <span class="n">qt_widgets</span><span class="p">[</span><span class="n">dir_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">qt_info</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">],</span> <span class="n">attr</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;registered taurus widget </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">pass</span>
 
 <div class="viewcode-block" id="TaurusWidgetFactory.getWidgets"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getWidgets">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -334,7 +337,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span></div>
 
 <div class="viewcode-block" id="TaurusWidgetFactory.getWidgetClassNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getWidgetClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgetClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TaurusWidgetFactory.getWidgetClasses"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getWidgetClasses">[docs]</a>    <span class="k">def</span> <span class="nf">getWidgetClasses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">klass</span> <span class="k">for</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">klass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span></div>
@@ -343,7 +346,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qt_widgets</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="TaurusWidgetFactory.getTaurusWidgetClassNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getTaurusWidgetClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusWidgetClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TaurusWidgetFactory.getTaurusWidgetClasses"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_TaurusWidgetFactory.html#taurus.qt.qtgui.util.TaurusWidgetFactory.getTaurusWidgetClasses">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusWidgetClasses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">klass</span> <span class="k">for</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">klass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taurus_widgets</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span></div>
@@ -384,7 +387,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

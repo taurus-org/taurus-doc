@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.extra_guiqwt.plot &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.extra_guiqwt.plot &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -165,10 +165,12 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Extension of :mod:`guiqwt.plot`</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusCurveDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrendDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusImageDialog&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">next</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
 
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">guiqwt.plot</span> <span class="k">import</span> <span class="n">ImageDialog</span><span class="p">,</span> <span class="n">CurveDialog</span>
 
 <span class="kn">import</span> <span class="nn">taurus.core</span>
@@ -181,6 +183,9 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.curve</span> <span class="k">import</span> <span class="n">TaurusCurveItem</span><span class="p">,</span> <span class="n">TaurusTrendParam</span><span class="p">,</span> <span class="n">TaurusTrendItem</span>
 
 
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusCurveDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrendDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusImageDialog&quot;</span><span class="p">]</span>
+
+
 <div class="viewcode-block" id="TaurusCurveDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusCurveDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusCurveDialog">[docs]</a><span class="k">class</span> <span class="nc">TaurusCurveDialog</span><span class="p">(</span><span class="n">CurveDialog</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A taurus dialog for showing 1D data.</span>
 <span class="sd">    It behaves as a regular :class:`guiqwt.plot.CurveDialog` but it also offers</span>
@@ -190,7 +195,7 @@
 <span class="sd">    .. seealso:: :class:`TaurusCurveWidget`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">_modifiableByUser</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">modelChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">([],</span> <span class="p">[</span><span class="s1">&#39;QStringList&#39;</span><span class="p">],</span> <span class="p">[</span><span class="nb">str</span><span class="p">])</span>
+    <span class="n">modelChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">([],</span> <span class="p">[</span><span class="s1">&#39;QStringList&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;QString&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;see :class:`guiqwt.plot.CurveDialog` for other valid initialization parameters&#39;&#39;&#39;</span>
@@ -221,7 +226,7 @@
 
     <span class="k">def</span> <span class="nf">_splitModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelNames</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;convert str to list if needed (commas and whitespace are considered as separators)&#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">modelNames</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="n">modelNames</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">modelNames</span>
@@ -291,7 +296,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Invalid model &quot;</span><span class="si">%s</span><span class="s1">&quot; (Skipping)&#39;</span> <span class="o">%</span> <span class="n">mx_my</span><span class="p">)</span>
             <span class="c1"># cycle styles</span>
-            <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">)</span>
             <span class="n">color</span> <span class="o">=</span> <span class="n">style</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">linestyle</span> <span class="o">=</span> <span class="n">style</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
             <span class="c1"># add the item</span>
@@ -337,7 +342,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">_modifiableByUser</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="n">modelChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">([],</span> <span class="p">[</span><span class="s1">&#39;QStringList&#39;</span><span class="p">],</span> <span class="p">[</span><span class="nb">str</span><span class="p">])</span>
+    <span class="n">modelChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">([],</span> <span class="p">[</span><span class="s1">&#39;QStringList&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;QString&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">taurusparam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;see :class:`guiqwt.plot.CurveDialog` for other valid initialization parameters&#39;&#39;&#39;</span>
@@ -376,7 +381,7 @@
 
     <span class="k">def</span> <span class="nf">_splitModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelNames</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;convert str to list if needed (commas and whitespace are considered as separators)&#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">modelNames</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="n">modelNames</span> <span class="o">=</span> <span class="n">modelNames</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">modelNames</span>
@@ -428,7 +433,7 @@
         <span class="c1"># create and attach new TaurusCurveItems</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modelNames</span><span class="p">:</span>
             <span class="c1"># cycle styles</span>
-            <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">)</span>
             <span class="c1"># add the item</span>
             <span class="n">item</span> <span class="o">=</span> <span class="n">make</span><span class="o">.</span><span class="n">ttrend</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">style</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">style</span><span class="p">[</span>
                                <span class="mi">1</span><span class="p">:],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">taurusparam</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaultTaurusparam</span><span class="p">))</span>
@@ -841,7 +846,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.display.qpixmapwidget &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.display.qpixmapwidget &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -164,11 +164,14 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains a pure Qt widget that displays an image&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QPixmapWidget&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 
 
 <div class="viewcode-block" id="QPixmapWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QPixmapWidget.html#taurus.qt.qtgui.display.QPixmapWidget">[docs]</a><span class="k">class</span> <span class="nc">QPixmapWidget</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
@@ -218,11 +221,11 @@
         <span class="n">vAlign</span> <span class="o">=</span> <span class="n">align</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVertical_Mask</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">hAlign</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignHCenter</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">pw</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">pw</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="k">elif</span> <span class="n">hAlign</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">pw</span>
         <span class="k">if</span> <span class="n">vAlign</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">:</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">ph</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">ph</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="k">elif</span> <span class="n">vAlign</span> <span class="o">&amp;</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span><span class="p">:</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="n">ph</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -364,8 +367,9 @@
 
 <span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
     <span class="s2">&quot;QPixmap Widget&quot;</span>
-    <span class="kn">import</span> <span class="nn">demo.qpixmapwidgetdemo</span>
-    <span class="k">return</span> <span class="n">demo</span><span class="o">.</span><span class="n">qpixmapwidgetdemo</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+    <span class="kn">from</span> <span class="nn">.demo</span> <span class="k">import</span> <span class="n">qpixmapwidgetdemo</span> <span class="c1"># after futurize stage1</span>
+    <span class="k">return</span> <span class="n">qpixmapwidgetdemo</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -407,7 +411,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

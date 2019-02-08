@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtdesigner.taurusplugin.taurusplugin &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtdesigner.taurusplugin.taurusplugin &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -176,6 +176,7 @@
 <span class="sd">      editing the widget model (same has &#39;Edit model...&#39; task menu item</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
@@ -185,8 +186,8 @@
 
 
 <div class="viewcode-block" id="Q_TYPEID"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtdesigner/taurusplugin.html#taurus.qt.qtdesigner.taurusplugin.Q_TYPEID">[docs]</a><span class="k">def</span> <span class="nf">Q_TYPEID</span><span class="p">(</span><span class="n">class_name</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Helper function to generate an IID for Qt. Returns a QString.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="s2">&quot;com.trolltech.Qt.Designer.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">class_name</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot; Helper function to generate an IID for Qt.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;com.trolltech.Qt.Designer.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">class_name</span></div>
 
 <span class="n">designer_logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s2">&quot;PyQtDesigner&quot;</span><span class="p">)</span>
 
@@ -242,11 +243,11 @@
                                                 <span class="n">designMode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                                 <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
             <span class="n">w</span> <span class="o">=</span> <span class="n">klass</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getWidgetClassName</span><span class="p">()</span>
-            <span class="nb">print</span> <span class="mi">100</span> <span class="o">*</span> <span class="s2">&quot;=&quot;</span>
-            <span class="nb">print</span> <span class="s2">&quot;taurus designer plugin error creating </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-            <span class="nb">print</span> <span class="mi">100</span> <span class="o">*</span> <span class="s2">&quot;-&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="s2">&quot;=&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;taurus designer plugin error creating </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
             <span class="kn">import</span> <span class="nn">traceback</span>
             <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
             <span class="n">w</span> <span class="o">=</span> <span class="kc">None</span>
@@ -340,7 +341,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

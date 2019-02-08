@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.taurusbasetypes &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.taurusbasetypes &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -161,9 +161,18 @@
 <span class="c1">##</span>
 <span class="c1">#############################################################################</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">a misc collection of basic types</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">IntEnum</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">PY2</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusSWDevState&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusSWDevHealth&quot;</span><span class="p">,</span> <span class="s2">&quot;OperationMode&quot;</span><span class="p">,</span>
            <span class="s2">&quot;TaurusSerializationMode&quot;</span><span class="p">,</span> <span class="s2">&quot;SubscriptionState&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusEventType&quot;</span><span class="p">,</span>
@@ -173,12 +182,6 @@
            <span class="s2">&quot;TaurusLockInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevState&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusModelValue&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">import</span> <span class="nn">datetime</span>
-
-<span class="kn">from</span> <span class="nn">.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
-<span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">IntEnum</span>
 
 
 <div class="viewcode-block" id="TaurusDevState"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevState.html#taurus.core.TaurusDevState">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevState</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
@@ -289,14 +292,15 @@
 <span class="n">__PYTHON_TYPE_TO_TAURUS_DATATYPE</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nb">str</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span>
     <span class="nb">int</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span>
-    <span class="n">long</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span>
+    <span class="c1"># long : DataType.Integer,  # (only in py2) see below...</span>
     <span class="nb">float</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
     <span class="nb">bool</span><span class="p">:</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Boolean</span><span class="p">,</span>
-    <span class="c1"># bytes : DataType.Bytes, # see below...</span>
+    <span class="c1"># bytes : DataType.Bytes,  # (only in py&gt;=3) see below...</span>
 <span class="p">}</span>
-<span class="k">if</span> <span class="nb">str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">bytes</span><span class="p">:</span>  <span class="c1"># Python &gt;=3</span>
+<span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>  <span class="c1"># Python 2</span>
+    <span class="n">__PYTHON_TYPE_TO_TAURUS_DATATYPE</span><span class="p">[</span><span class="n">long</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Integer</span>
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># Python &gt;=3</span>
     <span class="n">__PYTHON_TYPE_TO_TAURUS_DATATYPE</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">Bytes</span>
-<span class="c1"># Note: in Python2, DataType.from_python_type(bytes) --&gt; DataType.String</span>
 <span class="n">DataType</span><span class="o">.</span><span class="n">from_python_type</span> <span class="o">=</span> <span class="n">__PYTHON_TYPE_TO_TAURUS_DATATYPE</span><span class="o">.</span><span class="n">get</span>
 
 <span class="n">SubscriptionState</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span>
@@ -496,7 +500,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

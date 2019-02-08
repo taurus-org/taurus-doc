@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; taurus 4.4.0 documentation</title>
+  <title>Getting started &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../index.html"/>
         <link rel="up" title="User’s Guide" href="index.html"/>
         <link rel="next" title="User’s Interface" href="ui/index.html"/>
         <link rel="prev" title="Introduction" href="introduction.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.4 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">User&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Getting started</a></li>
@@ -135,7 +135,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../docs.html">Taurus 4.4 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
       
           <li><a href="index.html">User&#8217;s Guide</a> &raquo;</li>
       
@@ -238,15 +238,20 @@ on each change.</p>
 </div>
 <div class="section" id="dependencies">
 <span id="id3"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>Strictly speaking, Taurus only depends on numpy, but that will leave
-out most of the features normally expected of Taurus (which are
-considered &#8220;extras&#8221;). For example:</p>
+<p>Strictly speaking, Taurus only depends on <a class="reference external" href="http://numpy.org/">numpy</a>, <a class="reference external" href="http://pint.readthedocs.org/">pint</a> and <a class="reference external" href="https://python-future.org/">future</a>
+but that will leave out most of the features normally
+expected of Taurus (which are considered &#8220;extras&#8221;). For example:</p>
 <ul class="simple">
 <li>Interacting with a Tango controls system requires <a class="reference external" href="http://pytango.readthedocs.io">PyTango</a>.</li>
 <li>Interacting with an Epics controls system requires <a class="reference external" href="http://pypi.python.org/pypi/pyepics">pyepics</a>.</li>
-<li>Using the taurus Qt widgets, requires <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a> 4.x (4.8 &lt;= v &lt; 5).
-(PyQt5 support coming soon).</li>
-<li>The <a class="reference internal" href="../devel/api/taurus/qt/qtgui/plot.html#module-taurus.qt.qtgui.plot" title="taurus.qt.qtgui.plot"><code class="xref py py-mod docutils literal"><span class="pre">taurus.qt.qtgui.plot</span></code></a> module requires <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt</a>.</li>
+<li>Using the taurus <a class="reference external" href="http://qt.nokia.com/products/">Qt</a> widgets, requires either <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a> (v4 or v5)
+or <a class="reference external" href="https://wiki.qt.io/Qt_for_Python">PySide</a> (v1 or v2). Note that most development and testing of
+is done with PyQt4 and PyQt5, so many features may not be
+regularly tested with PySide and PySide2.</li>
+<li>The <a class="reference internal" href="../devel/api/taurus/qt/qtgui/plot.html#module-taurus.qt.qtgui.plot" title="taurus.qt.qtgui.plot"><code class="xref py py-mod docutils literal"><span class="pre">taurus.qt.qtgui.plot</span></code></a> module requires <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt</a>, which is
+only available when using PyQt4 and python2. As an alternative
+that supports both python2 and python3 and all the Qt bindings,
+refer to the <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> plugin.</li>
 <li>The image widgets require the <a class="reference external" href="https://pypi.python.org/pypi/guiqtw">guiqwt</a> library.</li>
 <li>The JDraw synoptics widgets require the <a class="reference external" href="http://www.dabeaz.com/ply/">PLY</a> package.</li>
 <li>The NeXus browser widget requires <a class="reference external" href="http://pymca.sourceforge.net/">PyMca5</a>.</li>
@@ -333,7 +338,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

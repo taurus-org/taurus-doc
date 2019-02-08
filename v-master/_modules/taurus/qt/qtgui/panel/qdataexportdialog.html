@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.qdataexportdialog &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.panel.qdataexportdialog &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -165,13 +165,16 @@
 <span class="sd">&quot;&quot;&quot;DataExportDlg.py: A Qt dialog for showing and exporting x-y Ascii data from</span>
 <span class="sd">one or more curves&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QDataExportDialog&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="k">import</span> <span class="n">UILoadable</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QDataExportDialog&quot;</span><span class="p">]</span>
 
 
 <span class="nd">@UILoadable</span>
@@ -198,7 +201,7 @@
 
         <span class="c1"># connections</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exportBT</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exportData</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onDataSetCBChange</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="p">[</span><span class="s1">&#39;QString&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onDataSetCBChange</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setDataSets</span><span class="p">(</span><span class="n">datadict</span><span class="p">,</span> <span class="n">sortedNames</span><span class="p">)</span>
 
@@ -214,7 +217,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">datadict</span> <span class="o">=</span> <span class="n">datadict</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sortedNames</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadict</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dataSetCB</span><span class="o">.</span><span class="n">insertItems</span><span class="p">(</span>
                 <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">allInSingleFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">allInMultipleFiles</span><span class="p">])</span></div>
 
@@ -243,8 +246,8 @@
                 <span class="c1">#**lazy** sanitising of the set to *suggest* it as a filename</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
                 <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;.dat&quot;</span>
-            <span class="n">ofile</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export File Name&#39;</span><span class="p">,</span>
-                                                    <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;All Files (*)&#39;</span><span class="p">)</span>
+            <span class="n">ofile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export File Name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+                                              <span class="s1">&#39;All Files (*)&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ofile</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
@@ -262,9 +265,9 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">):</span>
                         <span class="n">text</span><span class="o">+=</span><span class="s2">&quot;</span><span class="si">%r</span><span class="se">\t</span><span class="si">%r</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-                <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">ofile</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">ofile</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">ofile</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataTE</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()),</span> <span class="n">file</span><span class="o">=</span><span class="n">ofile</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                    <span class="s2">&quot;File saving failed&quot;</span><span class="p">,</span>
@@ -286,7 +289,7 @@
 <span class="sd">        if preffix is not given, the user is prompted for a directory path&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">preffix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">outputdir</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getExistingDirectory</span><span class="p">(</span>
-                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export Directory&#39;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">())</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Export Directory&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">outputdir</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="n">preffix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outputdir</span><span class="p">),</span> <span class="s2">&quot;set&quot;</span><span class="p">)</span>
@@ -431,7 +434,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

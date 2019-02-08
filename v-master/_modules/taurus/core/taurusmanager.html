@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.taurusmanager &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.taurusmanager &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -163,18 +163,17 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module contains the taurus base manager class&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusManager&quot;</span><span class="p">]</span>
-
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
 
 <span class="kn">from</span> <span class="nn">.util.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
 <span class="kn">from</span> <span class="nn">.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">taurus4_deprecation</span>
 <span class="kn">from</span> <span class="nn">.util.threadpool</span> <span class="k">import</span> <span class="n">ThreadPool</span>
-
 <span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">OperationMode</span><span class="p">,</span> <span class="n">ManagerState</span><span class="p">,</span>
                               <span class="n">TaurusSerializationMode</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.taurusauthority</span> <span class="k">import</span> <span class="n">TaurusAuthority</span>
@@ -183,7 +182,13 @@
 <span class="kn">from</span> <span class="nn">.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
 <span class="kn">from</span> <span class="nn">.taurusfactory</span> <span class="k">import</span> <span class="n">TaurusFactory</span>
 <span class="kn">from</span> <span class="nn">.taurushelper</span> <span class="k">import</span> <span class="n">getSchemeFromName</span>
+<span class="kn">import</span> <span class="nn">taurus</span>
 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusManager&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 
 <div class="viewcode-block" id="TaurusManager"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusManager.html#taurus.core.TaurusManager">[docs]</a><span class="k">class</span> <span class="nc">TaurusManager</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
@@ -462,7 +467,7 @@
         <span class="k">for</span> <span class="n">plugin_class</span> <span class="ow">in</span> <span class="n">plugin_classes</span><span class="p">:</span>
             <span class="n">schemes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">plugin_class</span><span class="o">.</span><span class="n">schemes</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">scheme</span> <span class="ow">in</span> <span class="n">schemes</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">plugins</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">scheme</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">scheme</span> <span class="ow">in</span> <span class="n">plugins</span><span class="p">:</span>
                     <span class="n">k</span> <span class="o">=</span> <span class="n">plugins</span><span class="p">[</span><span class="n">scheme</span><span class="p">]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                         <span class="s2">&quot;Conflicting plugins: </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2"> both implement &quot;</span>
@@ -506,10 +511,22 @@
         <span class="n">full_module_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;EXTRA_SCHEME_MODULES&#39;</span><span class="p">,</span> <span class="p">[]))</span>
 
+        <span class="n">full_module_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="p">,</span> <span class="s1">&#39;PLUGIN_SCHEME_MODULES&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+
+        <span class="c1"># ---------------------------------------------------------------------</span>
+        <span class="c1"># Note: this is an experimental feature introduced in v 4.5.0a</span>
+        <span class="c1"># It may be removed or changed in future releases</span>
+
+        <span class="c1"># Discover the taurus.core.schemes plugins</span>
+        <span class="n">schemes_ep</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">iter_entry_points</span><span class="p">(</span><span class="s1">&#39;taurus.core.schemes&#39;</span><span class="p">)</span>
+        <span class="n">full_module_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">schemes_ep</span><span class="p">])</span>
+        <span class="c1"># ---------------------------------------------------------------------</span>
+
         <span class="k">for</span> <span class="n">full_module_name</span> <span class="ow">in</span> <span class="n">full_module_names</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">m</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">full_module_name</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">],</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">imp1</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">imp1</span><span class="p">:</span>
                 <span class="c1"># just in case we are in python 2.4</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">m</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">full_module_name</span><span class="p">,</span>
@@ -541,7 +558,7 @@
 
     <span class="k">def</span> <span class="nf">_find_scheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory_class</span><span class="p">):</span>
         <span class="n">class_name</span> <span class="o">=</span> <span class="n">factory_class</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_name</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_name</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">class_name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
                 <span class="k">return</span> <span class="n">class_name</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
@@ -571,7 +588,7 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">manager</span> <span class="o">=</span> <span class="n">TaurusManager</span><span class="p">()</span>
-    <span class="nb">print</span> <span class="n">manager</span><span class="o">.</span><span class="n">getPlugins</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">manager</span><span class="o">.</span><span class="n">getPlugins</span><span class="p">())</span>
 </pre></div>
 
            </div>
@@ -606,7 +623,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

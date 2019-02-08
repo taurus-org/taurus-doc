@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.tango.tangodatabase &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.tango.tangodatabase &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -164,15 +164,16 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains all taurus tango authority&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoAttrInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoDevInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoServInfo&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;TangoDevClassInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoDatabaseCache&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoDatabase&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;TangoAuthority&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">map</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">import</span> <span class="nn">collections</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 
 <span class="kn">from</span> <span class="nn">PyTango</span> <span class="k">import</span> <span class="p">(</span><span class="n">Database</span><span class="p">,</span> <span class="n">DeviceProxy</span><span class="p">,</span> <span class="n">DevFailed</span><span class="p">,</span> <span class="n">ApiUtil</span><span class="p">)</span>
@@ -182,6 +183,12 @@
 <span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">taurus4_deprecation</span>
 
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoAttrInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoDevInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoServInfo&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TangoDevClassInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoDatabaseCache&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoDatabase&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TangoAuthority&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 <span class="n">InvalidAlias</span> <span class="o">=</span> <span class="s2">&quot;nada&quot;</span>
 
@@ -260,8 +267,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_domain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_family</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_member</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span>
-                                                       <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="c1"># python2 compatibility</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_domain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_family</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_member</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span>
+                                                       <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_alivePending</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -382,8 +390,7 @@
 
 <div class="viewcode-block" id="TangoServInfo.getDeviceNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoServInfo.html#taurus.core.tango.TangoServInfo.getDeviceNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_device_name_list&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TangoDevInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">TangoDevInfo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_name_list</span></div>
 
 <div class="viewcode-block" id="TangoServInfo.getClassNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoServInfo.html#taurus.core.tango.TangoServInfo.getClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">getClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -428,8 +435,8 @@
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">alive</span><span class="p">:</span>
                         <span class="k">break</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="n">alive</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="s2">&quot;except&quot;</span><span class="p">,</span> <span class="n">e</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;except&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_alivePending</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span></div></div>
@@ -465,7 +472,7 @@
             <span class="n">r</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">command_inout</span><span class="p">(</span><span class="s2">&quot;DbMySqlSelect&quot;</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
             <span class="n">row_nb</span><span class="p">,</span> <span class="n">column_nb</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">assert</span> <span class="n">row_nb</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="n">column_nb</span>
+            <span class="k">assert</span> <span class="n">row_nb</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">//</span> <span class="n">column_nb</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># fallback using tango commands (slow but works with sqlite DB)</span>
             <span class="c1"># see http://sf.net/p/tauruslib/tickets/148/</span>
@@ -487,7 +494,7 @@
         <span class="n">CD</span> <span class="o">=</span> <span class="n">CaselessDict</span>
         <span class="n">dev_dict</span><span class="p">,</span> <span class="n">serv_dict</span><span class="p">,</span> <span class="n">klass_dict</span><span class="p">,</span> <span class="n">alias_dict</span> <span class="o">=</span> <span class="n">CD</span><span class="p">(),</span> <span class="p">{},</span> <span class="p">{},</span> <span class="n">CD</span><span class="p">()</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">column_nb</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">column_nb</span><span class="p">):</span>
             <span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="p">,</span> <span class="n">exported</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">klass</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">column_nb</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">continue</span>  <span class="c1"># invalid/corrupted entry: just ignore it</span>
@@ -612,13 +619,13 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klasses</span></div>
 
 <div class="viewcode-block" id="TangoDatabaseCache.getDeviceDomainNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDatabaseCache.html#taurus.core.tango.TangoDatabaseCache.getDeviceDomainNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceDomainNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TangoDatabaseCache.getDeviceFamilyNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDatabaseCache.html#taurus.core.tango.TangoDatabaseCache.getDeviceFamilyNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceFamilyNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
         <span class="n">families</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">families</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
-        <span class="k">return</span> <span class="n">families</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">families</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TangoDatabaseCache.getDeviceMemberNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDatabaseCache.html#taurus.core.tango.TangoDatabaseCache.getDeviceMemberNames">[docs]</a>    <span class="k">def</span> <span class="nf">getDeviceMemberNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">):</span>
         <span class="n">families</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_tree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
@@ -627,7 +634,7 @@
         <span class="n">members</span> <span class="o">=</span> <span class="n">families</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">family</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">members</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
-        <span class="k">return</span> <span class="n">members</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">members</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TangoDatabaseCache.getDomainDevices"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoDatabaseCache.html#taurus.core.tango.TangoDatabaseCache.getDomainDevices">[docs]</a>    <span class="k">def</span> <span class="nf">getDomainDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">()</span><span class="o">.</span><span class="n">getDomainDevices</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span></div>
@@ -649,14 +656,14 @@
 
     <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">isMappingType</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
-                <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
+                <span class="n">other</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
             <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">addDevice</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="nb">print</span> <span class="n">e</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="s2">&quot;Must give dict&lt;obj, TangoDevInfo&gt; or sequence&lt;TangoDevInfo&gt;&quot;</span><span class="p">)</span>
 
@@ -675,7 +682,7 @@
     <span class="k">def</span> <span class="nf">getDomainDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all devices under the given domain. Returns empty list if</span>
 <span class="sd">        the domain doesn&#39;t exist or doesn&#39;t contain any devices&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_devices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">getFamilyDevices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all devices under the given domain/family. Returns empty list if</span>
@@ -683,7 +690,7 @@
         <span class="n">families</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">families</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">return</span> <span class="n">families</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">families</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
 
 <span class="k">class</span> <span class="nc">TangoServerTree</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
@@ -695,14 +702,14 @@
 
     <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">isMappingType</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
-                <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
+                <span class="n">other</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
             <span class="k">for</span> <span class="n">serv</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">addServer</span><span class="p">(</span><span class="n">serv</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="nb">print</span> <span class="n">e</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="s2">&quot;Must give dict&lt;obj, TangoServInfo&gt; or sequence&lt;TangoServInfo&gt;&quot;</span><span class="p">)</span>
 
@@ -716,7 +723,7 @@
     <span class="k">def</span> <span class="nf">getServerNameInstances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serverName</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all servers under the given serverName. Returns empty list if</span>
 <span class="sd">        the server name doesn&#39;t exist or doesn&#39;t contain any instances&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">serverName</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">serverName</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
 
 <span class="k">def</span> <span class="nf">get_home</span><span class="p">():</span>
@@ -787,7 +794,7 @@
             <span class="c1"># illegal line!</span>
             <span class="k">continue</span>
 
-        <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span> <span class="n">tup</span><span class="p">)</span>
+        <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span> <span class="n">tup</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">env_var_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">val</span>
 
@@ -801,11 +808,11 @@
     <span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;A Tango Authority&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">pars</span> <span class="o">=</span> <span class="p">()</span>
         <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">TangoAuthority</span><span class="o">.</span><span class="n">get_default_tango_host</span><span class="p">()</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">_hp</span> <span class="o">=</span> <span class="n">TangoAuthority</span><span class="o">.</span><span class="n">get_default_tango_host</span><span class="p">()</span>
+                <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">_hp</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">warning</span>
                 <span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Error getting default Tango host&quot;</span><span class="p">)</span>
 
@@ -839,7 +846,7 @@
         <span class="n">serv_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_inout</span><span class="p">(</span><span class="s2">&quot;DbGetDeviceInfo&quot;</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
         <span class="n">devs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_device_class_list</span><span class="p">(</span><span class="n">serv_name</span><span class="p">)</span>
         <span class="n">dev_name_lower</span> <span class="o">=</span> <span class="n">dev_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">devs</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">devs</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
             <span class="n">idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span>
             <span class="k">if</span> <span class="n">devs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">dev_name_lower</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">devs</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
@@ -1009,7 +1016,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

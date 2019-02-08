@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.threadpool &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.util.threadpool &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -163,18 +163,25 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;adapted from http://code.activestate.com/recipes/576576/&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+
+<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Thread</span><span class="p">,</span> <span class="n">currentThread</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span><span class="p">,</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">traceback</span> <span class="k">import</span> <span class="n">extract_stack</span><span class="p">,</span> <span class="n">format_list</span>
+
+<span class="kn">from</span> <span class="nn">.prop</span> <span class="k">import</span> <span class="n">propertx</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">Logger</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ThreadPool&quot;</span><span class="p">,</span> <span class="s2">&quot;Worker&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Thread</span><span class="p">,</span> <span class="n">currentThread</span>
-<span class="kn">from</span> <span class="nn">Queue</span> <span class="k">import</span> <span class="n">Queue</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span><span class="p">,</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">traceback</span> <span class="k">import</span> <span class="n">extract_stack</span><span class="p">,</span> <span class="n">format_list</span>
-
-<span class="kn">from</span> <span class="nn">prop</span> <span class="k">import</span> <span class="n">propertx</span>
-<span class="kn">from</span> <span class="nn">log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">DebugIt</span><span class="p">,</span> <span class="n">TraceIt</span>
 
 
 <div class="viewcode-block" id="ThreadPool"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadPool.html#taurus.core.util.ThreadPool">[docs]</a><span class="k">class</span> <span class="nc">ThreadPool</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
@@ -291,44 +298,44 @@
 
     <span class="k">def</span> <span class="nf">easyJob</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Sleep</span><span class="se">\t\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">n</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Sleep</span><span class="se">\t\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
         <span class="n">sleep</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="k">return</span> <span class="s1">&#39;Slept</span><span class="se">\t</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">n</span>
 
     <span class="k">def</span> <span class="nf">longJob</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Start</span><span class="se">\t\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">kw</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Start</span><span class="se">\t\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">kw</span><span class="p">)</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
         <span class="n">sleep</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="k">return</span> <span class="s2">&quot;Job done in </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">n</span>
 
     <span class="k">def</span> <span class="nf">badJob</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> !!! OOOPS !!!</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> !!! OOOPS !!!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
 
     <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="nb">print</span> <span class="s1">&#39;callback : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;callback : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">test_1</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">workers</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;workers&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="n">jobqueue</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;jobqueue&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
         <span class="n">pool</span> <span class="o">=</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ThreadPool&#39;</span><span class="p">,</span> <span class="n">Psize</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span> <span class="n">Qsize</span><span class="o">=</span><span class="n">jobqueue</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... let&#39;s add some jobs ...</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... let&#39;s add some jobs ...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">pool</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">badJob</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
                 <span class="n">pool</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">longJob</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
                 <span class="n">pool</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">easyJob</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s1">&#39;&#39;&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">            </span><span class="se">\t\t</span><span class="s1">... and now, we&#39;re waiting for the </span><span class="si">%i</span><span class="s1"> workers to get the </span><span class="si">%i</span><span class="s1"> jobs done ...</span>
-<span class="s1">        &#39;&#39;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">pool</span><span class="o">.</span><span class="n">qsize</span><span class="p">)</span>
+<span class="s1">        &#39;&#39;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">pool</span><span class="o">.</span><span class="n">qsize</span><span class="p">))</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... ok, that may take a while, let&#39;s get some reinforcement ...</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... ok, that may take a while, let&#39;s get some reinforcement ...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
         <span class="n">pool</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">50</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Joining ...</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Joining ...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Ok ...</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Ok ...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">test_2</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">workers</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;workers&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -337,21 +344,21 @@
         <span class="n">sleep_t</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sleep_t&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1">#from taurus.core.util.threadpool import ThreadPool</span>
         <span class="n">pool</span> <span class="o">=</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ThreadPool&#39;</span><span class="p">,</span> <span class="n">Psize</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span> <span class="n">Qsize</span><span class="o">=</span><span class="n">jobqueue</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... Check the number of busy workers ...</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="nb">print</span> <span class="s2">&quot;Num of busy workers = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">getNumOfBusyWorkers</span><span class="p">())</span>
-        <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... let&#39;s add some jobs ...</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... Check the number of busy workers ...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Num of busy workers = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">getNumOfBusyWorkers</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">... let&#39;s add some jobs ...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numjobs</span><span class="p">):</span>
             <span class="n">pool</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">easyJob</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sleep_t</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Monitoring the busy workers ...</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Monitoring the busy workers ...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
         <span class="k">while</span> <span class="n">pool</span><span class="o">.</span><span class="n">getNumOfBusyWorkers</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="s2">&quot;busy workers = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">getNumOfBusyWorkers</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;busy workers = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">getNumOfBusyWorkers</span><span class="p">()))</span>
             <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
-        <span class="nb">print</span> <span class="s2">&quot;Run </span><span class="si">%s</span><span class="s2"> jobs of 1 second took </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">numjobs</span><span class="p">,</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Joining ...</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run </span><span class="si">%s</span><span class="s2"> jobs of 1 second took </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">numjobs</span><span class="p">,</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Joining ...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Ok ...</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">... Ok ...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
@@ -398,7 +405,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.colors &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.util.colors &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -163,11 +163,12 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module contains color codes for state and quality&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DEVICE_STATE_DATA&quot;</span><span class="p">,</span> <span class="s2">&quot;ATTRIBUTE_QUALITY_DATA&quot;</span><span class="p">,</span> <span class="s2">&quot;ColorPalette&quot;</span><span class="p">,</span>
            <span class="s2">&quot;DEVICE_STATE_PALETTE&quot;</span><span class="p">,</span> <span class="s2">&quot;ATTRIBUTE_QUALITY_PALETTE&quot;</span><span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">types</span>
 
 <span class="n">DEVICE_STATE_DATA</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># map for TaurusDevState states (used for agnostic TaurusDevice.state)</span>
@@ -233,7 +234,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_int_decoder_dict</span> <span class="o">=</span> <span class="n">int_decoder_dict</span>
 
     <span class="k">def</span> <span class="nf">_decoder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">IntType</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">LongType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
             <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_int_decoder_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
 
@@ -261,7 +262,7 @@
         <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
 
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rgb_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rgb_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ColorPalette.name"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ColorPalette.html#taurus.core.util.ColorPalette.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stoq</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the name of the color.&quot;&quot;&quot;</span>
@@ -272,7 +273,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rgb_data</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="ColorPalette.has"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ColorPalette.html#taurus.core.util.ColorPalette.has">[docs]</a>    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rgb_data</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rgb_data</span></div>
 
 <div class="viewcode-block" id="ColorPalette.size"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ColorPalette.html#taurus.core.util.ColorPalette.size">[docs]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rgb_data</span><span class="p">)</span></div>
@@ -354,7 +355,7 @@
         <span class="n">bg_color</span> <span class="o">=</span> <span class="n">pal</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">stoq</span><span class="p">)</span>
         <span class="n">rgb</span> <span class="o">=</span> <span class="s2">&quot;(</span><span class="si">%3.3d</span><span class="s2">, </span><span class="si">%3.3d</span><span class="s2">, </span><span class="si">%3.3d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">pal</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="n">stoq</span><span class="p">)</span>
         <span class="n">hx</span> <span class="o">=</span> <span class="n">pal</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="n">stoq</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%7s</span><span class="s2"> </span><span class="si">%5s</span><span class="s2"> on </span><span class="si">%13s</span><span class="s2"> </span><span class="si">%15s</span><span class="s2"> #</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stoq</span><span class="p">,</span> <span class="n">fg_color</span><span class="p">,</span> <span class="n">bg_color</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">hx</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%7s</span><span class="s2"> </span><span class="si">%5s</span><span class="s2"> on </span><span class="si">%13s</span><span class="s2"> </span><span class="si">%15s</span><span class="s2"> #</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stoq</span><span class="p">,</span> <span class="n">fg_color</span><span class="p">,</span> <span class="n">bg_color</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">hx</span><span class="p">))</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -362,11 +363,11 @@
     <span class="n">print_color_palette</span><span class="p">(</span><span class="n">ATTRIBUTE_QUALITY_PALETTE</span><span class="p">)</span>
     <span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">TaurusDevState</span>
     <span class="kn">import</span> <span class="nn">PyTango</span>
-    <span class="nb">print</span>
-    <span class="nb">print</span> <span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="n">TaurusDevState</span><span class="o">.</span><span class="n">Ready</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="s1">&#39;TaurusDevState.Ready&#39;</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">ON</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="n">TaurusDevState</span><span class="o">.</span><span class="n">Ready</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="s1">&#39;TaurusDevState.Ready&#39;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="n">PyTango</span><span class="o">.</span><span class="n">DevState</span><span class="o">.</span><span class="n">ON</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">DEVICE_STATE_PALETTE</span><span class="o">.</span><span class="n">rgb</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 
            </div>
@@ -401,7 +402,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

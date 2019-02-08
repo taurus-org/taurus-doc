@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusconfigeditor &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusconfigeditor &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -166,12 +166,11 @@
 <span class="sd">taurusconfigeditor.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QConfigEditor&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
@@ -179,10 +178,15 @@
 <span class="kn">import</span> <span class="nn">shutil</span>
 
 
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QConfigEditor&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+
 <span class="k">class</span> <span class="nc">QConfigEditorModel</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A custom Model for QConfigEditor&#39;&#39;&#39;</span>
 
-    <span class="n">showError</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">showError</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">,</span> <span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -196,13 +200,12 @@
     <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;see :meth:`Qt.QAbstractTableModel.setData`&#39;&#39;&#39;</span>
 
-        <span class="n">idx_data_str</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="n">value_str</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">idx_data_str</span> <span class="o">==</span> <span class="n">value_str</span><span class="p">:</span>
+        <span class="n">idx_data_str</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">idx_data_str</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="c1">#self.itemFromIndex(index).setData(value, role)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span><span class="p">(</span><span class="n">value_str</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">showError</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s1">&#39;Wrong value!&#39;</span><span class="p">,</span>
                       <span class="s1">&#39;The value you entered is wrong. The old value will be restored.&#39;</span><span class="p">)</span>
@@ -216,9 +219,9 @@
 
 <span class="sd">        :param iniFileName: (str)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">iniFileName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">iniFileName</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
         <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">)</span>
 
@@ -236,7 +239,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">tmpindex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_toDeleteIndex</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">tmpindex</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">removeBranch</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
@@ -247,8 +250,8 @@
             <span class="n">group</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">tmpindex</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
         <span class="k">while</span><span class="p">(</span><span class="n">itemToMark</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
-                <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
+            <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
             <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">itemToMark</span><span class="o">.</span><span class="n">index</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toDeleteIndex</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
@@ -277,7 +280,7 @@
                 <span class="n">key</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="nb">dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">removeBranch</span><span class="p">(</span><span class="nb">dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">path</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s1">&#39;__orderedConfigNames__&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span>
                     <span class="k">return</span> <span class="nb">dict</span>
                 <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">removeBranch</span><span class="p">(</span>
                     <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">],</span> <span class="n">path</span><span class="p">)</span>
@@ -289,7 +292,7 @@
                     <span class="k">return</span> <span class="nb">dict</span>
                 <span class="nb">dict</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="k">return</span> <span class="nb">dict</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;__orderedConfigNames__&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s1">&#39;__orderedConfigNames__&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="nb">dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="k">return</span> <span class="nb">dict</span>
@@ -304,7 +307,7 @@
 <span class="sd">        :param index: (QModelIndex) index of the model</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">changedItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">changedItem</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">changedItem</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">changeTreeValue</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -316,14 +319,14 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
                            <span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">value</span><span class="p">))))</span>
-        <span class="n">changedItem</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
-            <span class="s1">&#39;Value has been changed. Old value: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">changedItem</span><span class="o">.</span><span class="n">text</span><span class="p">())),</span>
+        <span class="n">changedItem</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+            <span class="s1">&#39;Value has been changed. Old value: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">changedItem</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">)</span>
-        <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;emblem-important&#39;</span><span class="p">)),</span>
+        <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;emblem-important&#39;</span><span class="p">),</span>
                            <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">)</span>
         <span class="k">while</span><span class="p">(</span><span class="n">itemToMark</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
-                <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
+            <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Bold</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
             <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">itemToMark</span><span class="o">.</span><span class="n">index</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saveSettings</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
 
@@ -371,7 +374,7 @@
         <span class="n">configdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTaurusConfigFromSettings</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">configdict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mainConfig</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">configdict</span>
-            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fillTaurusConfig</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">configdict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="s2">&quot;Perspectives&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">childGroups</span><span class="p">()</span>
@@ -379,7 +382,7 @@
             <span class="n">item</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
             <span class="n">item</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="c1"># item.setSelectable(False)</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="s2">&quot;Perspectives/&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;Perspectives/&quot;</span> <span class="o">+</span> <span class="n">name</span>
             <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
             <span class="n">root</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -411,8 +414,8 @@
                 <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
 
-                <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;__itemConfigurations__;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;__itemConfigurations__;&quot;</span> <span class="o">+</span> <span class="n">k</span>
                 <span class="n">child</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
                 <span class="c1"># recursive call to fill all nodes</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fillTaurusConfig</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -425,8 +428,8 @@
 
                 <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">([</span><span class="n">child</span><span class="p">,</span> <span class="n">typeV</span><span class="p">,</span> <span class="n">valueV</span><span class="p">])</span>
 
-                <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;__itemConfigurations__;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;__itemConfigurations__;&quot;</span> <span class="o">+</span> <span class="n">k</span>
                 <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">typeV</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
@@ -451,8 +454,8 @@
                 <span class="k">if</span> <span class="n">BaseConfigurableClass</span><span class="o">.</span><span class="n">isTaurusConfig</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
                     <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
-                    <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
-                    <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+                    <span class="n">txt</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                    <span class="n">path</span> <span class="o">=</span> <span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> <span class="o">+</span> <span class="n">k</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
                     <span class="c1"># recursive call to fill all nodes</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">fillTaurusConfig</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -462,8 +465,8 @@
                     <span class="n">typeV</span><span class="o">.</span><span class="n">setForeground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">setForeground</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
                     <span class="n">item</span><span class="o">.</span><span class="n">appendRow</span><span class="p">([</span><span class="n">child</span><span class="p">,</span> <span class="n">typeV</span><span class="p">,</span> <span class="n">valueV</span><span class="p">])</span>
-                    <span class="n">txt</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
-                    <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+                    <span class="n">txt</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
+                    <span class="n">path</span> <span class="o">=</span> <span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> <span class="o">+</span> <span class="n">k</span>
 
                     <span class="n">child</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -481,11 +484,11 @@
 <span class="sd">        :returns (dict)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">qstate</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="s1">&#39;toByteArray&#39;</span><span class="p">)</span>
+        <span class="n">qstate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">qstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">qstate</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">qstate</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;problems loading TaurusConfig: </span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
                 <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Error loading settings&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
@@ -516,8 +519,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">beginGroup</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
 
         <span class="c1"># store the config dict</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;TaurusConfig&quot;</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
-            <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span><span class="p">[</span><span class="n">group</span><span class="p">]))))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span>
+            <span class="s2">&quot;TaurusConfig&quot;</span><span class="p">,</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_configurationDictionaries</span><span class="p">[</span><span class="n">group</span><span class="p">]))</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
         <span class="c1">#self.info(&#39;MainWindow settings saved in &quot;%s&quot;&#39;%self._settings.fileName())</span>
@@ -539,9 +544,9 @@
         <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span><span class="p">:</span>
             <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
             <span class="k">while</span><span class="p">(</span><span class="n">itemToMark</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-                <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(</span>
-                    <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Normal</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
-                <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVariant</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">)</span>
+                <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="o">.</span><span class="n">Normal</span><span class="p">),</span>
+                                   <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FontRole</span><span class="p">)</span>
+                <span class="n">itemToMark</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">)</span>
                 <span class="n">itemToMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">itemToMark</span><span class="o">.</span><span class="n">index</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
 
 
@@ -573,7 +578,7 @@
         <span class="sd">&#39;&#39;&#39;Reimplemented from :meth:`QWidget.contextMenuEvent`&#39;&#39;&#39;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toDeleteIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">treeview</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">from_qvariant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toDeleteIndex</span><span class="o">.</span><span class="n">data</span><span class="p">(),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toDeleteIndex</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">_toDeleteIndex</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="ow">or</span> <span class="n">text</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;LAST&#39;</span><span class="p">,</span> <span class="s1">&#39;[custom]&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">text</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">perspectives</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
@@ -604,7 +609,7 @@
                 <span class="n">path</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDir</span><span class="o">.</span><span class="n">homePath</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">originalFile</span>
-            <span class="n">iniFileName</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
+            <span class="n">iniFileName</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Select a settings file&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s1">&#39;Ini Files (*.ini)&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">iniFileName</span><span class="p">:</span>
                 <span class="k">return</span>
@@ -684,7 +689,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

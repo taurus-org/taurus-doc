@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.display.qsevensegment &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.qt.qtgui.display.qsevensegment &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -166,11 +166,14 @@
 <span class="sd">qsevensegmentdisplay.py</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Q7SegDigit&#39;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
-
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 
 <span class="n">POLY</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPolygonF</span>
 <span class="n">P</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span>
@@ -272,7 +275,7 @@
 
     <span class="n">DftWidth</span> <span class="o">=</span> <span class="mi">300</span>
     <span class="n">DftHeight</span> <span class="o">=</span> <span class="mi">300</span>
-    <span class="n">DftAspectRatio</span> <span class="o">=</span> <span class="n">DftWidth</span> <span class="o">/</span> <span class="n">DftHeight</span>
+    <span class="n">DftAspectRatio</span> <span class="o">=</span> <span class="n">DftWidth</span> <span class="o">//</span> <span class="n">DftHeight</span>
     <span class="n">DftUseFrame</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -386,7 +389,7 @@
 
         <span class="n">pens</span><span class="p">,</span> <span class="n">brushes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pens</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_brushes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
             <span class="n">seg</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPainterPath</span><span class="p">()</span>
             <span class="n">seg</span><span class="o">.</span><span class="n">addPolygon</span><span class="p">(</span><span class="n">geom</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pens</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -640,11 +643,11 @@
     <span class="k">def</span> <span class="nf">__init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">l</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
         <span class="n">l</span><span class="o">.</span><span class="n">setSpacing</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-        <span class="n">l</span><span class="o">.</span><span class="n">setMargin</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_digits</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
             <span class="n">d</span> <span class="o">=</span> <span class="n">Q7SegDigit</span><span class="p">()</span>
             <span class="n">d</span><span class="o">.</span><span class="n">setUseFrame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">d</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -713,7 +716,7 @@
     <span class="n">dw</span> <span class="o">=</span> <span class="n">Q7SegDigit</span><span class="p">()</span>
     <span class="n">dw</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
     <span class="n">dw</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="nb">print</span> <span class="n">dw</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dw</span><span class="p">)</span>
     <span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
 
 
@@ -798,7 +801,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

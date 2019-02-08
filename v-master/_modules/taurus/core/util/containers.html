@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.containers &mdash; taurus 4.4.0 documentation</title>
+  <title>taurus.core.util.containers &mdash; taurus 4.5.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.4.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.4
+                4.5
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.4 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -166,6 +166,18 @@
 <span class="sd">This module contains a set of useful containers that are not part of the standard</span>
 <span class="sd">python distribution.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CaselessList&quot;</span><span class="p">,</span> <span class="s2">&quot;CaselessDict&quot;</span><span class="p">,</span> <span class="s2">&quot;CaselessWeakValueDict&quot;</span><span class="p">,</span> <span class="s2">&quot;LoopList&quot;</span><span class="p">,</span>
            <span class="s2">&quot;CircBuf&quot;</span><span class="p">,</span> <span class="s2">&quot;LIFO&quot;</span><span class="p">,</span> <span class="s2">&quot;TimedQueue&quot;</span><span class="p">,</span> <span class="s2">&quot;self_locked&quot;</span><span class="p">,</span> <span class="s2">&quot;ThreadDict&quot;</span><span class="p">,</span>
@@ -173,11 +185,6 @@
            <span class="s2">&quot;DefaultThreadDict&quot;</span><span class="p">,</span> <span class="s2">&quot;getDictAsTree&quot;</span><span class="p">,</span> <span class="s2">&quot;ArrayBuffer&quot;</span><span class="p">,</span> <span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
-
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">weakref</span>
-<span class="kn">import</span> <span class="nn">operator</span>
 
 
 <div class="viewcode-block" id="CaselessList"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList">[docs]</a><span class="k">class</span> <span class="nc">CaselessList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
@@ -197,21 +204,21 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inlist</span><span class="o">=</span><span class="p">[]):</span>
         <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">inlist</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                                 <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1"> which is </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span>
                                 <span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__lowerstreq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">b</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
 <div class="viewcode-block" id="CaselessList.findentry"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.findentry">[docs]</a>    <span class="k">def</span> <span class="nf">findentry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;A caseless way of checking if an item is in the list or not.</span>
 <span class="sd">        It returns None or the entry.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                             <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
@@ -248,7 +255,7 @@
 
 <div class="viewcode-block" id="CaselessList.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds an item to the list and checks it&#39;s a string.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                             <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
         <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></div>
@@ -260,7 +267,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;You can only extend lists with lists. &#39;</span>
                             <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                                 <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
             <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span></div>
@@ -268,7 +275,7 @@
 <div class="viewcode-block" id="CaselessList.count"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Counts references to &#39;item&#39; in a caseless manner.</span>
 <span class="sd">        If item is not a string it will always return 0.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">return</span> <span class="mi">0</span>
         <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
@@ -287,7 +294,7 @@
             <span class="n">maxindex</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">minindex</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minindex</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">maxindex</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">maxindex</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                             <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
         <span class="n">index</span> <span class="o">=</span> <span class="n">minindex</span>
@@ -300,7 +307,7 @@
 <div class="viewcode-block" id="CaselessList.insert"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;s.insert(i, x) same as s[i:i] = [x]</span>
 <span class="sd">        Raises TypeError if x isn&#39;t a string.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                             <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
         <span class="nb">list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></div>
@@ -314,7 +321,7 @@
 <span class="sd">        the same length as the slice object requires.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                                 <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -323,7 +330,7 @@
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                     <span class="s1">&#39;Value given to set slice is not a sequence object.&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                                     <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -333,7 +340,7 @@
     <span class="k">def</span> <span class="nf">__setslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called to implement assignment to self[i:j].&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                                 <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
         <span class="nb">list</span><span class="o">.</span><span class="n">__setslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">sequence</span><span class="p">)</span>
@@ -403,8 +410,8 @@
         <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
 <div class="viewcode-block" id="CaselessDict.has_key"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.has_key">[docs]</a>    <span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.has_key`&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span></div>
+        <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.has_key` (needed for python2)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="CaselessDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.get`&quot;&quot;&quot;</span>
@@ -436,7 +443,7 @@
 <div class="viewcode-block" id="CaselessWeakValueDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict">[docs]</a><span class="k">class</span> <span class="nc">CaselessWeakValueDict</span><span class="p">(</span><span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">other</span><span class="p">:</span>
             <span class="c1"># Doesn&#39;t do keyword args</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -456,8 +463,10 @@
         <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
 <div class="viewcode-block" id="CaselessWeakValueDict.has_key"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.has_key">[docs]</a>    <span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary.has_key`&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span></div>
+        <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary`</span>
+<span class="sd">        (needed for python2)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="CaselessWeakValueDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary.get`&quot;&quot;&quot;</span>
@@ -469,8 +478,9 @@
 
 <div class="viewcode-block" id="CaselessWeakValueDict.update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary.update`&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">other</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CaselessWeakValueDict.fromkeys"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.fromkeys">[docs]</a>    <span class="k">def</span> <span class="nf">fromkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
@@ -548,7 +558,7 @@
 
     <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileobj</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
-            <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">fileobj</span><span class="p">)</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+            <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">fileobj</span><span class="p">)</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span><span class="p">:</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileobj</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">))</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;pickle&#39;</span><span class="p">:</span>
@@ -622,10 +632,10 @@
         <span class="sd">&#39;&#39;&#39;returns the current index&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span></div>
 
-<div class="viewcode-block" id="LoopList.next"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;advances one item in the list and returns it&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
 
 <div class="viewcode-block" id="LoopList.previous"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.previous">[docs]</a>    <span class="k">def</span> <span class="nf">previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;goes one item back in the list and returns it&#39;&#39;&#39;</span>
@@ -758,7 +768,7 @@
         <span class="sd">&quot;&quot;&quot; Initializes the list with a sequence or an initial value. &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">operator</span><span class="o">.</span><span class="n">isSequenceType</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -821,12 +831,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="s2">&quot;locked: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;locked: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="s2">&quot;released: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;released: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
     <span class="k">return</span> <span class="n">lock_fun</span></div>
 
@@ -860,7 +870,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">mro</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
 
 <div class="viewcode-block" id="ThreadDict.tracer"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.tracer">[docs]</a>    <span class="k">def</span> <span class="nf">tracer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-        <span class="nb">print</span> <span class="n">text</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ThreadDict.start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">import</span> <span class="nn">threading</span>
@@ -937,7 +947,7 @@
 
     <span class="nd">@self_locked</span>
 <div class="viewcode-block" id="ThreadDict.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threadkeys</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_threadkeys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
@@ -1003,16 +1013,16 @@
     <span class="c1">#__repr__ = self_locked(dict.__repr__)</span>
 
     <span class="c1">#get = self_locked(dict.get)</span>
-    <span class="n">has_key</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">)</span>
+    <span class="c1">#has_key = self_locked(dict.has_key)</span>
     <span class="n">update</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
     <span class="n">copy</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">copy</span><span class="p">)</span>
 
     <span class="n">keys</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-    <span class="n">items</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
-    <span class="n">iterkeys</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">)</span>
-    <span class="n">itervalues</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">itervalues</span><span class="p">)</span>
-    <span class="n">iteritems</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">)</span></div>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">self_locked</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
+    <span class="c1">#iterkeys = self_locked(dict.iterkeys)</span>
+    <span class="c1">#itervalues = self_locked(dict.itervalues)</span>
+    <span class="c1">#iteritems = self_locked(dict.iteritems)</span>
 
 
 <span class="k">class</span> <span class="nc">SortedDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
@@ -1032,7 +1042,7 @@
 <span class="sd">                    or a callable providing a sorting key algorithm.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">operator</span>
-        <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">isCallable</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">:</span>
@@ -1124,7 +1134,7 @@
                 <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">args</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">args</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 
         <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__copy__</span><span class="p">()</span>
@@ -1135,7 +1145,7 @@
         <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
             <span class="kn">import</span> <span class="nn">copy</span>
             <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
-                              <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+                              <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())))</span>
 
         <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="s1">&#39;defaultdict(</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
@@ -1186,12 +1196,12 @@
     <span class="sd">&quot;&quot;&quot;This method will print a recursive dict in a tree-like</span>
 <span class="sd">       shape::</span>
 
-<span class="sd">           &gt;&gt;&gt; print getDictAsTree({&#39;A&#39;:{&#39;B&#39;:[1,2],&#39;C&#39;:[3]}})&quot;&quot;&quot;</span>
+<span class="sd">           &gt;&gt;&gt; print(getDictAsTree({&#39;A&#39;:{&#39;B&#39;:[1,2],&#39;C&#39;:[3]}}))&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">add_to_level</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="nb">print</span> <span class="s1">&#39;with key &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">k</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;with key &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">k</span><span class="p">)</span>
                 <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)])</span>
                 <span class="n">lines</span> <span class="o">+=</span> <span class="n">add_to_level</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">]:</span>  <span class="c1"># End of recursion</span>
@@ -1204,7 +1214,7 @@
             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)])</span>
         <span class="k">return</span> <span class="n">lines</span>
     <span class="n">ls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">add_to_level</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dct</span><span class="p">)]</span>
-    <span class="nb">print</span> <span class="s1">&#39;lines are : </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ls</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lines are : </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="p">)</span>
     <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span></div>
 
 
@@ -1263,8 +1273,8 @@
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span><span class="o">.</span><span class="n">__nonzero__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span><span class="o">.</span><span class="fm">__bool__</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
@@ -1452,7 +1462,7 @@
 
 <span class="k">def</span> <span class="nf">chunks</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generator which yields successive n-sized chunks from l&#39;&#39;&#39;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">n</span><span class="p">):</span>
         <span class="k">yield</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span>
 </pre></div>
 
@@ -1488,7 +1498,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.4.0',
+            VERSION:'4.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
