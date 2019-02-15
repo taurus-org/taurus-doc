@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusdevicepanel &mdash; taurus 4.5.0 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusdevicepanel &mdash; taurus 4.5.1 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -644,12 +644,12 @@
 
 <span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;_ui&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="TaurusDevPanel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusDevPanel.html#taurus.qt.qtgui.panel.TaurusDevPanel">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevPanel</span><span class="p">(</span><span class="n">TaurusMainWindow</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TaurusDevPanel is a Taurus Application inspired in Jive and Atk Panel.</span>
 
 <span class="sd">    It Provides a Device selector and several dockWidgets for interacting and</span>
 <span class="sd">    displaying information from the selected device.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">TaurusMainWindow</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
@@ -666,12 +666,6 @@
             <span class="p">[</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Member</span><span class="p">])</span>  <span class="c1"># TODO: Tango-centric</span>
         <span class="c1"># self.deviceTree.insertFilter(filterNonExported)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deviceTree</span><span class="p">)</span>
-
-        <span class="c1"># needed because of a limitation in when using the useParentModel</span>
-        <span class="c1"># property from designer and taurus parents are not the same as Qt</span>
-        <span class="c1"># Parents</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">taurusAttrForm</span><span class="o">.</span><span class="n">recheckTaurusParent</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">taurusCommandsForm</span><span class="o">.</span><span class="n">recheckTaurusParent</span><span class="p">()</span>
 
         <span class="c1"># register subwidgets for configuration purposes</span>
         <span class="c1"># self.registerConfigDelegate(self.taurusAttrForm)</span>
@@ -690,7 +684,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusDevPanel.createActions"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusDevPanel.html#taurus.qt.qtgui.panel.TaurusDevPanel.createActions">[docs]</a>    <span class="k">def</span> <span class="nf">createActions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;create actions &#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;create actions&quot;&quot;&quot;</span>
         <span class="c1"># View Menu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">showAttrAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">attrDW</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
@@ -698,7 +692,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">commandsDW</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TaurusDevPanel.setTangoHost"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusDevPanel.html#taurus.qt.qtgui.panel.TaurusDevPanel.setTangoHost">[docs]</a>    <span class="k">def</span> <span class="nf">setTangoHost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;extended from :class:setTangoHost&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;extended from :class:setTangoHost&quot;&quot;&quot;</span>
         <span class="n">TaurusMainWindow</span><span class="o">.</span><span class="n">setTangoHost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">deviceTree</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">host</span><span class="p">)</span></div>
         <span class="c1"># self.deviceTree.insertFilter(filterNonExported)</span>
@@ -725,6 +719,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setDevice</span><span class="p">(</span><span class="n">devname</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusDevPanel.setDevice"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusDevPanel.html#taurus.qt.qtgui.panel.TaurusDevPanel.setDevice">[docs]</a>    <span class="k">def</span> <span class="nf">setDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">devname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set the device to be shown by the commands and attr forms&quot;&quot;&quot;</span>
         <span class="c1"># try to connect with the device</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">devname</span><span class="p">)</span>
         <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
@@ -743,6 +738,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Device unreachable&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusDevPanel.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusDevPanel.html#taurus.qt.qtgui.panel.TaurusDevPanel.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplemented to delegate model to the commands and attrs forms&quot;&quot;&quot;</span>
+        <span class="n">TaurusMainWindow</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">taurusAttrForm</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">taurusCommandsForm</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="TaurusDevPanel.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusDevPanel.html#taurus.qt.qtgui.panel.TaurusDevPanel.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
@@ -866,7 +867,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.0',
+            VERSION:'4.5.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

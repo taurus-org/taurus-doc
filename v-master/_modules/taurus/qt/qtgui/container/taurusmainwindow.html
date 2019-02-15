@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.container.taurusmainwindow &mdash; taurus 4.5.0 documentation</title>
+  <title>taurus.qt.qtgui.container.taurusmainwindow &mdash; taurus 4.5.1 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.0 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -780,8 +780,10 @@
             <span class="n">ba</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;TaurusConfig&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">applyQConfig</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Problem loading configuration from &quot;</span><span class="si">%s</span><span class="s1">&quot;. Some settings may not be restored.</span><span class="se">\n</span><span class="s1"> Details: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="nb">str</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">fileName</span><span class="p">()),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Problem loading configuration from &quot;</span><span class="si">{}</span><span class="s1">&quot;. &#39;</span>
+                   <span class="o">+</span> <span class="s1">&#39;Some settings may not be restored.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                   <span class="o">+</span> <span class="s1">&#39; Reason: </span><span class="si">{}</span><span class="s1">&#39;</span>
+                   <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">fileName</span><span class="p">()),</span> <span class="n">e</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Error Loading settings&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
@@ -1328,7 +1330,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.0',
+            VERSION:'4.5.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
