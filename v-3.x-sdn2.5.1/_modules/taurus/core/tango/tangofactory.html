@@ -445,6 +445,10 @@
 <span class="sd">           :return: (taurus.core.tango.TangoDevice) a device object </span>
 <span class="sd">           :raise: (taurus.core.taurusexception.TaurusException) if the given dev_name is invalid.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sardana passes model names with signals declared as Qt.pyqtSignal(&quot;QString)</span>
+        <span class="c1"># and this makes the slot values to be unicode on py2. Cast any of dev_name</span>
+        <span class="c1"># to str to avoid problems with PyTango which does not understand unicode</span>
+        <span class="n">dev_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span> 
         <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tango_alias_devs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_name</span><span class="p">)</span>
