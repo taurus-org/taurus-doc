@@ -218,7 +218,11 @@
 
 <div class="viewcode-block" id="TaurusAttribute.cleanUp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TaurusAttribute] cleanUp&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeEvents</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_unsuscribeEvents&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+                <span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TaurusAttribute._unsuscribeEvents API&#39;</span><span class="p">,</span>
+                <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;If you need it called in cleanUp, re-implement cleanUp&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unsuscribeEvents</span><span class="p">()</span>
         <span class="n">TaurusModel</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
@@ -284,14 +288,6 @@
 <div class="viewcode-block" id="TaurusAttribute.poll"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.poll">[docs]</a>    <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass&quot;</span> <span class="o">+</span>
                                   <span class="s2">&quot; TaurusAttribute.poll&quot;</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_subscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass&quot;</span> <span class="o">+</span>
-                                  <span class="s2">&quot; TaurusAttribute._subscribeEvents&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_unsubscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass&quot;</span> <span class="o">+</span>
-                                  <span class="s2">&quot; TaurusAttribute._unsubscribeEvents&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusAttribute.isUsingEvents"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.isUsingEvents">[docs]</a>    <span class="k">def</span> <span class="nf">isUsingEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Not allowed to call AbstractClass&quot;</span> <span class="o">+</span>
