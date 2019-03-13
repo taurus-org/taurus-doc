@@ -180,8 +180,7 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">jdraw_parser</span>
-
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic.jdraw.jdraw_parser</span> <span class="k">import</span> <span class="n">parse</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusJDrawSynopticsView&quot;</span><span class="p">]</span>
 
@@ -528,7 +527,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting to parse </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
                 <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsFactory</span><span class="p">(</span><span class="n">delayed</span><span class="o">=</span><span class="n">delayed</span><span class="p">)</span>
-                <span class="n">scene</span> <span class="o">=</span> <span class="n">jdraw_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+                <span class="n">scene</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
                 <span class="n">scene</span><span class="o">.</span><span class="n">setSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_selectionStyle</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Obtained </span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">scene</span><span class="p">:</span>
