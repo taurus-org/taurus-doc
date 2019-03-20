@@ -1006,12 +1006,21 @@
     <span class="n">_TEXT_RATIO</span> <span class="o">=</span> <span class="mf">0.8</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItemGroup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsRectItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItemGroup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsRectItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rect</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsTextItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsTextItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="o">.</span><span class="n">setTransform</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QTransform</span><span class="o">.</span><span class="n">fromScale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">),</span>
+            <span class="kc">True</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_validBackground</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># using that like the previous code create a worst result</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__layoutValide</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1302,8 +1311,9 @@
                 <span class="n">_frName</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">_frName</span> <span class="o">=</span> <span class="s1">&#39;rvalue.magnitude&#39;</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_currText</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span><span class="n">fragmentName</span><span class="o">=</span><span class="n">_frName</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_currText</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;unicode-escape&#39;</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span><span class="n">fragmentName</span><span class="o">=</span><span class="n">_frName</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currText</span> <span class="o">=</span> <span class="n">text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_currHtmlText</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">TaurusGraphicsItem</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
