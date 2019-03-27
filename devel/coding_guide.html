@@ -280,6 +280,24 @@ PyQt4, PyQt5 and PySide versions.</p>
 </pre></div>
 </div>
 </li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>this guideline applies to code which is part of the taurus module or its
+plugins. For end-user applications that use taurus, this rule may not apply,
+as mentioned in <a class="reference external" href="http://taurus-scada.org/tep/?TEP18.md">TEP18</a>:</p>
+<blockquote class="last">
+<div><em>For an end-user application based on taurus</em> it is probably better to import
+directly from a specific binding (PyQt5 is the best supported) and let taurus to
+adapt to that choice. In this way, one can write idiomatic code that better
+matches the chosen binding. Using the <code class="docutils literal"><span class="pre">taurus.external.qt</span></code> shim
+is also possible if one wants to make the code binding-agnostic, but in that
+case one must keep in mind that the resulting code will be less idiomatic
+and that the shim&#8217;s API may be eventually altered to better fit with taurus
+own requirements (and that those changes may not be aligned with the
+application needs).</div></blockquote>
+</div>
+<ol class="arabic" start="2">
 <li><p class="first">Since Taurus v&gt;=4.0, Qt-based code in Taurus assumes
 that <a class="reference external" href="http://pyqt.sourceforge.net/Docs/PyQt4/incompatible_apis.html">PyQt API v2</a> is used. PyQt API 1 code is not accepted in taurus.</p>
 <ul>
