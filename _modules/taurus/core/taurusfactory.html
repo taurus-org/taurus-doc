@@ -535,6 +535,17 @@
             <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
+<div class="viewcode-block" id="TaurusFactory.getValidatorFromName"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.getValidatorFromName">[docs]</a>    <span class="k">def</span> <span class="nf">getValidatorFromName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtain the validator object corresponding to the given model</span>
+<span class="sd">        name. If the model name is not valid for any TaurusModel class,</span>
+<span class="sd">        it returns None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modeltypes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getValidTypesForName</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">modeltypes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elementTypesMap</span><span class="p">[</span><span class="n">modeltypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">getNameValidator</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="TaurusFactory.findObjectClass"><a class="viewcode-back" href="../../../devel/api/taurus/core/resource/_TaurusFactory.html#taurus.core.TaurusFactory.findObjectClass">[docs]</a>    <span class="k">def</span> <span class="nf">findObjectClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">absolute_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtain the class object corresponding to the given name.</span>
