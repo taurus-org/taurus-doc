@@ -175,6 +175,7 @@
 
 <span class="kn">import</span> <span class="nn">taurus</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt.compat</span> <span class="k">import</span> <span class="n">PY_OBJECT</span>
 <span class="kn">import</span> <span class="nn">taurus.core</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.tree</span> <span class="k">import</span> <span class="n">TaurusDbTreeWidget</span>
@@ -192,7 +193,7 @@
     <span class="c1"># TODO add action to add new TaurusModelSelectorItem</span>
     <span class="c1"># TODO add mechanism to allow manual plugin activation</span>
     <span class="c1">#      (instead of relying on installation)</span>
-    <span class="n">modelsAdded</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QStringList&#39;</span><span class="p">)</span>
+    <span class="n">modelsAdded</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">PY_OBJECT</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QTabWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
@@ -239,7 +240,7 @@
     <span class="sd">&quot;&quot;&quot;Base class for ModelSelectorItem.</span>
 <span class="sd">    It defines the minimal API to be defined in the specialization</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">modelsAdded</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QStringList&#39;</span><span class="p">)</span>
+    <span class="n">modelsAdded</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">PY_OBJECT</span><span class="p">)</span>
     <span class="n">_dragEnabled</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="c1"># TODO add action for setModel</span>
 
