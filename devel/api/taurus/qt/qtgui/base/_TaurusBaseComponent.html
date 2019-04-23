@@ -224,15 +224,18 @@ If None is given (default) the component fetches the pending operations</td>
 <dl class="method">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.contextMenuEvent">
 <code class="descname">contextMenuEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.contextMenuEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle the popup menu event</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> &#8211; the popup menu event</td>
-</tr>
-</tbody>
-</table>
+<dd><p>DEPRECATED:
+Until v4.5.3a, the default implementation of contextMenuEvent showed
+the content of taurusMenu as a context menu. But this resulted in
+unwanted behaviour when the widget already implemented its own context
+menu (see <a class="reference external" href="https://github.com/taurus-org/taurus/issues/905">https://github.com/taurus-org/taurus/issues/905</a> )</p>
+<p>Therefore this feature was disabled in 4.5.3a.</p>
+<p>If you still want to show the contents of taurusMenu as a context menu,
+you can explicitly reimplement the contextMenuEvent method as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -892,18 +895,23 @@ It is the equivalent of doing:</p>
 
 <dl class="method">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusPopupMenu">
-<code class="descname">getTaurusPopupMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.getTaurusPopupMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getTaurusPopupMenu</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an xml string representing the current taurus popup menu</p>
-<table class="docutils field-list" frame="void" rules="none">
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an xml string representing the current taurus popup menu</td>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">an xml string representing the current taurus popup menu</td>
 </tr>
 </tbody>
 </table>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.5.3a.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1199,8 +1207,11 @@ in the next call to <a class="reference internal" href="#taurus.qt.qtgui.base.Ta
 
 <dl class="method">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.resetTaurusPopupMenu">
-<code class="descname">resetTaurusPopupMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.resetTaurusPopupMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">resetTaurusPopupMenu</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.resetTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the taurus popup menu to empty</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.5.3a.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1478,16 +1489,23 @@ component does not have a parent Taurus component</li>
 
 <dl class="method">
 <dt id="taurus.qt.qtgui.base.TaurusBaseComponent.setTaurusPopupMenu">
-<code class="descname">setTaurusPopupMenu</code><span class="sig-paren">(</span><em>menuData</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/base/taurusbase.html#TaurusBaseComponent.setTaurusPopupMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setTaurusPopupMenu</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.base.TaurusBaseComponent.setTaurusPopupMenu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets/unsets the taurus popup menu</p>
-<table class="docutils field-list" frame="void" rules="none">
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>menuData</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; an xml representing the popup menu</td>
+<tr class="field-odd field"><th class="field-name">type menuData:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">param menuData:</th><td class="field-body">an xml representing the popup menu</td>
 </tr>
 </tbody>
 </table>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 4.5.3a.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
