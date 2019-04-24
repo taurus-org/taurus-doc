@@ -326,35 +326,62 @@
     <span class="n">perspectiveChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 
     <span class="c1"># customization options:</span>
-    <span class="c1"># blinking semi-period in ms. Set to None for not showing the Heart beat</span>
-    <span class="c1"># LED</span>
-    <span class="n">_heartbeat</span> <span class="o">=</span> <span class="mi">1500</span>
-    <span class="n">_showFileMenu</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">_showViewMenu</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">_showTaurusMenu</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">_showToolsMenu</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">_showHelpMenu</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="c1"># Allows the user to change/create/delete perspectives</span>
-    <span class="n">_supportUserPerspectives</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">_showLogger</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="c1">#</span>
-    <span class="c1"># set to None for disabling splash screen</span>
-    <span class="n">_splashLogo</span> <span class="o">=</span> <span class="s2">&quot;large:TaurusSplash.png&quot;</span>
-    <span class="n">_splashMessage</span> <span class="o">=</span> <span class="s2">&quot;Initializing Main window...&quot;</span>
+    <span class="c1">#: Heartbeat LED blinking semi-period in ms. Set to None for not showing it</span>
+    <span class="n">HEARTBEAT</span> <span class="o">=</span> <span class="mi">1500</span>
+    <span class="c1">#: Whether to show the File menu</span>
+    <span class="n">FILE_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether to show the View menu</span>
+    <span class="n">VIEW_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether to show the Taurus menu</span>
+    <span class="n">TAURUS_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether to show the Tools menu</span>
+    <span class="n">TOOLS_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether to show the Help menu</span>
+    <span class="n">HELP_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether to show the Full Screen Toolbar</span>
+    <span class="n">FULLSCREEN_TOOLBAR_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether to show actions for user perspectives</span>
+    <span class="n">USER_PERSPECTIVES_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether add a dockwidget with the logger widget</span>
+    <span class="n">LOGGER_WIDGET_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Name of logo image for splash screen. Set to None for disabling splash</span>
+    <span class="n">SPLASH_LOGO_NAME</span> <span class="o">=</span> <span class="s2">&quot;large:TaurusSplash.png&quot;</span>
+    <span class="c1">#: Message for splash screen</span>
+    <span class="n">SPLASH_MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;Initializing Main window...&quot;</span>
+
+    <span class="n">_old_options_api</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;_heartbeat&#39;</span><span class="p">:</span> <span class="s1">&#39;HEARTBEAT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_showFileMenu&#39;</span><span class="p">:</span> <span class="s1">&#39;FILE_MENU_ENABLED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_showViewMenu&#39;</span><span class="p">:</span> <span class="s1">&#39;VIEW_MENU_ENABLED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_showTaurusMenu&#39;</span><span class="p">:</span> <span class="s1">&#39;TAURUS_MENU_ENABLED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_showToolsMenu&#39;</span><span class="p">:</span> <span class="s1">&#39;TOOLS_MENU_ENABLED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_showHelpMenu&#39;</span><span class="p">:</span> <span class="s1">&#39;HELP_MENU_ENABLED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_showLogger&#39;</span><span class="p">:</span> <span class="s1">&#39;LOGGER_WIDGET_ENABLED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_supportUserPerspectives&#39;</span><span class="p">:</span> <span class="s1">&#39;USER_PERSPECTIVES_ENABLED&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_splashLogo&#39;</span><span class="p">:</span> <span class="s1">&#39;SPLASH_LOGO_NAME&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_splashMessage&#39;</span><span class="p">:</span> <span class="s1">&#39;SPLASH_MESSAGE&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">splash</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseContainer</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+        <span class="c1"># Provide bck-compat with old options API</span>
+        <span class="k">for</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_options_api</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="n">old</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="n">new</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5.3a&#39;</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">))</span>
+
         <span class="k">if</span> <span class="n">splash</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">splash</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_splashLogo</span><span class="p">)</span>
+            <span class="n">splash</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SPLASH_LOGO_NAME</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">splash</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">designMode</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSplashScreen</span><span class="p">(</span>
-                <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_splashLogo</span><span class="p">))</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SPLASH_LOGO_NAME</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_splashMessage</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__splashScreen</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SPLASH_MESSAGE</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__tangoHost</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span> <span class="o">=</span> <span class="kc">None</span>
@@ -363,10 +390,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">helpManualDW</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resetHelpManualURI</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">HELP_MENU_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetHelpManualURI</span><span class="p">()</span>
 
         <span class="c1"># Heartbeat</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_heartbeat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEARTBEAT</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">QLed</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span> <span class="o">=</span> <span class="n">QLed</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">heartbeatLed</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span>
@@ -383,33 +412,41 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__createActions</span><span class="p">()</span>
 
         <span class="c1"># logger dock widget</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showLogger</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGGER_WIDGET_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">addLoggerWidget</span><span class="p">()</span>
 
         <span class="c1"># Create Menus</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showFileMenu</span><span class="p">:</span>  <span class="c1"># File menu</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">FILE_MENU_ENABLED</span><span class="p">:</span>  <span class="c1"># File menu</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createFileMenu</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showViewMenu</span><span class="p">:</span>  <span class="c1"># View menu</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">VIEW_MENU_ENABLED</span><span class="p">:</span>  <span class="c1"># View menu</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createViewMenu</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showTaurusMenu</span><span class="p">:</span>  <span class="c1"># Taurus Menu</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAURUS_MENU_ENABLED</span><span class="p">:</span>  <span class="c1"># Taurus Menu</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createTaurusMenu</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showToolsMenu</span><span class="p">:</span>  <span class="c1"># Tools Menu</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOOLS_MENU_ENABLED</span><span class="p">:</span>  <span class="c1"># Tools Menu</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createToolsMenu</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showHelpMenu</span><span class="p">:</span>  <span class="c1"># Help Menu</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">HELP_MENU_ENABLED</span><span class="p">:</span>  <span class="c1"># Help Menu</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createHelpMenu</span><span class="p">()</span>
 
         <span class="c1"># View Toolbar</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;viewToolBar&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">FULLSCREEN_TOOLBAR_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;viewToolBar&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span><span class="p">)</span>
 
         <span class="c1"># Perspectives Toolbar</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">USER_PERSPECTIVES_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createPerspectivesToolBar</span><span class="p">()</span>
 
         <span class="c1"># disable the configuration action if there is nothing to configure</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configurationAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">configurationDialog</span><span class="o">.</span><span class="n">_tabwidget</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaurusMainWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_options_api</span><span class="p">:</span>
+            <span class="n">new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_options_api</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="n">new</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5.3a&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusMainWindow.contextMenuEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.contextMenuEvent">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reimplemented to avoid deprecation warning related to:</span>
@@ -432,7 +469,7 @@
 <div class="viewcode-block" id="TaurusMainWindow.createFileMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createFileMenu">[docs]</a>    <span class="k">def</span> <span class="nf">createFileMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;adds a &quot;File&quot; Menu&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;File&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">USER_PERSPECTIVES_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">importSettingsFileAction</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fileMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exportSettingsFileAction</span><span class="p">)</span>
             <span class="c1"># self.fileMenu.addAction(self.resetSettingsAction)</span>
@@ -442,12 +479,12 @@
 <div class="viewcode-block" id="TaurusMainWindow.createViewMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.createViewMenu">[docs]</a>    <span class="k">def</span> <span class="nf">createViewMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;adds a &quot;View&quot; Menu&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showLogger</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGGER_WIDGET_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__loggerDW</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;Tool Bars&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggleFullScreenAction</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">USER_PERSPECTIVES_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="s2">&quot;Load Perspectives&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="p">)</span>
@@ -487,7 +524,7 @@
         <span class="n">pbutton</span><span class="o">.</span><span class="n">setMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">pbutton</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">savePerspectiveAction</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showViewMenu</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">VIEW_MENU_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesToolBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span></div>
 
@@ -497,9 +534,10 @@
 <span class="sd">        .. note:: This method may need be called by derived classes at the end</span>
 <span class="sd">                  of their initialization.</span>
 
-<span class="sd">        :return: (QMenu) the updated perspectives menu (or None if self._supportUserPerspectives is False)</span>
+<span class="sd">        :return: (QMenu) the updated perspectives menu (or None if</span>
+<span class="sd">                 self.USER_PERSPECTIVES_ENABLED is False)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supportUserPerspectives</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">USER_PERSPECTIVES_ENABLED</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perspectivesMenu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPerspectivesList</span><span class="p">():</span>
@@ -1026,12 +1064,12 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;External Applications&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">setToolButtonStyle</span><span class="p">(</span>
                     <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolButtonTextBesideIcon</span><span class="p">)</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showViewMenu</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">VIEW_MENU_ENABLED</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">extAppsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">extapp</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">toMenu</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showToolsMenu</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">toMenu</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOOLS_MENU_ENABLED</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolsMenu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">createToolsMenu</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">externalAppsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">extapp</span><span class="p">)</span>
@@ -1207,7 +1245,7 @@
 
 <div class="viewcode-block" id="TaurusMainWindow.resetHeartbeat"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/container/_TaurusMainWindow.html#taurus.qt.qtgui.container.TaurusMainWindow.resetHeartbeat">[docs]</a>    <span class="k">def</span> <span class="nf">resetHeartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;resets the heartbeat interval&#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setHeartbeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_heartbeat</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHeartbeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">HEARTBEAT</span><span class="p">)</span></div>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
     <span class="c1"># Public slots for apply/restore changes</span>
@@ -1261,17 +1299,17 @@
     <span class="n">app</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
 
     <span class="k">class</span> <span class="nc">MyMainWindow</span><span class="p">(</span><span class="n">TaurusMainWindow</span><span class="p">):</span>
-        <span class="n">_heartbeat</span> <span class="o">=</span> <span class="mi">300</span>  <span class="c1"># blinking semi-period in ms. Set to None for not showing the Heart beat LED</span>
-        <span class="n">_showFileMenu</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">_showViewMenu</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">_showTaurusMenu</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">_showToolsMenu</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">_showHelpMenu</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">HEARTBEAT</span> <span class="o">=</span> <span class="mi">300</span>  <span class="c1"># blinking semi-period in ms. Set to None for not showing the Heart beat LED</span>
+        <span class="n">FILE_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">VIEW_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">TAURUS_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">TOOLS_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">HELP_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># Allows the user to change/create/delete perspectives</span>
-        <span class="n">_supportUserPerspectives</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">_showLogger</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">USER_PERSPECTIVES_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">LOGGER_WIDGET_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># set to None for disabling splash screen</span>
-        <span class="n">_splashLogo</span> <span class="o">=</span> <span class="s2">&quot;large:TaurusSplash.png&quot;</span>
+        <span class="n">SPLASH_LOGO_NAME</span> <span class="o">=</span> <span class="s2">&quot;large:TaurusSplash.png&quot;</span>
         <span class="n">_splashMessage</span> <span class="o">=</span> <span class="s2">&quot;Initializing Main window...&quot;</span>
 
         <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

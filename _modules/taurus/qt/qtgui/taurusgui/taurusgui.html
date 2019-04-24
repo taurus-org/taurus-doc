@@ -353,7 +353,7 @@
 
 
 <div class="viewcode-block" id="TaurusGui"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui">[docs]</a><span class="k">class</span> <span class="nc">TaurusGui</span><span class="p">(</span><span class="n">TaurusMainWindow</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is main class for constructing the dynamic GUIs. TaurusGui is a</span>
 <span class="sd">    specialised TaurusMainWindow which is able to handle &quot;panels&quot; and load</span>
 <span class="sd">    configuration files.</span>
@@ -411,7 +411,7 @@
 <span class="sd">            gui.show()</span>
 <span class="sd">            app.exec_()</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">SelectedInstrument</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
     <span class="n">doorNameChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
@@ -419,6 +419,13 @@
     <span class="n">newShortMessage</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
 
     <span class="n">IMPLICIT_ASSOCIATION</span> <span class="o">=</span> <span class="s1">&#39;__[IMPLICIT]__&#39;</span>
+
+    <span class="c1">#: Whether to show user actions related to shared data connections</span>
+    <span class="n">PANELS_MENU_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: Whether to show the applets toolbar</span>
+    <span class="n">APPLETS_TOOLBAR_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1">#: wether to add the Quick access Toolbar (empty by default)</span>
+    <span class="n">QUICK_ACCESS_TOOLBAR_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">confname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">configRecursionDepth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">TaurusMainWindow</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -451,13 +458,29 @@
         <span class="c1"># Create a global SharedDataManager</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span> <span class="o">=</span> <span class="n">SharedDataManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">__initPanelsMenu</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__initQuickAccessToolBar</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__initJorgBar</span><span class="p">()</span>
+        <span class="c1"># Initialize menus &amp; toolbars</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">PANELS_MENU_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initPanelsMenu</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initPanelsToolBar</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">QUICK_ACCESS_TOOLBAR_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initQuickAccessToolBar</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">APPLETS_TOOLBAR_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initJorgBar</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">__initSharedDataConnections</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__initToolsMenu</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__initViewMenu</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__initPanelsToolBar</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOOLS_MENU_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initToolsMenu</span><span class="p">()</span>
+
+        <span class="c1"># Create lockview actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
+            <span class="s2">&quot;system-lock-screen&quot;</span><span class="p">),</span> <span class="s2">&quot;Lock View&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setLockView</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">VIEW_MENU_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__initViewMenu</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">loadConfiguration</span><span class="p">(</span><span class="n">confname</span><span class="p">)</span>
 
@@ -509,7 +532,11 @@
     <span class="k">def</span> <span class="nf">__initPanelsMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Panels menu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__panelsMenu</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="s1">&#39;Panels&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">insertMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpMenu</span><span class="o">.</span><span class="n">menuAction</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panelsMenu</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>  <span class="c1"># insert the panels menu before the help menu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">insertMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpMenu</span><span class="o">.</span><span class="n">menuAction</span><span class="p">(),</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">__panelsMenu</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># Or just add it if help menu is not shown</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__panelsMenu</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hideAllPanelsAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panelsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;actions:hide.svg&#39;</span><span class="p">),</span> <span class="s2">&quot;Hide all panels&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hideAllPanels</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">showAllPanelsAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panelsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
@@ -539,11 +566,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
         <span class="c1"># view locking</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
-            <span class="s2">&quot;system-lock-screen&quot;</span><span class="p">),</span> <span class="s2">&quot;Lock View&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setLockView</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__initPanelsToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -551,15 +573,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">panelsToolBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="s2">&quot;Panels&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">panelsToolBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;PanelsToolbar&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">panelsToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">newPanelAction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panelsToolBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">VIEW_MENU_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panelsToolBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">__initQuickAccessToolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quickAccessToolBar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="s2">&quot;Quick Access&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quickAccessToolBar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;quickAccessToolbar&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quickAccessToolBar</span><span class="o">.</span><span class="n">setToolButtonStyle</span><span class="p">(</span>
             <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolButtonTextBesideIcon</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">quickAccessToolBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">VIEW_MENU_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewToolBarsMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">quickAccessToolBar</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">()</span>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__initJorgBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Fancy Stuff ToolBar (aka Jorg&#39;s Bar ;) )</span>
@@ -989,8 +1014,10 @@
         <span class="n">synopticpanel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">synoptic</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                          <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span>
                                              <span class="s1">&#39;image-x-generic&#39;</span><span class="p">))</span>
-        <span class="n">toggleSynopticAction</span> <span class="o">=</span> <span class="n">synopticpanel</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">quickAccessToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">toggleSynopticAction</span><span class="p">)</span></div>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">QUICK_ACCESS_TOOLBAR_ENABLED</span><span class="p">:</span>
+            <span class="n">toggleSynopticAction</span> <span class="o">=</span> <span class="n">synopticpanel</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">quickAccessToolBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">toggleSynopticAction</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusGui.createConsole"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.createConsole">[docs]</a>    <span class="k">def</span> <span class="nf">createConsole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernels</span><span class="p">):</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;createConsole() and the &quot;CONSOLE&quot; configuration key are &#39;</span> <span class="o">+</span>
@@ -1211,8 +1238,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">resetQSettings</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">APPNAME</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">customIcon</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">organizationIcon</span><span class="p">,</span> <span class="n">ORGNAME</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">customIcon</span><span class="p">,</span> <span class="n">APPNAME</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">APPLETS_TOOLBAR_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">organizationIcon</span><span class="p">,</span> <span class="n">ORGNAME</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">customIcon</span><span class="p">,</span> <span class="n">APPNAME</span><span class="p">)</span>
 
         <span class="c1"># get custom widget catalog entries</span>
         <span class="c1"># @todo: support also loading from xml</span>
@@ -1231,8 +1260,9 @@
                                                   <span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">url</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setHelpManualURI</span><span class="p">(</span><span class="n">MANUAL_URI</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span><span class="p">,</span> <span class="s1">&#39;Manual&#39;</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                         <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;help-browser&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">HELP_MENU_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span><span class="p">,</span> <span class="s1">&#39;Manual&#39;</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;help-browser&#39;</span><span class="p">))</span>
 
         <span class="c1"># configure the macro infrastructure</span>
         <span class="n">MACROSERVER_NAME</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;MACROSERVER_NAME&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
@@ -1476,14 +1506,21 @@
         <span class="k">for</span> <span class="n">panel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__panels</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">panel</span><span class="o">.</span><span class="n">toggleViewAction</span><span class="p">()</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
             <span class="n">panel</span><span class="o">.</span><span class="n">setFeatures</span><span class="p">(</span><span class="n">dwfeat</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">newPanelAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">showAllPanelsAction</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">hideAllPanelsAction</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">addExternalApplicationAction</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">removeExternalApplicationAction</span><span class="p">,</span>
-                       <span class="p">):</span>
-            <span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">PANELS_MENU_ENABLED</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">newPanelAction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">showAllPanelsAction</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">hideAllPanelsAction</span><span class="p">,</span>
+                        <span class="p">):</span>
+                <span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOOLS_MENU_ENABLED</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addExternalApplicationAction</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">removeExternalApplicationAction</span><span class="p">,</span>
+                        <span class="p">):</span>
+                <span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_lockviewAction</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="ow">not</span> <span class="n">modifiable</span><span class="p">)</span>
+
         <span class="n">TaurusMainWindow</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusGui.onShortMessage"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.onShortMessage">[docs]</a>    <span class="k">def</span> <span class="nf">onShortMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
@@ -1801,7 +1838,6 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
-    <span class="c1"># xmlTest()</span>
 </pre></div>
 
            </div>
