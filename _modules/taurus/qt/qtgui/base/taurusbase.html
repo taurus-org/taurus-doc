@@ -308,6 +308,12 @@
                                     <span class="s1">&#39;formatter&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resetModelInConfig</span><span class="p">()</span>
 
+        <span class="c1"># connect taurusEvent signal to filterEvent</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterEvent</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not connect taurusEvent signal: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
     <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">getSignaller</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span>
@@ -1059,15 +1065,11 @@
 
 <div class="viewcode-block" id="TaurusBaseComponent.preAttach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.preAttach">[docs]</a>    <span class="k">def</span> <span class="nf">preAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.attach() before actual attach is performed.</span>
-<span class="sd">        Default implementation just emits a signal.</span>
+<span class="sd">        Default implementation does nothing.</span>
 
 <span class="sd">        Override when necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterEvent</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="c1"># self.error(&quot;In %s.preAttach() ... failed!&quot; % str(type(self)))</span>
-            <span class="k">pass</span></div>
+        <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="TaurusBaseComponent.postAttach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.postAttach">[docs]</a>    <span class="k">def</span> <span class="nf">postAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.attach() after actual attach is performed.</span>
@@ -1079,15 +1081,11 @@
 
 <div class="viewcode-block" id="TaurusBaseComponent.preDetach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.preDetach">[docs]</a>    <span class="k">def</span> <span class="nf">preDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.detach() before actual deattach is performed.</span>
-<span class="sd">        Default implementation just disconnects a signal.</span>
+<span class="sd">        Default implementation does nothing.</span>
 
 <span class="sd">        Override when necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterEvent</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="c1"># self.error(&quot;In %s.preDetach() ... failed!&quot; % str(type(self)))</span>
-            <span class="k">pass</span></div>
+        <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="TaurusBaseComponent.postDetach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.postDetach">[docs]</a>    <span class="k">def</span> <span class="nf">postDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.detach() after actual deattach is performed.</span>
