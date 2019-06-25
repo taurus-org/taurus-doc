@@ -1159,7 +1159,12 @@
                               <span class="bp">self</span><span class="o">.</span><span class="n">_startingTime</span><span class="p">)</span>  <span class="c1"># Set a range of 1 min</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setAxisScale</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Set a range of 10 events</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">axisWidget</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span><span class="o">.</span><span class="n">scaleDivChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rescheduleReplot</span><span class="p">)</span>  <span class="c1"># disconnects the previous axis</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axisWidget</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># disconnect the previous axis</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">scaleDivChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rescheduleReplot</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                <span class="k">pass</span>  <span class="c1"># ignore exception if signal was not previously connected</span>
         <span class="c1"># enable/disable the archiving action</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_useArchivingAction</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enable</span><span class="p">)</span>
         <span class="c1"># call the parent class method</span>
@@ -2008,8 +2013,8 @@
 
 <span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
     <span class="n">w</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSplitter</span><span class="p">()</span>
@@ -2024,92 +2029,60 @@
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">trend_main</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="p">(),</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_axis_mode</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span>
+               <span class="n">use_archiving</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+               <span class="n">max_buffer_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">forced_read_period</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+               <span class="n">demo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+               <span class="n">window_name</span><span class="o">=</span><span class="s1">&#39;TaurusTrend (qwt5)&#39;</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
-    <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] [&lt;model1&gt; [&lt;model2&gt;] ...]&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;a taurus application for plotting trends&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;--x-axis-mode&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;x_axis_mode&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;t|e&quot;</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;interprete X values as either timestamps (t) or event numbers (e). Accepted values: t|e&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;--buffer&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;max_buffer_size&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">TaurusTrend</span><span class="o">.</span><span class="n">DEFAULT_MAX_BUFFER_SIZE</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;maximum number of values per curve to be plotted (default = </span><span class="si">%i</span><span class="s2">) (when reached, the oldest values will be discarded)&quot;</span> <span class="o">%</span> <span class="n">TaurusTrend</span><span class="o">.</span><span class="n">DEFAULT_MAX_BUFFER_SIZE</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="s2">&quot;--config-file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;config_file&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use the given config file for initialization&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--export&quot;</span><span class="p">,</span> <span class="s2">&quot;--export-file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;export_file&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use the given file to as output instead of showing the plot&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--forced-read&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;forced_read_period&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;MILLISECONDS&quot;</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;force Taurustrend to re-read the attributes every MILLISECONDS ms&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="s2">&quot;--use-archiving&quot;</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;use_archiving&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--window-name&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;window_name&quot;</span><span class="p">,</span>
-                      <span class="n">default</span><span class="o">=</span><span class="s2">&quot;TaurusTrend&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Name of the window&quot;</span><span class="p">)</span>
-
-    <span class="n">app</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
-                                                        <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurustrend&quot;</span><span class="p">,</span>
-                                                        <span class="n">app_version</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
-    <span class="n">options</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_options</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">]:</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">models</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurustrend(qwt5)&quot;</span><span class="p">)</span>
 
     <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusTrend</span><span class="p">()</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">window_name</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>
+
+    <span class="c1"># demo option</span>
+    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="n">models</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;eval:rand()&#39;</span><span class="p">,</span> <span class="s1">&#39;eval:1+rand(2)&#39;</span><span class="p">])</span>
 
     <span class="c1"># xistime option</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">setXIsTime</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setXIsTime</span><span class="p">(</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+
     <span class="c1"># max buffer size option</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">setMaxDataBufferSize</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">max_buffer_size</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">max_buffer_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setMaxDataBufferSize</span><span class="p">(</span><span class="n">max_buffer_size</span><span class="p">)</span>
+
     <span class="c1"># configuration file option</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">loadConfig</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">loadConfig</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+
     <span class="c1"># set models</span>
     <span class="k">if</span> <span class="n">models</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-    <span class="c1"># export option</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">export_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">curves</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">trendSets</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-        <span class="k">def</span> <span class="nf">exportIfAllCurves</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">counters</span><span class="o">=</span><span class="n">curves</span><span class="p">):</span>
-            <span class="n">curve</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Event received for </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">curve</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">curve</span> <span class="ow">in</span> <span class="n">counters</span><span class="p">:</span>
-                <span class="n">counters</span><span class="p">[</span><span class="n">curve</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">counters</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
-                    <span class="n">trend</span><span class="o">.</span><span class="n">exportPdf</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">export_file</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Exported to : </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">options</span><span class="o">.</span><span class="n">export_file</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
-                    <span class="n">trend</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">curves</span><span class="p">:</span>
-            <span class="n">w</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                <span class="n">ts</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">exportIfAllCurves</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>  <span class="c1"># exit without showing the widget</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
 
     <span class="c1"># period option</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">forced_read_period</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">setForcedReadingPeriod</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">forced_read_period</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">forced_read_period</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setForcedReadingPeriod</span><span class="p">(</span><span class="n">forced_read_period</span><span class="p">)</span>
 
     <span class="c1"># archiving option</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">setUseArchiving</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">use_archiving</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setUseArchiving</span><span class="p">(</span><span class="n">use_archiving</span><span class="p">)</span>
 
     <span class="c1"># show the widget</span>
     <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
     <span class="c1"># if no models are passed, show the data import dialog</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">options</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">models</span> <span class="ow">and</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">w</span><span class="o">.</span><span class="n">showDataImportDlg</span><span class="p">()</span>
 
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+    <span class="n">trend_main</span><span class="p">()</span>
 </pre></div>
 
            </div>

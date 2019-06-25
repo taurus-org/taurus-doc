@@ -193,7 +193,7 @@ four attributes (state, position, velocity, acceleration) of a Tango device
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusForm</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;velocity&#39;</span><span class="p">,</span> <span class="s1">&#39;acceleration&#39;</span> <span class="p">]</span>
 <span class="n">model</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;motor/icepap/01/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">attr</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span> <span class="p">]</span>
@@ -210,7 +210,7 @@ four attributes (state, position, velocity, acceleration) of a Tango device
 </div>
 <p>The above example can even be achieved even without typing any code:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">taurus</span><span class="o">/</span><span class="n">qt</span><span class="o">/</span><span class="n">qtgui</span><span class="o">/</span><span class="n">panel</span>
-<span class="o">%</span> <span class="n">taurusform</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">state</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">position</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">velocity</span>
+<span class="o">%</span> <span class="n">taurus</span> <span class="n">form</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">state</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">position</span> <span class="n">motor</span><span class="o">/</span><span class="n">icepap</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="n">velocity</span>
 </pre></div>
 </div>
 <p>For many more examples, See the <a class="reference internal" href="../devel/examples.html#examples"><span class="std std-ref">Examples</span></a> page.</p>

@@ -175,6 +175,7 @@
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">click</span>
 
 <span class="kn">import</span> <span class="nn">taurus</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
@@ -736,8 +737,45 @@
     <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
     <span class="n">w</span><span class="o">.</span><span class="n">stop_logging</span><span class="p">()</span>
 
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;qlogmon&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--port&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+              <span class="n">default</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">,</span>
+              <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;port where log server is running&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--log-name&#39;</span><span class="p">,</span> <span class="s1">&#39;log_name&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;filter specific log object&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--log-level&#39;</span><span class="p">,</span> <span class="s1">&#39;log_level&#39;</span><span class="p">,</span>
+              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;critical&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;trace&#39;</span><span class="p">]),</span>
+              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;filter specific log level&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">qlogmon_cmd</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">log_name</span><span class="p">,</span> <span class="n">log_level</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Show the Taurus Remote Log Monitor&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">taurus</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">taurus</span><span class="p">,</span> <span class="n">log_level</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Trace</span><span class="p">)</span>
+
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus remote logger&quot;</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">QLoggingWidget</span><span class="p">(</span><span class="n">perspective</span><span class="o">=</span><span class="s2">&quot;Remote&quot;</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+
+    <span class="n">filterbar</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">getFilterBar</span><span class="p">()</span>
+    <span class="n">filterbar</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">log_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">filterbar</span><span class="o">.</span><span class="n">setFilterText</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">getPerspectiveBar</span><span class="p">()</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">connect_logging</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">getQModel</span><span class="p">()</span><span class="o">.</span><span class="n">disconnect_logging</span><span class="p">()</span>
+
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
+    <span class="c1"># qlogmon_cmd</span>
 </pre></div>
 
            </div>

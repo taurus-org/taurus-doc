@@ -104,6 +104,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
@@ -175,21 +176,19 @@
             
   <div class="section" id="taurusapplication">
 <h1><a class="reference internal" href="#taurus.qt.qtgui.application.TaurusApplication" title="taurus.qt.qtgui.application.TaurusApplication"><code class="xref py py-class docutils literal"><span class="pre">TaurusApplication</span></code></a><a class="headerlink" href="#taurusapplication" title="Permalink to this headline">¶</a></h1>
-<img src="../../../../../../_images/inheritance-7626d503e3b0480cbb6edba644fea752a70aa483.png" alt="Inheritance diagram of TaurusApplication" usemap="#inheritance8e47e21a7e" class="inheritance"/>
+<img src="../../../../../../_images/inheritance-43d437644ec418d2533ba2ff128b5cc261cef823.png" alt="Inheritance diagram of TaurusApplication" usemap="#inheritance8e47e21a7e" class="inheritance"/>
 <map id="inheritance8e47e21a7e" name="inheritance8e47e21a7e">
 <area shape="rect" id="node1" title="The taurus logger class. All taurus pertinent classes should inherit" alt="" coords="158,389,230,437"/>
-<area shape="rect" id="node8" title="A QApplication that additionally parses the command line looking" alt="" coords="65,485,198,533"/>
+<area shape="rect" id="node8" title="A QApplication that performs some taurus&#45;specific initializations" alt="" coords="65,485,198,533"/>
 <area shape="rect" id="node3" title="A magical object class that provides Python 2 compatibility methods::" alt="" coords="155,197,241,245"/>
 </map>
 <dl class="class">
 <dt id="taurus.qt.qtgui.application.TaurusApplication">
 <em class="property">class </em><code class="descname">TaurusApplication</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QApplication</span></code>, <code class="xref py py-class docutils literal"><span class="pre">taurus.core.util.log.Logger</span></code></p>
-<p>A QApplication that additionally parses the command line looking
-for taurus options. This is done using the
-<a class="reference internal" href="../../../core/util/argparse.html#module-taurus.core.util.argparse" title="taurus.core.util.argparse"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.util.argparse</span></code></a>.
-To create a TaurusApplication object you should use the same parameters
-as in QApplication.</p>
+<p>A QApplication that performs some taurus-specific initializations
+and (optionally but deprecated) also parses the command line for taurus
+options.</p>
 <dl class="docutils">
 <dt>The optional keyword parameters:</dt>
 <dd><ul class="first last simple">
@@ -197,16 +196,21 @@ as in QApplication.</p>
 <li>app_version: (str) application version</li>
 <li>org_name: (str) organization name</li>
 <li>org_domain: (str) organization domain</li>
+<li>cmd_line_parser (None [or DEPRECATED <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>])</li>
 </ul>
 </dd>
 </dl>
-<p>...And at last the &#8216;cmd_line_parser&#8217; which should be an instance of
-<a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a>. Simple example:</p>
+<p>If cmd_line_parser is explicitly set to None (recommended), no parsing will
+be done at all. If a  <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">optparse.OptionParser</span></code></a> instance is passed as
+cmd_line_parser (deprecated), it will be used for parsing the command line
+arguments. If it is not explicitly passed (not recommended), a default
+parser will be assumed with the default taurus options.</p>
+<p>Simple example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.display</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span><span class="p">()</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="n">w</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">TaurusLabel</span><span class="p">()</span>
 <span class="n">w</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;sys/tg_test/1/double_scalar&#39;</span>
@@ -215,31 +219,6 @@ as in QApplication.</p>
 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>A more complex example showing how to add options and a usage help:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
-<span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
-<span class="kn">import</span> <span class="nn">taurus.qt.qtgui.display</span>
-
-<span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">usage</span> <span class="o">=</span> <span class="s2">&quot;%prog [options] &lt;model&gt;&quot;</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--hello&quot;</span><span class="p">)</span>
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
-<span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Need to supply model attribute&quot;</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">w</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">TaurusLabel</span><span class="p">()</span>
-<span class="n">w</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>For more details on taurus command line parsing check
-<a class="reference internal" href="../../../core/util/argparse.html#module-taurus.core.util.argparse" title="taurus.core.util.argparse"><code class="xref py py-mod docutils literal"><span class="pre">taurus.core.util.argparse</span></code></a>.</p>
 <dl class="method">
 <dt id="taurus.qt.qtgui.application.TaurusApplication.basicConfig">
 <code class="descname">basicConfig</code><span class="sig-paren">(</span><em>log_file_name=None</em>, <em>maxBytes=10000000.0</em>, <em>backupCount=5</em>, <em>with_gui_exc_handler=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication.basicConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication.basicConfig" title="Permalink to this definition">¶</a></dt>

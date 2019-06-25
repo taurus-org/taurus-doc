@@ -2652,8 +2652,8 @@
             <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ofile</span><span class="p">:</span>
                 <span class="k">return</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
-            <span class="n">ofile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="n">ofile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ofile</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
         <span class="n">configdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createConfig</span><span class="p">(</span><span class="n">curvenames</span><span class="o">=</span><span class="n">curvenames</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Saving current settings in &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">ofile</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">configdict</span><span class="p">,</span> <span class="n">ofile</span><span class="p">)</span>
@@ -2673,8 +2673,8 @@
                 <span class="s1">&#39;TaurusPlot Curve Properties File (*.pck)&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ifile</span><span class="p">:</span>
                 <span class="k">return</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
-            <span class="n">ifile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="n">ifile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ifile</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
         <span class="n">configdict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ifile</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">applyConfig</span><span class="p">(</span><span class="n">configdict</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ifile</span><span class="o">.</span><span class="n">name</span></div>
@@ -3848,82 +3848,40 @@
         <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">isOptimizationEnabled</span><span class="p">,</span> <span class="n">setOptimizationEnabled</span><span class="p">,</span> <span class="n">resetOptimizationEnabled</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">plot_main</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="p">(),</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_axis_mode</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">demo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">window_name</span><span class="o">=</span><span class="s1">&#39;TaurusPlot (qwt)&#39;</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.application</span>
-    <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] [&lt;model1&gt; [&lt;model2&gt;] ...]&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;a taurus application for plotting 1D data sets&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;--x-axis-mode&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;x_axis_mode&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;t|n&quot;</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;interprete X values as either timestamps (t) or numbers (n). Accepted values: t|n (e is also accepted as a synonim of n)&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="s2">&quot;--config-file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;config_file&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use the given config file for initialization&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--import-ascii&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;import_ascii&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;import the given ascii file into the plot&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--export&quot;</span><span class="p">,</span> <span class="s2">&quot;--export-file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;export_file&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use the given file to as output instead of showing the plot&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--window-name&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;window_name&quot;</span><span class="p">,</span>
-                      <span class="n">default</span><span class="o">=</span><span class="s2">&quot;TaurusPlot&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Name of the window&quot;</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurusplot(qwt)&quot;</span><span class="p">)</span>
 
-    <span class="n">app</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
-                                                        <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurusplot&quot;</span><span class="p">,</span>
-                                                        <span class="n">app_version</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
-    <span class="n">options</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_options</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]:</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">models</span> <span class="o">=</span> <span class="n">args</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusPlot</span><span class="p">()</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">window_name</span><span class="p">)</span>
 
-    <span class="n">w</span><span class="o">.</span><span class="n">setXIsTime</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">loadConfig</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">import_ascii</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">importAscii</span><span class="p">([</span><span class="n">options</span><span class="o">.</span><span class="n">import_ascii</span><span class="p">],</span> <span class="n">xcol</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setXIsTime</span><span class="p">(</span><span class="n">x_axis_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="n">models</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;eval:rand(100)&#39;</span><span class="p">,</span> <span class="s1">&#39;eval:0.5*sqrt(arange(100))&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">models</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-        
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">export_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">curves</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">trendSets</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
 
-        <span class="k">def</span> <span class="nf">exportIfAllCurves</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">counters</span><span class="o">=</span><span class="n">curves</span><span class="p">):</span>
-            <span class="n">curve</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Event received for </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">curve</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">curve</span> <span class="ow">in</span> <span class="n">counters</span><span class="p">:</span>
-                <span class="n">counters</span><span class="p">[</span><span class="n">curve</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">counters</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
-                    <span class="n">trend</span><span class="o">.</span><span class="n">exportPdf</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">export_file</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">: Exported to : </span><span class="si">%s</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">options</span><span class="o">.</span><span class="n">export_file</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
-                    <span class="n">trend</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">curves</span><span class="p">:</span>
-            <span class="n">w</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">trendSets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                <span class="n">ts</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">exportIfAllCurves</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>  <span class="c1"># exit without showing the widget</span>
-
-    <span class="c1"># show the widget</span>
     <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
     <span class="c1"># if no models are passed, show the data import dialog</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-            <span class="ow">and</span> <span class="n">options</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="n">options</span><span class="o">.</span><span class="n">import_ascii</span> <span class="ow">is</span> <span class="kc">None</span>
-        <span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">models</span> <span class="ow">and</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">w</span><span class="o">.</span><span class="n">showDataImportDlg</span><span class="p">()</span>
 
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+    <span class="n">plot_main</span><span class="p">()</span>
 </pre></div>
 
            </div>

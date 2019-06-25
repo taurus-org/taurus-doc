@@ -218,44 +218,13 @@ please refer to the documentation of that application.</p>
 opposed to launching TaurusGUI directly), so you should refer to the specific
 instructions for launching that GUI.</p>
 <p>Still, you may want to launch TaurusGui directly for debugging an specific
-application or for creating a new GUI from scratch. For this, use the following
-command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurusgui</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
+application. For this, use the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurus</span> <span class="n">gui</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Options:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
-<span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="n">CONFIG_DIR</span>
-                      <span class="n">use</span> <span class="n">the</span> <span class="n">given</span> <span class="n">configuration</span> <span class="n">directory</span> <span class="k">for</span>
-                      <span class="n">initialization</span>
-<span class="o">--</span><span class="n">new</span><span class="o">-</span><span class="n">gui</span>             <span class="n">launch</span> <span class="n">a</span> <span class="n">wizard</span> <span class="k">for</span> <span class="n">creating</span> <span class="n">a</span> <span class="n">new</span> <span class="n">TaurusGUI</span>
-                      <span class="n">application</span>
-<span class="o">--</span><span class="n">version</span>             <span class="n">show</span> <span class="n">program</span><span class="s1">&#39;s version number and exit</span>
-
-<span class="n">Taurus</span> <span class="n">Options</span><span class="p">:</span>
-  <span class="n">Basic</span> <span class="n">options</span> <span class="n">present</span> <span class="ow">in</span> <span class="nb">any</span> <span class="n">taurus</span> <span class="n">application</span>
-
-  <span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">level</span><span class="o">=</span><span class="n">LEVEL</span>
-                      <span class="n">taurus</span> <span class="n">log</span> <span class="n">level</span><span class="o">.</span> <span class="n">Allowed</span> <span class="n">values</span> <span class="n">are</span> <span class="p">(</span><span class="n">case</span>
-                      <span class="n">insensitive</span><span class="p">):</span> <span class="n">critical</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">warning</span><span class="o">/</span><span class="n">warn</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span>
-                      <span class="n">debug</span><span class="p">,</span> <span class="n">trace</span>
-  <span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">polling</span><span class="o">-</span><span class="n">period</span><span class="o">=</span><span class="n">MILLISEC</span>
-                      <span class="n">taurus</span> <span class="k">global</span> <span class="n">polling</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">milliseconds</span>
-  <span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">serialization</span><span class="o">-</span><span class="n">mode</span><span class="o">=</span><span class="n">SERIAL</span>
-                      <span class="n">taurus</span> <span class="n">serialization</span> <span class="n">mode</span><span class="o">.</span> <span class="n">Allowed</span> <span class="n">values</span> <span class="n">are</span> <span class="p">(</span><span class="n">case</span>
-                      <span class="n">insensitive</span><span class="p">):</span> <span class="n">serial</span><span class="p">,</span> <span class="n">concurrent</span> <span class="p">(</span><span class="n">default</span><span class="p">)</span>
-  <span class="o">--</span><span class="n">tango</span><span class="o">-</span><span class="n">host</span><span class="o">=</span><span class="n">TANGO_HOST</span>
-                      <span class="n">Tango</span> <span class="n">host</span> <span class="n">name</span>
+<p>For creating a new taurusgui from scratch, use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurus</span> <span class="n">newgui</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<dl class="last docutils">
-<dt>for backwards compatibility:</dt>
-<dd>taurusgui CONFIG_DIR</dd>
-<dt>is equivalent to:</dt>
-<dd>taurusgui &#8211;config-dir=CONFIG_DIR</dd>
-</dl>
 </div>
 </div>
 <div class="section" id="general-structure-of-a-taurusgui-application">
@@ -459,13 +428,13 @@ you would see if launching the macro in a <cite>spock</cite> console)</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You can run <cite>taurusgui macrogui</cite> for seeing an example of a TaurusGUI-
+<p class="last">You can run <cite>taurus gui macrogui</cite> for seeing an example of a TaurusGUI-
 based application that provides the aforementioned panels</p>
 </div>
 <div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/macrogui01.png"><img alt="../../_images/macrogui01.png" src="../../_images/macrogui01.png" style="width: 80%;" /></a>
 <p class="caption"><span class="caption-text">Macro-related panels (taken from the macrogui example that can be launched
-with <cite>taurusgui macrogui</cite>)</span></p>
+with <cite>taurus gui macrogui</cite>)</span></p>
 </div>
 <p>In most specific GUIs the macroserver and door name to use are pre-configured and
 the user does not need to change them. Sometimes though, you may want to alter it.
@@ -499,11 +468,11 @@ pool configuration.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>example01</td>
-<td>taurusgui example01</td>
+<td>taurus gui example01</td>
 <td>Included in Taurus (&lt;taurus&gt;/qt/qtgui/taurusgui/conf/tgconf_example01)</td>
 </tr>
 <tr class="row-odd"><td>Macrogui</td>
-<td>taurusgui macrogui</td>
+<td>taurus gui macrogui</td>
 <td>Included in Taurus (&lt;taurus&gt;/qt/qtgui/taurusgui/conf/tgconf_macrogui)</td>
 </tr>
 <tr class="row-even"><td>Alba&#8217;s beam lines control GUIs</td>

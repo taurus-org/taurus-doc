@@ -104,6 +104,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
@@ -217,7 +218,7 @@ programatically:</p>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui</span> <span class="k">import</span> <span class="n">TaurusGui</span>
     <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s1">&#39;MyGui&#39;</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s1">&#39;MyGui&#39;</span><span class="p">)</span>
     <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">()</span>
     <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
     <span class="n">gui</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="s1">&#39;Foo&#39;</span><span class="p">)</span>
@@ -234,7 +235,7 @@ at the same time use the declarative way:</p>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui</span> <span class="k">import</span> <span class="n">TaurusGui</span>
     <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">(</span><span class="n">confname</span><span class="o">=</span><span class="vm">__file__</span><span class="p">)</span>
     <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
     <span class="n">gui</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="s1">&#39;Foo&#39;</span><span class="p">)</span>  <span class="c1"># &lt;-- programmatic!</span>
