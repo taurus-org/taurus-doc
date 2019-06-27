@@ -689,7 +689,19 @@
 
         <span class="n">imgBuffer</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_HEADER_FORMAT</span><span class="p">):]</span>
         <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getDtypeId</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="c1"># RGB24, 3 bytes per pixel</span>
+            <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">bbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">gbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">rbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">rbuf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">])</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">gbuf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">])</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">bbuf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">])</span>
+            <span class="n">img2D</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
             <span class="c1"># RGBA 4 bytes per pixel</span>
             <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">bbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
@@ -837,7 +849,7 @@
             <span class="c1"># TODO: other modes</span>
             <span class="c1">#&#39;RGB555&#39;     : 4,#Core.RGB555,</span>
             <span class="c1">#&#39;RGB565&#39;     : 5,#Core.RGB565,</span>
-            <span class="c1">#&#39;RGB24&#39;      : 6,#Core.RGB24,</span>
+            <span class="s1">&#39;RGB24&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>  <span class="c1"># Core.RGB24,</span>
             <span class="s1">&#39;RGB32&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># Core.RGB32,</span>
             <span class="c1">#&#39;BGR24&#39;      : 8,#Core.BGR24,</span>
             <span class="c1">#&#39;BGR32&#39;      : 9,#Core.BGR32,</span>
@@ -858,7 +870,7 @@
                 <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span>
                 <span class="c1">#&#39;RGB555&#39;     : Core.RGB555,</span>
                 <span class="c1">#&#39;RGB565&#39;     : Core.RGB565,</span>
-                <span class="c1">#&#39;RGB24&#39;      : Core.RGB24,</span>
+                <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;RGB24&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB24,</span>
                 <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;RGB32&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB32,</span>
                 <span class="c1"># 8     : &#39;BGR24&#39;,#Core.BGR24,</span>
                 <span class="c1">#&#39;BGR32&#39;      : Core.BGR32,</span>
@@ -879,7 +891,7 @@
                 <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;uint64&#39;</span><span class="p">,</span>
                 <span class="c1">#&#39;RGB555&#39;     : Core.RGB555,</span>
                 <span class="c1">#&#39;RGB565&#39;     : Core.RGB565,</span>
-                <span class="c1"># 6      : &#39;uint8&#39;, # Core.RGB24,</span>
+                <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;uint8&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB24,</span>
                 <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;uint8&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB32,</span>
                 <span class="c1">#&#39;BGR24&#39;      : Core.BGR24,</span>
                 <span class="c1">#&#39;BGR32&#39;      : Core.BGR32,</span>
