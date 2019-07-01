@@ -428,7 +428,8 @@
     <span class="c1">#: wether to add the Quick access Toolbar (empty by default)</span>
     <span class="n">QUICK_ACCESS_TOOLBAR_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">confname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">configRecursionDepth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">confname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">configRecursionDepth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">settingsname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">TaurusMainWindow</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">configRecursionDepth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -482,6 +483,11 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">VIEW_MENU_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__initViewMenu</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">settingsname</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetQSettings</span><span class="p">()</span>
+            <span class="n">_s</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="n">settingsname</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="o">.</span><span class="n">IniFormat</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setQSettings</span><span class="p">(</span><span class="n">_s</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">loadConfiguration</span><span class="p">(</span><span class="n">confname</span><span class="p">)</span>
 
@@ -1167,20 +1173,47 @@
                 <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Initialization error&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
-        <span class="c1"># Get the xml root node from the xml configuration file</span>
-        <span class="n">XML_CONFIG</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;XML_CONFIG&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">XML_CONFIG</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">xmlroot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loadXmlConfig</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadAppName</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">confname</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadOrgName</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadCustomLogo</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadOrgLogo</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadSingleInstance</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadExtraCatalogWidgets</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadManualUri</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="n">POOLINSTRUMENTS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loadSardanaOptions</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadSynoptic</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="c1"># TODO: remove deprecated _loadConsole</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadConsole</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadCustomPanels</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">,</span> <span class="n">POOLINSTRUMENTS</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadCustomToolBars</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadCustomApplets</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadExternalApps</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadIniFile</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_loadXmlConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the xml root node from the xml configuration file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">xml_config</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;XML_CONFIG&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">xml_config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_xmlConfigFileName</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_xmlConfigFileName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">XML_CONFIG</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">xml_config</span><span class="p">)</span>
         <span class="c1"># default fallback (in case of I/O or parse errors)</span>
         <span class="n">xmlroot</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="s1">&#39;&lt;root&gt;&lt;/root&gt;&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">XML_CONFIG</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">xml_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># If a relative name was given, the conf directory will be used</span>
                 <span class="c1"># as base path</span>
-                <span class="n">xmlfname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">XML_CONFIG</span><span class="p">)</span>
+                <span class="n">xmlfname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">xml_config</span><span class="p">)</span>
                 <span class="n">xmlFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">xmlfname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
                 <span class="n">xmlstring</span> <span class="o">=</span> <span class="n">xmlFile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
                 <span class="n">xmlFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1193,165 +1226,203 @@
                     <span class="n">msg</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ignore</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">xmlroot</span>
 
-        <span class="c1"># General Qt application settings and jorgs bar logos</span>
-        <span class="n">APPNAME</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;GUI_NAME&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_loadAppName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">confname</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">appname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;GUI_NAME&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
             <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;GUI_NAME&quot;</span><span class="p">,</span> <span class="n">confname</span><span class="p">))</span>
-        <span class="n">ORGNAME</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;ORGANIZATION&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="n">appname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">appname</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_loadOrgName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">orgname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;ORGANIZATION&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
             <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;ORGANIZATION&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">organizationName</span><span class="p">())</span> <span class="ow">or</span> <span class="s1">&#39;Taurus&#39;</span><span class="p">))</span>
-        <span class="n">CUSTOMLOGO</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;CUSTOM_LOGO&#39;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setOrganizationName</span><span class="p">(</span><span class="n">orgname</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_loadCustomLogo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">custom_logo</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;CUSTOM_LOGO&#39;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span>
             <span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;LOGO&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;CUSTOM_LOGO&quot;</span><span class="p">,</span> <span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">)))</span>
-        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">CUSTOMLOGO</span><span class="p">):</span>
-            <span class="n">customIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">CUSTOMLOGO</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">custom_logo</span><span class="p">):</span>
+            <span class="n">custom_icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">custom_logo</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">customIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">CUSTOMLOGO</span><span class="p">))</span>
-        <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="n">APPNAME</span><span class="p">)</span>
-        <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setOrganizationName</span><span class="p">(</span><span class="n">ORGNAME</span><span class="p">)</span>
-        <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+            <span class="n">custom_icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">custom_logo</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">custom_icon</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">APPLETS_TOOLBAR_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">custom_icon</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
 
-        <span class="n">logo</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;ORGANIZATION_LOGO&#39;</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">_loadOrgLogo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span>
+                       <span class="s2">&quot;ORGANIZATION_LOGO&quot;</span><span class="p">,</span>
                        <span class="s2">&quot;logos:taurus.png&quot;</span><span class="p">)</span>
-        <span class="n">ORGANIZATIONLOGO</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;ORGANIZATION_LOGO&#39;</span><span class="p">,</span>
-                                   <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span>
-                                                        <span class="s2">&quot;ORGANIZATION_LOGO&quot;</span><span class="p">,</span>
-                                                        <span class="n">logo</span><span class="p">))</span>
-        <span class="c1">##</span>
-        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ORGANIZATIONLOGO</span><span class="p">):</span>
-            <span class="n">organizationIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">ORGANIZATIONLOGO</span><span class="p">)</span>
+        <span class="n">org_logo</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span>
+                           <span class="s2">&quot;ORGANIZATION_LOGO&quot;</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span>
+                                                <span class="s2">&quot;ORGANIZATION_LOGO&quot;</span><span class="p">,</span>
+                                                <span class="n">logo</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">org_logo</span><span class="p">):</span>
+            <span class="n">org_icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">org_logo</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">organizationIcon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">ORGANIZATIONLOGO</span><span class="p">))</span>
+            <span class="n">org_icon</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">org_logo</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">APPLETS_TOOLBAR_ENABLED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">org_icon</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">organizationName</span><span class="p">())</span>
 
-        <span class="c1"># if required, enforce that only one instance of this GUI can be run</span>
-        <span class="n">SINGLEINSTANCE</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;SINGLE_INSTANCE&#39;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_loadSingleInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        if required, enforce that only one instance of this GUI can be run</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">single_inst</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;SINGLE_INSTANCE&#39;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
             <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;SINGLE_INSTANCE&quot;</span><span class="p">,</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">SINGLEINSTANCE</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">single_inst</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkSingleInstance</span><span class="p">():</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Only one istance of </span><span class="si">%s</span><span class="s1"> is allowed to run the same time&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="n">APPNAME</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Only one instance of </span><span class="si">%s</span><span class="s1"> is allowed to run the same time&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">applicationName</span><span class="p">())</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
                     <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Multiple copies&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span><span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="c1"># some initialization</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resetQSettings</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">APPNAME</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">customIcon</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">APPLETS_TOOLBAR_ENABLED</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">organizationIcon</span><span class="p">,</span> <span class="n">ORGNAME</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">jorgsBar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">customIcon</span><span class="p">,</span> <span class="n">APPNAME</span><span class="p">)</span>
-
-        <span class="c1"># get custom widget catalog entries</span>
+    <span class="k">def</span> <span class="nf">_loadExtraCatalogWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get custom widget catalog entries</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># @todo: support also loading from xml</span>
-        <span class="n">EXTRA_CATALOG_WIDGETS</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;EXTRA_CATALOG_WIDGETS&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">extra_catalog_widgets</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;EXTRA_CATALOG_WIDGETS&#39;</span><span class="p">,</span> <span class="p">[])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_extraCatalogWidgets</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">classname</span><span class="p">,</span> <span class="n">pixmapname</span> <span class="ow">in</span> <span class="n">EXTRA_CATALOG_WIDGETS</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">pix_map_name</span> <span class="ow">in</span> <span class="n">extra_catalog_widgets</span><span class="p">:</span>
             <span class="c1"># If a relative file name is given, the conf directory will be used</span>
             <span class="c1"># as base path</span>
-            <span class="k">if</span> <span class="n">pixmapname</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pixmapname</span><span class="p">):</span>
-                <span class="n">pixmapname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">pixmapname</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_extraCatalogWidgets</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">classname</span><span class="p">,</span> <span class="n">pixmapname</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">pix_map_name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QFile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pix_map_name</span><span class="p">):</span>
+                <span class="n">pix_map_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">pix_map_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_extraCatalogWidgets</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">class_name</span><span class="p">,</span> <span class="n">pix_map_name</span><span class="p">))</span>
 
-        <span class="c1"># manual panel</span>
-        <span class="n">MANUAL_URI</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;MANUAL_URI&#39;</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">_loadManualUri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        manual panel</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">manual_uri</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;MANUAL_URI&#39;</span><span class="p">,</span>
                              <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MANUAL_URI&quot;</span><span class="p">,</span>
                                                   <span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">url</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setHelpManualURI</span><span class="p">(</span><span class="n">MANUAL_URI</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHelpManualURI</span><span class="p">(</span><span class="n">manual_uri</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">HELP_MENU_ENABLED</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">helpManualBrowser</span><span class="p">,</span> <span class="s1">&#39;Manual&#39;</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                              <span class="n">icon</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="o">.</span><span class="n">fromTheme</span><span class="p">(</span><span class="s1">&#39;help-browser&#39;</span><span class="p">))</span>
 
-        <span class="c1"># configure the macro infrastructure</span>
-        <span class="n">MACROSERVER_NAME</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;MACROSERVER_NAME&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
-            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MACROSERVER_NAME&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-        <span class="n">MACRO_PANELS</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;MACRO_PANELS&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
-            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MACRO_PANELS&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+    <span class="c1">### SARDANA MACRO STUFF ON</span>
+    <span class="k">def</span> <span class="nf">_loadSardanaOptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;configure macro infrastructure&quot;&quot;&quot;</span>
+        <span class="n">ms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loadMacroServerName</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="n">mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loadMacroPanels</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
         <span class="c1"># macro infrastructure will only be created if MACROSERVER_NAME is set</span>
-        <span class="k">if</span> <span class="n">MACRO_PANELS</span> <span class="ow">and</span> <span class="n">MACROSERVER_NAME</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mp</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">sardana.taurus.qt.qtgui.macrolistener</span> <span class="k">import</span> <span class="n">MacroBroker</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__macroBroker</span> <span class="o">=</span> <span class="n">MacroBroker</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">MACROSERVER_NAME</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">macroserverNameChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">MACROSERVER_NAME</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadDoorName</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loadMacroEditorsPath</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
+        <span class="n">pool_instruments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loadInstrumentsFromPool</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">,</span> <span class="n">ms</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pool_instruments</span>
 
-        <span class="n">DOOR_NAME</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;DOOR_NAME&#39;</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">_loadMacroServerName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">macro_server_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s2">&quot;MACROSERVER_NAME&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MACROSERVER_NAME&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">macro_server_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">macroserverNameChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">macro_server_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">macro_server_name</span>
+
+    <span class="k">def</span> <span class="nf">_loadMacroPanels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">macro_panels</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s2">&quot;MACRO_PANELS&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MACRO_PANELS&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">macro_panels</span>
+
+    <span class="k">def</span> <span class="nf">_loadDoorName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">door_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s2">&quot;DOOR_NAME&quot;</span><span class="p">,</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;DOOR_NAME&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">DOOR_NAME</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">doorNameChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">DOOR_NAME</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">door_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">doorNameChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">door_name</span><span class="p">)</span>
 
-        <span class="n">MACROEDITORS_PATH</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;MACROEDITORS_PATH&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
-            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MACROEDITORS_PATH&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">MACROEDITORS_PATH</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">sardana.taurus.qt.qtgui.extra_macroexecutor.macroparameterseditor.macroparameterseditor</span> <span class="k">import</span> <span class="n">ParamEditorManager</span>
-            <span class="n">ParamEditorManager</span><span class="p">()</span><span class="o">.</span><span class="n">parsePaths</span><span class="p">(</span><span class="n">MACROEDITORS_PATH</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_loadMacroEditorsPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="n">macro_editors_path</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s2">&quot;MACROEDITORS_PATH&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MACROEDITORS_PATH&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">macro_editors_path</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">sardana.taurus.qt.qtgui.extra_macroexecutor.macroparameterseditor.macroparameterseditor</span> <span class="k">import</span> \
+                <span class="n">ParamEditorManager</span>
+            <span class="n">ParamEditorManager</span><span class="p">()</span><span class="o">.</span><span class="n">parsePaths</span><span class="p">(</span><span class="n">macro_editors_path</span><span class="p">)</span>
             <span class="n">ParamEditorManager</span><span class="p">()</span><span class="o">.</span><span class="n">browsePaths</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">_loadInstrumentsFromPool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">,</span> <span class="n">macro_server_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get panel descriptions from pool if required</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">instruments_from_pool</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s2">&quot;INSTRUMENTS_FROM_POOL&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;INSTRUMENTS_FROM_POOL&quot;</span><span class="p">,</span> <span class="s2">&quot;False&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">instruments_from_pool</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;Gathering Instrument info from Pool&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">pool_instruments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createInstrumentsFromPool</span><span class="p">(</span>
+                <span class="n">macro_server_name</span><span class="p">)</span>  <span class="c1"># auto create instruments from pool</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pool_instruments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">pool_instruments</span>
+    <span class="c1">### SARDANA MACRO STUFF OFF</span>
+    
+    <span class="k">def</span> <span class="nf">_loadSynoptic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
         <span class="c1"># Synoptics</span>
-        <span class="n">SYNOPTIC</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;SYNOPTIC&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">SYNOPTIC</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>  <span class="c1"># old config file style</span>
+        <span class="n">synoptic</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;synoptic&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">synoptic</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>  <span class="c1"># old config file style</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;Deprecated usage of SYNOPTIC keyword (now it expects a list of paths). Please update your configuration file to: &quot;SYNOPTIC=[</span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s1">]&quot;.&#39;</span> <span class="o">%</span> <span class="n">SYNOPTIC</span><span class="p">)</span>
-            <span class="n">SYNOPTIC</span> <span class="o">=</span> <span class="p">[</span><span class="n">SYNOPTIC</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">SYNOPTIC</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># we look in the xml config file if not present in the python config</span>
-            <span class="n">SYNOPTIC</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">node</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;SYNOPTIC&quot;</span><span class="p">)</span>
+                <span class="s1">&#39;Deprecated usage of synoptic keyword (now it expects a list of paths). Please update your configuration file to: &quot;synoptic=[</span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s1">]&quot;.&#39;</span> <span class="o">%</span> <span class="n">synoptic</span><span class="p">)</span>
+            <span class="n">synoptic</span> <span class="o">=</span> <span class="p">[</span><span class="n">synoptic</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">synoptic</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># we look in the xml config file if not present in the python config</span>
+            <span class="n">synoptic</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;synoptic&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
                     <span class="n">s</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)</span>
                     <span class="c1"># we do not append empty strings</span>
                     <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-                        <span class="n">SYNOPTIC</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">SYNOPTIC</span><span class="p">:</span>
+                        <span class="n">synoptic</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">synoptic</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createMainSynoptic</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-        <span class="c1"># Get panel descriptions from pool if required</span>
-        <span class="n">INSTRUMENTS_FROM_POOL</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;INSTRUMENTS_FROM_POOL&#39;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
-            <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;INSTRUMENTS_FROM_POOL&quot;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">INSTRUMENTS_FROM_POOL</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;Gathering Instrument info from Pool&quot;</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="n">POOLINSTRUMENTS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createInstrumentsFromPool</span><span class="p">(</span>
-                <span class="n">MACROSERVER_NAME</span><span class="p">)</span>  <span class="c1"># auto create instruments from pool</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">POOLINSTRUMENTS</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="c1">#######################################################################</span>
-        <span class="c1"># Deprecated CONSOLE command (if you need a IPython Console, just add a</span>
-        <span class="c1"># Panel with a `silx.gui.console.IPythonWidget`</span>
-        <span class="c1"># TODO: remove this block when deprecation grace time is due</span>
-        <span class="n">CONSOLE</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;CONSOLE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_loadConsole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deprecated CONSOLE command (if you need a IPython Console, just add a</span>
+<span class="sd">        Panel with a `silx.gui.console.IPythonWidget`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: remove this method when making deprecation efective</span>
+        <span class="n">console</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;CONSOLE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
             <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;CONSOLE&quot;</span><span class="p">,</span> <span class="p">[]))</span>
-        <span class="k">if</span> <span class="n">CONSOLE</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">console</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">createConsole</span><span class="p">([])</span>
-        <span class="c1">#######################################################################</span>
 
-        <span class="c1"># get custom panel descriptions from the python config file</span>
-        <span class="n">CUSTOM_PANELS</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_loadCustomPanels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">,</span> <span class="n">poolinstruments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get custom panel descriptions from the python config file, xml config and</span>
+<span class="sd">        create panels based on the panel descriptions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">custom_panels</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
             <span class="n">conf</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">PanelDescription</span><span class="p">)]</span>
 
-        <span class="c1"># add custom panel descriptions from xml config</span>
-        <span class="n">panelDescriptions</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;PanelDescriptions&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">panelDescriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">panelDescriptions</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;PanelDescription&quot;</span><span class="p">):</span>
+        <span class="n">panel_descriptions</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;PanelDescriptions&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">panel_descriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">panel_descriptions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;PanelDescription&quot;</span><span class="p">:</span>
                     <span class="n">pd</span> <span class="o">=</span> <span class="n">PanelDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
                     <span class="k">if</span> <span class="n">pd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">CUSTOM_PANELS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
+                        <span class="n">custom_panels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
 
-        <span class="c1"># create panels based on the panel descriptions gathered before</span>
-        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">CUSTOM_PANELS</span> <span class="o">+</span> <span class="n">POOLINSTRUMENTS</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">custom_panels</span> <span class="o">+</span> <span class="n">poolinstruments</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;Creating panel </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="k">pass</span>
                 <span class="n">w</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">getWidget</span><span class="p">(</span><span class="n">sdm</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="p">,</span> <span class="n">setModel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s1">&#39;setCustomWidgetMap&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s2">&quot;setCustomWidgetMap&quot;</span><span class="p">):</span>
                     <span class="n">w</span><span class="o">.</span><span class="n">setCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getCustomWidgetMap</span><span class="p">())</span>
                 <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
@@ -1359,35 +1430,37 @@
                     <span class="n">instrumentkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IMPLICIT_ASSOCIATION</span>
                 <span class="c1"># the pool instruments may change when the pool config changes,</span>
                 <span class="c1"># so we do not store their config</span>
-                <span class="n">registerconfig</span> <span class="o">=</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">POOLINSTRUMENTS</span>
+                <span class="n">registerconfig</span> <span class="o">=</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">poolinstruments</span>
                 <span class="c1"># create a panel</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">floating</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span> <span class="n">registerconfig</span><span class="o">=</span><span class="n">registerconfig</span><span class="p">,</span>
                                  <span class="n">instrumentkey</span><span class="o">=</span><span class="n">instrumentkey</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Cannot create panel </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
-                    <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;__Unknown__&#39;</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot create panel </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
+                    <span class="n">p</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;__Unknown__&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">)</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Initialization error&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Initialization error&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
                     <span class="n">msg</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ignore</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
-        <span class="c1"># get custom toolbars descriptions from the python config file</span>
-        <span class="n">CUSTOM_TOOLBARS</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_loadCustomToolBars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get custom toolbars descriptions from the python config file, xml config and</span>
+<span class="sd">        create toolbars based on the descriptions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">custom_toolbars</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
             <span class="n">conf</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ToolBarDescription</span><span class="p">)]</span>
 
-        <span class="c1"># add custom toolbar descriptions from xml config</span>
-        <span class="n">toolBarDescriptions</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;ToolBarDescriptions&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">toolBarDescriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">toolBarDescriptions</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;ToolBarDescription&quot;</span><span class="p">):</span>
+        <span class="n">tool_bar_descriptions</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;ToolBarDescriptions&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tool_bar_descriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tool_bar_descriptions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;ToolBarDescription&quot;</span><span class="p">:</span>
                     <span class="n">d</span> <span class="o">=</span> <span class="n">ToolBarDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
                     <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">CUSTOM_TOOLBARS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                        <span class="n">custom_toolbars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
-        <span class="c1"># create toolbars based on the descriptions gathered before</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">CUSTOM_TOOLBARS</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">custom_toolbars</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;Creating Toolbar </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -1406,38 +1479,40 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Cannot add toolbar </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
-                    <span class="n">d</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;__Unknown__&#39;</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot add toolbar </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
+                    <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;__Unknown__&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">)</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Initialization error&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Initialization error&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
                     <span class="n">msg</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ignore</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
-        <span class="n">CUSTOM_APPLETS</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">_loadCustomApplets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get custom applet descriptions from the python config file, xml config and</span>
+<span class="sd">        create applet based on the descriptions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">custom_applets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># for backwards compatibility</span>
         <span class="n">MONITOR</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
-            <span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;MONITOR&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MONITOR&quot;</span><span class="p">,</span> <span class="p">[]))</span>
+            <span class="n">conf</span><span class="p">,</span> <span class="s2">&quot;MONITOR&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;MONITOR&quot;</span><span class="p">,</span> <span class="p">[]))</span>
         <span class="k">if</span> <span class="n">MONITOR</span><span class="p">:</span>
-            <span class="n">CUSTOM_APPLETS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AppletDescription</span><span class="p">(</span>
-                <span class="s1">&#39;monitor&#39;</span><span class="p">,</span> <span class="n">classname</span><span class="o">=</span><span class="s1">&#39;TaurusMonitorTiny&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">MONITOR</span><span class="p">))</span>
+            <span class="n">custom_applets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AppletDescription</span><span class="p">(</span>
+                <span class="s2">&quot;monitor&quot;</span><span class="p">,</span> <span class="n">classname</span><span class="o">=</span><span class="s2">&quot;TaurusMonitorTiny&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">MONITOR</span><span class="p">))</span>
 
-        <span class="c1"># get custom applet descriptions from the python config file</span>
-        <span class="n">CUSTOM_APPLETS</span> <span class="o">+=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
+        <span class="n">custom_applets</span> <span class="o">+=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
             <span class="n">conf</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">AppletDescription</span><span class="p">)]</span>
 
-        <span class="c1"># add applet descriptions from xml config</span>
-        <span class="n">appletDescriptions</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;AppletDescriptions&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">appletDescriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">appletDescriptions</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;AppletDescription&quot;</span><span class="p">):</span>
+        <span class="n">applet_descriptions</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;AppletDescriptions&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">applet_descriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">applet_descriptions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;AppletDescription&quot;</span><span class="p">:</span>
                     <span class="n">d</span> <span class="o">=</span> <span class="n">AppletDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
                     <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">CUSTOM_APPLETS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                        <span class="n">custom_applets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
-        <span class="c1"># create applet based on the descriptions gathered before</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">CUSTOM_APPLETS</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">custom_applets</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;Creating applet </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -1452,38 +1527,44 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">BaseConfigurableClass</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Cannot add applet </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
-                    <span class="n">d</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;__Unknown__&#39;</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot add applet </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
+                    <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;__Unknown__&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">)</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Initialization error&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Initialization error&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
                     <span class="n">msg</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ignore</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
-        <span class="c1"># add external applications from both the python and the xml config</span>
-        <span class="c1"># files</span>
-        <span class="n">EXTERNAL_APPS</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_loadExternalApps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add external applications from both the python and the xml config files</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">external_apps</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
             <span class="n">conf</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ExternalApp</span><span class="p">)]</span>
 
-        <span class="n">externalAppsNode</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;ExternalApps&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">externalAppsNode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">externalAppsNode</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;ExternalApp&quot;</span><span class="p">):</span>
+        <span class="n">ext_apps_node</span> <span class="o">=</span> <span class="n">xmlroot</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;ExternalApps&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ext_apps_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">ext_apps_node</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;ExternalApp&quot;</span><span class="p">:</span>
                     <span class="n">ea</span> <span class="o">=</span> <span class="n">ExternalApp</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
                     <span class="k">if</span> <span class="n">ea</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">EXTERNAL_APPS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ea</span><span class="p">)</span>
+                        <span class="n">external_apps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ea</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">EXTERNAL_APPS</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">external_apps</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_external_app_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">getAction</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">addExternalAppLauncher</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">getAction</span><span class="p">())</span>
 
-        <span class="c1"># get the &quot;factory settings&quot; filename. By default, it is called</span>
-        <span class="c1"># &quot;default.ini&quot; and resides in the configuration dir</span>
-        <span class="n">INIFILE</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;INIFILE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_loadIniFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the &quot;factory settings&quot; filename. By default, it is called</span>
+<span class="sd">        &quot;default.ini&quot; and resides in the configuration dir</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">ini_file</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;INIFILE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getVarFromXML</span><span class="p">(</span>
             <span class="n">xmlroot</span><span class="p">,</span> <span class="s2">&quot;INIFILE&quot;</span><span class="p">,</span> <span class="s2">&quot;default.ini&quot;</span><span class="p">))</span>
         <span class="c1"># if a relative name is given, the conf dir is used as the root path</span>
-        <span class="n">iniFileName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">INIFILE</span><span class="p">)</span>
+        <span class="n">ini_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confDirectory</span><span class="p">,</span> <span class="n">ini_file</span><span class="p">)</span>
 
         <span class="c1"># read the settings (or the factory settings if the regular file is not</span>
         <span class="c1"># found)</span>
@@ -1494,7 +1575,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">splashScreen</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">pass</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loadSettings</span><span class="p">(</span><span class="n">factorySettingsFileName</span><span class="o">=</span><span class="n">iniFileName</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadSettings</span><span class="p">(</span><span class="n">factorySettingsFileName</span><span class="o">=</span><span class="n">ini_file_name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusGui.setLockView"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.setLockView">[docs]</a>    <span class="k">def</span> <span class="nf">setLockView</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locked</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="ow">not</span> <span class="n">locked</span><span class="p">)</span></div>
@@ -1786,9 +1867,15 @@
 <span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;confname&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--safe-mode&#39;</span><span class="p">,</span> <span class="s1">&#39;safe_mode&#39;</span><span class="p">,</span> <span class="n">is_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
               <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;launch in safe mode (it prevents potentially problematic &#39;</span>
-                    <span class="s1">&#39;configs from being loaded)&#39;</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s1">&#39;configs from being loaded)&#39;</span><span class="p">)</span>
               <span class="p">)</span>
-<span class="k">def</span> <span class="nf">gui_cmd</span><span class="p">(</span><span class="n">confname</span><span class="p">,</span> <span class="n">safe_mode</span><span class="p">):</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--ini&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+              <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;INIFILE&quot;</span><span class="p">,</span>
+              <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;settings file (.ini) to be loaded (defaults to &#39;</span>
+                    <span class="o">+</span> <span class="s1">&#39;&lt;user_config_dir&gt;/&lt;appname&gt;.ini)&#39;</span><span class="p">),</span>
+              <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+              <span class="p">)</span>
+<span class="k">def</span> <span class="nf">gui_cmd</span><span class="p">(</span><span class="n">confname</span><span class="p">,</span> <span class="n">safe_mode</span><span class="p">,</span> <span class="n">ini</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Launch a TaurusGUI using the given CONF&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="kn">import</span> <span class="nn">taurus</span>
@@ -1798,18 +1885,12 @@
 
     <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurusgui&quot;</span><span class="p">)</span>
 
-    <span class="c1"># if options.new_gui:  # launch app settings wizard instead of taurusgui</span>
-    <span class="c1">#     from taurus.qt.qtgui.taurusgui import AppSettingsWizard</span>
-    <span class="c1">#     wizard = AppSettingsWizard()</span>
-    <span class="c1">#     wizard.show()</span>
-    <span class="c1">#     sys.exit(app.exec_())</span>
-
     <span class="k">if</span> <span class="n">safe_mode</span><span class="p">:</span>
         <span class="n">configRecursionDepth</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">configRecursionDepth</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">confname</span><span class="o">=</span><span class="n">confname</span><span class="p">,</span>
+    <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">confname</span><span class="o">=</span><span class="n">confname</span><span class="p">,</span> <span class="n">settingsname</span><span class="o">=</span><span class="n">ini</span><span class="p">,</span>
                     <span class="n">configRecursionDepth</span><span class="o">=</span><span class="n">configRecursionDepth</span><span class="p">)</span>
 
     <span class="n">gui</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
