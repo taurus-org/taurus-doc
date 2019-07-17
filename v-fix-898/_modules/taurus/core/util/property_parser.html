@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.util.property_parser &mdash; taurus 4.5.4-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.5.4-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.util.property_parser</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.util.property_parser</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This is an experimental property parser&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">ply.lex</span> <span class="k">as</span> <span class="nn">lex</span>
+<span class="kn">import</span> <span class="nn">ply.yacc</span> <span class="k">as</span> <span class="nn">yacc</span>
+<span class="kn">from</span> <span class="nn">.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">Logger</span>
+
+<span class="n">reserved</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">({</span>
+    <span class="s1">&#39;true&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;false&#39;</span><span class="p">:</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;yes&#39;</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;no&#39;</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span>
+<span class="p">})</span>
+
+<span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;EQUALS&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;KEY&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;NUMBER&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;COMMA&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;LLST&#39;</span><span class="p">,</span> <span class="s1">&#39;RLST&#39;</span><span class="p">,</span>
+          <span class="c1">#&#39;LBRACKET&#39;, &#39;RBRACKET&#39;,</span>
+          <span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">reserved</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="n">t_EQUALS</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\=&#39;</span>
+<span class="n">t_LLST</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\[&#39;</span>
+<span class="n">t_RLST</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\]&#39;</span>
+<span class="n">t_COMMA</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\,&#39;</span>
+<span class="c1">#t_LBRACKET = r&#39;\{&#39;</span>
+<span class="c1">#t_RBRACKET = r&#39;\}&#39;</span>
+
+
+<div class="viewcode-block" id="t_NUMBER"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.t_NUMBER">[docs]</a><span class="k">def</span> <span class="nf">t_NUMBER</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="sa">r</span><span class="s1">&#39;[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%d</span><span class="s2">]: Number </span><span class="si">%s</span><span class="s2"> is not valid!&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">t</span></div>
+
+<span class="c1"># The following backslash sequences have their usual special meaning: \&quot;,</span>
+<span class="c1"># \\, \n, and \t.</span>
+
+
+<div class="viewcode-block" id="t_STRING"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.t_STRING">[docs]</a><span class="k">def</span> <span class="nf">t_STRING</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="sa">r</span><span class="s1">&#39;\&quot;([^</span><span class="se">\\</span><span class="s1">&quot;]|(</span><span class="se">\\</span><span class="s1">.))*\&quot;&#39;</span>
+    <span class="n">escaped</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nb">str</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">new_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="nb">str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">escaped</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
+            <span class="n">new_str</span> <span class="o">+=</span> <span class="n">c</span>
+            <span class="n">escaped</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">:</span>
+                <span class="n">escaped</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_str</span> <span class="o">+=</span> <span class="n">c</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_str</span>
+    <span class="k">return</span> <span class="n">t</span></div>
+
+
+<div class="viewcode-block" id="t_KEY"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.t_KEY">[docs]</a><span class="k">def</span> <span class="nf">t_KEY</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="sa">r</span><span class="s1">&#39;[a-zA-Z0-9/_\.\/]+&#39;</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">reserved</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;KEY&#39;</span><span class="p">)</span>    <span class="c1"># Check for reserved words</span>
+    <span class="k">return</span> <span class="n">t</span></div>
+
+
+<span class="c1"># Ignored characters</span>
+<span class="n">t_ignore</span> <span class="o">=</span> <span class="s1">&#39; </span><span class="se">\t</span><span class="s1">&#39;</span>
+
+<span class="n">t_ignore_COMMENT</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\#.*&#39;</span>
+
+
+<div class="viewcode-block" id="t_newline"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.t_newline">[docs]</a><span class="k">def</span> <span class="nf">t_newline</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="sa">r</span><span class="s1">&#39;\n+&#39;</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">lineno</span> <span class="o">+=</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="t_error"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.t_error">[docs]</a><span class="k">def</span> <span class="nf">t_error</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%d</span><span class="s2">]: Illegal character &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="p_error"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_error">[docs]</a><span class="k">def</span> <span class="nf">p_error</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%d</span><span class="s2">]: Syntax error in input [</span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">))))</span></div>
+
+<span class="c1">#-------------------------------------------------------------------------</span>
+<span class="c1"># Yacc Starting symbol</span>
+<span class="c1">#-------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="p_property_file"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_property_file">[docs]</a><span class="k">def</span> <span class="nf">p_property_file</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;property_file : statement_list</span>
+<span class="sd">                     |&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="p_statement_list"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_statement_list">[docs]</a><span class="k">def</span> <span class="nf">p_statement_list</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;statement_list : statement_list statement&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="p_statement"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_statement">[docs]</a><span class="k">def</span> <span class="nf">p_statement</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;statement_list : statement&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="p_statement_assign"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_statement_assign">[docs]</a><span class="k">def</span> <span class="nf">p_statement_assign</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;statement : KEY EQUALS value&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span></div>
+
+
+<div class="viewcode-block" id="p_value"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_value">[docs]</a><span class="k">def</span> <span class="nf">p_value</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;value : atomic</span>
+<span class="sd">             | list&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="p_value_atomic"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_value_atomic">[docs]</a><span class="k">def</span> <span class="nf">p_value_atomic</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;atomic : KEY</span>
+<span class="sd">              | STRING</span>
+<span class="sd">              | NUMBER</span>
+<span class="sd">              | boolean&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="p_value_boolean"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_value_boolean">[docs]</a><span class="k">def</span> <span class="nf">p_value_boolean</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;boolean : true</span>
+<span class="sd">               | false</span>
+<span class="sd">               | yes</span>
+<span class="sd">               | no&#39;&#39;&#39;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="p_value_list"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_value_list">[docs]</a><span class="k">def</span> <span class="nf">p_value_list</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;list : LLST value_list RLST&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="p_value_list_elems1"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_value_list_elems1">[docs]</a><span class="k">def</span> <span class="nf">p_value_list_elems1</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;value_list : value_list COMMA value&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="p_value_list_elems2"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser.html#taurus.core.util.property_parser.p_value_list_elems2">[docs]</a><span class="k">def</span> <span class="nf">p_value_list_elems2</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;value_list : value&#39;&#39;&#39;</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="PropertyParser"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_PropertyParser.html#taurus.core.util.property_parser.PropertyParser">[docs]</a><span class="k">class</span> <span class="nc">PropertyParser</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_filename</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="PropertyParser.parse_file"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_PropertyParser.html#taurus.core.util.property_parser.PropertyParser.parse_file">[docs]</a>    <span class="k">def</span> <span class="nf">parse_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">kw</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;debuglog&#39;</span><span class="p">:</span> <span class="n">logger</span> <span class="ow">or</span> <span class="bp">self</span><span class="p">,</span>
+            <span class="s1">&#39;errorlog&#39;</span><span class="p">:</span> <span class="n">logger</span> <span class="ow">or</span> <span class="bp">self</span><span class="p">,</span>
+            <span class="s1">&#39;debug&#39;</span><span class="p">:</span> <span class="n">debug</span><span class="p">,</span>
+            <span class="s1">&#39;optimize&#39;</span><span class="p">:</span> <span class="n">optimize</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">kw_lex</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">kw_lex</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;lextab&#39;</span><span class="p">:</span> <span class="s1">&#39;property_lextab&#39;</span><span class="p">})</span>
+        <span class="n">kw_yacc</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">kw_yacc</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;tabmodule&#39;</span><span class="p">:</span> <span class="s1">&#39;property_yacctab&#39;</span><span class="p">})</span>
+        <span class="n">lexer</span> <span class="o">=</span> <span class="n">lex</span><span class="o">.</span><span class="n">lex</span><span class="p">(</span><span class="o">**</span><span class="n">kw_lex</span><span class="p">)</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">yacc</span><span class="o">.</span><span class="n">yacc</span><span class="p">(</span><span class="o">**</span><span class="n">kw_yacc</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span> <span class="n">lexer</span><span class="o">=</span><span class="n">lexer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PropertyParser.parse"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_PropertyParser.html#taurus.core.util.property_parser.PropertyParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_file</span><span class="p">(</span>
+                <span class="n">f</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="n">optimize</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">raise</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="PropertyParser.getLastFilename"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_PropertyParser.html#taurus.core.util.property_parser.PropertyParser.getLastFilename">[docs]</a>    <span class="k">def</span> <span class="nf">getLastFilename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_filename</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">pp</span> <span class="o">=</span> <span class="n">PropertyParser</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.5.4-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

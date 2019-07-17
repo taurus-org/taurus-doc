@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.util.taurusropepatch &mdash; taurus 4.5.4-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="taurus 4.5.4-alpha documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.qt.qtgui.util.taurusropepatch</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.util.taurusropepatch</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;[DEPRECATED] Rope patch for better performance.</span>
+<span class="sd">Based on spyder.rope_patch&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apply&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecated</span>
+<span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;taurusropepatch module&#39;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0.1&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="apply"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/taurusropepatch.html#taurus.qt.qtgui.util.taurusropepatch.apply">[docs]</a><span class="k">def</span> <span class="nf">apply</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Monkey patching rope for better performances&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">rope</span>
+    <span class="k">if</span> <span class="n">rope</span><span class="o">.</span><span class="n">VERSION</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;0.9.3&#39;</span><span class="p">,</span> <span class="s1">&#39;0.9.2&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;rope </span><span class="si">%s</span><span class="s2"> can&#39;t be patched&quot;</span> <span class="o">%</span> <span class="n">rope</span><span class="o">.</span><span class="n">VERSION</span><span class="p">)</span>
+
+    <span class="c1"># Patching pycore.PyCore, so that forced builtin modules (i.e. modules</span>
+    <span class="c1"># that were declared as &#39;extension_modules&#39; in rope preferences)</span>
+    <span class="c1"># will be indeed recognized as builtins by rope, as expected</span>
+    <span class="kn">from</span> <span class="nn">rope.base</span> <span class="k">import</span> <span class="n">pycore</span>
+
+    <span class="k">class</span> <span class="nc">PatchedPyCore</span><span class="p">(</span><span class="n">pycore</span><span class="o">.</span><span class="n">PyCore</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Returns a `PyObject` if the module was found.&quot;&quot;&quot;</span>
+            <span class="c1"># check if this is a builtin module</span>
+            <span class="n">pymod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_builtin_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pymod</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pymod</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">module</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">pycore</span><span class="o">.</span><span class="n">ModuleNotFoundError</span><span class="p">(</span>
+                    <span class="s1">&#39;Module </span><span class="si">%s</span><span class="s1"> not found&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_to_pyobject</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+    <span class="n">pycore</span><span class="o">.</span><span class="n">PyCore</span> <span class="o">=</span> <span class="n">PatchedPyCore</span>
+
+    <span class="c1"># Patching BuiltinFunction for the calltip/doc functions to be</span>
+    <span class="c1"># able to retrieve the function signatures with forced builtins</span>
+    <span class="kn">from</span> <span class="nn">rope.base</span> <span class="k">import</span> <span class="n">builtins</span><span class="p">,</span> <span class="n">pyobjects</span>
+    <span class="kn">from</span> <span class="nn">spyder.utils.dochelpers</span> <span class="k">import</span> <span class="n">getargs</span>
+
+
+    <span class="k">class</span> <span class="nc">PatchedBuiltinFunction</span><span class="p">(</span><span class="n">builtins</span><span class="o">.</span><span class="n">BuiltinFunction</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">returned</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">builtin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">argnames</span><span class="o">=</span><span class="p">[],</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">builtins</span><span class="o">.</span><span class="n">_BuiltinElement</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">builtin</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+            <span class="n">pyobjects</span><span class="o">.</span><span class="n">AbstractFunction</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">argnames</span> <span class="o">=</span> <span class="n">argnames</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">argnames</span> <span class="ow">and</span> <span class="n">builtin</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">argnames</span> <span class="o">=</span> <span class="n">getargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">builtin</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">argnames</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">argnames</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">returned</span> <span class="o">=</span> <span class="n">returned</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">function</span>
+    <span class="n">builtins</span><span class="o">.</span><span class="n">BuiltinFunction</span> <span class="o">=</span> <span class="n">PatchedBuiltinFunction</span>
+
+    <span class="c1"># Patching BuiltinName for the go to definition feature to simply work</span>
+    <span class="c1"># with forced builtins</span>
+    <span class="kn">from</span> <span class="nn">rope.base</span> <span class="k">import</span> <span class="n">libutils</span>
+    <span class="kn">import</span> <span class="nn">inspect</span>
+
+    <span class="k">class</span> <span class="nc">PatchedBuiltinName</span><span class="p">(</span><span class="n">builtins</span><span class="o">.</span><span class="n">BuiltinName</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">_pycore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pyobject</span>
+            <span class="k">while</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">builtins</span><span class="o">.</span><span class="n">BuiltinModule</span><span class="p">)</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">pycore</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">pycore</span>
+
+        <span class="k">def</span> <span class="nf">get_definition_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isbuiltin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyobject</span><span class="p">):</span>
+                <span class="n">_lines</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getsourcelines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyobject</span><span class="o">.</span><span class="n">builtin</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pyobject</span><span class="o">.</span><span class="n">builtin</span><span class="p">)</span>
+                <span class="n">pycore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pycore</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">pycore</span> <span class="ow">and</span> <span class="n">pycore</span><span class="o">.</span><span class="n">project</span><span class="p">:</span>
+                    <span class="n">resource</span> <span class="o">=</span> <span class="n">libutils</span><span class="o">.</span><span class="n">path_to_resource</span><span class="p">(</span><span class="n">pycore</span><span class="o">.</span><span class="n">project</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                    <span class="n">module</span> <span class="o">=</span> <span class="n">pyobjects</span><span class="o">.</span><span class="n">PyModule</span><span class="p">(</span><span class="n">pycore</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">lineno</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">builtins</span><span class="o">.</span><span class="n">BuiltinName</span> <span class="o">=</span> <span class="n">PatchedBuiltinName</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'4.5.4-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

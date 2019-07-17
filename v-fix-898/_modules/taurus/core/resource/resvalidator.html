@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.resource.resvalidator &mdash; taurus 4.5.4-alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.5.4-alpha documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.resource.resvalidator</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.resource.resvalidator</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusvalidator</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusAttributeNameValidator</span><span class="p">,</span>
+                                         <span class="n">TaurusDeviceNameValidator</span><span class="p">,</span>
+                                         <span class="n">TaurusAuthorityNameValidator</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurushelper</span> <span class="k">import</span> <span class="n">getSchemeFromName</span><span class="p">,</span> <span class="n">Factory</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ResourceAuthorityNameValidator&#39;</span><span class="p">,</span> <span class="s1">&#39;ResourceDeviceNameValidator&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;ResourceAttributeNameValidator&#39;</span><span class="p">]</span>
+
+<span class="c1"># Pattern for python variables</span>
+<span class="n">PY_VAR</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(?&lt;![\.a-zA-Z0-9_])[a-zA-Z_][a-zA-Z0-9_]*&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">_ResNameValidator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract class for all Res validators. Res Name validators should inherit</span>
+<span class="sd">    first from it and then from the TaurusXXXNameValidator to give its methods</span>
+<span class="sd">    highest precedence according to the python MRO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;res&#39;</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(?P&lt;_resname&gt;</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">PY_VAR</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+    <span class="n">fragment</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^(?P&lt;scheme&gt;</span><span class="si">%(scheme)s</span><span class="s1">):&#39;</span> <span class="o">+</span> \
+              <span class="sa">r</span><span class="s1">&#39;((?P&lt;authority&gt;</span><span class="si">%(authority)s</span><span class="s1">)(?=/))?&#39;</span> <span class="o">+</span> \
+              <span class="sa">r</span><span class="s1">&#39;(?P&lt;path&gt;</span><span class="si">%(path)s</span><span class="s1">)&#39;</span> <span class="o">+</span> \
+              <span class="sa">r</span><span class="s1">&#39;(\?(?P&lt;query&gt;</span><span class="si">%(query)s</span><span class="s1">))?&#39;</span> <span class="o">+</span> \
+              <span class="sa">r</span><span class="s1">&#39;(#(?P&lt;fragment&gt;</span><span class="si">%(fragment)s</span><span class="s1">))?$&#39;</span>
+
+    <span class="n">_elementType</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_getValueValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the name validator for the mapped model name scheme</span>
+
+<span class="sd">        :param name: (str) resource name</span>
+<span class="sd">        :return: A specific TaurusValidator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scheme</span> <span class="o">=</span> <span class="n">getSchemeFromName</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="n">scheme</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elementType</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">getAttributeNameValidator</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elementType</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">getDeviceNameValidator</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elementType</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">getAuthorityNameValidator</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;_elementType must be one of (Authority, Device, Attribute)&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_getKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elementType</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">TaurusAttributeNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elementType</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">:</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">TaurusDeviceNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elementType</span> <span class="o">==</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span><span class="p">:</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">TaurusAuthorityNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;_elementType must be one of (Authority, Device, Attribute)&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">g</span><span class="p">[</span><span class="s1">&#39;_resname&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Factory</span><span class="p">(</span><span class="s1">&#39;res&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">isValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks validity of the key (resname) and also of the value</span>
+<span class="sd">        (model name)&quot;&quot;&quot;</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getKey</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getValue</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getValueValidator</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the groups for the value extended with &#39;_resname&#39;&quot;&quot;&quot;</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getKey</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getValue</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getValueValidator</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;_resname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">getNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the names of the value&quot;&quot;&quot;</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getKey</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getValue</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getValueValidator</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ResourceAuthorityNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/resource/resvalidator/_ResourceAuthorityNameValidator.html#taurus.core.resource.resvalidator.ResourceAuthorityNameValidator">[docs]</a><span class="k">class</span> <span class="nc">ResourceAuthorityNameValidator</span><span class="p">(</span><span class="n">_ResNameValidator</span><span class="p">,</span>
+                                     <span class="n">TaurusAuthorityNameValidator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validator for res authority names. Apart from the named related to the</span>
+<span class="sd">    mapped model value, the following named groups are created:</span>
+
+<span class="sd">     - _resname: resource name (aka key)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># authority = r&#39;(?P&lt;_resname&gt;%s)&#39; % PY_VAR</span>
+    <span class="c1"># path = &#39;(?!)&#39;</span>
+    <span class="n">_elementType</span> <span class="o">=</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Authority</span></div>
+
+
+<div class="viewcode-block" id="ResourceDeviceNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/resource/resvalidator/_ResourceDeviceNameValidator.html#taurus.core.resource.resvalidator.ResourceDeviceNameValidator">[docs]</a><span class="k">class</span> <span class="nc">ResourceDeviceNameValidator</span><span class="p">(</span><span class="n">_ResNameValidator</span><span class="p">,</span>
+                                  <span class="n">TaurusDeviceNameValidator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validator for res device names. Apart from the named related to the</span>
+<span class="sd">    mapped model value, the following named groups are created:</span>
+
+<span class="sd">     - _resname: resource name (aka key)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_elementType</span> <span class="o">=</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span></div>
+
+
+<div class="viewcode-block" id="ResourceAttributeNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/resource/resvalidator/_ResourceAttributeNameValidator.html#taurus.core.resource.resvalidator.ResourceAttributeNameValidator">[docs]</a><span class="k">class</span> <span class="nc">ResourceAttributeNameValidator</span><span class="p">(</span><span class="n">_ResNameValidator</span><span class="p">,</span>
+                                     <span class="n">TaurusAttributeNameValidator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validator for res attribute names. Apart from the named related to the</span>
+<span class="sd">    mapped model value, the following named groups are created:</span>
+
+<span class="sd">     - _resname: resource name (aka key)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_elementType</span> <span class="o">=</span> <span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.5.4-alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
