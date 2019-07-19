@@ -230,7 +230,7 @@
 
 
 <span class="nd">@UILoadable</span>
-<div class="viewcode-block" id="CurvesAppearanceChooser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser">[docs]</a><span class="k">class</span> <span class="nc">CurvesAppearanceChooser</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser">[docs]</a><span class="k">class</span> <span class="nc">CurvesAppearanceChooser</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A widget for choosing plot appearance for one or more curves.</span>
 <span class="sd">    The current curves properties are passed using the setCurves() method using</span>
@@ -293,7 +293,7 @@
         <span class="c1"># except Exception, e:</span>
         <span class="c1"># print &quot;CURVE APPEARANCE EXCEPTION:&quot;,str(e)</span>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.setCurves"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.setCurves">[docs]</a>    <span class="k">def</span> <span class="nf">setCurves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curvePropDict</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.setCurves"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.setCurves">[docs]</a>    <span class="k">def</span> <span class="nf">setCurves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curvePropDict</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Populates the list of curves from the properties dictionary. It uses</span>
 <span class="sd">        the curve title for display, and stores the curve name as the item data</span>
 <span class="sd">        (with role=CurvesAppearanceChooser.NAME_ROLE)</span>
@@ -315,7 +315,7 @@
                           <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsUserCheckable</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsDragEnabled</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEditable</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">setCurrentRow</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.onItemChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onItemChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onItemChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.onItemChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.onItemChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onItemChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;slot used when an item data has changed&#39;&#39;&#39;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NAME_ROLE</span><span class="p">)</span>
         <span class="n">previousTitle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">title</span>
@@ -324,7 +324,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">currentTitle</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">CurveTitleEdited</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">currentTitle</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.updateTitles"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.updateTitles">[docs]</a>    <span class="k">def</span> <span class="nf">updateTitles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newTitlesDict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.updateTitles"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.updateTitles">[docs]</a>    <span class="k">def</span> <span class="nf">updateTitles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newTitlesDict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Updates the titles of the curves that are displayed in the curves list.</span>
 
@@ -337,7 +337,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__itemsDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">title</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.getSelectedCurveNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.getSelectedCurveNames">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectedCurveNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.getSelectedCurveNames"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.getSelectedCurveNames">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectedCurveNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns the curve names for the curves selected at the curves list.</span>
 
 <span class="sd">        *Note*: The names may differ from the displayed text, which</span>
@@ -348,7 +348,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NAME_ROLE</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">curvesLW</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()]</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.showProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.showProperties">[docs]</a>    <span class="k">def</span> <span class="nf">showProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.showProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.showProperties">[docs]</a>    <span class="k">def</span> <span class="nf">showProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Updates the dialog to show the given properties.</span>
 
 <span class="sd">        :param prop: (CurveAppearanceProperties) the properties object</span>
@@ -411,7 +411,7 @@
             <span class="n">checkState</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cFillCB</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="n">checkState</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.onControlChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onControlChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onControlChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.onControlChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.onControlChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onControlChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;slot to be called whenever a control widget is changed. It emmits a</span>
 <span class="sd">        &#39;controlChanged signal and applies the change if in autoapply mode.</span>
 <span class="sd">        It ignores any arguments passed&#39;&#39;&#39;</span>
@@ -420,7 +420,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoApply</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">onApply</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.onSelectedCurveChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onSelectedCurveChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onSelectedCurveChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.onSelectedCurveChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.onSelectedCurveChanged">[docs]</a>    <span class="k">def</span> <span class="nf">onSelectedCurveChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates the shown properties when the curve selection changes&quot;&quot;&quot;</span>
         <span class="n">plist</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">curvePropDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
                  <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSelectedCurveNames</span><span class="p">()]</span>
@@ -441,7 +441,7 @@
             <span class="c1"># cStyle=dots</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sSizeSB</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.getShownProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.getShownProperties">[docs]</a>    <span class="k">def</span> <span class="nf">getShownProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.getShownProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.getShownProperties">[docs]</a>    <span class="k">def</span> <span class="nf">getShownProperties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a copy of the currently shown properties and updates</span>
 <span class="sd">        self._shownProp</span>
 
@@ -489,7 +489,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_shownProp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.onApply"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onApply">[docs]</a>    <span class="k">def</span> <span class="nf">onApply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.onApply"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.onApply">[docs]</a>    <span class="k">def</span> <span class="nf">onApply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply does 2 things:</span>
 
 <span class="sd">            - It updates `self.curvePropDict` using the current values</span>
@@ -514,7 +514,7 @@
         <span class="c1"># return both values</span>
         <span class="k">return</span> <span class="n">prop</span><span class="p">,</span> <span class="n">names</span></div>
 
-<div class="viewcode-block" id="CurvesAppearanceChooser.onReset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.plot.CurvesAppearanceChooser.onReset">[docs]</a>    <span class="k">def</span> <span class="nf">onReset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CurvesAppearanceChooser.onReset"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurvesAppearanceChooser.html#taurus.qt.qtgui.qwt5.CurvesAppearanceChooser.onReset">[docs]</a>    <span class="k">def</span> <span class="nf">onReset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;slot to be called when the reset action is triggered. It reverts to</span>
 <span class="sd">        the original situation&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCurves</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_curvePropDictOrig</span><span class="p">)</span>
@@ -527,7 +527,7 @@
         <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CurveAppearanceProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties">[docs]</a><span class="k">class</span> <span class="nc">CurveAppearanceProperties</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="CurveAppearanceProperties"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.qwt5.CurveAppearanceProperties">[docs]</a><span class="k">class</span> <span class="nc">CurveAppearanceProperties</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;An object describing the appearance of a TaurusCurve&#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sStyle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sSize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sColor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sFill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -582,7 +582,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">77</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="CurveAppearanceProperties.inConflict_update_a"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.inConflict_update_a">[docs]</a>    <span class="k">def</span> <span class="nf">inConflict_update_a</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.inConflict_update_a"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.qwt5.CurveAppearanceProperties.inConflict_update_a">[docs]</a>    <span class="k">def</span> <span class="nf">inConflict_update_a</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This  function can be passed to CurvesAppearance.merge()</span>
 <span class="sd">        if one wants to update prop1 with prop2 except for those</span>
 <span class="sd">        attributes of prop2 that are set to None&quot;&quot;&quot;</span>
@@ -592,11 +592,11 @@
             <span class="k">return</span> <span class="n">b</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="CurveAppearanceProperties.inConflict_none"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.inConflict_none">[docs]</a>    <span class="k">def</span> <span class="nf">inConflict_none</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.inConflict_none"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.qwt5.CurveAppearanceProperties.inConflict_none">[docs]</a>    <span class="k">def</span> <span class="nf">inConflict_none</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;In case of conflict, returns None&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="CurveAppearanceProperties.conflictsWith"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.conflictsWith">[docs]</a>    <span class="k">def</span> <span class="nf">conflictsWith</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.conflictsWith"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.qwt5.CurveAppearanceProperties.conflictsWith">[docs]</a>    <span class="k">def</span> <span class="nf">conflictsWith</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;returns a list of attribute names that are in conflict between this self and other&quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">aname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyList</span><span class="p">:</span>
@@ -607,7 +607,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="CurveAppearanceProperties.merge"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plist</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">conflict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.merge"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.qwt5.CurveAppearanceProperties.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plist</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">conflict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;returns a CurveAppearanceProperties object formed by merging a list</span>
 <span class="sd">        of other CurveAppearanceProperties objects</span>
 
@@ -648,7 +648,7 @@
                     <span class="k">break</span>
         <span class="k">return</span> <span class="n">p</span></div>
 
-<div class="viewcode-block" id="CurveAppearanceProperties.applyToCurve"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.plot.CurveAppearanceProperties.applyToCurve">[docs]</a>    <span class="k">def</span> <span class="nf">applyToCurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
+<div class="viewcode-block" id="CurveAppearanceProperties.applyToCurve"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/qwt5/_CurveAppearanceProperties.html#taurus.qt.qtgui.qwt5.CurveAppearanceProperties.applyToCurve">[docs]</a>    <span class="k">def</span> <span class="nf">applyToCurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;applies the current properties to a given curve</span>
 <span class="sd">        If a property is set to None, it is not applied to the curve&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">DeprecationWarning</span><span class="p">(</span>

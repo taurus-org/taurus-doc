@@ -36,7 +36,7 @@
     <link rel="top" title="taurus 4.5.4-alpha documentation" href="../../../../index.html"/>
         <link rel="up" title="taurus.core" href="../core.html"/>
         <link rel="next" title="taurus.core.util.argparse" href="util/argparse.html"/>
-        <link rel="prev" title="TangoServInfo" href="tango/_TangoServInfo.html"/> 
+        <link rel="prev" title="TaurusDatabase" href="taurusdatabase/_TaurusDatabase.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -108,7 +108,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="../core.html">core</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
@@ -187,8 +186,19 @@ The json implementation follows the rule:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="util/argparse.html">argparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/console.html">console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util/decorator.html">decorator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/init_lightweight.html">init_lightweight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/lock.html">lock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/parse_args.html">parse_args</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/property_parser.html">property_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/propertyfile.html">propertyfile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/remotelogmonitor.html">remotelogmonitor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util/report.html">report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/sourcecode.html">sourcecode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/tablepprint.html">tablepprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/tb.html">tb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util/whichexecutable.html">whichexecutable</a></li>
 </ul>
 </div>
 <p class="rubric">Classes</p>
@@ -219,9 +229,9 @@ The json implementation follows the rule:</p>
 <li><a class="reference internal" href="util/_EventGenerator.html#taurus.core.util.EventGenerator" title="taurus.core.util.EventGenerator"><code class="xref py py-class docutils literal"><span class="pre">EventGenerator</span></code></a></li>
 <li><a class="reference internal" href="util/_EventListener.html#taurus.core.util.EventListener" title="taurus.core.util.EventListener"><code class="xref py py-class docutils literal"><span class="pre">EventListener</span></code></a></li>
 <li><a class="reference internal" href="util/_FunctionCodec.html#taurus.core.util.FunctionCodec" title="taurus.core.util.FunctionCodec"><code class="xref py py-class docutils literal"><span class="pre">FunctionCodec</span></code></a></li>
-<li><a class="reference internal" href="util/_InfoIt.html#taurus.core.util.InfoIt" title="taurus.core.util.InfoIt"><code class="xref py py-class docutils literal"><span class="pre">InfoIt</span></code></a></li>
 </ul>
 </td><td><ul class="simple">
+<li><a class="reference internal" href="util/_InfoIt.html#taurus.core.util.InfoIt" title="taurus.core.util.InfoIt"><code class="xref py py-class docutils literal"><span class="pre">InfoIt</span></code></a></li>
 <li><a class="reference internal" href="util/_JSONCodec.html#taurus.core.util.JSONCodec" title="taurus.core.util.JSONCodec"><code class="xref py py-class docutils literal"><span class="pre">JSONCodec</span></code></a></li>
 <li><a class="reference internal" href="util/_LIFO.html#taurus.core.util.LIFO" title="taurus.core.util.LIFO"><code class="xref py py-class docutils literal"><span class="pre">LIFO</span></code></a></li>
 <li><a class="reference internal" href="util/_ListEventGenerator.html#taurus.core.util.ListEventGenerator" title="taurus.core.util.ListEventGenerator"><code class="xref py py-class docutils literal"><span class="pre">ListEventGenerator</span></code></a></li>
@@ -244,7 +254,6 @@ The json implementation follows the rule:</p>
 <li><a class="reference internal" href="util/_WarnIt.html#taurus.core.util.WarnIt" title="taurus.core.util.WarnIt"><code class="xref py py-class docutils literal"><span class="pre">WarnIt</span></code></a></li>
 <li><a class="reference internal" href="util/_Worker.html#taurus.core.util.Worker" title="taurus.core.util.Worker"><code class="xref py py-class docutils literal"><span class="pre">Worker</span></code></a></li>
 <li><a class="reference internal" href="util/_ZIPCodec.html#taurus.core.util.ZIPCodec" title="taurus.core.util.ZIPCodec"><code class="xref py py-class docutils literal"><span class="pre">ZIPCodec</span></code></a></li>
-<li><a class="reference internal" href="util/_defaultdict.html#taurus.core.util.defaultdict" title="taurus.core.util.defaultdict"><code class="xref py py-class docutils literal"><span class="pre">defaultdict</span></code></a></li>
 <li><a class="reference internal" href="util/_defaultdict_fromkey.html#taurus.core.util.defaultdict_fromkey" title="taurus.core.util.defaultdict_fromkey"><code class="xref py py-class docutils literal"><span class="pre">defaultdict_fromkey</span></code></a></li>
 </ul>
 </td></tr></table>
@@ -267,7 +276,7 @@ Object can be a callable object, a function or a method.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a weak reference for the given callable</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BoundMethodWeakref or weakref.ref</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">taurus.core.util.BoundMethodWeakref or weakref.ref</p>
 </td>
 </tr>
 </tbody>
@@ -404,7 +413,7 @@ on python threading</li>
         <a href="util/argparse.html" class="btn btn-neutral float-right" title="taurus.core.util.argparse" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tango/_TangoServInfo.html" class="btn btn-neutral" title="TangoServInfo" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="taurusdatabase/_TaurusDatabase.html" class="btn btn-neutral" title="TaurusDatabase" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -184,7 +184,7 @@
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 
-<div class="viewcode-block" id="TaurusDevState"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusDevState.html#taurus.core.TaurusDevState">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevState</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusDevState"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusDevState.html#taurus.core.TaurusDevState">[docs]</a><span class="k">class</span> <span class="nc">TaurusDevState</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Enumeration of possible states of :class:`taurus.core.TaurusDevice`</span>
 <span class="sd">    objects. This is returned, e.g. by :meth:`TaurusDevice.state`.</span>
 
@@ -312,7 +312,7 @@
     <span class="p">))</span>
 
 
-<div class="viewcode-block" id="AttrQuality"><a class="viewcode-back" href="../../../devel/api/taurus/core/_AttrQuality.html#taurus.core.AttrQuality">[docs]</a><span class="k">class</span> <span class="nc">AttrQuality</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<div class="viewcode-block" id="AttrQuality"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_AttrQuality.html#taurus.core.AttrQuality">[docs]</a><span class="k">class</span> <span class="nc">AttrQuality</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Enumeration of quality states for Taurus attributes. based on</span>
 <span class="sd">    This is the Taurus equivalent to PyTango.AttrQuality.</span>
 <span class="sd">    The members present in PyTango are also defined here with the same values,</span>
@@ -376,7 +376,7 @@
 <span class="n">TaurusSWDevHealth</span> <span class="o">=</span> <span class="n">DeprecatedEnum</span><span class="p">(</span><span class="s1">&#39;TaurusSWDevHealth&#39;</span><span class="p">,</span> <span class="s1">&#39;TaurusDevState&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="TaurusTimeVal"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal">[docs]</a><span class="k">class</span> <span class="nc">TaurusTimeVal</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusTimeVal"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusTimeVal.html#taurus.core.TaurusTimeVal">[docs]</a><span class="k">class</span> <span class="nc">TaurusTimeVal</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tv_sec</span> <span class="o">=</span> <span class="mi">0</span>
@@ -389,17 +389,17 @@
     <span class="k">def</span> <span class="nf">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">totime</span><span class="p">()</span>
 
-<div class="viewcode-block" id="TaurusTimeVal.totime"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.totime">[docs]</a>    <span class="k">def</span> <span class="nf">totime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusTimeVal.totime"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.totime">[docs]</a>    <span class="k">def</span> <span class="nf">totime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_nsec</span> <span class="o">*</span> <span class="mf">1e-9</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_usec</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tv_sec</span></div>
 
-<div class="viewcode-block" id="TaurusTimeVal.todatetime"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.todatetime">[docs]</a>    <span class="k">def</span> <span class="nf">todatetime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusTimeVal.todatetime"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.todatetime">[docs]</a>    <span class="k">def</span> <span class="nf">todatetime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">totime</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="TaurusTimeVal.isoformat"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.isoformat">[docs]</a>    <span class="k">def</span> <span class="nf">isoformat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusTimeVal.isoformat"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.isoformat">[docs]</a>    <span class="k">def</span> <span class="nf">isoformat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">todatetime</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="TaurusTimeVal.fromtimestamp"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.fromtimestamp">[docs]</a>    <span class="k">def</span> <span class="nf">fromtimestamp</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusTimeVal.fromtimestamp"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.fromtimestamp">[docs]</a>    <span class="k">def</span> <span class="nf">fromtimestamp</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
         <span class="n">tv</span> <span class="o">=</span> <span class="n">TaurusTimeVal</span><span class="p">()</span>
         <span class="n">tv</span><span class="o">.</span><span class="n">tv_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
         <span class="n">usec</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">tv</span><span class="o">.</span><span class="n">tv_sec</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000000</span>
@@ -408,7 +408,7 @@
         <span class="k">return</span> <span class="n">tv</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="TaurusTimeVal.fromdatetime"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.fromdatetime">[docs]</a>    <span class="k">def</span> <span class="nf">fromdatetime</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusTimeVal.fromdatetime"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.fromdatetime">[docs]</a>    <span class="k">def</span> <span class="nf">fromdatetime</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
         <span class="kn">import</span> <span class="nn">time</span>
         <span class="n">tv</span> <span class="o">=</span> <span class="n">TaurusTimeVal</span><span class="p">()</span>
         <span class="n">tv</span><span class="o">.</span><span class="n">tv_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
@@ -417,11 +417,11 @@
         <span class="k">return</span> <span class="n">tv</span></div>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="TaurusTimeVal.now"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.now">[docs]</a>    <span class="k">def</span> <span class="nf">now</span><span class="p">():</span>
+<div class="viewcode-block" id="TaurusTimeVal.now"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusTimeVal.html#taurus.core.TaurusTimeVal.now">[docs]</a>    <span class="k">def</span> <span class="nf">now</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">TaurusTimeVal</span><span class="o">.</span><span class="n">fromdatetime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span></div></div>
 
 
-<div class="viewcode-block" id="TaurusModelValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusModelValue.html#taurus.core.TaurusModelValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelValue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusModelValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusModelValue.html#taurus.core.TaurusModelValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelValue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rvalue</span> <span class="o">=</span> <span class="kc">None</span>
@@ -430,7 +430,7 @@
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="TaurusAttrValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttrValue.html#taurus.core.TaurusAttrValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttrValue</span><span class="p">(</span><span class="n">TaurusModelValue</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusAttrValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusAttrValue.html#taurus.core.TaurusAttrValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttrValue</span><span class="p">(</span><span class="n">TaurusModelValue</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">TaurusModelValue</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -440,14 +440,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="TaurusConfigValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusConfigValue.html#taurus.core.TaurusConfigValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigValue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusConfigValue"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusConfigValue.html#taurus.core.TaurusConfigValue">[docs]</a><span class="k">class</span> <span class="nc">TaurusConfigValue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TaurusAttrValue&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="TaurusLockInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusLockInfo.html#taurus.core.TaurusLockInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusLockInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusLockInfo"><a class="viewcode-back" href="../../../devel/api/taurus/core/init_lightweight/_TaurusLockInfo.html#taurus.core.TaurusLockInfo">[docs]</a><span class="k">class</span> <span class="nc">TaurusLockInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="n">LOCK_STATUS_UNKNOWN</span> <span class="o">=</span> <span class="s1">&#39;Lock status unknown&#39;</span>
 
