@@ -1411,7 +1411,8 @@
         <span class="k">if</span> <span class="n">panel_descriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">panel_descriptions</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;PanelDescription&quot;</span><span class="p">:</span>
-                    <span class="n">pd</span> <span class="o">=</span> <span class="n">PanelDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+                    <span class="n">child_str</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">)</span>
+                    <span class="n">pd</span> <span class="o">=</span> <span class="n">PanelDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">child_str</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">pd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">custom_panels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
 
@@ -1456,7 +1457,8 @@
         <span class="k">if</span> <span class="n">tool_bar_descriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tool_bar_descriptions</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;ToolBarDescription&quot;</span><span class="p">:</span>
-                    <span class="n">d</span> <span class="o">=</span> <span class="n">ToolBarDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+                    <span class="n">child_str</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">)</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">ToolBarDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">child_str</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">custom_toolbars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
@@ -1508,7 +1510,8 @@
         <span class="k">if</span> <span class="n">applet_descriptions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">applet_descriptions</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;AppletDescription&quot;</span><span class="p">:</span>
-                    <span class="n">d</span> <span class="o">=</span> <span class="n">AppletDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+                    <span class="n">child_str</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">)</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">AppletDescription</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">child_str</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">custom_applets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
@@ -1547,7 +1550,8 @@
         <span class="k">if</span> <span class="n">ext_apps_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">ext_apps_node</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;ExternalApp&quot;</span><span class="p">:</span>
-                    <span class="n">ea</span> <span class="o">=</span> <span class="n">ExternalApp</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+                    <span class="n">child_str</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">)</span>
+                    <span class="n">ea</span> <span class="o">=</span> <span class="n">ExternalApp</span><span class="o">.</span><span class="n">fromXml</span><span class="p">(</span><span class="n">child_str</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">ea</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">external_apps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ea</span><span class="p">)</span>
 
@@ -1805,7 +1809,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigDelegate</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="n">panelxml</span> <span class="o">=</span> <span class="n">PanelDescription</span><span class="o">.</span><span class="n">fromPanel</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span><span class="o">.</span><span class="n">toXml</span><span class="p">()</span>
             <span class="n">panelDescriptionsNode</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">panelxml</span><span class="p">))</span>
-        <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">xmlroot</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">)</span>
 
         <span class="c1"># write to file</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
