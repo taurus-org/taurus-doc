@@ -174,7 +174,6 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui.utils</span> <span class="k">import</span> <span class="n">PanelDescription</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getCachedPixmap</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="k">import</span> <span class="n">GraphicalChoiceWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.communication</span> <span class="k">import</span> <span class="n">SharedDataManager</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span>
@@ -568,6 +567,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">commLV</span><span class="o">.</span><span class="n">setItemDelegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemDelegate</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">showModelChooser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
         <span class="n">models</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">TaurusModelChooser</span><span class="o">.</span><span class="n">modelChooserDlg</span><span class="p">(</span>
             <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">asMimeData</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
