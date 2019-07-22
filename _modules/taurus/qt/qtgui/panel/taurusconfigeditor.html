@@ -172,11 +172,11 @@
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QConfigEditor&quot;</span><span class="p">]</span>
@@ -220,12 +220,9 @@
 
 <span class="sd">        :param iniFileName: (str)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">iniFileName</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fo</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="n">iniFileName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="o">.</span><span class="n">IniFormat</span><span class="p">)</span>
@@ -487,7 +484,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">qstate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">qstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">qstate</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">qstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">qstate</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -507,6 +504,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">==</span> <span class="p">[]:</span>
             <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+
         <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clearChanges</span><span class="p">()</span>
         <span class="c1"># self.reloadFile()</span>
@@ -536,7 +535,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">==</span> <span class="p">[]:</span>
             <span class="k">return</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">reloadFile</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">clearChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
