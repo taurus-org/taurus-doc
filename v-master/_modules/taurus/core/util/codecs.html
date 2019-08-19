@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.codecs &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.core.util.codecs &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -202,7 +202,7 @@
 <span class="sd">    &gt;&gt;&gt; f, d = codec.decode((v.format, v.value))</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
 
@@ -218,7 +218,8 @@
 <span class="kn">from</span> <span class="nn">.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;NullCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;ZIPCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;BZ2Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;JSONCodec&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;FunctionCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;PlotCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;CodecPipeline&quot;</span><span class="p">,</span> <span class="s2">&quot;CodecFactory&quot;</span><span class="p">]</span>
+           <span class="s2">&quot;Utf8Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;FunctionCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;PlotCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;CodecPipeline&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;CodecFactory&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
@@ -310,7 +311,7 @@
 <span class="sd">        &#39;Hello world\\nHello wo&#39;&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="ZIPCodec.encode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ZIPCodec.html#taurus.core.util.ZIPCodec.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;encodes the given data to a gzip string. The given data **must** be a string</span>
+        <span class="sd">&quot;&quot;&quot;encodes the given data to gzip bytes. The given data **must** be bytes</span>
 
 <span class="sd">        :param data: (sequence[str, obj]) a sequence of two elements where the first item is the encoding format of the second item object</span>
 
@@ -322,7 +323,7 @@
         <span class="k">return</span> <span class="nb">format</span><span class="p">,</span> <span class="n">zlib</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ZIPCodec.decode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ZIPCodec.html#taurus.core.util.ZIPCodec.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;decodes the given data from a gzip string.</span>
+        <span class="sd">&quot;&quot;&quot;decodes the given data from a gzip bytes.</span>
 
 <span class="sd">        :param data: (sequence[str, obj]) a sequence of two elements where the first item is the encoding format of the second item object</span>
 
@@ -353,7 +354,7 @@
 <span class="sd">        &#39;Hello world\\nHello wo&#39;&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="BZ2Codec.encode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_BZ2Codec.html#taurus.core.util.BZ2Codec.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;encodes the given data to a bz2 string. The given data **must** be a string</span>
+        <span class="sd">&quot;&quot;&quot;encodes the given data to bz2 bytes. The given data **must** be bytes</span>
 
 <span class="sd">        :param data: (sequence[str, obj]) a sequence of two elements where the first item is the encoding format of the second item object</span>
 
@@ -365,7 +366,7 @@
         <span class="k">return</span> <span class="nb">format</span><span class="p">,</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="BZ2Codec.decode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_BZ2Codec.html#taurus.core.util.BZ2Codec.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;decodes the given data from a bz2 string.</span>
+        <span class="sd">&quot;&quot;&quot;decodes the given data from bz2 bytes.</span>
 
 <span class="sd">        :param data: (sequence[str, obj]) a sequence of two elements where the first item is the encoding format of the second item object</span>
 
@@ -398,7 +399,7 @@
 <span class="sd">        {&#39;hello&#39;: &#39;world&#39;, &#39;goodbye&#39;: 1000}&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;encodes the given data to a pickle string. The given data **must** be</span>
+        <span class="sd">&quot;&quot;&quot;encodes the given data to pickle bytes. The given data **must** be</span>
 <span class="sd">        a python object that :mod:`pickle` is able to convert.</span>
 
 <span class="sd">        :param data: (sequence[str, obj]) a sequence of two elements where the</span>
@@ -470,7 +471,7 @@
             <span class="nb">format</span> <span class="o">+=</span> <span class="s1">&#39;_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># make it compact by default</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;separators&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;separators&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">))</span>
-        <span class="k">return</span> <span class="nb">format</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">format</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="JSONCodec.decode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_JSONCodec.html#taurus.core.util.JSONCodec.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;decodes the given data from a json string.</span>
@@ -489,8 +490,6 @@
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">buffer_types</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">bytes</span><span class="p">):</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
         
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">ensure_ascii</span><span class="p">:</span>
@@ -517,6 +516,56 @@
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">newdict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_transform_ascii</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_ascii</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">newdict</span></div>
+
+
+<div class="viewcode-block" id="Utf8Codec"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_Utf8Codec.html#taurus.core.util.Utf8Codec">[docs]</a><span class="k">class</span> <span class="nc">Utf8Codec</span><span class="p">(</span><span class="n">Codec</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A codec able to encode/decode utf8 strings to/from bytes.</span>
+<span class="sd">    Useful to adapt i/o encodings in a codec pipe.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; from taurus.core.util.codecs import CodecFactory</span>
+
+<span class="sd">        &gt;&gt;&gt; cf = CodecFactory()</span>
+<span class="sd">        &gt;&gt;&gt; codec = cf.getCodec(&#39;zip_utf8_json&#39;)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # first encode something</span>
+<span class="sd">        &gt;&gt;&gt; data = { &#39;hello&#39; : &#39;world&#39;, &#39;goodbye&#39; : 1000 }</span>
+<span class="sd">        &gt;&gt;&gt; format, encoded_data = codec.encode((&quot;&quot;, data))</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # now decode it</span>
+<span class="sd">        &gt;&gt;&gt; _, decoded_data = codec.decode((format, encoded_data))</span>
+<span class="sd">        &gt;&gt;&gt; print decoded_data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Utf8Codec.encode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_Utf8Codec.html#taurus.core.util.Utf8Codec.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Encodes the given utf8 string to bytes.</span>
+
+<span class="sd">        :param data: (sequence[str, obj]) a sequence of two elements where the</span>
+<span class="sd">                     first item is the encoding format of the second item object</span>
+
+<span class="sd">        :return: (sequence[str, obj]) a sequence of two elements where the</span>
+<span class="sd">                 first item is the encoding format of the second item object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;utf8&#39;</span>
+        <span class="n">fmt</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fmt</span><span class="p">):</span>
+            <span class="nb">format</span> <span class="o">+=</span> <span class="s1">&#39;_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">fmt</span>
+        <span class="k">return</span> <span class="nb">format</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Utf8Codec.decode"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_Utf8Codec.html#taurus.core.util.Utf8Codec.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;decodes the given data from a bytes.</span>
+
+<span class="sd">        :param data: (sequence[str, obj]) a sequence of two elements where the</span>
+<span class="sd">                     first item is the encoding format of the second item object</span>
+
+<span class="sd">        :return: (sequence[str, obj]) a sequence of two elements where the</span>
+<span class="sd">                 first item is the encoding format of the second item object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fmt</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fmt</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div></div>
 
 
 <span class="k">class</span> <span class="nc">BSONCodec</span><span class="p">(</span><span class="n">Codec</span><span class="p">):</span>
@@ -689,7 +738,19 @@
 
         <span class="n">imgBuffer</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_HEADER_FORMAT</span><span class="p">):]</span>
         <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__getDtypeId</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="c1"># RGB24, 3 bytes per pixel</span>
+            <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">bbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">gbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">rbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">rbuf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">])</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">gbuf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">])</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">bbuf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">])</span>
+            <span class="n">img2D</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
             <span class="c1"># RGBA 4 bytes per pixel</span>
             <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">bbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
@@ -837,7 +898,7 @@
             <span class="c1"># TODO: other modes</span>
             <span class="c1">#&#39;RGB555&#39;     : 4,#Core.RGB555,</span>
             <span class="c1">#&#39;RGB565&#39;     : 5,#Core.RGB565,</span>
-            <span class="c1">#&#39;RGB24&#39;      : 6,#Core.RGB24,</span>
+            <span class="s1">&#39;RGB24&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>  <span class="c1"># Core.RGB24,</span>
             <span class="s1">&#39;RGB32&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># Core.RGB32,</span>
             <span class="c1">#&#39;BGR24&#39;      : 8,#Core.BGR24,</span>
             <span class="c1">#&#39;BGR32&#39;      : 9,#Core.BGR32,</span>
@@ -858,7 +919,7 @@
                 <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span>
                 <span class="c1">#&#39;RGB555&#39;     : Core.RGB555,</span>
                 <span class="c1">#&#39;RGB565&#39;     : Core.RGB565,</span>
-                <span class="c1">#&#39;RGB24&#39;      : Core.RGB24,</span>
+                <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;RGB24&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB24,</span>
                 <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;RGB32&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB32,</span>
                 <span class="c1"># 8     : &#39;BGR24&#39;,#Core.BGR24,</span>
                 <span class="c1">#&#39;BGR32&#39;      : Core.BGR32,</span>
@@ -879,7 +940,7 @@
                 <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;uint64&#39;</span><span class="p">,</span>
                 <span class="c1">#&#39;RGB555&#39;     : Core.RGB555,</span>
                 <span class="c1">#&#39;RGB565&#39;     : Core.RGB565,</span>
-                <span class="c1"># 6      : &#39;uint8&#39;, # Core.RGB24,</span>
+                <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;uint8&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB24,</span>
                 <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;uint8&#39;</span><span class="p">,</span>  <span class="c1"># Core.RGB32,</span>
                 <span class="c1">#&#39;BGR24&#39;      : Core.BGR24,</span>
                 <span class="c1">#&#39;BGR32&#39;      : Core.BGR32,</span>
@@ -993,6 +1054,7 @@
     <span class="c1">#: Default minimum map of registered codecs</span>
     <span class="n">CODEC_MAP</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">({</span>
         <span class="s1">&#39;json&#39;</span><span class="p">:</span> <span class="n">JSONCodec</span><span class="p">,</span>
+        <span class="s1">&#39;utf8&#39;</span><span class="p">:</span> <span class="n">Utf8Codec</span><span class="p">,</span>
         <span class="s1">&#39;bson&#39;</span><span class="p">:</span> <span class="n">BSONCodec</span><span class="p">,</span>
         <span class="s1">&#39;bz2&#39;</span><span class="p">:</span> <span class="n">BZ2Codec</span><span class="p">,</span>
         <span class="s1">&#39;zip&#39;</span><span class="p">:</span> <span class="n">ZIPCodec</span><span class="p">,</span>
@@ -1112,7 +1174,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

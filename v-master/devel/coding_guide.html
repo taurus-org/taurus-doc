@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Taurus development guidelines &mdash; taurus 4.5.1 documentation</title>
+  <title>Taurus development guidelines &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../index.html"/>
         <link rel="up" title="Developer’s Guide" href="index.html"/>
         <link rel="next" title="Creating GUIs with the TaurusGUI framework" href="taurusgui_newgui.html"/>
         <link rel="prev" title="Taurus 3.x to 4.x migration guide" href="taurus3to4.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -141,7 +141,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -280,10 +280,28 @@ PyQt4, PyQt5 and PySide versions.</p>
 </pre></div>
 </div>
 </li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>this guideline applies to code which is part of the taurus module or its
+plugins. For end-user applications that use taurus, this rule may not apply,
+as mentioned in <a class="reference external" href="http://taurus-scada.org/tep/?TEP18.md">TEP18</a>:</p>
+<blockquote class="last">
+<div><em>For an end-user application based on taurus</em> it is probably better to import
+directly from a specific binding (PyQt5 is the best supported) and let taurus to
+adapt to that choice. In this way, one can write idiomatic code that better
+matches the chosen binding. Using the <code class="docutils literal"><span class="pre">taurus.external.qt</span></code> shim
+is also possible if one wants to make the code binding-agnostic, but in that
+case one must keep in mind that the resulting code will be less idiomatic
+and that the shim&#8217;s API may be eventually altered to better fit with taurus
+own requirements (and that those changes may not be aligned with the
+application needs).</div></blockquote>
+</div>
+<ol class="arabic" start="2">
 <li><p class="first">Since Taurus v&gt;=4.0, Qt-based code in Taurus assumes
 that <a class="reference external" href="http://pyqt.sourceforge.net/Docs/PyQt4/incompatible_apis.html">PyQt API v2</a> is used. PyQt API 1 code is not accepted in taurus.</p>
 <ul>
-<li><p class="first">Use standard python strings (e.g., use <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> for Qt strings instead of
+<li><p class="first">Use standard python strings (e.g., use <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> for Qt strings instead of
 <code class="xref py py-class docutils literal"><span class="pre">QString</span></code>). Code like:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="s2">&quot; hello &quot;</span><span class="p">)</span>
 <span class="n">my_string2</span> <span class="o">=</span> <span class="n">my_string</span><span class="o">.</span><span class="n">trimmed</span><span class="p">()</span>
@@ -401,7 +419,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

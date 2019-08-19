@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusmodelchooser &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusmodelchooser &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -168,24 +168,124 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span>
+
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+
+<span class="kn">import</span> <span class="nn">taurus</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt.compat</span> <span class="k">import</span> <span class="n">PY_OBJECT</span>
 <span class="kn">import</span> <span class="nn">taurus.core</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.tree</span> <span class="k">import</span> <span class="n">TaurusDbTreeWidget</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessList</span>
 <span class="kn">from</span> <span class="nn">.taurusmodellist</span> <span class="k">import</span> <span class="n">TaurusModelList</span>
 
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusModelSelectorTree&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusModelChooser&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TaurusModelSelector&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusModelSelectorItem&quot;</span><span class="p">]</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusModelSelectorTree&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusModelChooser&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TaurusModelSelector"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelector.html#taurus.qt.qtgui.panel.TaurusModelSelector">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelSelector</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QTabWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;TaurusModelSelector is a QTabWidget container for</span>
+<span class="sd">    TaurusModelSelectorItem.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO add action to add new TaurusModelSelectorItem</span>
+    <span class="c1"># TODO add mechanism to allow manual plugin activation</span>
+    <span class="c1">#      (instead of relying on installation)</span>
+    <span class="n">modelsAdded</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">PY_OBJECT</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QTabWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__setTabItemModel</span><span class="p">)</span>
+        <span class="c1"># ---------------------------------------------------------------------</span>
+        <span class="c1"># Note: this is an experimental feature</span>
+        <span class="c1"># It may be removed or changed in future releases</span>
+        <span class="c1"># Discover the taurus.modelselector plugins</span>
+        <span class="n">ep_name</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.panel.TaurusModelSelector.items&#39;</span>
+        <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">iter_entry_points</span><span class="p">(</span><span class="n">ep_name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ms_class</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+                <span class="n">ms_item</span> <span class="o">=</span> <span class="n">ms_class</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__addItem</span><span class="p">(</span><span class="n">ms_item</span><span class="p">,</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;Invalid TaurusModelSelectorItem plugin: </span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">ep</span><span class="o">.</span><span class="n">module_name</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="n">taurus</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="c1"># ---------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">__setTabItemModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">default_model</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">taurus</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Problem setting up selector: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__addItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">default_model</span> <span class="o">=</span> <span class="n">model</span>
+
+        <span class="n">widget</span><span class="o">.</span><span class="n">modelsAdded</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelsAdded</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TaurusModelSelectorTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelSelectorTree</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusModelSelectorItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorItem.html#taurus.qt.qtgui.panel.TaurusModelSelectorItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelSelectorItem</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for ModelSelectorItem.</span>
+<span class="sd">    It defines the minimal API to be defined in the specialization</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">modelsAdded</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">PY_OBJECT</span><span class="p">)</span>
+    <span class="n">_dragEnabled</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># TODO add action for setModel</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_model</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="TaurusModelSelectorItem.getSelectedModels"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorItem.html#taurus.qt.qtgui.panel.TaurusModelSelectorItem.getSelectedModels">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectedModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">((</span><span class="s1">&#39;getSelectedModels must be implemented&#39;</span>
+                                   <span class="o">+</span> <span class="s1">&#39; in TaurusModelSelectorItem subclass&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TaurusModelSelectorItem.getModelMimeData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorItem.html#taurus.qt.qtgui.panel.TaurusModelSelectorItem.getModelMimeData">[docs]</a>    <span class="k">def</span> <span class="nf">getModelMimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reimplemented from TaurusBaseComponent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSelectedModels</span><span class="p">()</span>
+        <span class="n">md</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMimeData</span><span class="p">()</span>
+        <span class="n">md</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
+        <span class="n">models_bytes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
+        <span class="n">md</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtcore</span><span class="o">.</span><span class="n">mimetypes</span><span class="o">.</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span>
+                   <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">models_bytes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">md</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_default_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reimplement to return a default model to initialize the widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">((</span><span class="s1">&#39;default_model must be implemented&#39;</span>
+                                   <span class="o">+</span> <span class="s1">&#39; in TaurusModelSelectorItem subclass&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_set_default_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set default model to initialize the widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="c1"># Reimplement this property</span>
+    <span class="n">default_model</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="o">=</span><span class="n">_get_default_model</span><span class="p">,</span> <span class="n">fset</span><span class="o">=</span><span class="n">_set_default_model</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TaurusModelSelectorTree"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelSelectorTree.html#taurus.qt.qtgui.panel.TaurusModelSelectorTree">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelSelectorTree</span><span class="p">(</span><span class="n">TaurusModelSelectorItem</span><span class="p">):</span>
 
     <span class="n">addModels</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QStringList&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buttonsPos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">TaurusWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">TaurusModelSelectorItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">selectables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">selectables</span> <span class="o">=</span> <span class="p">[</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Attribute</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Member</span><span class="p">,</span>
                            <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusElementType</span><span class="o">.</span><span class="n">Device</span><span class="p">]</span>
@@ -275,6 +375,34 @@
         <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;container&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Views&#39;</span>
         <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">TangoModelSelectorItem</span><span class="p">(</span><span class="n">TaurusModelSelectorTree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A taurus model selector item for Tango models</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: Tango-centric (move to Taurus-Tango plugin)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">buttonsPos</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightToolBarArea</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">TaurusModelSelectorTree</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">selectables</span><span class="o">=</span><span class="n">selectables</span><span class="p">,</span>
+            <span class="n">buttonsPos</span><span class="o">=</span><span class="n">buttonsPos</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onAddSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reimplemented from TaurusModelSelectorTree to emit modelsAdded</span>
+<span class="sd">        signal instead of addModels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelsAdded</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getSelectedModels</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_get_default_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplemented from TaurusModelSelectorItem&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="s1">&#39;tango&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_default_model</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">()</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_model</span>
+
+    <span class="n">default_model</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="o">=</span><span class="n">_get_default_model</span><span class="p">,</span>
+                             <span class="n">fset</span><span class="o">=</span><span class="n">TaurusModelSelectorTree</span><span class="o">.</span><span class="n">_set_default_model</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="TaurusModelChooser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusModelChooser.html#taurus.qt.qtgui.panel.TaurusModelChooser">[docs]</a><span class="k">class</span> <span class="nc">TaurusModelChooser</span><span class="p">(</span><span class="n">TaurusWidget</span><span class="p">):</span>
@@ -536,7 +664,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

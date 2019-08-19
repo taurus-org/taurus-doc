@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.tango.starter &mdash; taurus 4.6.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.tango.starter</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.tango.starter</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a very simple API for starting and killing device</span>
+<span class="sd">servers</span>
+
+<span class="sd">It is not a replacement of the Tango Starter Device Server since this is much</span>
+<span class="sd">more limited in scope.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">PyTango</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="n">_log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s1">&#39;Starter&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Starter"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter">[docs]</a><span class="k">class</span> <span class="nc">Starter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Abstract class for managing (starting, stopping, registering and</span>
+<span class="sd">    removing) a Tango Device Server.</span>
+
+<span class="sd">    Derived classes should provide the methods for starting and stopping a</span>
+<span class="sd">    device.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param ds_name: (str) Device Server name in the form &quot;server/instance&quot;</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span> <span class="o">=</span> <span class="n">ds_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dserver_name</span> <span class="o">=</span> <span class="s1">&#39;dserver/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ds_name</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dserver</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceProxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dserver_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">serverExisted</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span>  <span class="c1"># not registered?</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dserver</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">serverExisted</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addedDevices</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Starter.hardKill"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.hardKill">[docs]</a>    <span class="k">def</span> <span class="nf">hardKill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;hardKill method is mandatory&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Starter.terminate"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.terminate">[docs]</a>    <span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;terminate method is mandatory&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Starter.start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;start method is mandatory&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Starter.stopDs"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.stopDs">[docs]</a>    <span class="k">def</span> <span class="nf">stopDs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">synch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hard_kill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">wait_seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">hard_kill</span><span class="p">:</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Hard killing server </span><span class="si">%s</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hardKill</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Stopping server </span><span class="si">%s</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">synch</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">wait_seconds</span><span class="p">):</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Waiting for server </span><span class="si">%s</span><span class="s1"> to get stopped. Iteration: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isRunning</span><span class="p">():</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">##############################################################</span>
+                <span class="c1"># TODO: this workaround doesn&#39;t seem necessary (see isRunning)</span>
+                <span class="c1"># time.sleep(3)</span>
+                <span class="c1">##############################################################</span>
+                <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Server </span><span class="si">%s</span><span class="s1"> has been stopped&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">)</span>
+                <span class="k">return</span>
+        <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Server </span><span class="si">%s</span><span class="s1"> did not stop within </span><span class="si">%d</span><span class="s1"> seconds&#39;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">,</span> <span class="n">wait_seconds</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Starter.startDs"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.startDs">[docs]</a>    <span class="k">def</span> <span class="nf">startDs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">synch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isRunning</span><span class="p">():</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Server already running&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Starting server </span><span class="si">%s</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">synch</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">wait_seconds</span><span class="p">):</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Waiting for server </span><span class="si">%s</span><span class="s1"> to get started... </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isRunning</span><span class="p">():</span>
+                <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Server </span><span class="si">%s</span><span class="s1"> has been started&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">)</span>
+                <span class="c1">##############################################################</span>
+                <span class="c1"># Workaround to avoid race conditions</span>
+                <span class="c1"># TODO: Find root cause of race condition and fix</span>
+                <span class="n">_wait</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;TAURUS_STARTER_WAIT&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">_wait</span><span class="p">:</span>
+                    <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Waiting </span><span class="si">%g</span><span class="s1"> s after start&#39;</span> <span class="o">%</span> <span class="n">_wait</span><span class="p">)</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">_wait</span><span class="p">)</span>
+                <span class="c1">##############################################################</span>
+                <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Server </span><span class="si">%s</span><span class="s1"> did not start within </span><span class="si">%d</span><span class="s1"> seconds&#39;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">,</span> <span class="n">wait_seconds</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Starter.addNewDevice"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.addNewDevice">[docs]</a>    <span class="k">def</span> <span class="nf">addNewDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a device of this server in the DB (register the server if</span>
+<span class="sd">        not present)</span>
+<span class="sd">        e.g. to create Starter in an init script::</span>
+
+<span class="sd">            addNewDevice(&#39;sys/tg_test/foobar&#39;, klass=&#39;TangoTest&#39;)</span>
+
+<span class="sd">        :param klass: class name. If None passed, it defaults to the server</span>
+<span class="sd">                      name (without instance name)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">device</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addedDevices</span><span class="p">:</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> already added. Skipping&#39;</span> <span class="o">%</span> <span class="n">device</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">klass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># in case the device is already defined, skipping...</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">Database</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">import_device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> already exists. Skipping&#39;</span> <span class="o">%</span> <span class="n">device</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="c1"># register the device,</span>
+        <span class="c1"># in case the server did not exist before this will define it</span>
+        <span class="n">dev_info</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DbDevInfo</span><span class="p">()</span>
+        <span class="n">dev_info</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="n">dev_info</span><span class="o">.</span><span class="n">klass</span> <span class="o">=</span> <span class="n">klass</span>
+        <span class="n">dev_info</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">add_device</span><span class="p">(</span><span class="n">dev_info</span><span class="p">)</span>
+        <span class="c1"># create proxy to dserver</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dserver</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceProxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dserver_name</span><span class="p">)</span>
+        <span class="c1"># keep track of added devices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addedDevices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">device</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Starter.cleanDb"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.cleanDb">[docs]</a>    <span class="k">def</span> <span class="nf">cleanDb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;removes devices which have been added by :meth:`addNewDevice`</span>
+<span class="sd">        and then removes the server if it was registered by this starter</span>
+<span class="sd">        (or, if force is True, it removes the server in any case)</span>
+
+<span class="sd">        :param force: (bool) force removing of the Server even if it was</span>
+<span class="sd">                      not registered within this starter</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addedDevices</span><span class="p">:</span>
+            <span class="n">PyTango</span><span class="o">.</span><span class="n">Database</span><span class="p">()</span><span class="o">.</span><span class="n">delete_device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deleted device </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">device</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">serverExisted</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_addedDevices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> was not registered by this starter. Not removing. &#39;</span> <span class="o">+</span>
+                   <span class="s1">&#39;Use </span><span class="si">%s</span><span class="s1">.cleanDb(force=True) to force cleanup&#39;</span><span class="p">)</span> <span class="o">%</span> \
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stopDs</span><span class="p">(</span><span class="n">hard_kill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">PyTango</span><span class="o">.</span><span class="n">Database</span><span class="p">()</span><span class="o">.</span><span class="n">delete_server</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">)</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deleted Server </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Starter.isRunning"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_Starter.html#taurus.core.tango.starter.Starter.isRunning">[docs]</a>    <span class="k">def</span> <span class="nf">isRunning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: In case the sleeps in startDS and stopDS need to be re-added,</span>
+        <span class="c1">#       we should study another implementation for this method.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dserver</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dserver</span><span class="o">.</span><span class="n">ping</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DevFailed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
+
+<div class="viewcode-block" id="ProcessStarter"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_ProcessStarter.html#taurus.core.tango.starter.ProcessStarter">[docs]</a><span class="k">class</span> <span class="nc">ProcessStarter</span><span class="p">(</span><span class="n">Starter</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A :class:`Starter` which uses subprocess to start and stop a device</span>
+<span class="sd">    server.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">execname</span><span class="p">,</span> <span class="n">ds_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param execname: (str) path to the executable to launch the server</span>
+<span class="sd">        :param ds_name: (str) Device Server name in the form &quot;server/instance&quot;</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ProcessStarter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ds_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds_instance</span> <span class="o">=</span> <span class="n">ds_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exec_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">execname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ProcessStarter.start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_ProcessStarter.html#taurus.core.tango.starter.ProcessStarter.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dev_null</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">exec_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_instance</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">dev_null</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">dev_null</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProcessStarter.terminate"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_ProcessStarter.html#taurus.core.tango.starter.ProcessStarter.terminate">[docs]</a>    <span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Process not started, cannot terminate it.&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProcessStarter.hardKill"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/starter/_ProcessStarter.html#taurus.core.tango.starter.ProcessStarter.hardKill">[docs]</a>    <span class="k">def</span> <span class="nf">hardKill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Process not started, cannot terminate it.&#39;</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="kn">from</span> <span class="nn">taurus.test.resource</span> <span class="k">import</span> <span class="n">getResourcePath</span>
+    <span class="n">timeoutExec</span> <span class="o">=</span> <span class="n">getResourcePath</span><span class="p">(</span><span class="s1">&#39;taurus.qt.qtgui.button.test.res&#39;</span><span class="p">,</span> <span class="s1">&#39;Timeout&#39;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">ProcessStarter</span><span class="p">(</span><span class="n">timeoutExec</span><span class="p">,</span> <span class="s1">&#39;Timeout/test_removeme&#39;</span><span class="p">)</span>
+    <span class="n">devname</span> <span class="o">=</span> <span class="s1">&#39;testing/timeout/temp-1&#39;</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">addNewDevice</span><span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="s1">&#39;Timeout&#39;</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">startDs</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Is running:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">isRunning</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ping:&quot;</span><span class="p">,</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">DeviceProxy</span><span class="p">(</span><span class="n">devname</span><span class="p">)</span><span class="o">.</span><span class="n">ping</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">stopDs</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">cleanDb</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.6.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

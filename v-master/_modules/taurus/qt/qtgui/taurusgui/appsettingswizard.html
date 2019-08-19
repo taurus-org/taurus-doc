@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.taurusgui.appsettingswizard &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.taurusgui.appsettingswizard &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -184,12 +184,11 @@
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
 
-<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="n">warning</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
 <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.panel</span>
 <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.taurusgui.paneldescriptionwizard</span>
 <span class="kn">import</span> <span class="nn">taurus.qt.qtgui.input</span>
-<span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="n">TangoDeviceNameValidator</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">ExternalAppAction</span>
 
@@ -865,6 +864,12 @@
 
     <span class="k">def</span> <span class="nf">_getMacroServerName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macroGroupBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">macroServerComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">()):</span>
+            <span class="k">try</span><span class="p">:</span> <span class="c1"># TODO: tango-centric</span>
+                <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span>
+                    <span class="n">TangoDeviceNameValidator</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cannot import tango (needed for sardana integration)&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
             <span class="n">ms_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">macroServerComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
             <span class="n">complete_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">TangoDeviceNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">ms_name</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">complete_name</span>
@@ -874,6 +879,12 @@
     <span class="k">def</span> <span class="nf">_getDoorName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macroGroupBox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">macroServerComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">()):</span>
             <span class="n">door_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_confWidget</span><span class="o">.</span><span class="n">doorComboBox</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span>
+            <span class="k">try</span><span class="p">:</span> <span class="c1"># TODO: tango-centric</span>
+                <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span>
+                    <span class="n">TangoDeviceNameValidator</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cannot import tango (needed for sardana integration)&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
             <span class="n">complete_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">TangoDeviceNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span>
                 <span class="n">door_name</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">complete_name</span>
@@ -1000,7 +1011,8 @@
             <span class="n">name</span> <span class="o">=</span> <span class="n">AppSettingsWizard</span><span class="o">.</span><span class="n">getValueFromNode</span><span class="p">(</span>
                 <span class="n">child</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_panels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_panels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">)))</span>
 
     <span class="k">def</span> <span class="nf">_addPanel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">paneldesc</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">taurusgui</span><span class="o">.</span><span class="n">paneldescriptionwizard</span><span class="o">.</span><span class="n">PanelDescriptionWizard</span><span class="o">.</span><span class="n">getDialog</span><span class="p">(</span>
@@ -1196,7 +1208,7 @@
         <span class="n">icon</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;icon&quot;</span><span class="p">)</span>
         <span class="n">icon</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getIcon</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="ExternalAppEditor.getDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_ExternalAppEditor.html#taurus.qt.qtgui.taurusgui.ExternalAppEditor.getDialog">[docs]</a>    <span class="k">def</span> <span class="nf">getDialog</span><span class="p">():</span>
@@ -1270,7 +1282,9 @@
             <span class="n">name</span> <span class="o">=</span> <span class="n">AppSettingsWizard</span><span class="o">.</span><span class="n">getValueFromNode</span><span class="p">(</span>
                 <span class="n">child</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_externalApps</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_externalApps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">))</span>
+                <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_addApplication</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">xml</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">ExternalAppEditor</span><span class="o">.</span><span class="n">getDialog</span><span class="p">()</span>
@@ -1812,7 +1826,8 @@
         <span class="n">monitor</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;MONITOR&quot;</span><span class="p">)</span>
         <span class="n">monitor</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="s2">&quot;monitor&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_substitutions</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode&#39;</span><span class="p">),</span>
+                <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_substitutions</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="AppSettingsWizard.substitutionName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_AppSettingsWizard.html#taurus.qt.qtgui.taurusgui.AppSettingsWizard.substitutionName">[docs]</a>    <span class="k">def</span> <span class="nf">substitutionName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">mod_dir</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
@@ -1869,7 +1884,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

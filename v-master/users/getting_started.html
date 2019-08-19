@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; taurus 4.5.1 documentation</title>
+  <title>Getting started &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../index.html"/>
         <link rel="up" title="User’s Guide" href="index.html"/>
         <link rel="next" title="User’s Interface" href="ui/index.html"/>
         <link rel="prev" title="Introduction" href="introduction.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">User&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Getting started</a></li>
@@ -135,7 +135,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="index.html">User&#8217;s Guide</a> &raquo;</li>
       
@@ -171,27 +171,6 @@ download and install the latest release of Taurus (see pip &#8211;help for optio
 <p>Note: pip is already included in python&gt;2.7.9</p>
 <p>Note: some &#8220;extra&#8221; features of taurus have additional <a class="reference internal" href="#dependencies">dependencies</a>.</p>
 </div>
-<div class="section" id="installing-from-sources-manually-platform-independent">
-<h3>Installing from sources manually (platform-independent)<a class="headerlink" href="#installing-from-sources-manually-platform-independent" title="Permalink to this headline">¶</a></h3>
-<p>You may alternatively install from a downloaded release package:</p>
-<ol class="arabic">
-<li><p class="first">Download the latest sources of taurus from <a class="reference external" href="http://pypi.python.org/pypi/taurus">http://pypi.python.org/pypi/taurus</a></p>
-</li>
-<li><p class="first">Extract the downloaded source into a temporary directory and change to it</p>
-</li>
-<li><p class="first">run:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">test the installation:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import taurus; print taurus.Release.version&quot;</span>
-</pre></div>
-</div>
-</li>
-</ol>
-<p>Note: some &#8220;extra&#8221; features of taurus have additional <a class="reference internal" href="#dependencies">dependencies</a>.</p>
-</div>
 <div class="section" id="linux-debian-based">
 <h3>Linux (Debian-based)<a class="headerlink" href="#linux-debian-based" title="Permalink to this headline">¶</a></h3>
 <p>Since v3.0, Taurus is part of the official repositories of Debian (and Ubuntu
@@ -200,25 +179,20 @@ doing (as root):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">aptitude</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">taurus</span>
 </pre></div>
 </div>
-<p>(see more detailed instructions in <a class="reference external" href="https://sourceforge.net/p/sardana/wiki/Howto-SardanaFromScratch/">this step-by-step howto</a>)</p>
+<p>Note: <cite>python3-taurus</cite> and <cite>python3-taurus-pyqtgraph</cite> packages are already
+built in <a class="reference external" href="https://salsa.debian.org">https://salsa.debian.org</a> , but are not yet part of the official debian
+repositories</p>
 </div>
-<div class="section" id="windows">
-<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
-<ol class="arabic">
-<li><p class="first">Install the <a class="reference external" href="http://python-xy.github.io/">Python(x,y)</a> bundle (alternatively, you could install Python,
-<a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a>, <a class="reference external" href="http://www.dabeaz.com/ply/">PLY</a>, and other <a class="reference internal" href="#dependencies">dependencies</a> independently, but <a class="reference external" href="http://python-xy.github.io/">Python(x,y)</a>
-will save you much worries about versions).</p>
-</li>
-<li><p class="first">Download the latest Taurus windows binary from <a class="reference external" href="http://pypi.python.org/pypi/taurus">http://pypi.python.org/pypi/taurus</a></p>
-</li>
-<li><p class="first">Run the installation executable</p>
-</li>
-<li><p class="first">test the installation:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Python27</span>\<span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import taurus; print taurus.Release.version&quot;</span>
+<div class="section" id="installing-in-a-conda-environment-windows-and-linux">
+<h3>Installing in a conda environment (Windows and linux)<a class="headerlink" href="#installing-in-a-conda-environment-windows-and-linux" title="Permalink to this headline">¶</a></h3>
+<p>First create a <a class="reference external" href="http://conda.io/docs/">Conda</a> environment with all the dependencies and activate it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+<span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">tango</span><span class="o">-</span><span class="n">controls</span>  <span class="c1"># for windows, use &quot;tcoutinho&quot; instead of &quot;tango-controls&quot;</span>
+<span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">py3qt5</span> <span class="n">python</span><span class="o">=</span><span class="mi">3</span> <span class="n">pyqt</span><span class="o">=</span><span class="mi">5</span> <span class="n">itango</span> <span class="n">pytango</span> <span class="n">lxml</span> <span class="n">future</span> <span class="n">guidata</span> <span class="n">guiqwt</span> <span class="n">ipython</span> <span class="n">pillow</span> <span class="n">pint</span> <span class="n">ply</span> <span class="n">pyqtgraph</span> <span class="n">pythonqwt</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">pymca</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">py3qt5</span>
 </pre></div>
 </div>
-</li>
-</ol>
+<p>Then install taurus and taurus_pyqtgraph using pip (as explained above)</p>
 </div>
 </div>
 <div class="section" id="working-from-git-source-directly-in-develop-mode">
@@ -226,13 +200,14 @@ will save you much worries about versions).</p>
 <p>If you intend to do changes to Taurus itself, or want to try the latest
 developments, it is convenient to work directly from the git source in
 &#8220;develop&#8221; (aka &#8220;editable&#8221;) mode, so that you do not need to re-install
-on each change.</p>
-<p>You can clone taurus from our main git repository:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">taurus</span><span class="o">-</span><span class="n">org</span><span class="o">/</span><span class="n">taurus</span><span class="o">.</span><span class="n">git</span> <span class="n">taurus</span>
-</pre></div>
-</div>
-<p>Then, to work in develop mode, just do:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">./</span><span class="n">taurus</span>
+on each change:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># install taurus in develop mode</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">taurus</span><span class="o">-</span><span class="n">org</span><span class="o">/</span><span class="n">taurus</span><span class="o">.</span><span class="n">git</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">./</span><span class="n">taurus</span>  <span class="c1"># &lt;-- Note the -e !!</span>
+
+<span class="c1"># install taurus_pyqtgraph in develop mode</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">taurus</span><span class="o">-</span><span class="n">org</span><span class="o">/</span><span class="n">taurus_pyqtgraph</span><span class="o">.</span><span class="n">git</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">./</span><span class="n">taurus_pyqtgraph</span>  <span class="c1"># &lt;-- Note the -e !!</span>
 </pre></div>
 </div>
 </div>
@@ -248,7 +223,7 @@ expected of Taurus (which are considered &#8220;extras&#8221;). For example:</p>
 or <a class="reference external" href="https://wiki.qt.io/Qt_for_Python">PySide</a> (v1 or v2). Note that most development and testing of
 is done with PyQt4 and PyQt5, so many features may not be
 regularly tested with PySide and PySide2.</li>
-<li>The <a class="reference internal" href="../devel/api/taurus/qt/qtgui/plot.html#module-taurus.qt.qtgui.plot" title="taurus.qt.qtgui.plot"><code class="xref py py-mod docutils literal"><span class="pre">taurus.qt.qtgui.plot</span></code></a> module requires <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt</a>, which is
+<li>The <a class="reference internal" href="../devel/api/taurus/qt/qtgui/qwt5.html#module-taurus.qt.qtgui.qwt5" title="taurus.qt.qtgui.qwt5"><code class="xref py py-mod docutils literal"><span class="pre">taurus.qt.qtgui.qwt5</span></code></a> module requires <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt</a>, which is
 only available when using PyQt4 and python2. As an alternative
 that supports both python2 and python3 and all the Qt bindings,
 refer to the <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> plugin.</li>
@@ -265,33 +240,16 @@ requirements, execute the following command:</p>
 </div>
 <p>How you install the required dependencies depends on your preferred
 installation method:</p>
-<ul>
-<li><p class="first">For GNU/Linux, it is in general better to install the dependencies from
-your distribution repositories if available.</p>
-</li>
-<li><p class="first">For Windows users: many of these dependencies are already satisfied
-by installing the <a class="reference external" href="http://python-xy.github.io/">Python(x,y)</a> bundle. Also, most can be installed
-from <a class="reference external" href="http://pypi.python.org/pypi">PyPI</a> (e.g. using pip). For some versions, PyPI may not provide
-pre-built windows binaries, so pip may try to compile from sources,
-which takes long and may not succeed without some further work. In
-those cases, one may use windows binaries from other versions and/or
-wheel packages from the <a class="reference external" href="http://www.silx.org/pub/wheelhouse/">Silx_WheelHouse</a>.</p>
-</li>
-<li><p class="first">In general, you can use pip to install dependencies for a given
-extra feature (if they are in PyPI or in one of your configured
-indexes). Use:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">taurus</span><span class="p">[</span><span class="n">NAME_OF_EXTRA</span><span class="p">]</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">The <a class="reference external" href="http://conda.io/docs/">Conda</a> package management system may also be used to install
-most of the required dependencies.</p>
-</li>
-<li><p class="first">The <a class="reference external" href="http://hub.docker.com/r/cpascual/taurus-test/">taurus-test Docker container</a> provides a Docker container (based
+<ul class="simple">
+<li>For GNU/Linux, it is in general better to install the dependencies from
+your distribution repositories if available. A <a class="reference external" href="http://conda.io/docs/">Conda</a> environment can be
+used alternatively (interesting for testing new features in isolation)</li>
+<li>For Windows users, the recommended option is to use a <a class="reference external" href="http://conda.io/docs/">Conda</a> environment
+(see above).</li>
+<li>The <a class="reference external" href="http://hub.docker.com/r/cpascual/taurus-test/">taurus-test Docker container</a> provides a Docker container (based
 on Debian) with all the dependencies pre-installed (including Tango and
 Epics running environments) on which you can install taurus straight
-away.</p>
-</li>
+away.</li>
 </ul>
 </div>
 </div>
@@ -338,7 +296,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

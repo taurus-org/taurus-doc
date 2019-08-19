@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.base.taurusbase &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.base.taurusbase &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -186,7 +186,7 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusoperation</span> <span class="k">import</span> <span class="n">WriteAttrOperation</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.eventfilters</span> <span class="k">import</span> <span class="n">filterEvent</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util.signal</span> <span class="k">import</span> <span class="n">baseSignal</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util</span> <span class="k">import</span> <span class="n">baseSignal</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_DEV_MIME_TYPE</span>
@@ -249,7 +249,7 @@
 
     <span class="n">taurusEvent</span> <span class="o">=</span> <span class="n">baseSignal</span><span class="p">(</span><span class="s1">&#39;taurusEvent&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialization of TaurusBaseComponent&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelObj</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -260,8 +260,12 @@
 
         <span class="n">BaseConfigurableClass</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="c1"># --------------------------------------------------------------</span>
+        <span class="c1"># Deprecated API for context menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># deprecated since 4.5.3a. Do not use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># deprecated since 4.5.3a. Do not use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__explicitPopupMenu</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># --------------------------------------------------------------</span>
 
         <span class="c1"># attributes storing property values</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_format</span> <span class="o">=</span> <span class="kc">None</span>
@@ -303,6 +307,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getFormat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setFormat</span><span class="p">,</span>
                                     <span class="s1">&#39;formatter&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resetModelInConfig</span><span class="p">()</span>
+
+        <span class="c1"># connect taurusEvent signal to filterEvent</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterEvent</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not connect taurusEvent signal: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
     <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">getSignaller</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -352,18 +362,39 @@
         <span class="k">return</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="n">scheme</span><span class="p">)</span></div>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
-    <span class="c1"># Popup menu behavior</span>
+    <span class="c1"># Context menu behavior</span>
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
 
 <div class="viewcode-block" id="TaurusBaseComponent.contextMenuEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.contextMenuEvent">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Handle the popup menu event</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        DEPRECATED:</span>
+<span class="sd">        Until v4.5.3a, the default implementation of contextMenuEvent showed</span>
+<span class="sd">        the content of taurusMenu as a context menu. But this resulted in</span>
+<span class="sd">        unwanted behaviour when the widget already implemented its own context</span>
+<span class="sd">        menu (see https://github.com/taurus-org/taurus/issues/905 )</span>
 
-<span class="sd">        :param event: the popup menu event</span>
+<span class="sd">        Therefore this feature was disabled in 4.5.3a.</span>
+
+<span class="sd">        If you still want to show the contents of taurusMenu as a context menu,</span>
+<span class="sd">        you can explicitly reimplement the contextMenuEvent method as::</span>
+
+<span class="sd">            def contextMenuEvent(self, event):</span>
+<span class="sd">                self.taurusMenu.exec_(event.globalPos())</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__explicitPopupMenu</span><span class="p">:</span>
+                <span class="c1"># bck-compat: show taurusMenu as a contextMenu if it was</span>
+                <span class="c1"># explicitly created via the (deprecated) &quot;setTaurusPopupMenu&quot;</span>
+                <span class="c1"># API</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span>
+                <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+                    <span class="n">dep</span><span class="o">=</span><span class="s1">&#39;taurusMenu context Menu API&#39;</span><span class="p">,</span>
+                    <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;custom contextMenuEvent to show taurusMenu&#39;</span><span class="p">,</span>
+                    <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5.3a&#39;</span>
+                 <span class="p">)</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span></div>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
     <span class="c1"># Mandatory methods to be implemented in subclass implementation</span>
@@ -1034,15 +1065,11 @@
 
 <div class="viewcode-block" id="TaurusBaseComponent.preAttach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.preAttach">[docs]</a>    <span class="k">def</span> <span class="nf">preAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.attach() before actual attach is performed.</span>
-<span class="sd">        Default implementation just emits a signal.</span>
+<span class="sd">        Default implementation does nothing.</span>
 
 <span class="sd">        Override when necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterEvent</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="c1"># self.error(&quot;In %s.preAttach() ... failed!&quot; % str(type(self)))</span>
-            <span class="k">pass</span></div>
+        <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="TaurusBaseComponent.postAttach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.postAttach">[docs]</a>    <span class="k">def</span> <span class="nf">postAttach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.attach() after actual attach is performed.</span>
@@ -1054,15 +1081,11 @@
 
 <div class="viewcode-block" id="TaurusBaseComponent.preDetach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.preDetach">[docs]</a>    <span class="k">def</span> <span class="nf">preDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.detach() before actual deattach is performed.</span>
-<span class="sd">        Default implementation just disconnects a signal.</span>
+<span class="sd">        Default implementation does nothing.</span>
 
 <span class="sd">        Override when necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterEvent</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="c1"># self.error(&quot;In %s.preDetach() ... failed!&quot; % str(type(self)))</span>
-            <span class="k">pass</span></div>
+        <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="TaurusBaseComponent.postDetach"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.postDetach">[docs]</a>    <span class="k">def</span> <span class="nf">postDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called inside self.detach() after actual deattach is performed.</span>
@@ -1377,24 +1400,30 @@
         <span class="sd">&quot;&quot;&quot;Resets the showing of the display value to True&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setShowText</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaurusBaseComponent.setTaurusPopupMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.setTaurusPopupMenu">[docs]</a>    <span class="k">def</span> <span class="nf">setTaurusPopupMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menuData</span><span class="p">):</span>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5.3a&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">setTaurusPopupMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menuData</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets/unsets the taurus popup menu</span>
 
 <span class="sd">        :param menuData: (str) an xml representing the popup menu&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">menuData</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__explicitPopupMenu</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">factory</span> <span class="o">=</span> <span class="n">ActionFactory</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getNewMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenu</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getNewMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaurusBaseComponent.getTaurusPopupMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.getTaurusPopupMenu">[docs]</a>    <span class="k">def</span> <span class="nf">getTaurusPopupMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5.3a&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getTaurusPopupMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns an xml string representing the current taurus popup menu</span>
 
 <span class="sd">        :return: (str) an xml string representing the current taurus popup menu</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span>
 
-<div class="viewcode-block" id="TaurusBaseComponent.resetTaurusPopupMenu"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.resetTaurusPopupMenu">[docs]</a>    <span class="k">def</span> <span class="nf">resetTaurusPopupMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.5.3a&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">resetTaurusPopupMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resets the taurus popup menu to empty&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taurusMenuData</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__explicitPopupMenu</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="TaurusBaseComponent.isModifiableByUser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.isModifiableByUser">[docs]</a>    <span class="k">def</span> <span class="nf">isModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;whether the user can change the contents of the widget</span>
@@ -1445,7 +1474,7 @@
 
     <span class="n">_dragEnabled</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_disconnect_on_hide</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_supportedMimeTypes</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_autoTooltip</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1866,7 +1895,7 @@
         <span class="n">formats</span> <span class="o">=</span> <span class="n">mimeData</span><span class="o">.</span><span class="n">formats</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">mtype</span> <span class="ow">in</span> <span class="n">supported</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">mtype</span> <span class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
-                <span class="n">d</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">mimeData</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">mtype</span><span class="p">))</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">mimeData</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">mtype</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">None</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -2049,7 +2078,8 @@
 
     <span class="n">applied</span> <span class="o">=</span> <span class="n">baseSignal</span><span class="p">(</span><span class="s1">&#39;applied&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">taurus_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">taurus_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
                           <span class="n">parent</span><span class="o">=</span><span class="n">taurus_parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
 
@@ -2332,7 +2362,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

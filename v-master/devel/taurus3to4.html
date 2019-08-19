@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Taurus 3.x to 4.x migration guide &mdash; taurus 4.5.1 documentation</title>
+  <title>Taurus 3.x to 4.x migration guide &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../index.html"/>
         <link rel="up" title="Developer’s Guide" href="index.html"/>
         <link rel="next" title="Taurus development guidelines" href="coding_guide.html"/>
         <link rel="prev" title="Developer’s Guide" href="index.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -141,7 +141,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -161,18 +161,320 @@
             
   <div class="section" id="taurus-3-x-to-4-x-migration-guide">
 <span id="migration-to-taurus4"></span><h1>Taurus 3.x to 4.x migration guide<a class="headerlink" href="#taurus-3-x-to-4-x-migration-guide" title="Permalink to this headline">¶</a></h1>
-<p>This chapter explains how to migrate from an application written using Taurus 3.x
-to Taurus 4.x.</p>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p>This section needs to be expanded. <strong>Help wanted!</strong>.
-In the meanwhile, the following documents may be useful:</p>
-<ul class="last simple">
+<p>Taurus 4 was released in July 2016 with the main goal of making Taurus scheme-agnostic
+(i.e. not relying on Tango for its core functionalities).</p>
+<p>Being a major version change,
+it is not fully backwards-compatible with the previous taurus 3.x versions.</p>
+<p>However, a design goal for the 4.x series was to smooth the transition from 3.x as much
+as possible, and a backwards-compatibility layer which will mark old taurus code as
+deprecated but otherwise attempt to transparently support it in Taurus4 whenever that
+is possible.</p>
+<p>Thanks to this compatibility layer, a Taurus 3 application is likely to run on taurus 4
+after minimal or even no changes (but typically producing deprecation warnings and
+possibly with some functionality slightly altered).</p>
+<p>A good strategy for migrating a taurus 3 application or widget to taurus 4 is to attempt
+to run it as-is with taurus 4 and then try to remove any deprecation warnings one by one.
+Most changes will be related to one of the following:</p>
+<ul class="simple">
+<li>renamed methods and APIs (see the <em>API changes</em> section below),</li>
+<li>differences between Tango states and Taurus states (see the <em>Working with States</em> section below)</li>
+<li>Use of quantities for values (see the <em>Working with quantities</em> section below)</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The main sources of information regarding the changes introduced in
+Taurus 4 are the following two Enhancement proposals:</p>
+<blockquote>
+<div><ul class="simple">
 <li><a class="reference external" href="http://sf.net/p/tauruslib/wiki/TEP3">TEP3</a></li>
 <li><a class="reference external" href="http://sf.net/p/tauruslib/wiki/TEP14">TEP14</a></li>
-<li><a class="reference external" href="http://sf.net/p/tauruslib/wiki/Taurus4-API_changes">Taurus 4 API changes</a></li>
-<li><a class="reference external" href="https://indico.esrf.fr/indico/event/4/session/6/contribution/17/material/slides/">Taurus 4 slides</a></li>
 </ul>
+</div></blockquote>
+<p class="last">These changes are also treated in the <a class="reference external" href="https://indico.esrf.fr/indico/event/4/session/6/contribution/17/material/slides/">Taurus 4 slides</a></p>
+</div>
+<div class="section" id="api-changes">
+<h2>API Changes<a class="headerlink" href="#api-changes" title="Permalink to this headline">¶</a></h2>
+<p>The following is a table of Taurus 3.x public members (classes, methods, attributes, etc) that became deprecated in Taurus 4</p>
+<p>This list is a best-effort to document changes, but it may not be 100% complete (please feel free to suggest changes)</p>
+<p><strong>IMPORTANT</strong>: in some cases, the proposed alternative can be used as a drop-in replacement of the deprecated code, but in some others the code may need some adaptation.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Member</th>
+<th class="head">Alternative(s)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>TaurusConfigValue</td>
+<td>TaurusAttribute / TaurusAttrValue</td>
+</tr>
+<tr class="row-odd"><td>TaurusConfigurationProxy</td>
+<td>TaurusAttribute</td>
+</tr>
+<tr class="row-even"><td>TaurusConfiguration</td>
+<td>TaurusAttribute</td>
+</tr>
+<tr class="row-odd"><td>Configuration (helper)</td>
+<td>Attribute (helper)</td>
+</tr>
+<tr class="row-even"><td>Database (helper)</td>
+<td>Authority (helper)</td>
+</tr>
+<tr class="row-odd"><td>TaurusManager.{g,s}etOperationMode</td>
+<td>&#8211;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>xxxAttrValue.&lt;foo&gt;
+<em>(where &lt;foo&gt; is any config option)</em></td>
+<td>xxxAttribute.&lt;foo&gt;</td>
+</tr>
+<tr class="row-even"><td>xxxAttribute.value</td>
+<td>xxxAttribute.rvalue</td>
+</tr>
+<tr class="row-odd"><td>xxxAttribute.w_value</td>
+<td>xxxAttribute.wvalue</td>
+</tr>
+<tr class="row-even"><td>xxxAttribute.has_failed</td>
+<td>xxxAttribute.error</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.{g,s}etDescription</td>
+<td>TangoAttribute.description</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.isInformDeviceOfErrors</td>
+<td>&#8211;</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.displayValue</td>
+<td>str</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getDisplayValue</td>
+<td>TangoAttribute.getLabel</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getDisplayUnit</td>
+<td>TangoAttribute.rvalue.units</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getStandardUnit</td>
+<td>TangoAttribute.rvalue.units</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getUnit</td>
+<td>TangoAttribute.rvalue.units</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.unit</td>
+<td>TangoAttribute.rvalue.units</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getDisplayWriteValue</td>
+<td>&#8211;</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getWritable</td>
+<td>TangoAttribute.isWritable</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.is{Scalar,Spectrum,Image}</td>
+<td>TangoAttribute.data_format</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getMaxDim{X,Y}</td>
+<td>TangoAttribute.getMaxDim</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getShape</td>
+<td><em>introspect the value shape if applicable</em></td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getParam</td>
+<td>TangoAttribute.getAttributeInfoEx</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.setParam</td>
+<td><em>use PyTango</em></td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getConfig</td>
+<td>self  <em>(merged)</em></td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getCRanges</td>
+<td>TangoAttribute .range + .alarms + .warnings</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getCLimits</td>
+<td>TangoAttribute.range</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getMinValue</td>
+<td>TangoAttribute.range</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getMaxValue</td>
+<td>TangoAttribute.range</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.climits</td>
+<td>TangoAttribute.range</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getCAlarms</td>
+<td>TangoAttribute.alarms</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getMinAlarm</td>
+<td>TangoAttribute.alarms</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getMaxAlarm</td>
+<td>TangoAttribute.alarms</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.min_alarm</td>
+<td>TangoAttribute.alarms</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.max_alarm</td>
+<td>TangoAttribute.alarms</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.calarms</td>
+<td>TangoAttribute.alarms</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getCWarnings</td>
+<td>TangoAttribute.warnings</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.getMinWarning</td>
+<td>TangoAttribute.warnings</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.getMaxWarning</td>
+<td>TangoAttribute.warnings</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.min_warning</td>
+<td>TangoAttribute.warnings</td>
+</tr>
+<tr class="row-odd"><td>TangoAttribute.max_warning</td>
+<td>TangoAttribute.warnings</td>
+</tr>
+<tr class="row-even"><td>TangoAttribute.cwarnings</td>
+<td>TangoAttribute.warnings</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>TangoDevice.getState</td>
+<td>TangoDevice.stateObj.read().rvalue <em>tango</em> or
+.state <em>agnostic</em></td>
+</tr>
+<tr class="row-odd"><td>TangoDevice.getStateObj</td>
+<td>TangoDevice.stateObj  <em>tango</em> or
+.factory.getAttribute(state_full_name) <em>agnostic</em></td>
+</tr>
+<tr class="row-even"><td>TangoDevice.getSWState</td>
+<td>TangoDevice.state</td>
+</tr>
+<tr class="row-odd"><td>TangoDevice.getValueObj</td>
+<td>TangoDevice.state <em>agnostic or</em> stateObj.read <em>tango</em></td>
+</tr>
+<tr class="row-even"><td>TangoDevice.getDisplayValue</td>
+<td>TangoDevice.state().name</td>
+</tr>
+<tr class="row-odd"><td>TangoDevice.getHWObj</td>
+<td>TangoDevice.getDeviceProxy</td>
+</tr>
+<tr class="row-even"><td>TangoDevice.isValidDev</td>
+<td>(TangoDevice.getDeviceProxy() is not None)</td>
+</tr>
+<tr class="row-odd"><td>TangoDevice.getDescription</td>
+<td>TangoDevice.description</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>TangoDatabase</td>
+<td>TangoAuthority</td>
+</tr>
+<tr class="row-even"><td>TangoAuthority.getHWObj</td>
+<td>TangoAuthority.getDeviceProxy</td>
+</tr>
+<tr class="row-odd"><td>TangoAuthority.getValueObj</td>
+<td>TangoAuthority.getTangoDB</td>
+</tr>
+<tr class="row-even"><td>TangoAuthority.getDisplayValue</td>
+<td>TangoAuthority.getFullName</td>
+</tr>
+<tr class="row-odd"><td>TangoAuthority.getDescription</td>
+<td>TangoAuthority.description</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>TangoFactory.getAttributeInfo</td>
+<td>TangoFactory.getAttribute</td>
+</tr>
+<tr class="row-even"><td>TangoFactory.getConfiguration</td>
+<td>TangoFactory.getAttribute</td>
+</tr>
+<tr class="row-odd"><td>TangoDevice.{g,s}etOperationMode</td>
+<td>&#8211;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="working-with-quantities">
+<h2>Working with quantities<a class="headerlink" href="#working-with-quantities" title="Permalink to this headline">¶</a></h2>
+<p>One of the most visible changes in Taurus 4 is its use of quantities for the values
+of numeric attributes.</p>
+<p>In Taurus 4 all the values of numeric (float or integer) attributes and their associated
+properties (such as limits, warning levels, etc.) are <code class="xref py py-class docutils literal"><span class="pre">pint.Quantity</span></code> objects provided
+by the <code class="xref py py-mod docutils literal"><span class="pre">pint</span></code> python module. A Quantity is essentially the combination of a <cite>magnitude</cite>
+and a <cite>unit</cite>. In taurus 3.x all values were just &#8220;magnitudes&#8221;, and their units were either
+implicit or loosely described as a free string property, but not enforced in any way.</p>
+<p>By using Quantities Taurus 4 can automatically verify the dimensional validity of
+operations and provide support for I/O using user-preferred units.</p>
+<p>Taurus 3 applications use <cite>.value</cite> or <cite>.w_value</cite> to get the read or write
+magnitude of a taurus value, respectively. In taurus 4 these would be equivalent
+to <cite>.rvalue.magnitude</cite> and <cite>.wvalue.magnitude</cite>, but the recommended way to adapt
+a Taurus 3 application is to use the Quantity objects, not their magnitudes
+(i.e., <cite>rvalue</cite> and <cite>wvalue</cite>) and refactor the code if necessary.</p>
+<p>For example, given the following taurus 3 code <strong>where we assume that ampli is in meters</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/ampli&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span>  <span class="c1"># here &quot;5&quot; is implicitly assumed to mean &quot;5 meters&quot;</span>
+</pre></div>
+</div>
+<p>a lazy conversion to avoid deprecation warnings in taurus 4 would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/ampli&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">rvalue</span><span class="o">.</span><span class="n">magnitude</span>
+</pre></div>
+</div>
+<p>...which is a very direct translation (and exactly what the automated backwards
+compatibility layer already does for you). However, the recommended
+conversion should use Quantities rather than magnitudes, e.g:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">UR</span>  <span class="c1"># import the taurus unit registry</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/ampli&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">UR</span><span class="o">.</span><span class="n">meters</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span>  <span class="c1"># use explicit units</span>
+</pre></div>
+</div>
+<p>Or, using the Quantity constructor instead of the <cite>Unit Registry</cite>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Q_</span>  <span class="c1"># import the taurus Quantity factory</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/ampli&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="s2">&quot;5 meters&quot;</span><span class="p">)</span>  <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>Finally, note that when using Quantities, you do not need to care about
+matching the units, as long as they are dimensionally compatible:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="s2">&quot;15 feet&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-device-states">
+<h2>Working with Device states<a class="headerlink" href="#working-with-device-states" title="Permalink to this headline">¶</a></h2>
+<p>Taurus 4 is all about being &#8220;scheme-agnostic&#8221;. This means that the taurus core
+(and ideally the main widgets as well) should not assume that the model objects
+(attributes, devices, authorities) are of one specific source type (Tango, Epics,
+Evaluation...)</p>
+<p>This implies that the APIs should be scheme-agnostic. In Taurus 3, the concept
+of <em>device state</em> is completely &#8220;tango-centric&#8221; and it has been replaced in
+Taurus 4 by a much more generic one where the devices are either &#8220;ready&#8221; or &#8220;not
+ready&#8221; (this is of course much less informative, but it is generic enough to
+accomodate schemes where the sources of data may not even be hardware-related).</p>
+<p>In Taurus 4, the Taurus device states are defined in the
+<cite>taurus.core.TaurusDevState</cite> enumeration, and the tango device states are
+supported by the tango scheme in <cite>taurus.core.tango.DevState</cite> enumeration, which
+is a numerically-compatible translation of <cite>PyTango.DevState</cite></p>
+<p>Some taurus 3.x applications may implement logic that depends on Tango states,
+or maybe display information based on the rich palette of Tango state colors.
+In these cases, when converting the application to Taurus 4 one needs to decide
+if the simple Taurus states are enough (in which case one should refactor the
+logic and use <cite>device.state</cite> to get the <em>Taurus</em> device state) or if the richer
+tango states are required to the point of sacrificing the scheme-agnosticism of
+the application (in which case one can use <cite>device.stateObj.read().rvalue</cite> to
+obtain the <em>Tango</em> device state)</p>
 </div>
 </div>
 
@@ -218,7 +520,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

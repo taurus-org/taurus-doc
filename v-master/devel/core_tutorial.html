@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus core tutorial &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus core tutorial &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../index.html"/>
         <link rel="up" title="Developer’s Guide" href="index.html"/>
         <link rel="next" title="Taurus custom settings" href="tauruscustomsettings.html"/>
         <link rel="prev" title="Taurus icon guide" href="icon_guide.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -141,7 +141,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -252,14 +252,14 @@ any scheme-specific feature. For this, Taurus provides several high-level
 scheme-agnostic helpers to obtain the Taurus Element associated to a given
 model name:</p>
 <ul class="simple">
-<li><a class="reference internal" href="api/taurus.html#taurus.Authority" title="taurus.Authority"><code class="xref py py-func docutils literal"><span class="pre">taurus.Authority()</span></code></a></li>
-<li><a class="reference internal" href="api/taurus.html#taurus.Device" title="taurus.Device"><code class="xref py py-func docutils literal"><span class="pre">taurus.Device()</span></code></a></li>
-<li><a class="reference internal" href="api/taurus.html#taurus.Attribute" title="taurus.Attribute"><code class="xref py py-func docutils literal"><span class="pre">taurus.Attribute()</span></code></a></li>
-<li><a class="reference internal" href="api/taurus.html#taurus.Object" title="taurus.Object"><code class="xref py py-func docutils literal"><span class="pre">taurus.Object()</span></code></a></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.Authority()</span></code></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.Device()</span></code></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.Attribute()</span></code></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.Object()</span></code></li>
 </ul>
 <p>The first three helpers require you to know which type of Element (i.e.,
 Attribute, Device or Authority) is represented by the model name. If you do not know that
-beforehand, you can use <a class="reference internal" href="api/taurus.html#taurus.Object" title="taurus.Object"><code class="xref py py-meth docutils literal"><span class="pre">taurus.Object()</span></code></a> which will automatically find the
+beforehand, you can use <code class="xref py py-meth docutils literal"><span class="pre">taurus.Object()</span></code> which will automatically find the
 type and provide you with the corresponding model object (but of course this is
 slightly less efficient than using one of the first three helpers).</p>
 <p>These helpers will automatically find out which scheme corresponds to the given
@@ -276,7 +276,7 @@ can be done as follows:</p>
 <span class="n">testDev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>or, using <a class="reference internal" href="api/taurus.html#taurus.Object" title="taurus.Object"><code class="xref py py-meth docutils literal"><span class="pre">taurus.Object()</span></code></a>:</p>
+<p>or, using <code class="xref py py-meth docutils literal"><span class="pre">taurus.Object()</span></code>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus</span>
 <span class="n">testDev</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">)</span>
 </pre></div>
@@ -290,15 +290,15 @@ EPICS Process Variable called &#8220;my:example.RBV&#8221; is just:</p>
 <p>Taurus also provides other helpers to access lower level objects for dealing
 with models:</p>
 <ul class="simple">
-<li><a class="reference internal" href="api/taurus.html#taurus.Factory" title="taurus.Factory"><code class="xref py py-func docutils literal"><span class="pre">taurus.Factory()</span></code></a></li>
-<li><a class="reference internal" href="api/taurus.html#taurus.Manager" title="taurus.Manager"><code class="xref py py-func docutils literal"><span class="pre">taurus.Manager()</span></code></a></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.Factory()</span></code></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.Manager()</span></code></li>
 </ul>
 <p>And also some useful methods to validate names, find out the element type(s)
 for a given name and other related tasks:</p>
 <ul class="simple">
-<li><a class="reference internal" href="api/taurus.html#taurus.isValidName" title="taurus.isValidName"><code class="xref py py-func docutils literal"><span class="pre">taurus.isValidName()</span></code></a></li>
-<li><a class="reference internal" href="api/taurus.html#taurus.getValidTypesForName" title="taurus.getValidTypesForName"><code class="xref py py-func docutils literal"><span class="pre">taurus.getValidTypesForName()</span></code></a></li>
-<li><a class="reference internal" href="api/taurus.html#taurus.getSchemeFromName" title="taurus.getSchemeFromName"><code class="xref py py-func docutils literal"><span class="pre">taurus.getSchemeFromName()</span></code></a></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.isValidName()</span></code></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.getValidTypesForName()</span></code></li>
+<li><code class="xref py py-func docutils literal"><span class="pre">taurus.getSchemeFromName()</span></code></li>
 </ul>
 </div>
 <div class="section" id="advantages-of-accessing-tango-via-taurus-over-pytango">
@@ -401,7 +401,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

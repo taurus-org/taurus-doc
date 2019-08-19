@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TaurusGui &mdash; taurus 4.5.1 documentation</title>
+  <title>TaurusGui &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../../index.html"/>
         <link rel="up" title="taurus.qt.qtgui.taurusgui" href="../taurusgui.html"/>
         <link rel="next" title="taurus.qt.qtgui.tree" href="../tree.html"/>
         <link rel="prev" title="PanelDescriptionWizard" href="_PanelDescriptionWizard.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -104,10 +104,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
@@ -147,7 +147,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../../../../../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="../../../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -189,7 +189,7 @@
 </map>
 <dl class="class">
 <dt id="taurus.qt.qtgui.taurusgui.TaurusGui">
-<em class="property">class </em><code class="descname">TaurusGui</code><span class="sig-paren">(</span><em>parent=None</em>, <em>confname=None</em>, <em>configRecursionDepth=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">TaurusGui</code><span class="sig-paren">(</span><em>parent=None</em>, <em>confname=None</em>, <em>configRecursionDepth=None</em>, <em>settingsname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.container.taurusmainwindow.TaurusMainWindow</span></code></p>
 <p>This is main class for constructing the dynamic GUIs. TaurusGui is a
 specialised TaurusMainWindow which is able to handle &#8220;panels&#8221; and load
@@ -217,7 +217,7 @@ programatically:</p>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui</span> <span class="k">import</span> <span class="n">TaurusGui</span>
     <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s1">&#39;MyGui&#39;</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s1">&#39;MyGui&#39;</span><span class="p">)</span>
     <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">()</span>
     <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
     <span class="n">gui</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="s1">&#39;Foo&#39;</span><span class="p">)</span>
@@ -234,7 +234,7 @@ at the same time use the declarative way:</p>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui</span> <span class="k">import</span> <span class="n">TaurusGui</span>
     <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">gui</span> <span class="o">=</span> <span class="n">TaurusGui</span><span class="p">(</span><span class="n">confname</span><span class="o">=</span><span class="vm">__file__</span><span class="p">)</span>
     <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
     <span class="n">gui</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="s1">&#39;Foo&#39;</span><span class="p">)</span>  <span class="c1"># &lt;-- programmatic!</span>
@@ -243,9 +243,27 @@ at the same time use the declarative way:</p>
 </pre></div>
 </div>
 <dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.APPLETS_TOOLBAR_ENABLED">
+<code class="descname">APPLETS_TOOLBAR_ENABLED</code><em class="property"> = True</em><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.APPLETS_TOOLBAR_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to show the applets toolbar</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="taurus.qt.qtgui.taurusgui.TaurusGui.IMPLICIT_ASSOCIATION">
 <code class="descname">IMPLICIT_ASSOCIATION</code><em class="property"> = '__[IMPLICIT]__'</em><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.IMPLICIT_ASSOCIATION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.PANELS_MENU_ENABLED">
+<code class="descname">PANELS_MENU_ENABLED</code><em class="property"> = True</em><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.PANELS_MENU_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to show user actions related to shared data connections</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.taurusgui.TaurusGui.QUICK_ACCESS_TOOLBAR_ENABLED">
+<code class="descname">QUICK_ACCESS_TOOLBAR_ENABLED</code><em class="property"> = True</em><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.QUICK_ACCESS_TOOLBAR_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dd><p>wether to add the Quick access Toolbar (empty by default)</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="taurus.qt.qtgui.taurusgui.TaurusGui.SelectedInstrument">
@@ -302,7 +320,7 @@ elements that belong to the same instrument according to the Pool info</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<code class="xref py py-class docutils literal"><span class="pre">PanelDescription</span></code>&gt;</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<code class="xref py py-class docutils literal"><span class="pre">PanelDescription</span></code>&gt;</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
@@ -327,13 +345,13 @@ reader and writer (allowing  selecting instruments from synoptic</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>wiget</strong> (<code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>) &#8211; the widget to be contained in the panel</li>
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the name of the panel. It will be used in tabs as well as for configuration</li>
-<li><strong>floating</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether the panel should be docked or floating. (see note below)</li>
-<li><strong>registerconfig</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the panel will be registered as a delegate for configuration</li>
-<li><strong>custom</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True the panel is to be considered a &#8220;custom panel&#8221;</li>
-<li><strong>permanent</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; set this to True for panels that need to be recreated when restoring the app</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the name of the panel. It will be used in tabs as well as for configuration</li>
+<li><strong>floating</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; whether the panel should be docked or floating. (see note below)</li>
+<li><strong>registerconfig</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the panel will be registered as a delegate for configuration</li>
+<li><strong>custom</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True the panel is to be considered a &#8220;custom panel&#8221;</li>
+<li><strong>permanent</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; set this to True for panels that need to be recreated when restoring the app</li>
 <li><strong>icon</strong> (<code class="xref py py-class docutils literal"><span class="pre">QIcon</span></code>) &#8211; icon for the panel</li>
-<li><strong>instrumentkey</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; name of an instrument to which this panel is to be associated</li>
+<li><strong>instrumentkey</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; name of an instrument to which this panel is to be associated</li>
 </ul>
 </td>
 </tr>
@@ -372,7 +390,7 @@ value is given, it will be interpreted as floating=True (while if
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>area</strong> (<code class="xref py py-class docutils literal"><span class="pre">DockWidgetArea</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; . If
+<li><strong>area</strong> (<code class="xref py py-class docutils literal"><span class="pre">DockWidgetArea</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; . If
 area==&#8217;FLOATING&#8217;, the dockwidgets that are floating will be
 returned.</li>
 <li><strong>area</strong> &#8211; </li>
@@ -395,7 +413,7 @@ returned.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dict whose keys are the instruments known to the gui
 and whose values are the corresponding associated panels (or None).</td>
@@ -413,7 +431,7 @@ belonging to this GUI</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>&gt;</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>&gt;</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dictionary whose keys are device
 type strings (i.e. see <code class="xref py py-class docutils literal"><span class="pre">PyTango.DeviceInfo</span></code>) and whose
@@ -435,9 +453,9 @@ values are widgets to be used</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; The name of the instrument whose associated panel is wanted</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; The name of the instrument whose associated panel is wanted</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the associated panel name (or None).</td>
 </tr>
@@ -469,7 +487,7 @@ values are widgets to be used</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
@@ -497,7 +515,7 @@ values are widgets to be used</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>confname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the  name of module located in the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>confname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the  name of module located in the
 PYTHONPATH or in the conf subdirectory of the directory
 in which taurusgui.py file is installed.
 This method will try to import &lt;confname&gt;.
@@ -537,7 +555,7 @@ clicking in the synoptic)</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name that identifies the instrument.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name that identifies the instrument.</td>
 </tr>
 </tbody>
 </table>
@@ -552,7 +570,7 @@ taken when there is a new message is to display it in the main window status bar
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the short descriptive message to be handled</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; the short descriptive message to be handled</td>
 </tr>
 </tbody>
 </table>
@@ -578,7 +596,7 @@ taken when there is a new message is to display it in the main window status bar
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the name of the external application to be
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the name of the external application to be
 removed
 If None given, the user will be prompted</td>
 </tr>
@@ -600,7 +618,7 @@ them as well.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the name of the panel to be removed
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; the name of the panel to be removed
 If None given, the user will be prompted</td>
 </tr>
 </tbody>
@@ -617,9 +635,9 @@ By default, it keeps any existing association not present in the associationsdic
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>associationsdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; a dict whose keys are the instruments names
+<li><strong>associationsdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>&gt;) &#8211; a dict whose keys are the instruments names
 and whose values are the corresponding associated panels (or None)</li>
-<li><strong>clearExisting</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the the existing asociations are cleared.
+<li><strong>clearExisting</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; if True, the the existing asociations are cleared.
 If False (default) existing associations are
 updated with those in associationsdict</li>
 </ul>
@@ -638,7 +656,7 @@ be used by default in all TaurusForm Panels belonging to this gui.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>map</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>&gt;) &#8211; a dictionary whose keys are device
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>map</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">QWidget</span></code>&gt;) &#8211; a dictionary whose keys are device
 type strings (e.g. see <code class="xref py py-class docutils literal"><span class="pre">PyTango.DeviceInfo</span></code>) and
 whose values are widgets to be used</td>
 </tr>
@@ -658,7 +676,7 @@ whose values are widgets to be used</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>panelname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name that identifies the panel.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>panelname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name that identifies the panel.
 This name must be unique within the panels in the GUI.</td>
 </tr>
 </tbody>
@@ -674,8 +692,8 @@ This name must be unique within the panels in the GUI.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name of the instrument</li>
-<li><strong>panelname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; The name of the associated
+<li><strong>instrumentname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) &#8211; The name of the instrument</li>
+<li><strong>panelname</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal"><span class="pre">None</span></code>) &#8211; The name of the associated
 panel or None to remove the association
 for this instrument.</li>
 </ul>
@@ -734,7 +752,7 @@ stored in the configuration.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showAlways</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; forces showing the dialog even if there are no new custom Panels</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showAlways</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; forces showing the dialog even if there are no new custom Panels</td>
 </tr>
 </tbody>
 </table>
@@ -749,7 +767,7 @@ should be permanently stored in the configuration.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showAlways</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; forces showing the dialog</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>showAlways</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) &#8211; forces showing the dialog</td>
 </tr>
 </tbody>
 </table>
@@ -801,7 +819,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

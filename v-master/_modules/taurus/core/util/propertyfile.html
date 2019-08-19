@@ -1,0 +1,542 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.util.propertyfile &mdash; taurus 4.6.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">taurus</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>taurus.core.util.propertyfile</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.util.propertyfile</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">propertyfile.py:</span>
+
+<span class="sd">A Python replacement for java.util.Properties class</span>
+<span class="sd">This is modelled as closely as possible to the Java original.</span>
+
+<span class="sd">Adapted from http://code.activestate.com/recipes/496795/</span>
+<span class="sd">Created - Anand B Pillai &lt;abpillai@gmail.com&gt;</span>
+<span class="sd">Modified - Tiago Coutinho</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">next</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Properties&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<div class="viewcode-block" id="Properties"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties">[docs]</a><span class="k">class</span> <span class="nc">Properties</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A Python replacement for java.util.Properties &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="c1"># Note: We don&#39;t take a default properties object</span>
+        <span class="c1"># as argument yet</span>
+
+        <span class="c1"># Dictionary of properties.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_props</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Dictionary of properties with &#39;pristine&#39; keys</span>
+        <span class="c1"># This is used for dumping the properties to a file</span>
+        <span class="c1"># using the &#39;store&#39; method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_origprops</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Dictionary mapping keys from property</span>
+        <span class="c1"># dictionary to pristine dictionary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_keymap</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">othercharre</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?&lt;!</span><span class="se">\\</span><span class="s1">)(\s*\=)|(?&lt;!</span><span class="se">\\</span><span class="s1">)(\s*\:)&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">othercharre2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\s*\=)|(\s*\:)&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bspacere</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(?!\s$)&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_props</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="p">))</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;}&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="k">def</span> <span class="nf">__parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Parse a list of lines and create</span>
+<span class="sd">        an internal property dictionary &quot;&quot;&quot;</span>
+
+        <span class="c1"># Every line in the file must consist of either a comment</span>
+        <span class="c1"># or a key-value pair. A key-value pair is a line consisting</span>
+        <span class="c1"># of a key which is a combination of non-white space characters</span>
+        <span class="c1"># The separator character between key-value pairs is a &#39;=&#39;,</span>
+        <span class="c1"># &#39;:&#39; or a whitespace character not including the newline.</span>
+        <span class="c1"># If the &#39;=&#39; or &#39;:&#39; characters are found, in the line, even</span>
+        <span class="c1"># keys containing whitespace chars are allowed.</span>
+
+        <span class="c1"># A line with only a key according to the rules above is also</span>
+        <span class="c1"># fine. In such case, the value is considered as the empty string.</span>
+        <span class="c1"># In order to include characters &#39;=&#39; or &#39;:&#39; in a key or value,</span>
+        <span class="c1"># they have to be properly escaped using the backslash character.</span>
+
+        <span class="c1"># Some examples of valid key-value pairs:</span>
+        <span class="c1">#</span>
+        <span class="c1"># key     value</span>
+        <span class="c1"># key=value</span>
+        <span class="c1"># key:value</span>
+        <span class="c1"># key     value1,value2,value3</span>
+        <span class="c1"># key     value1,value2,value3 \</span>
+        <span class="c1">#         value4, value5</span>
+        <span class="c1"># key</span>
+        <span class="c1"># This key= this value</span>
+        <span class="c1"># key = value1 value2 value3</span>
+
+        <span class="c1"># Any line that starts with a &#39;#&#39; is considerered a comment</span>
+        <span class="c1"># and skipped. Also any trailing or preceding whitespaces</span>
+        <span class="c1"># are removed from the key/value.</span>
+
+        <span class="c1"># This is a line parser. It parses the</span>
+        <span class="c1"># contents like by line.</span>
+
+        <span class="n">lineno</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">lineno</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="c1"># Skip null lines</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># Skip lines which are comments</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># Some flags</span>
+            <span class="n">escaped</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># Position of first separation char</span>
+            <span class="n">sepidx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="c1"># A flag for performing wspace re check</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># Check for valid space separation</span>
+            <span class="c1"># First obtain the max index to which we</span>
+            <span class="c1"># can search.</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">othercharre</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+                <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+                <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">first</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">wspacere</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?&lt;![</span><span class="se">\\</span><span class="s1">\=\:])(\s)&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">othercharre2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+                    <span class="c1"># Check if either &#39;=&#39; or &#39;:&#39; is present</span>
+                    <span class="c1"># in the line. If they are then it means</span>
+                    <span class="c1"># they are preceded by a backslash.</span>
+
+                    <span class="c1"># This means, we need to modify the</span>
+                    <span class="c1"># wspacere a bit, not to look for</span>
+                    <span class="c1"># : or = characters.</span>
+                    <span class="n">wspacere</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?&lt;![</span><span class="se">\\</span><span class="s1">])(\s)&#39;</span><span class="p">)</span>
+                <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+            <span class="n">m2</span> <span class="o">=</span> <span class="n">wspacere</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">m2</span><span class="p">:</span>
+                <span class="c1"># print &#39;Space match=&gt;&#39;,line</span>
+                <span class="c1"># Means we need to split by space.</span>
+                <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">m2</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+                <span class="n">sepidx</span> <span class="o">=</span> <span class="n">first</span>
+            <span class="k">elif</span> <span class="n">m</span><span class="p">:</span>
+                <span class="c1"># print &#39;Other match=&gt;&#39;,line</span>
+                <span class="c1"># No matching wspace char found, need</span>
+                <span class="c1"># to split by either &#39;=&#39; or &#39;:&#39;</span>
+                <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+                <span class="n">sepidx</span> <span class="o">=</span> <span class="n">last</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="c1"># print line[sepidx]</span>
+
+            <span class="c1"># If the last character is a backslash</span>
+            <span class="c1"># it has to be preceded by a space in which</span>
+            <span class="c1"># case the next line is read as part of the</span>
+            <span class="c1"># same property</span>
+            <span class="k">while</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">:</span>
+                <span class="c1"># Read next line</span>
+                <span class="n">nextline</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">nextline</span> <span class="o">=</span> <span class="n">nextline</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">lineno</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># This line will become part of the value</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">nextline</span>
+
+            <span class="c1"># Now split to key,value according to separation char</span>
+            <span class="k">if</span> <span class="n">sepidx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="n">sepidx</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="n">sepidx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">line</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">processPair</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Properties.processPair"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.processPair">[docs]</a>    <span class="k">def</span> <span class="nf">processPair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Process a (key, value) pair &quot;&quot;&quot;</span>
+
+        <span class="n">oldkey</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="n">oldvalue</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="c1"># Create key intelligently</span>
+        <span class="n">keyparts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bspacere</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="c1"># print keyparts</span>
+
+        <span class="n">strippable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">lastpart</span> <span class="o">=</span> <span class="n">keyparts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">lastpart</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1"> &#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">keyparts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">lastpart</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># If no backspace is found at the end, but empty</span>
+        <span class="c1"># space is found, strip it</span>
+        <span class="k">elif</span> <span class="n">lastpart</span> <span class="ow">and</span> <span class="n">lastpart</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">:</span>
+            <span class="n">strippable</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keyparts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strippable</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">oldkey</span> <span class="o">=</span> <span class="n">oldkey</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="n">oldvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unescape</span><span class="p">(</span><span class="n">oldvalue</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unescape</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_props</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1"># Check if an entry exists in pristine keys</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keymap</span><span class="p">:</span>
+            <span class="n">oldkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keymap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_origprops</span><span class="p">[</span><span class="n">oldkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">oldvalue</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_origprops</span><span class="p">[</span><span class="n">oldkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">oldvalue</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="c1"># Store entry in keymap</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_keymap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">oldkey</span></div>
+
+<div class="viewcode-block" id="Properties.escape"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.escape">[docs]</a>    <span class="k">def</span> <span class="nf">escape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="c1"># Java escapes the &#39;=&#39; and &#39;:&#39; in the value</span>
+        <span class="c1"># string with backslashes in the store method.</span>
+        <span class="c1"># So let us do the same.</span>
+        <span class="n">newvalue</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;\:&#39;</span><span class="p">)</span>
+        <span class="n">newvalue</span> <span class="o">=</span> <span class="n">newvalue</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="s1">&#39;\=&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">newvalue</span></div>
+
+<div class="viewcode-block" id="Properties.unescape"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.unescape">[docs]</a>    <span class="k">def</span> <span class="nf">unescape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="c1"># Reverse of escape</span>
+        <span class="n">newvalue</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;\:&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">)</span>
+        <span class="n">newvalue</span> <span class="o">=</span> <span class="n">newvalue</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;\=&#39;</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">newvalue</span></div>
+
+<div class="viewcode-block" id="Properties.load"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Load properties from an open file stream &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check for the opened mode</span>
+        <span class="k">if</span> <span class="n">stream</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Stream should be opened in read-only mode!&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__parse</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span></div>
+
+<div class="viewcode-block" id="Properties.getProperty"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.getProperty">[docs]</a>    <span class="k">def</span> <span class="nf">getProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return a property for the given key &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Properties.setProperty"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.setProperty">[docs]</a>    <span class="k">def</span> <span class="nf">setProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Set the property for the given key &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processPair</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;both key and value should be strings!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Properties.propertyNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.propertyNames">[docs]</a>    <span class="k">def</span> <span class="nf">propertyNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return an iterator over all the keys of the property</span>
+<span class="sd">        dictionary, i.e the names of the properties &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_props</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Properties.list"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Prints a listing of the properties to the</span>
+<span class="sd">        stream &#39;out&#39; which defaults to the standard output &quot;&quot;&quot;</span>
+
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;-- listing properties --</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_props</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="Properties.store"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.store">[docs]</a>    <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Write the properties list to the stream &#39;out&#39; along</span>
+<span class="sd">        with the optional &#39;header&#39; &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Steam should be opened in write mode!&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))</span>
+            <span class="c1"># Write timestamp</span>
+            <span class="n">tstamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%a %b </span><span class="si">%d</span><span class="s1"> %H:%M:%S %Z %Y&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">tstamp</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))</span>
+            <span class="c1"># Write properties from the pristine dictionary</span>
+            <span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_origprops</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">prop</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))</span>
+
+            <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span></div>
+
+<div class="viewcode-block" id="Properties.getPropertyDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/propertyfile/_Properties.html#taurus.core.util.propertyfile.Properties.getPropertyDict">[docs]</a>    <span class="k">def</span> <span class="nf">getPropertyDict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_props</span></div>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; To support direct dictionary like access &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; To support direct dictionary like access &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; For attributes not found in self, redirect</span>
+<span class="sd">        to the properties dictionary &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_props</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_props</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Properties</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test2.properties&#39;</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="n">p</span><span class="p">[</span><span class="s1">&#39;hello&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span>
+
+<span class="c1">#    print p</span>
+<span class="c1">#    print p.items()</span>
+<span class="c1">#    print p[&#39;name3&#39;]</span>
+<span class="c1">#    p[&#39;name3&#39;] = &#39;changed = value&#39;</span>
+<span class="c1">#    print p[&#39;name3&#39;]</span>
+<span class="c1">#    p[&#39;new key&#39;] = &#39;new value&#39;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test2.properties&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'4.6.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

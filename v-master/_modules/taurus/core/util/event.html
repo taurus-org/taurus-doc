@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.event &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.core.util.event &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -184,7 +184,7 @@
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 
-<div class="viewcode-block" id="BoundMethodWeakref"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_BoundMethodWeakref.html#taurus.core.util.BoundMethodWeakref">[docs]</a><span class="k">class</span> <span class="nc">BoundMethodWeakref</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="BoundMethodWeakref"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_BoundMethodWeakref.html#taurus.core.util.BoundMethodWeakref">[docs]</a><span class="k">class</span> <span class="nc">BoundMethodWeakref</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class represents a weak reference to a method of an object since</span>
 <span class="sd">    weak references to methods don&#39;t work by themselves&quot;&quot;&quot;</span>
 
@@ -235,7 +235,7 @@
         <span class="k">return</span> <span class="s1">&#39;BoundMethodWeakRef of </span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CallableRef"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.core.util.CallableRef">[docs]</a><span class="k">def</span> <span class="nf">CallableRef</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">del_cb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CallableRef"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight.html#taurus.core.util.CallableRef">[docs]</a><span class="k">def</span> <span class="nf">CallableRef</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">del_cb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function returns a callable weak reference to a callable object.</span>
 <span class="sd">    Object can be a callable object, a function or a method.</span>
 
@@ -245,7 +245,8 @@
 <span class="sd">    :type del_cb: callable object or None</span>
 
 <span class="sd">    :return: a weak reference for the given callable</span>
-<span class="sd">    :rtype: BoundMethodWeakref or weakref.ref&quot;&quot;&quot;</span>
+<span class="sd">    :rtype: taurus.core.util.BoundMethodWeakref or weakref.ref</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">im_self</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s1">&#39;__self__&#39;</span><span class="p">):</span>
         <span class="n">im_self</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="vm">__self__</span>
@@ -317,7 +318,7 @@
 <span class="kn">from</span> <span class="nn">.object</span> <span class="k">import</span> <span class="n">Object</span>
 
 
-<div class="viewcode-block" id="EventGenerator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator">[docs]</a><span class="k">class</span> <span class="nc">EventGenerator</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator">[docs]</a><span class="k">class</span> <span class="nc">EventGenerator</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class capable of firing events&quot;&quot;&quot;</span>
 
     <span class="n">WaitTimeout</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -340,18 +341,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cond</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="EventGenerator.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Locks this event generator&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventGenerator.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Unlocks this event generator&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">_is_owned</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="EventGenerator.subscribeEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.subscribeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">subscribeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">with_first_event</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.subscribeEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.subscribeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">subscribeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">with_first_event</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Subscribes to the event</span>
 
 <span class="sd">        :param cb: a callable object</span>
@@ -381,7 +382,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventGenerator.unsubscribeDeletedEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.unsubscribeDeletedEvent">[docs]</a>    <span class="k">def</span> <span class="nf">unsubscribeDeletedEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb_ref</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.unsubscribeDeletedEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.unsubscribeDeletedEvent">[docs]</a>    <span class="k">def</span> <span class="nf">unsubscribeDeletedEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb_ref</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;for internal usage only&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
@@ -393,7 +394,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventGenerator.unsubscribeEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.unsubscribeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">unsubscribeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.unsubscribeEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.unsubscribeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">unsubscribeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Unsubscribes the given callback from the event. If the callback is not</span>
 <span class="sd">        a listener for this event a debug message is generated an nothing happens.</span>
 
@@ -413,7 +414,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventGenerator.isSubscribed"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.isSubscribed">[docs]</a>    <span class="k">def</span> <span class="nf">isSubscribed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.isSubscribed"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.isSubscribed">[docs]</a>    <span class="k">def</span> <span class="nf">isSubscribed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines if the given callback is registered for this event.</span>
 
 <span class="sd">        :param cb: a callable object</span>
@@ -426,20 +427,20 @@
         <span class="n">cb_ref</span> <span class="o">=</span> <span class="n">CallableRef</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unsubscribeDeletedEvent</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">cb_ref</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb_list</span></div>
 
-<div class="viewcode-block" id="EventGenerator.setEventsActive"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.setEventsActive">[docs]</a>    <span class="k">def</span> <span class="nf">setEventsActive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">events_active</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.setEventsActive"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.setEventsActive">[docs]</a>    <span class="k">def</span> <span class="nf">setEventsActive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">events_active</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;(De)activates events on this event generator.</span>
 
 <span class="sd">        :param events_active: activate/deactivate events</span>
 <span class="sd">        :type  events_active: bool&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">events_active</span> <span class="o">=</span> <span class="n">events_active</span></div>
 
-<div class="viewcode-block" id="EventGenerator.getEventsActive"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.getEventsActive">[docs]</a>    <span class="k">def</span> <span class="nf">getEventsActive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.getEventsActive"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.getEventsActive">[docs]</a>    <span class="k">def</span> <span class="nf">getEventsActive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines is events are active</span>
 <span class="sd">        :return: True if events are active or False otherwise</span>
 <span class="sd">        :rtype: bool&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">events_active</span></div>
 
-<div class="viewcode-block" id="EventGenerator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">event_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">event_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fires an event.</span>
 <span class="sd">        :param val: event value</span>
 <span class="sd">        :type  val: object&quot;&quot;&quot;</span>
@@ -459,7 +460,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventGenerator.waitEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.waitEvent">[docs]</a>    <span class="k">def</span> <span class="nf">waitEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">any</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="EventGenerator.waitEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.waitEvent">[docs]</a>    <span class="k">def</span> <span class="nf">waitEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">any</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">stack</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Waits for an event to occur</span>
 
@@ -507,7 +508,7 @@
 
         <span class="k">return</span> <span class="n">val</span></div>
 
-<div class="viewcode-block" id="EventGenerator.read"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventGenerator.html#taurus.core.util.EventGenerator.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EventGenerator.read"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventGenerator.html#taurus.core.util.EventGenerator.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Read the last event</span>
 
 <span class="sd">        :return: the last event value</span>
@@ -515,7 +516,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_val</span></div></div>
 
 
-<div class="viewcode-block" id="EventListener"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventListener.html#taurus.core.util.EventListener">[docs]</a><span class="k">class</span> <span class="nc">EventListener</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="EventListener"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventListener.html#taurus.core.util.EventListener">[docs]</a><span class="k">class</span> <span class="nc">EventListener</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A class that listens for an event with a specific value</span>
 
 <span class="sd">    Note: Since this class stores for each event value the last timestamp when</span>
@@ -533,22 +534,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">event_set</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="EventListener.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventListener.html#taurus.core.util.EventListener.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EventListener.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventListener.html#taurus.core.util.EventListener.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Locks this event listener&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventListener.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventListener.html#taurus.core.util.EventListener.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EventListener.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventListener.html#taurus.core.util.EventListener.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Unlocks this event listener&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">_is_owned</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="EventListener.clearEventSet"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventListener.html#taurus.core.util.EventListener.clearEventSet">[docs]</a>    <span class="k">def</span> <span class="nf">clearEventSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EventListener.clearEventSet"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventListener.html#taurus.core.util.EventListener.clearEventSet">[docs]</a>    <span class="k">def</span> <span class="nf">clearEventSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Clears the internal event buffer&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event_set</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventListener.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventListener.html#taurus.core.util.EventListener.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="EventListener.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventListener.html#taurus.core.util.EventListener.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Notifies that a given event has arrived</span>
 <span class="sd">        This function is protected inside with the object&#39;s lock. Do NOT call</span>
 <span class="sd">        this function when you have the lock acquired on this object.</span>
@@ -564,7 +565,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="EventListener.waitEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_EventListener.html#taurus.core.util.EventListener.waitEvent">[docs]</a>    <span class="k">def</span> <span class="nf">waitEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="EventListener.waitEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_EventListener.html#taurus.core.util.EventListener.waitEvent">[docs]</a>    <span class="k">def</span> <span class="nf">waitEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait for an event with the given value. You MUST protect this function</span>
 <span class="sd">        with this object&#39;s lock before calling this method and always unlock it</span>
 <span class="sd">        afterward, of course::</span>
@@ -608,14 +609,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="ConfigEventGenerator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ConfigEventGenerator.html#taurus.core.util.ConfigEventGenerator">[docs]</a><span class="k">class</span> <span class="nc">ConfigEventGenerator</span><span class="p">(</span><span class="n">EventGenerator</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigEventGenerator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ConfigEventGenerator.html#taurus.core.util.ConfigEventGenerator">[docs]</a><span class="k">class</span> <span class="nc">ConfigEventGenerator</span><span class="p">(</span><span class="n">EventGenerator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Manage configuration events&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ConfigEventGenerator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ConfigEventGenerator.html#taurus.core.util.ConfigEventGenerator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">event_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigEventGenerator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ConfigEventGenerator.html#taurus.core.util.ConfigEventGenerator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">event_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">EventGenerator</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">event_val</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="ListEventGenerator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ListEventGenerator.html#taurus.core.util.ListEventGenerator">[docs]</a><span class="k">class</span> <span class="nc">ListEventGenerator</span><span class="p">(</span><span class="n">EventGenerator</span><span class="p">):</span>
+<div class="viewcode-block" id="ListEventGenerator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ListEventGenerator.html#taurus.core.util.ListEventGenerator">[docs]</a><span class="k">class</span> <span class="nc">ListEventGenerator</span><span class="p">(</span><span class="n">EventGenerator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Manage list events, detecting changes in the list&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">events_active</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -623,7 +624,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">last_val</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_event_val</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="ListEventGenerator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ListEventGenerator.html#taurus.core.util.ListEventGenerator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<div class="viewcode-block" id="ListEventGenerator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ListEventGenerator.html#taurus.core.util.ListEventGenerator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Notifies that a given event has arrived</span>
 <span class="sd">        This function is protected inside with the object&#39;s lock. Do NOT call</span>
 <span class="sd">        this function when you have the lock acquired on this object.</span>
@@ -650,7 +651,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="AttributeEventWait"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait">[docs]</a><span class="k">class</span> <span class="nc">AttributeEventWait</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait">[docs]</a><span class="k">class</span> <span class="nc">AttributeEventWait</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class designed to connect to a :class:`taurus.core.taurusattribute.TaurusAttribute` and</span>
 <span class="sd">    fire events or wait for a certain event.&quot;&quot;&quot;</span>
 
@@ -662,7 +663,7 @@
         <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AttributeEventWait.connect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.connect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Connect to the given attribute</span>
 <span class="sd">        :param attr: the attribute to connect to</span>
 <span class="sd">        :type  attr: taurus.core.taurusattribute.TaurusAttribute&quot;&quot;&quot;</span>
@@ -678,7 +679,7 @@
         <span class="k">if</span> <span class="n">needAdd</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.disconnect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.disconnect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Disconnects from the attribute. If not connected nothing happens.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clearEventSet</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="p">:</span>
@@ -686,11 +687,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_val</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Locks this event listener&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Unocks this event listener&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">_is_owned</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
@@ -705,12 +706,12 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: Thread </span><span class="si">%s</span><span class="s2"> trying to unlock condition previously &quot;</span> \
                   <span class="s2">&quot;locked by thread </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">curr_th</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.clearEventSet"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.clearEventSet">[docs]</a>    <span class="k">def</span> <span class="nf">clearEventSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.clearEventSet"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.clearEventSet">[docs]</a>    <span class="k">def</span> <span class="nf">clearEventSet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Clears the internal event buffer&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_event_set</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_val</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.eventReceived"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.eventReceived"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Event listener method for the underlying attribute. Do not call this</span>
 <span class="sd">        method. It will be called internally when the attribute generates</span>
 <span class="sd">        an event.&quot;&quot;&quot;</span>
@@ -721,7 +722,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Notifies that a given event has arrived</span>
 <span class="sd">        This function is protected inside with the object&#39;s lock. Do NOT call</span>
 <span class="sd">        this function when you have the lock acquired on this object.</span>
@@ -737,7 +738,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.getLastRecordedEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.getLastRecordedEvent">[docs]</a>    <span class="k">def</span> <span class="nf">getLastRecordedEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.getLastRecordedEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.getLastRecordedEvent">[docs]</a>    <span class="k">def</span> <span class="nf">getLastRecordedEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;returns the value of the last recorded event or None if no event has</span>
 <span class="sd">        been received or the last event was an error event</span>
 
@@ -745,7 +746,7 @@
 <span class="sd">        :rtype: object&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_val</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.getRecordedEvents"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.getRecordedEvents">[docs]</a>    <span class="k">def</span> <span class="nf">getRecordedEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.getRecordedEvents"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.getRecordedEvents">[docs]</a>    <span class="k">def</span> <span class="nf">getRecordedEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a reference to the internal dictionary used to store the internal</span>
 <span class="sd">        events. Modify the return dictionary at your own risk!</span>
 
@@ -753,7 +754,7 @@
 <span class="sd">        :rtype: dict&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event_set</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.getRecordedEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.getRecordedEvent">[docs]</a>    <span class="k">def</span> <span class="nf">getRecordedEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventWait.getRecordedEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.getRecordedEvent">[docs]</a>    <span class="k">def</span> <span class="nf">getRecordedEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the the recorded local timestamp for the event with the given</span>
 <span class="sd">        value or None if no event with the given value has been recorded.</span>
 
@@ -763,7 +764,7 @@
 <span class="sd">        :rtype: float&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event_set</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AttributeEventWait.waitEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.waitEvent">[docs]</a>    <span class="k">def</span> <span class="nf">waitEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retries</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<div class="viewcode-block" id="AttributeEventWait.waitEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventWait.html#taurus.core.util.AttributeEventWait.waitEvent">[docs]</a>    <span class="k">def</span> <span class="nf">waitEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retries</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
                   <span class="nb">any</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait for an event with the given value.</span>
 
@@ -823,7 +824,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="AttributeEventIterator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator">[docs]</a><span class="k">class</span> <span class="nc">AttributeEventIterator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator">[docs]</a><span class="k">class</span> <span class="nc">AttributeEventIterator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Internal class. For test purposes&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attrs</span><span class="p">):</span>
@@ -832,7 +833,7 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AttributeEventIterator.connect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator.connect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
             <span class="n">attrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">attrs</span><span class="p">,)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
@@ -840,16 +841,16 @@
         <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span><span class="p">:</span>
             <span class="n">attr</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AttributeEventIterator.disconnect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator.disconnect"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span><span class="p">:</span>
             <span class="n">attr</span><span class="o">.</span><span class="n">removeListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AttributeEventIterator.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator.lock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="AttributeEventIterator.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator.unlock"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.unlock">[docs]</a>    <span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">_is_owned</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cond</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -859,12 +860,12 @@
             <span class="nb">print</span><span class="p">((</span><span class="s2">&quot;WARNING: Thread </span><span class="si">%s</span><span class="s2"> trying to unlock condition previously &quot;</span>
                    <span class="o">+</span> <span class="s2">&quot;locked by thread </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">curr_th</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="AttributeEventIterator.eventReceived"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator.eventReceived"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">rvalue</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AttributeEventIterator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
@@ -873,7 +874,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="AttributeEventIterator.events"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.events">[docs]</a>    <span class="k">def</span> <span class="nf">events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="AttributeEventIterator.events"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_AttributeEventIterator.html#taurus.core.util.AttributeEventIterator.events">[docs]</a>    <span class="k">def</span> <span class="nf">events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -917,7 +918,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

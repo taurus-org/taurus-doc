@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.graphic.jdraw.jdraw_view &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.graphic.jdraw.jdraw_view &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -180,15 +180,14 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">jdraw_parser</span>
-
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic.jdraw.jdraw_parser</span> <span class="k">import</span> <span class="n">parse</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusJDrawSynopticsView&quot;</span><span class="p">]</span>
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView">[docs]</a><span class="k">class</span> <span class="nc">TaurusJDrawSynopticsView</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsView</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView">[docs]</a><span class="k">class</span> <span class="nc">TaurusJDrawSynopticsView</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsView</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Taurus Class that visualizes Synoptics drawn with the JDraw tool (by ESRF). It is equivalent to ATK Synoptic Player (Java).</span>
 
@@ -251,21 +250,21 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setViewportUpdateMode</span><span class="p">(</span><span class="n">updateMode</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.defineStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.defineStyle">[docs]</a>    <span class="k">def</span> <span class="nf">defineStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.defineStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.defineStyle">[docs]</a>    <span class="k">def</span> <span class="nf">defineStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
     <span class="c1"># TaurusBaseWidget over writing</span>
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.isReadOnly"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.isReadOnly"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.update"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.update"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.emit_signal()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emitColors</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.openJDraw"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.openJDraw">[docs]</a>    <span class="k">def</span> <span class="nf">openJDraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.openJDraw"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.openJDraw">[docs]</a>    <span class="k">def</span> <span class="nf">openJDraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ifile</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Load JDraw File&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;JDraw File (*.jdw)&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ifile</span><span class="p">:</span>
@@ -275,7 +274,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">ifile</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fileName</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.setAlias"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setAlias">[docs]</a>    <span class="k">def</span> <span class="nf">setAlias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.setAlias"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.setAlias">[docs]</a>    <span class="k">def</span> <span class="nf">setAlias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Assigning a dictionary like {&#39;Tag&#39;:&#39;Value&#39;} with tags to be replaced in object names while parsing. &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="s1">&#39;items&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">alias</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="o">=</span> <span class="n">alias</span>
@@ -283,14 +282,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_item_list"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.get_item_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_item_list"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.get_item_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">_name</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;_name&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_device_list"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.get_device_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_device_list"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.get_device_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">items</span> <span class="o">=</span> <span class="p">[(</span><span class="n">item</span><span class="p">,</span> <span class="n">parseTangoUri</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item_list</span><span class="p">()]</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;_devslashname&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">items</span> <span class="k">if</span> <span class="n">v</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_item_colors"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.get_item_colors">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_item_colors"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.get_item_colors">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">item_colors</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -306,7 +305,7 @@
 
     <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
     <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.selectGraphicItem"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.selectGraphicItem">[docs]</a>    <span class="k">def</span> <span class="nf">selectGraphicItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_name</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.selectGraphicItem"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.selectGraphicItem">[docs]</a>    <span class="k">def</span> <span class="nf">selectGraphicItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">selectGraphicItem</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
@@ -324,11 +323,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;modelsChanged(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelsChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.emitColors"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.emitColors">[docs]</a>    <span class="k">def</span> <span class="nf">emitColors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.emitColors"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.emitColors">[docs]</a>    <span class="k">def</span> <span class="nf">emitColors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;emit signal which is used to refresh the tree and colors of icons depend of the current status in jdrawSynoptic&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_item_colors</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_sizes"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.get_sizes">[docs]</a>    <span class="k">def</span> <span class="nf">get_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.get_sizes"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.get_sizes">[docs]</a>    <span class="k">def</span> <span class="nf">get_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">srect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">sceneRect</span><span class="p">()</span>
         <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(),</span> <span class="n">srect</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
                  <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">s</span><span class="o">.</span><span class="n">height</span><span class="p">())]</span>
@@ -339,7 +338,7 @@
             <span class="n">sizes</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.fitting"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.fitting">[docs]</a>    <span class="k">def</span> <span class="nf">fitting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ADJUST_FRAME</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.fitting"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.fitting">[docs]</a>    <span class="k">def</span> <span class="nf">fitting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ADJUST_FRAME</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parent size is the size of the bigger panel (desn&#39;t keep ratio)</span>
 <span class="sd">        Rect size never changes (fixed by the graphics objects)</span>
@@ -383,7 +382,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
             <span class="s1">&#39;Done: size(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">),hint(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">),srect(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">),parent(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">)</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sizes</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.resizeEvent"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.resizeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.resizeEvent"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.resizeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; It has been needed to reimplent size policies &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">resizable</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QScrollArea</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isVisible</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;In TaurusJDrawSynopticsView(&#39;</span> <span class="o">+</span>
@@ -404,24 +403,24 @@
                          <span class="s1">&#39;).resizeEvent: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.refreshModel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.refreshModel">[docs]</a>    <span class="k">def</span> <span class="nf">refreshModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.refreshModel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.refreshModel">[docs]</a>    <span class="k">def</span> <span class="nf">refreshModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.updateStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.updateStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repaint</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.repaint"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.repaint">[docs]</a>    <span class="k">def</span> <span class="nf">repaint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.repaint"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.repaint">[docs]</a>    <span class="k">def</span> <span class="nf">repaint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsView</span><span class="o">.</span><span class="n">repaint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
         <span class="c1"># self.fitting()</span>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.getGraphicsFactory"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getGraphicsFactory">[docs]</a>    <span class="k">def</span> <span class="nf">getGraphicsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.getGraphicsFactory"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.getGraphicsFactory">[docs]</a>    <span class="k">def</span> <span class="nf">getGraphicsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">jdraw</span>
         <span class="c1"># self.parent())</span>
         <span class="k">return</span> <span class="n">jdraw</span><span class="o">.</span><span class="n">TaurusJDrawGraphicsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">),</span> <span class="n">delayed</span><span class="o">=</span><span class="n">delayed</span><span class="p">)</span></div>
 
     <span class="c1">###########################################################################</span>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.getFramed"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getFramed">[docs]</a>    <span class="k">def</span> <span class="nf">getFramed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.getFramed"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.getFramed">[docs]</a>    <span class="k">def</span> <span class="nf">getFramed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
@@ -432,13 +431,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">frame</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.setResizable"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setResizable">[docs]</a>    <span class="k">def</span> <span class="nf">setResizable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resizable</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.setResizable"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.setResizable">[docs]</a>    <span class="k">def</span> <span class="nf">setResizable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resizable</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_resizable</span> <span class="o">=</span> <span class="n">resizable</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.resizable"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.resizable">[docs]</a>    <span class="k">def</span> <span class="nf">resizable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.resizable"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.resizable">[docs]</a>    <span class="k">def</span> <span class="nf">resizable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resizable</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.mousePressEvent"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.mousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.mousePressEvent"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.mousePressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Records last event position to use it for DragEvents &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mousePos</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">scenePos</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">event</span><span class="o">.</span><span class="n">scenePos</span><span class="p">()</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
@@ -448,7 +447,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">mousePos</span><span class="p">))</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.getModelMimeData"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getModelMimeData">[docs]</a>    <span class="k">def</span> <span class="nf">getModelMimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.getModelMimeData"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.getModelMimeData">[docs]</a>    <span class="k">def</span> <span class="nf">getModelMimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Used for drag events &quot;&quot;&quot;</span>
         <span class="n">model</span><span class="p">,</span> <span class="n">mimeData</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
@@ -482,14 +481,14 @@
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.setDefaultPanelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setDefaultPanelClass">[docs]</a>    <span class="k">def</span> <span class="nf">setDefaultPanelClass</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.setDefaultPanelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.setDefaultPanelClass">[docs]</a>    <span class="k">def</span> <span class="nf">setDefaultPanelClass</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns the Class used to open new object panels on double-click (TaurusDevicePanel by default)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">klass</span><span class="o">.</span><span class="n">_defaultClass</span> <span class="o">=</span> <span class="n">other</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.defaultPanelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.defaultPanelClass">[docs]</a>    <span class="k">def</span> <span class="nf">defaultPanelClass</span><span class="p">(</span><span class="n">klass</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.defaultPanelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.defaultPanelClass">[docs]</a>    <span class="k">def</span> <span class="nf">defaultPanelClass</span><span class="p">(</span><span class="n">klass</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method assigns the Class used to open new object panels on double-click (TaurusDevicePanel by default)</span>
 <span class="sd">        If an string is used it can be either a Taurus class or an OS launcher</span>
@@ -501,17 +500,17 @@
         <span class="n">obj</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">_defaultClass</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.setPanelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setPanelClass">[docs]</a>    <span class="k">def</span> <span class="nf">setPanelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.setPanelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.setPanelClass">[docs]</a>    <span class="k">def</span> <span class="nf">setPanelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_panelClass</span> <span class="o">=</span> <span class="n">widget</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.panelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.panelClass">[docs]</a>    <span class="k">def</span> <span class="nf">panelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.panelClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.panelClass">[docs]</a>    <span class="k">def</span> <span class="nf">panelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panelClass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultPanelClass</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_panelClass</span></div>
 
     <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.setModel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.setModel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delayed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_currF</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">alias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -528,7 +527,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting to parse </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
                 <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsFactory</span><span class="p">(</span><span class="n">delayed</span><span class="o">=</span><span class="n">delayed</span><span class="p">)</span>
-                <span class="n">scene</span> <span class="o">=</span> <span class="n">jdraw_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+                <span class="n">scene</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
                 <span class="n">scene</span><span class="o">.</span><span class="n">setSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_selectionStyle</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Obtained </span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">scene</span><span class="p">:</span>
@@ -555,12 +554,12 @@
         <span class="c1">#self.debug(&#39;out of setModel()&#39;)</span>
         <span class="n">taurus</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.closeEvent"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.closeEvent"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">closeAllPanels</span><span class="p">()</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsView</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.setModels"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setModels">[docs]</a>    <span class="k">def</span> <span class="nf">setModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.setModels"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.setModels">[docs]</a>    <span class="k">def</span> <span class="nf">setModels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; This method triggers item.setModel(item._name) in all internal items. &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">_name</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">TaurusGraphicsItem</span><span class="p">):</span>
@@ -568,11 +567,11 @@
                     <span class="s1">&#39;TaurusJDrawGraphicsFactory.setModels(): calling item.setModel(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">_name</span><span class="p">))</span>
                 <span class="n">item</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.getModel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getModel">[docs]</a>    <span class="k">def</span> <span class="nf">getModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.getModel"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.getModel">[docs]</a>    <span class="k">def</span> <span class="nf">getModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_currF</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.getQtDesignerPluginInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
         <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Taurus Display&#39;</span>
         <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.graphic&#39;</span>
@@ -581,7 +580,7 @@
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getModel</span><span class="p">,</span> <span class="n">setModel</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.setSelectionStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.setSelectionStyle">[docs]</a>    <span class="k">def</span> <span class="nf">setSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selectionStyle</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.setSelectionStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.setSelectionStyle">[docs]</a>    <span class="k">def</span> <span class="nf">setSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selectionStyle</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selectionStyle</span><span class="p">,</span>  <span class="n">string_types</span><span class="p">):</span>
             <span class="n">selectionStyle</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">selectionStyle</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
             <span class="k">try</span><span class="p">:</span>
@@ -593,13 +592,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectionStyle</span><span class="p">(</span><span class="n">selectionStyle</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_selectionStyle</span> <span class="o">=</span> <span class="n">selectionStyle</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.getSelectionStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getSelectionStyle">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.getSelectionStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.getSelectionStyle">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectionStyle</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.getSelectionStyleName"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.getSelectionStyleName">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectionStyleName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.getSelectionStyleName"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.getSelectionStyleName">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectionStyleName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">SynopticSelectionStyle</span><span class="o">.</span><span class="n">whatis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getSelectionStyle</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="TaurusJDrawSynopticsView.resetSelectionStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView.resetSelectionStyle">[docs]</a>    <span class="k">def</span> <span class="nf">resetSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusJDrawSynopticsView.resetSelectionStyle"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawSynopticsView.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawSynopticsView.resetSelectionStyle">[docs]</a>    <span class="k">def</span> <span class="nf">resetSelectionStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSelectionStyle</span><span class="p">(</span><span class="n">SynopticSelectionStyle</span><span class="o">.</span><span class="n">OUTLINE</span><span class="p">)</span></div>
 
     <span class="n">selectionStyle</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getSelectionStyleName</span><span class="p">,</span>
@@ -616,7 +615,7 @@
     <span class="n">taurus</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">)</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="c1">#form = Qt.QDialog()</span>
     <span class="c1"># ly=Qt.QVBoxLayout(form)</span>
@@ -668,7 +667,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

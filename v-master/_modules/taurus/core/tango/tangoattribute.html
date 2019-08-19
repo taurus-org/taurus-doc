@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.tango.tangoattribute &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.core.tango.tangoattribute &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -258,8 +258,10 @@
                     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                         <span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
 
-        <span class="n">rvalue</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span>
-        <span class="n">wvalue</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">w_value</span>
+        <span class="c1"># Protect against DeviceAttribute not providing .value in some cases,</span>
+        <span class="c1"># seen e.g. in PyTango 9.3.0</span>
+        <span class="n">rvalue</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">wvalue</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;w_value&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">numerical</span><span class="p">:</span>
             <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span><span class="o">.</span><span class="n">_units</span>
             <span class="k">if</span> <span class="n">rvalue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -463,6 +465,7 @@
 <div class="viewcode-block" id="TangoAttribute.cleanUp"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[TangoAttribute] cleanUp&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeConfEvents</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeChangeEvents</span><span class="p">()</span>
         <span class="n">TaurusAttribute</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pytango_attrinfoex</span> <span class="o">=</span> <span class="kc">None</span></div>
@@ -556,7 +559,7 @@
         <span class="k">elif</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="p">(</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">_1D</span><span class="p">,</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_2D</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">is_int_type</span><span class="p">(</span><span class="n">tgtype</span><span class="p">):</span>
                 <span class="c1"># cast to integer because the magnitude conversion gives floats</span>
-                <span class="n">attrvalue</span> <span class="o">=</span> <span class="n">magnitude</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+                <span class="n">attrvalue</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">tgtype</span> <span class="o">==</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">CmdArgType</span><span class="o">.</span><span class="n">DevUChar</span><span class="p">:</span>
                 <span class="n">attrvalue</span> <span class="o">=</span> <span class="n">magnitude</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -739,7 +742,7 @@
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">listeners</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">==</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Unsubscribed</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">listeners</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeEvents</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeChangeEvents</span><span class="p">()</span>
 
         <span class="c1"># if initial_subscription_state == SubscriptionState.Subscribed:</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">listeners</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
@@ -769,7 +772,7 @@
             <span class="k">return</span> <span class="n">ret</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subscription_state</span> <span class="o">!=</span> <span class="n">SubscriptionState</span><span class="o">.</span><span class="n">Unsubscribed</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeEvents</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unsubscribeChangeEvents</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">ret</span></div>
 
@@ -793,7 +796,7 @@
     <span class="k">def</span> <span class="nf">_process_event_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ex</span><span class="p">):</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">_subscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_subscribeChangeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Enable subscription to the attribute events. If change events are</span>
 <span class="sd">            not supported polling is activated &quot;&quot;&quot;</span>
             
@@ -844,7 +847,7 @@
         
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chg_evt_id</span>
                 
-    <span class="k">def</span> <span class="nf">_unsubscribeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_unsubscribeChangeEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Careful in this method: This is intended to be executed in the cleanUp</span>
         <span class="c1"># so we should not access external objects from the factory, like the</span>
         <span class="c1"># parent object</span>
@@ -1588,7 +1591,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

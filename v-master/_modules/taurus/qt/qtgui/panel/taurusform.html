@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusform &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusform &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -167,6 +167,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
+<span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
 
@@ -1004,21 +1005,22 @@
     <span class="k">def</span> <span class="nf">_updateAttrWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Populates the form with an item for each of the attributes shown</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">dev</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">dev</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="n">TaurusDevState</span><span class="o">.</span><span class="n">Ready</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+            <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">attribute_list_query</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sortKey</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getViewFilters</span><span class="p">():</span>
+                <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">attrlist</span><span class="p">))</span>
+            <span class="n">attrnames</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">devname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attrlist</span><span class="p">:</span>
+                <span class="c1"># ugly hack . But setUseParentModel does not work well</span>
+                <span class="n">attrnames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Filling with attribute list: </span><span class="si">%s</span><span class="s1">&#39;</span>
+                       <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">attrnames</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_form</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">attrnames</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cannot connect to device&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_form</span><span class="o">.</span><span class="n">setModel</span><span class="p">([])</span>
-            <span class="k">return</span>
-        <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">attribute_list_query</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sortKey</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getViewFilters</span><span class="p">():</span>
-            <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">attrlist</span><span class="p">))</span>
-        <span class="n">attrnames</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">devname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelName</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attrlist</span><span class="p">:</span>
-            <span class="c1"># ugly hack . But setUseParentModel does not work well</span>
-            <span class="n">attrnames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Filling with attribute list: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">attrnames</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_form</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">attrnames</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusAttrForm.setViewFilters"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusAttrForm.html#taurus.qt.qtgui.panel.TaurusAttrForm.setViewFilters">[docs]</a>    <span class="k">def</span> <span class="nf">setViewFilters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filterlist</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;sets the filters to be applied when displaying the attributes</span>
@@ -1087,7 +1089,7 @@
         <span class="n">models</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">models</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sys/tg_test/1/state&#39;</span><span class="p">,</span>
                   <span class="s1">&#39;sys/tg_test/1/float_scalar&#39;</span><span class="p">,</span>
@@ -1119,7 +1121,7 @@
         <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;bl97/pc/dummy-01&#39;</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">dialog</span> <span class="o">=</span> <span class="n">TaurusAttrForm</span><span class="p">()</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1138,7 +1140,7 @@
         <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;bl97/pc/dummy-01&#39;</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">dialog</span> <span class="o">=</span> <span class="n">TaurusCommandsForm</span><span class="p">()</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1153,7 +1155,7 @@
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
 
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusValue</span>
 
@@ -1184,33 +1186,23 @@
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
 
-<span class="k">def</span> <span class="nf">taurusFormMain</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;A launcher for TaurusForm.&#39;&#39;&#39;</span>
-    <span class="c1"># NOTE: DON&#39;T PUT TEST CODE HERE.</span>
-    <span class="c1"># THIS IS CALLED FROM THE LAUNCHER SCRIPT (&lt;taurus&gt;/scripts/taurusform)</span>
-    <span class="c1"># USE test1() instead.</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--window-name&#39;</span><span class="p">,</span> <span class="s1">&#39;window_name&#39;</span><span class="p">,</span>
+              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;Taurus Form&#39;</span><span class="p">,</span>
+              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of the window&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;rb&#39;</span><span class="p">),</span>
+              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;configuration file for initialization&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">form_cmd</span><span class="p">(</span><span class="n">window_name</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Shows a Taurus form populated with the given model names&quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
-    <span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">argparse</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">import</span> <span class="nn">os</span>
-
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] [model1 [model2 ...]]&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;the taurus form panel application&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--window-name&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;window_name&quot;</span><span class="p">,</span>
-                      <span class="n">default</span><span class="o">=</span><span class="s2">&quot;TaurusForm&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Name of the window&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="s2">&quot;--config-file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;config_file&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use the given config file for initialization&quot;</span><span class="p">)</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
-                            <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurusform&quot;</span><span class="p">,</span>
-                            <span class="n">app_version</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
-    <span class="n">options</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_options</span><span class="p">()</span>
-
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">dialog</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">setModelInConfig</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">window_name</span><span class="p">)</span>
+
+    <span class="n">dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>
 
     <span class="c1"># Make sure the window size and position are restored</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">,</span> <span class="n">dialog</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">,</span>
@@ -1238,16 +1230,14 @@
         <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;T_FORM_CUSTOM_WIDGET_MAP&#39;</span><span class="p">,</span> <span class="p">{}))</span>
 
     <span class="c1"># set a model list from the command line or launch the chooser</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">dialog</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">models</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">dialog</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">dialog</span><span class="o">.</span><span class="n">chooseModels</span><span class="p">()</span>
 
     <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
 
@@ -1256,7 +1246,7 @@
     <span class="c1"># test2()</span>
     <span class="c1"># test3()</span>
     <span class="c1"># test4()</span>
-    <span class="n">taurusFormMain</span><span class="p">()</span>
+    <span class="n">form_cmd</span><span class="p">()</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
@@ -1294,7 +1284,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

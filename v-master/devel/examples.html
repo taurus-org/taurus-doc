@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Examples &mdash; taurus 4.5.1 documentation</title>
+  <title>Examples &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../index.html"/>
         <link rel="up" title="Developer’s Guide" href="index.html"/>
         <link rel="next" title="taurus" href="api/taurus.html"/>
         <link rel="prev" title="Taurus custom settings" href="tauruscustomsettings.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -141,7 +141,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -196,7 +196,7 @@ does not include the following header and footer code lines:</p>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
 <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
 <span class="n">panel</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
@@ -235,7 +235,7 @@ work properly.</strong></p>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="bp">None</span><span class="p">,)</span>
 <span class="n">panel</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
 <span class="n">layout</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
 <span class="n">panel</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
@@ -417,7 +417,7 @@ default widget for some attributes according to the user needs.</p>
 <div class="section" id="simple-plotting-of-various-spectrum-attributes">
 <h3>Simple plotting of various spectrum attributes<a class="headerlink" href="#simple-plotting-of-various-spectrum-attributes" title="Permalink to this headline">¶</a></h3>
 <p>Say you want to plot two SPECTRUM attributes and watch them changing on-line?
-Taurus provides a very complete widget: <a class="reference internal" href="api/taurus/qt/qtgui/plot/_TaurusPlot.html#taurus.qt.qtgui.plot.TaurusPlot" title="taurus.qt.qtgui.plot.TaurusPlot"><code class="xref py py-class docutils literal"><span class="pre">plot.TaurusPlot</span></code></a>
+Taurus provides a very complete widget: <code class="xref py py-class docutils literal"><span class="pre">plot.TaurusPlot</span></code>
 (which makes use of the <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt</a> library) .</p>
 <img alt="../_images/taurusplot01.png" class="align-center" src="../_images/taurusplot01.png" />
 <p>code:</p>
@@ -452,7 +452,7 @@ x-values instead of being considered as another spectrum to plot like before.</p
 <div class="section" id="plotting-data-that-is-not-an-attribute">
 <h3>Plotting data that is not an attribute<a class="headerlink" href="#plotting-data-that-is-not-an-attribute" title="Permalink to this headline">¶</a></h3>
 <p>You are <em>not</em> limited to plotting data from Tango attributes. With
-<a class="reference internal" href="api/taurus/qt/qtgui/plot/_TaurusPlot.html#taurus.qt.qtgui.plot.TaurusPlot" title="taurus.qt.qtgui.plot.TaurusPlot"><code class="xref py py-class docutils literal"><span class="pre">plot.TaurusPlot</span></code></a> you can also include arbitrary points (or even
+<code class="xref py py-class docutils literal"><span class="pre">plot.TaurusPlot</span></code> you can also include arbitrary points (or even
 functions) in the plot.</p>
 <p>Oh, and you can can change the display properties of any curve:</p>
 <img alt="../_images/taurusplot03.png" class="align-center" src="../_images/taurusplot03.png" />
@@ -517,7 +517,7 @@ formula!</p>
 <div class="section" id="plotting-trends">
 <span id="examples-taurustrend"></span><h3>Plotting Trends<a class="headerlink" href="#plotting-trends" title="Permalink to this headline">¶</a></h3>
 <p>Many times we are interested in showing how a scalar attribute evolves with
-time. A close-cousin of the TaurusPlot called <a class="reference internal" href="api/taurus/qt/qtgui/plot/_TaurusTrend.html#taurus.qt.qtgui.plot.TaurusTrend" title="taurus.qt.qtgui.plot.TaurusTrend"><code class="xref py py-class docutils literal"><span class="pre">plot.TaurusTrend</span></code></a>
+time. A close-cousin of the TaurusPlot called <code class="xref py py-class docutils literal"><span class="pre">plot.TaurusTrend</span></code>
 is here to help you:</p>
 <img alt="../_images/taurustrend01.png" class="align-center" src="../_images/taurustrend01.png" />
 <p>code:</p>
@@ -545,7 +545,7 @@ plot a separate trend line for each.</p>
 feature-rich and very configurable GUIs by using existing widgets as &#8220;panels&#8221;.
 TaurusGuis can be created via a wizard application (no programming at all!) with
 a few clicks. You can try it out by running:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">taurusgui</span> <span class="o">--</span><span class="n">new</span><span class="o">-</span><span class="n">gui</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">taurus</span> <span class="n">newgui</span>
 </pre></div>
 </div>
 <p>For more details and tricks regarding TaurusGui, check <a class="reference internal" href="taurusgui_newgui.html#taurusgui-newgui"><span class="std std-ref">this</span></a>.</p>
@@ -594,7 +594,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

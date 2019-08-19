@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image’s interface &mdash; taurus 4.5.1 documentation</title>
+  <title>Image’s interface &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../index.html"/>
         <link rel="up" title="User’s Interface" href="index.html"/>
         <link rel="next" title="Array Editor" href="arrayeditor.html"/>
         <link rel="prev" title="TaurusTrend User’s Interface" href="trend.html"/> 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">User&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
@@ -151,7 +151,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="../index.html">User&#8217;s Guide</a> &raquo;</li>
       
@@ -209,31 +209,13 @@ the image widget will not be available.</p>
 <p>You may also use TaurusImageDialog as a stand-alone application for showing image
 attributes from the control system. You can launch the stand-alone Taurus Image
 with the following command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurusimage</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">model</span><span class="o">&gt;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurus</span> <span class="n">guiqwt</span> <span class="n">image</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">model</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>Options:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
-<span class="o">--</span><span class="n">demo</span>                <span class="n">show</span> <span class="n">a</span> <span class="n">demo</span> <span class="n">of</span> <span class="n">the</span> <span class="n">widget</span>
-<span class="o">--</span><span class="n">version</span>             <span class="n">show</span> <span class="n">program</span><span class="s1">&#39;s version number and exit</span>
-
-<span class="n">Taurus</span> <span class="n">Options</span><span class="p">:</span>
-  <span class="n">Basic</span> <span class="n">options</span> <span class="n">present</span> <span class="ow">in</span> <span class="nb">any</span> <span class="n">taurus</span> <span class="n">application</span>
-
-  <span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">level</span><span class="o">=</span><span class="n">LEVEL</span>
-                      <span class="n">taurus</span> <span class="n">log</span> <span class="n">level</span><span class="o">.</span> <span class="n">Allowed</span> <span class="n">values</span> <span class="n">are</span> <span class="p">(</span><span class="n">case</span>
-                      <span class="n">insensitive</span><span class="p">):</span> <span class="n">critical</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">warning</span><span class="o">/</span><span class="n">warn</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span>
-                      <span class="n">debug</span><span class="p">,</span> <span class="n">trace</span>
-  <span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">polling</span><span class="o">-</span><span class="n">period</span><span class="o">=</span><span class="n">MILLISEC</span>
-                      <span class="n">taurus</span> <span class="k">global</span> <span class="n">polling</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">milliseconds</span>
-  <span class="o">--</span><span class="n">taurus</span><span class="o">-</span><span class="n">serialization</span><span class="o">-</span><span class="n">mode</span><span class="o">=</span><span class="n">SERIAL</span>
-                      <span class="n">taurus</span> <span class="n">serialization</span> <span class="n">mode</span><span class="o">.</span> <span class="n">Allowed</span> <span class="n">values</span> <span class="n">are</span> <span class="p">(</span><span class="n">case</span>
-                      <span class="n">insensitive</span><span class="p">):</span> <span class="n">serial</span><span class="p">,</span> <span class="n">concurrent</span> <span class="p">(</span><span class="n">default</span><span class="p">)</span>
-  <span class="o">--</span><span class="n">tango</span><span class="o">-</span><span class="n">host</span><span class="o">=</span><span class="n">TANGO_HOST</span>
-                      <span class="n">Tango</span> <span class="n">host</span> <span class="n">name</span>
+<p>Run the following command for more details:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">taurus</span> <span class="n">guiqwt</span> <span class="n">image</span> <span class="o">--</span><span class="n">help</span>
 </pre></div>
 </div>
-<p>The model is the name of a taurus image attribute</p>
 </div>
 </div>
 
@@ -279,7 +261,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.graphic.taurusgraphic &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.graphic.taurusgraphic &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -190,7 +190,7 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span><span class="p">,</span>
                                   <span class="n">ExternalAppAction</span><span class="p">,</span> <span class="n">TaurusWidgetFactory</span><span class="p">)</span>
@@ -249,7 +249,7 @@
 
 
 <div class="viewcode-block" id="QEmitter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_QEmitter.html#taurus.qt.qtgui.graphic.QEmitter">[docs]</a><span class="k">class</span> <span class="nc">QEmitter</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
-    <span class="n">updateView</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span></div>
+    <span class="n">updateView</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">compat</span><span class="o">.</span><span class="n">PY_OBJECT</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TaurusGraphicsUpdateThread"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsUpdateThread.html#taurus.qt.qtgui.graphic.TaurusGraphicsUpdateThread">[docs]</a><span class="k">class</span> <span class="nc">TaurusGraphicsUpdateThread</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QThread</span><span class="p">):</span>
@@ -1006,12 +1006,21 @@
     <span class="n">_TEXT_RATIO</span> <span class="o">=</span> <span class="mf">0.8</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItemGroup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsRectItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItemGroup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsRectItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rect</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoBrush</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rect</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoPen</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsTextItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsTextItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="o">.</span><span class="n">setTransform</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QTransform</span><span class="o">.</span><span class="n">fromScale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_TEXT_RATIO</span><span class="p">),</span>
+            <span class="kc">True</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_validBackground</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># using that like the previous code create a worst result</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__layoutValide</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1302,8 +1311,9 @@
                 <span class="n">_frName</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">_frName</span> <span class="o">=</span> <span class="s1">&#39;rvalue.magnitude&#39;</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_currText</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span><span class="n">fragmentName</span><span class="o">=</span><span class="n">_frName</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_currText</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;unicode-escape&#39;</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDisplayValue</span><span class="p">(</span><span class="n">fragmentName</span><span class="o">=</span><span class="n">_frName</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currText</span> <span class="o">=</span> <span class="n">text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_currHtmlText</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">TaurusGraphicsItem</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
@@ -1722,7 +1732,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

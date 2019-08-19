@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.resource &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.core.resource &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,10 +33,10 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="taurus.core" href="../core.html"/>
-        <link rel="next" title="Logger" href="resource/_Logger.html"/>
-        <link rel="prev" title="EvaluationFactory" href="evaluation/_EvaluationFactory.html"/> 
+        <link rel="next" title="taurus.core.resource.resvalidator" href="resource/resvalidator.html"/>
+        <link rel="prev" title="TaurusTimeVal" href="init_lightweight/_TaurusTimeVal.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -104,10 +104,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../cli.html">cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="../core.html">core</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
@@ -147,7 +147,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../../../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -235,45 +235,21 @@ mapped to the <cite>myattr</cite> resource name, calling <cite>taurus.Attribute(
 will return a <code class="xref py py-class docutils literal"><span class="pre">EvaluationAttribute</span></code>, not a <cite>ResAttribute</cite> (<cite>ResAttribute</cite>
 is not even defined).</p>
 </div>
+<p class="rubric">Modules</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="resource/resvalidator.html">resvalidator</a></li>
+</ul>
+</div>
 <p class="rubric">Classes</p>
 <div class="toctree-wrapper compound">
 </div>
 <table class="hlist"><tr><td><ul class="simple">
-<li><a class="reference internal" href="resource/_Logger.html#taurus.core.resource.Logger" title="taurus.core.resource.Logger"><code class="xref py py-class docutils literal"><span class="pre">Logger</span></code></a></li>
 <li><a class="reference internal" href="resource/_ResourcesFactory.html#taurus.core.resource.ResourcesFactory" title="taurus.core.resource.ResourcesFactory"><code class="xref py py-class docutils literal"><span class="pre">ResourcesFactory</span></code></a></li>
-<li><a class="reference internal" href="resource/_Singleton.html#taurus.core.resource.Singleton" title="taurus.core.resource.Singleton"><code class="xref py py-class docutils literal"><span class="pre">Singleton</span></code></a></li>
 </ul>
 </td><td><ul class="simple">
-<li><a class="reference internal" href="resource/_TaurusException.html#taurus.core.resource.TaurusException" title="taurus.core.resource.TaurusException"><code class="xref py py-class docutils literal"><span class="pre">TaurusException</span></code></a></li>
-<li><a class="reference internal" href="resource/_TaurusFactory.html#taurus.core.resource.TaurusFactory" title="taurus.core.resource.TaurusFactory"><code class="xref py py-class docutils literal"><span class="pre">TaurusFactory</span></code></a></li>
 </ul>
 </td></tr></table>
-<p class="rubric">Functions</p>
-<dl class="function">
-<dt id="taurus.core.resource.Manager">
-<code class="descname">Manager</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurushelper.html#Manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.Manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the one and only TaurusManager</p>
-<p>It is a shortcut to:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taurus.core</span>
-<span class="n">manager</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the TaurusManager</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusmanager.TaurusManager</span></code></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-class docutils literal"><span class="pre">taurus.core.taurusmanager.TaurusManager</span></code></p>
-</div>
-</dd></dl>
-
 </div>
 
 
@@ -283,10 +259,10 @@ is not even defined).</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="resource/_Logger.html" class="btn btn-neutral float-right" title="Logger" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="resource/resvalidator.html" class="btn btn-neutral float-right" title="taurus.core.resource.resvalidator" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="evaluation/_EvaluationFactory.html" class="btn btn-neutral" title="EvaluationFactory" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="init_lightweight/_TaurusTimeVal.html" class="btn btn-neutral" title="TaurusTimeVal" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -318,7 +294,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

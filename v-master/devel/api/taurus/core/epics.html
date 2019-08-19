@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.epics &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.core.epics &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,9 +33,9 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="taurus.core" href="../core.html"/>
-        <link rel="next" title="EpicsFactory" href="epics/_EpicsFactory.html"/>
+        <link rel="next" title="taurus.core.epics.epicsvalidator" href="epics/epicsvalidator.html"/>
         <link rel="prev" title="taurus.core" href="../core.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User&#8217;s Guide</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer&#8217;s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
@@ -104,10 +104,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../cli.html">cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="../core.html">core</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../_Logger.html"><code class="docutils literal"><span class="pre">Logger</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
@@ -147,7 +147,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../../../../docs.html">Taurus 4.5 documentation</a> &raquo;</li>
+          <li><a href="../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
       
           <li><a href="../../../index.html">Developer&#8217;s Guide</a> &raquo;</li>
       
@@ -195,17 +195,23 @@ use the <code class="xref py py-class docutils literal"><span class="pre">taurus
 <p>Epics attributes (should) work just as other Taurus attributes and can be
 referred by their model name wherever a Taurus Attribute model is expected. For
 example, you can launch a <cite>TaurusForm</cite> with an epics attribute:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$&gt; taurusform ca:my:example
+<div class="highlight-default"><div class="highlight"><pre><span></span>$&gt; taurus form ca:my:example
 </pre></div>
 </div>
 <p>Similarly, you can combine epics attributes with attributes from other schemes:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$&gt; taurusform &#39;ca:my:example&#39; &#39;tango:sys/tg_test/1/float_scalar&#39;       &#39;eval:{ca:my:example}*{tango:sys/tg_test/1/float_scalar}&#39;
+<div class="highlight-default"><div class="highlight"><pre><span></span>$&gt; taurus form &#39;ca:my:example&#39; &#39;tango:sys/tg_test/1/float_scalar&#39;       &#39;eval:{ca:my:example}*{tango:sys/tg_test/1/float_scalar}&#39;
 </pre></div>
 </div>
 <p>Currently, the taurus epics scheme just supports epics PVs, implementing them as
 taurus attributes. Other model types such as the Authority, and Device classes
 are just convenience dummy objects in the epics scheme at this point.
 Epics records may eventually be mapped as Devices.</p>
+<p class="rubric">Modules</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="epics/epicsvalidator.html">epicsvalidator</a></li>
+</ul>
+</div>
 <p class="rubric">Classes</p>
 <div class="toctree-wrapper compound">
 </div>
@@ -224,7 +230,7 @@ Epics records may eventually be mapped as Devices.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="epics/_EpicsFactory.html" class="btn btn-neutral float-right" title="EpicsFactory" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="epics/epicsvalidator.html" class="btn btn-neutral float-right" title="taurus.core.epics.epicsvalidator" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../core.html" class="btn btn-neutral" title="taurus.core" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -259,7 +265,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

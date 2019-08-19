@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.containers &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.core.util.containers &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -187,7 +187,7 @@
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
 
-<div class="viewcode-block" id="CaselessList"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList">[docs]</a><span class="k">class</span> <span class="nc">CaselessList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList">[docs]</a><span class="k">class</span> <span class="nc">CaselessList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A case insensitive lists that has some caseless methods. Only allows</span>
 <span class="sd">    strings as list members. Most methods that would normally return a list,</span>
 <span class="sd">    return a CaselessList. (Except list() and lowercopy())</span>
@@ -215,7 +215,7 @@
         <span class="n">b</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
-<div class="viewcode-block" id="CaselessList.findentry"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.findentry">[docs]</a>    <span class="k">def</span> <span class="nf">findentry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.findentry"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.findentry">[docs]</a>    <span class="k">def</span> <span class="nf">findentry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;A caseless way of checking if an item is in the list or not.</span>
 <span class="sd">        It returns None or the entry.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
@@ -233,7 +233,7 @@
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="CaselessList.remove"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.remove"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Remove the first occurence of an item, the caseless way.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lowerstreq</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
@@ -241,26 +241,26 @@
                 <span class="k">return</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;: list.remove(x): x not in list&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessList.copy"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.copy"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a CaselessList copy of self.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">CaselessList</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessList.list"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.list"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a normal list version of self.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessList.lowercopy"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.lowercopy">[docs]</a>    <span class="k">def</span> <span class="nf">lowercopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.lowercopy"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.lowercopy">[docs]</a>    <span class="k">def</span> <span class="nf">lowercopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a lowercase (list) copy of self.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="CaselessList.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds an item to the list and checks it&#39;s a string.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Members of this object must be strings. &#39;</span>
                             <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
         <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessList.extend"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.extend"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Extend the list with another list. Each member of the list must be</span>
 <span class="sd">        a string.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -272,7 +272,7 @@
                                 <span class="s1">&#39;You supplied </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
             <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessList.count"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.count"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Counts references to &#39;item&#39; in a caseless manner.</span>
 <span class="sd">        If item is not a string it will always return 0.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
@@ -283,7 +283,7 @@
                 <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">count</span></div>
 
-<div class="viewcode-block" id="CaselessList.index"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">minindex</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxindex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.index"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">minindex</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxindex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Provide an index of first occurence of item in the list. (or raise</span>
 <span class="sd">        a ValueError if item not present)</span>
 <span class="sd">        If item is not a string, will raise a TypeError.</span>
@@ -304,7 +304,7 @@
                 <span class="k">return</span> <span class="n">index</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;: list.index(x): x not in list&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessList.insert"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessList.html#taurus.core.util.CaselessList.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessList.insert"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessList.html#taurus.core.util.CaselessList.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;s.insert(i, x) same as s[i:i] = [x]</span>
 <span class="sd">        Raises TypeError if x isn&#39;t a string.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
@@ -386,7 +386,7 @@
         <span class="k">return</span> <span class="n">CaselessList</span><span class="p">(</span><span class="nb">list</span><span class="o">.</span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="CaselessDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict">[docs]</a><span class="k">class</span> <span class="nc">CaselessDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_CaselessDict.html#taurus.core.util.CaselessDict">[docs]</a><span class="k">class</span> <span class="nc">CaselessDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A case insensitive dictionary. Use this class as a normal dictionary.</span>
 <span class="sd">    The keys must be strings&quot;&quot;&quot;</span>
 
@@ -409,30 +409,30 @@
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
-<div class="viewcode-block" id="CaselessDict.has_key"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.has_key">[docs]</a>    <span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDict.has_key"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_CaselessDict.html#taurus.core.util.CaselessDict.has_key">[docs]</a>    <span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.has_key` (needed for python2)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="CaselessDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_CaselessDict.html#taurus.core.util.CaselessDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.get`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">def_val</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessDict.setdefault"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.setdefault">[docs]</a>    <span class="k">def</span> <span class="nf">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDict.setdefault"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_CaselessDict.html#taurus.core.util.CaselessDict.setdefault">[docs]</a>    <span class="k">def</span> <span class="nf">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.setdefault`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">def_val</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessDict.update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDict.update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_CaselessDict.html#taurus.core.util.CaselessDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.update`&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessDict.fromkeys"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.fromkeys">[docs]</a>    <span class="k">def</span> <span class="nf">fromkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDict.fromkeys"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_CaselessDict.html#taurus.core.util.CaselessDict.fromkeys">[docs]</a>    <span class="k">def</span> <span class="nf">fromkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
             <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="CaselessDict.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDict.html#taurus.core.util.CaselessDict.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDict.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/property_parser/_CaselessDict.html#taurus.core.util.CaselessDict.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`dict.pop`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">def_val</span><span class="p">)</span></div>
 
@@ -440,7 +440,7 @@
         <span class="nb">dict</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="CaselessWeakValueDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict">[docs]</a><span class="k">class</span> <span class="nc">CaselessWeakValueDict</span><span class="p">(</span><span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessWeakValueDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict">[docs]</a><span class="k">class</span> <span class="nc">CaselessWeakValueDict</span><span class="p">(</span><span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
@@ -462,33 +462,33 @@
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
-<div class="viewcode-block" id="CaselessWeakValueDict.has_key"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.has_key">[docs]</a>    <span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessWeakValueDict.has_key"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.has_key">[docs]</a>    <span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary`</span>
 <span class="sd">        (needed for python2)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="CaselessWeakValueDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessWeakValueDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary.get`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">def_val</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessWeakValueDict.setdefault"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.setdefault">[docs]</a>    <span class="k">def</span> <span class="nf">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessWeakValueDict.setdefault"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.setdefault">[docs]</a>    <span class="k">def</span> <span class="nf">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary.setdefault`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">def_val</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessWeakValueDict.update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessWeakValueDict.update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary.update`&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">other</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CaselessWeakValueDict.fromkeys"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.fromkeys">[docs]</a>    <span class="k">def</span> <span class="nf">fromkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessWeakValueDict.fromkeys"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.fromkeys">[docs]</a>    <span class="k">def</span> <span class="nf">fromkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
             <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="CaselessWeakValueDict.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessWeakValueDict.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.CaselessWeakValueDict.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">def_val</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overwritten from :meth:`weakref.WeakValueDictionary.pop`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">def_val</span><span class="p">)</span></div>
 
@@ -577,7 +577,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;File not in a supported format&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="LoopList"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList">[docs]</a><span class="k">class</span> <span class="nc">LoopList</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="LoopList"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LoopList.html#taurus.core.util.LoopList">[docs]</a><span class="k">class</span> <span class="nc">LoopList</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;this class provides an effectively cyclic list.</span>
 <span class="sd">    It can be used, e.g., for storing colors or pen properties to be changed automatically in a plot</span>
 
@@ -609,13 +609,13 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemlist</span><span class="o">=</span><span class="p">[]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setItemList</span><span class="p">(</span><span class="n">itemlist</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LoopList.setItemList"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.setItemList">[docs]</a>    <span class="k">def</span> <span class="nf">setItemList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemlist</span><span class="p">):</span>
+<div class="viewcode-block" id="LoopList.setItemList"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LoopList.html#taurus.core.util.LoopList.setItemList">[docs]</a>    <span class="k">def</span> <span class="nf">setItemList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemlist</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;sets the item list&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_itemlist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itemlist</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nitems</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_itemlist</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LoopList.current"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.current">[docs]</a>    <span class="k">def</span> <span class="nf">current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LoopList.current"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LoopList.html#taurus.core.util.LoopList.current">[docs]</a>    <span class="k">def</span> <span class="nf">current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;returns current item&#39;&#39;&#39;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># makes the list effectively cyclic</span>
@@ -623,12 +623,12 @@
         <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;cyclic list is empty&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LoopList.setCurrentIndex"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.setCurrentIndex">[docs]</a>    <span class="k">def</span> <span class="nf">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="LoopList.setCurrentIndex"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LoopList.html#taurus.core.util.LoopList.setCurrentIndex">[docs]</a>    <span class="k">def</span> <span class="nf">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;sets current index (and returns the corresponding item)&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="n">index</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="LoopList.getCurrentIndex"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.getCurrentIndex">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LoopList.getCurrentIndex"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LoopList.html#taurus.core.util.LoopList.getCurrentIndex">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;returns the current index&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span></div>
 
@@ -637,12 +637,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
 
-<div class="viewcode-block" id="LoopList.previous"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.previous">[docs]</a>    <span class="k">def</span> <span class="nf">previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">next</span> <span class="o">=</span> <span class="fm">__next__</span>
+
+<div class="viewcode-block" id="LoopList.previous"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LoopList.html#taurus.core.util.LoopList.previous">[docs]</a>    <span class="k">def</span> <span class="nf">previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;goes one item back in the list and returns it&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="LoopList.allItems"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LoopList.html#taurus.core.util.LoopList.allItems">[docs]</a>    <span class="k">def</span> <span class="nf">allItems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LoopList.allItems"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LoopList.html#taurus.core.util.LoopList.allItems">[docs]</a>    <span class="k">def</span> <span class="nf">allItems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;returns the items list (one period)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemlist</span></div>
 
@@ -659,7 +661,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nitems</span></div>
 
 
-<div class="viewcode-block" id="CircBuf"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CircBuf.html#taurus.core.util.CircBuf">[docs]</a><span class="k">class</span> <span class="nc">CircBuf</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="CircBuf"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CircBuf.html#taurus.core.util.CircBuf">[docs]</a><span class="k">class</span> <span class="nc">CircBuf</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A circular buffer of Python values.</span>
 
 <span class="sd">    Examples::</span>
@@ -690,22 +692,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">buf</span> <span class="o">=</span> <span class="n">leng</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="CircBuf.is_empty"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CircBuf.html#taurus.core.util.CircBuf.is_empty">[docs]</a>    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CircBuf.is_empty"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CircBuf.html#taurus.core.util.CircBuf.is_empty">[docs]</a>    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true only if CircBuf has no items.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="CircBuf.is_full"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CircBuf.html#taurus.core.util.CircBuf.is_full">[docs]</a>    <span class="k">def</span> <span class="nf">is_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CircBuf.is_full"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CircBuf.html#taurus.core.util.CircBuf.is_full">[docs]</a>    <span class="k">def</span> <span class="nf">is_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true only if CircBuf has no space.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">len</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CircBuf.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CircBuf.html#taurus.core.util.CircBuf.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CircBuf.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CircBuf.html#taurus.core.util.CircBuf.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves an item from a non-empty circular buffer.&quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">len</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="CircBuf.put"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CircBuf.html#taurus.core.util.CircBuf.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="CircBuf.put"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CircBuf.html#taurus.core.util.CircBuf.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Puts an item onto a circular buffer.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buf</span><span class="p">)</span>
@@ -715,13 +717,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">len</span> <span class="o">+=</span> <span class="mi">1</span></div></div>
 
 
-<div class="viewcode-block" id="LIFO"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LIFO.html#taurus.core.util.LIFO">[docs]</a><span class="k">class</span> <span class="nc">LIFO</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="LIFO"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LIFO.html#taurus.core.util.LIFO">[docs]</a><span class="k">class</span> <span class="nc">LIFO</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">=</span> <span class="nb">max</span>
 
-<div class="viewcode-block" id="LIFO.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LIFO.html#taurus.core.util.LIFO.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">):</span>
+<div class="viewcode-block" id="LIFO.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LIFO.html#taurus.core.util.LIFO.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -729,7 +731,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LIFO.extend"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LIFO.html#taurus.core.util.LIFO.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
+<div class="viewcode-block" id="LIFO.extend"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LIFO.html#taurus.core.util.LIFO.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
@@ -740,23 +742,23 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LIFO.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LIFO.html#taurus.core.util.LIFO.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="LIFO.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LIFO.html#taurus.core.util.LIFO.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LIFO.clear"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LIFO.html#taurus.core.util.LIFO.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LIFO.clear"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LIFO.html#taurus.core.util.LIFO.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="LIFO.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LIFO.html#taurus.core.util.LIFO.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LIFO.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LIFO.html#taurus.core.util.LIFO.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span></div>
 
-<div class="viewcode-block" id="LIFO.getCopy"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_LIFO.html#taurus.core.util.LIFO.getCopy">[docs]</a>    <span class="k">def</span> <span class="nf">getCopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LIFO.getCopy"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_LIFO.html#taurus.core.util.LIFO.getCopy">[docs]</a>    <span class="k">def</span> <span class="nf">getCopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="TimedQueue"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_TimedQueue.html#taurus.core.util.TimedQueue">[docs]</a><span class="k">class</span> <span class="nc">TimedQueue</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="TimedQueue"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_TimedQueue.html#taurus.core.util.TimedQueue">[docs]</a><span class="k">class</span> <span class="nc">TimedQueue</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; A FIFO that keeps all the values introduced at least for a given time.</span>
 <span class="sd">    Applied to some device servers, to force States to be kept at least a minimum time.</span>
 <span class="sd">    Previously named as PyTango_utils.device.StateQueue</span>
@@ -774,13 +776,13 @@
             <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TimedQueue.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_TimedQueue.html#taurus.core.util.TimedQueue.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+<div class="viewcode-block" id="TimedQueue.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_TimedQueue.html#taurus.core.util.TimedQueue.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Inserts a tuple with (value,insert_time,delete_time=now+keep) &quot;&quot;&quot;</span>
         <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="n">l</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">now</span> <span class="o">+</span> <span class="n">keep</span><span class="p">)</span>
         <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TimedQueue.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_TimedQueue.html#taurus.core.util.TimedQueue.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="TimedQueue.pop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_TimedQueue.html#taurus.core.util.TimedQueue.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Returns the indicated value, or the first one; but removes only if delete_time has been reached.</span>
 <span class="sd">        All values are returned at least once.</span>
 <span class="sd">        When the queue has only a value, it is not deleted.</span>
@@ -794,7 +796,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TimedQueue.index"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_TimedQueue.html#taurus.core.util.TimedQueue.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="TimedQueue.index"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_TimedQueue.html#taurus.core.util.TimedQueue.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">obj</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">i</span>
@@ -808,7 +810,7 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="self_locked"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.core.util.self_locked">[docs]</a><span class="k">def</span> <span class="nf">self_locked</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">reentrant</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="self_locked"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight.html#taurus.core.util.self_locked">[docs]</a><span class="k">def</span> <span class="nf">self_locked</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">reentrant</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Decorator to make thread-safe class members</span>
 <span class="sd">       Decorator to create thread-safe objects.</span>
 
@@ -841,7 +843,7 @@
     <span class="k">return</span> <span class="n">lock_fun</span></div>
 
 
-<div class="viewcode-block" id="ThreadDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict">[docs]</a><span class="k">class</span> <span class="nc">ThreadDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict">[docs]</a><span class="k">class</span> <span class="nc">ThreadDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Thread safe dictionary with redefinable read/write methods and a</span>
 <span class="sd">    background thread for hardware update.  All methods are thread-safe using</span>
 <span class="sd">    *@self_lock* decorator.</span>
@@ -869,10 +871,10 @@
         <span class="c1"># equals to self.__class__.__base__ or type(self).__bases__[0]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">mro</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
 
-<div class="viewcode-block" id="ThreadDict.tracer"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.tracer">[docs]</a>    <span class="k">def</span> <span class="nf">tracer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.tracer"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.tracer">[docs]</a>    <span class="k">def</span> <span class="nf">tracer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ThreadDict.start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">import</span> <span class="nn">threading</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">threaded</span><span class="p">:</span>
             <span class="k">return</span>
@@ -884,13 +886,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ThreadDict.stop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.stop"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">threaded</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_Thread&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ThreadDict.alive"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.alive">[docs]</a>    <span class="k">def</span> <span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.alive"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.alive">[docs]</a>    <span class="k">def</span> <span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_Thread&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
@@ -900,7 +902,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="c1"># dict.__del__(self)</span>
 
-<div class="viewcode-block" id="ThreadDict.run"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.run"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">isSet</span><span class="p">():</span>
             <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threadkeys</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
@@ -922,38 +924,38 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timewait</span><span class="p">)</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.get_last_update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.get_last_update">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.get_last_update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.get_last_update">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.set_last_update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.set_last_update">[docs]</a>    <span class="k">def</span> <span class="nf">set_last_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.set_last_update"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.set_last_update">[docs]</a>    <span class="k">def</span> <span class="nf">set_last_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">value</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.get_last_cycle_start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.get_last_cycle_start">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_cycle_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.get_last_cycle_start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.get_last_cycle_start">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_cycle_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_cycle_start</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.set_last_cycle_start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.set_last_cycle_start">[docs]</a>    <span class="k">def</span> <span class="nf">set_last_cycle_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.set_last_cycle_start"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.set_last_cycle_start">[docs]</a>    <span class="k">def</span> <span class="nf">set_last_cycle_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_cycle_start</span> <span class="o">=</span> <span class="n">value</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.get_timewait"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.get_timewait">[docs]</a>    <span class="k">def</span> <span class="nf">get_timewait</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.get_timewait"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.get_timewait">[docs]</a>    <span class="k">def</span> <span class="nf">get_timewait</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">timewait</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.set_timewait"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.set_timewait">[docs]</a>    <span class="k">def</span> <span class="nf">set_timewait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.set_timewait"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.set_timewait">[docs]</a>    <span class="k">def</span> <span class="nf">set_timewait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timewait</span> <span class="o">=</span> <span class="n">value</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threadkeys</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_threadkeys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.threadkeys"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.threadkeys">[docs]</a>    <span class="k">def</span> <span class="nf">threadkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.threadkeys"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.threadkeys">[docs]</a>    <span class="k">def</span> <span class="nf">threadkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threadkeys</span><span class="p">[:]</span></div>
 
     <span class="nd">@self_locked</span>
@@ -977,7 +979,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
     <span class="nd">@self_locked</span>
-<div class="viewcode-block" id="ThreadDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ThreadDict.html#taurus.core.util.ThreadDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ThreadDict.get"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ThreadDict.html#taurus.core.util.ThreadDict.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="kn">import</span> <span class="nn">time</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">threaded</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_method</span><span class="p">:</span>
             <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_method</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
@@ -1152,7 +1154,7 @@
                                             <span class="nb">dict</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="defaultdict_fromkey"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_defaultdict_fromkey.html#taurus.core.util.defaultdict_fromkey">[docs]</a><span class="k">class</span> <span class="nc">defaultdict_fromkey</span><span class="p">(</span><span class="n">defaultdict</span><span class="p">):</span>
+<div class="viewcode-block" id="defaultdict_fromkey"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_defaultdict_fromkey.html#taurus.core.util.defaultdict_fromkey">[docs]</a><span class="k">class</span> <span class="nc">defaultdict_fromkey</span><span class="p">(</span><span class="n">defaultdict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Creates a dictionary with a default_factory function that creates new elements using key as argument.</span>
 <span class="sd">    Usage : new_dict = defaultdict_fromkey(method); where method like (lambda key: return new_obj(key))</span>
 <span class="sd">    Each time that new_dict[key] is called with a key that doesn&#39;t exist, method(key) is used to create the value</span>
@@ -1166,7 +1168,7 @@
         <span class="k">return</span> <span class="n">value</span></div>
 
 
-<div class="viewcode-block" id="CaselessDefaultDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_CaselessDefaultDict.html#taurus.core.util.CaselessDefaultDict">[docs]</a><span class="k">class</span> <span class="nc">CaselessDefaultDict</span><span class="p">(</span><span class="n">defaultdict_fromkey</span><span class="p">,</span> <span class="n">CaselessDict</span><span class="p">):</span>
+<div class="viewcode-block" id="CaselessDefaultDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_CaselessDefaultDict.html#taurus.core.util.CaselessDefaultDict">[docs]</a><span class="k">class</span> <span class="nc">CaselessDefaultDict</span><span class="p">(</span><span class="n">defaultdict_fromkey</span><span class="p">,</span> <span class="n">CaselessDict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; a join venture between caseless and default dict</span>
 <span class="sd">    This class merges the two previous ones.</span>
 <span class="sd">    This declaration equals to::</span>
@@ -1179,7 +1181,7 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="DefaultThreadDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_DefaultThreadDict.html#taurus.core.util.DefaultThreadDict">[docs]</a><span class="k">class</span> <span class="nc">DefaultThreadDict</span><span class="p">(</span><span class="n">defaultdict_fromkey</span><span class="p">,</span> <span class="n">ThreadDict</span><span class="p">):</span>
+<div class="viewcode-block" id="DefaultThreadDict"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_DefaultThreadDict.html#taurus.core.util.DefaultThreadDict">[docs]</a><span class="k">class</span> <span class="nc">DefaultThreadDict</span><span class="p">(</span><span class="n">defaultdict_fromkey</span><span class="p">,</span> <span class="n">ThreadDict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;a join venture between thread and default dict</span>
 <span class="sd">    This class merges the two previous ones.</span>
 <span class="sd">    @todo This two classes are not yet well integrated ... the way a new key is added to the dict must be rewritten explicitly.</span>
@@ -1192,7 +1194,7 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="getDictAsTree"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util.html#taurus.core.util.getDictAsTree">[docs]</a><span class="k">def</span> <span class="nf">getDictAsTree</span><span class="p">(</span><span class="n">dct</span><span class="p">):</span>
+<div class="viewcode-block" id="getDictAsTree"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight.html#taurus.core.util.getDictAsTree">[docs]</a><span class="k">def</span> <span class="nf">getDictAsTree</span><span class="p">(</span><span class="n">dct</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This method will print a recursive dict in a tree-like</span>
 <span class="sd">       shape::</span>
 
@@ -1218,7 +1220,7 @@
     <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ArrayBuffer"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer">[docs]</a><span class="k">class</span> <span class="nc">ArrayBuffer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer">[docs]</a><span class="k">class</span> <span class="nc">ArrayBuffer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A data buffer which internally uses a preallocated numpy.array.</span>
 <span class="sd">    An ArrayBuffer will only present the actual contents, not the full internal</span>
 <span class="sd">    buffer, so when appending or extending, it behaves as if dynamic</span>
@@ -1284,7 +1286,7 @@
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span><span class="o">.</span><span class="n">__setslice__</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ArrayBuffer.resizeBuffer"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.resizeBuffer">[docs]</a>    <span class="k">def</span> <span class="nf">resizeBuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newlen</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.resizeBuffer"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.resizeBuffer">[docs]</a>    <span class="k">def</span> <span class="nf">resizeBuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newlen</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;resizes the internal buffer&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">newlen</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">newlen</span>
@@ -1298,7 +1300,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__bsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.append"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; similar to the append method in a list, except that once the maximum</span>
 <span class="sd">        buffer size is reached, elements get discarded on the begginning to keep</span>
 <span class="sd">        the size within the limit</span>
@@ -1318,7 +1320,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">+=</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.extend"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.extend"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; similar to the extend method of a list, except that once the maximum</span>
 <span class="sd">        buffer size is reached, elements get discarded on the begginning to keep</span>
 <span class="sd">        the size within the limit</span>
@@ -1340,7 +1342,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">:]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bsize</span><span class="p">):]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bsize</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.extendLeft"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.extendLeft">[docs]</a>    <span class="k">def</span> <span class="nf">extendLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.extendLeft"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.extendLeft">[docs]</a>    <span class="k">def</span> <span class="nf">extendLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Prepends data to the current contents. Note that, contrary to the</span>
 <span class="sd">        extent method, no data will be discarded if the maximum size limit is</span>
 <span class="sd">        reached. Instead, an exception will be raised.</span>
@@ -1363,7 +1365,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s1">&#39;Maximum buffer size cannot be exceeded when calling extendLeft &#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.moveLeft"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.moveLeft">[docs]</a>    <span class="k">def</span> <span class="nf">moveLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.moveLeft"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.moveLeft">[docs]</a>    <span class="k">def</span> <span class="nf">moveLeft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;discards n elements from the begginning to make space at the end of</span>
 <span class="sd">        the buffer. Moves all elements n positions to the left and the contents</span>
 <span class="sd">        size gets decreased by n</span>
@@ -1376,7 +1378,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">newend</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[</span><span class="n">n</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">newend</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.contents"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.contents">[docs]</a>    <span class="k">def</span> <span class="nf">contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.contents"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.contents">[docs]</a>    <span class="k">def</span> <span class="nf">contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;returns the array of the contents that have already been filled. Note</span>
 <span class="sd">        that it does not return the full buffer, only those elements that have</span>
 <span class="sd">        been already set.</span>
@@ -1389,7 +1391,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__buffer</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.toArray"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.toArray">[docs]</a>    <span class="k">def</span> <span class="nf">toArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.toArray"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.toArray">[docs]</a>    <span class="k">def</span> <span class="nf">toArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;returns a copy of the array of the contents. It is equivalent to</span>
 <span class="sd">        ``b.contents.copy()``</span>
 
@@ -1399,7 +1401,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.contentsSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.contentsSize">[docs]</a>    <span class="k">def</span> <span class="nf">contentsSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.contentsSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.contentsSize">[docs]</a>    <span class="k">def</span> <span class="nf">contentsSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Equivalent to len(b)</span>
 
 <span class="sd">        :return: (int) length of the current contents of the ArrayBuffer (not</span>
@@ -1409,7 +1411,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.bufferSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.bufferSize">[docs]</a>    <span class="k">def</span> <span class="nf">bufferSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.bufferSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.bufferSize">[docs]</a>    <span class="k">def</span> <span class="nf">bufferSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns the current size of the internal buffer</span>
 
 <span class="sd">        :return: (int) lcurrent length of the internal buffer</span>
@@ -1418,7 +1420,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bsize</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.maxSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.maxSize">[docs]</a>    <span class="k">def</span> <span class="nf">maxSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.maxSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.maxSize">[docs]</a>    <span class="k">def</span> <span class="nf">maxSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns the maximum size of the internal buffer, beyond which the</span>
 <span class="sd">        ArrayBuffer starts discarding elements when appending</span>
 
@@ -1428,7 +1430,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maxSize</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.setMaxSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.setMaxSize">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxSize</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.setMaxSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.setMaxSize">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxSize</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Sets the maximum size of the internal buffer, beyond which the</span>
 <span class="sd">        ArrayBuffer starts discarding elements when appending</span>
 
@@ -1441,7 +1443,7 @@
                 <span class="s1">&#39;Cannot set a maximum size below the current buffer size (</span><span class="si">%i</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bsize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__maxSize</span> <span class="o">=</span> <span class="n">maxSize</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.isFull"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.isFull">[docs]</a>    <span class="k">def</span> <span class="nf">isFull</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.isFull"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.isFull">[docs]</a>    <span class="k">def</span> <span class="nf">isFull</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Whether the contents fill the whole of the internal buffer</span>
 
 <span class="sd">        :return: (bool) True if the contents fill the maximum size. False otherwise.</span>
@@ -1450,7 +1452,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__maxSize</span></div>
 
-<div class="viewcode-block" id="ArrayBuffer.remainingSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.remainingSize">[docs]</a>    <span class="k">def</span> <span class="nf">remainingSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ArrayBuffer.remainingSize"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/init_lightweight/_ArrayBuffer.html#taurus.core.util.ArrayBuffer.remainingSize">[docs]</a>    <span class="k">def</span> <span class="nf">remainingSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;returns the remaining free space in the internal buffer (e.g., 0 if it is full)</span>
 
 <span class="sd">        :return: (int) length of the unused space in the internal buffer</span>
@@ -1498,7 +1500,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

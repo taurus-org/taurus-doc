@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.panel.taurusconfigeditor &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.panel.taurusconfigeditor &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -172,10 +172,11 @@
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusWidget</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QConfigEditor&quot;</span><span class="p">]</span>
@@ -219,10 +220,8 @@
 
 <span class="sd">        :param iniFileName: (str)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">iniFileName</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span> <span class="o">=</span> <span class="n">iniFileName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span>
@@ -485,7 +484,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">qstate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">qstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">qstate</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">qstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">qstate</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -505,6 +504,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">==</span> <span class="p">[]:</span>
             <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+
         <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clearChanges</span><span class="p">()</span>
         <span class="c1"># self.reloadFile()</span>
@@ -534,7 +535,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">markedItems</span> <span class="o">==</span> <span class="p">[]:</span>
             <span class="k">return</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">originalFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporaryFile</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">reloadFile</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">clearChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -632,29 +633,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">restoreOriginal</span><span class="p">()</span></div></div>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">config_cmd</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open the taurus configuration editor&quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
-    <span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">argparse</span>
-    <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Release</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">get_taurus_parser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_usage</span><span class="p">(</span><span class="s2">&quot;%prog [options] [INIFILENAME]&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;taurus configuration editor&quot;</span><span class="p">)</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
-                            <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurusconfigeditor&quot;</span><span class="p">,</span>
-                            <span class="n">app_version</span><span class="o">=</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
     <span class="n">w</span> <span class="o">=</span> <span class="n">QConfigEditor</span><span class="p">()</span>
     <span class="n">w</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
     <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">loadFile</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">config_file</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">loadFile</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
 
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+    <span class="n">config_cmd</span><span class="p">()</span>
 </pre></div>
 
            </div>
@@ -689,7 +687,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

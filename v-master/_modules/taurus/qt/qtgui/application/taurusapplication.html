@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.qt.qtgui.application.taurusapplication &mdash; taurus 4.5.1 documentation</title>
+  <title>taurus.qt.qtgui.application.taurusapplication &mdash; taurus 4.6.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../../search.html"/>
-    <link rel="top" title="taurus 4.5.1 documentation" href="../../../../../index.html"/>
+    <link rel="top" title="taurus 4.6.0 documentation" href="../../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.5
+                4.6
               </div>
             
           
@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.5 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
@@ -176,7 +176,6 @@
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">LogExceptHook</span><span class="p">,</span> <span class="n">Logger</span>
-<span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusApplication&quot;</span><span class="p">]</span>
@@ -262,26 +261,30 @@
 
 
 <div class="viewcode-block" id="TaurusApplication"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication">[docs]</a><span class="k">class</span> <span class="nc">TaurusApplication</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">,</span> <span class="n">Logger</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A QApplication that additionally parses the command line looking</span>
-<span class="sd">    for taurus options. This is done using the</span>
-<span class="sd">    :mod:`taurus.core.util.argparse`.</span>
-<span class="sd">    To create a TaurusApplication object you should use the same parameters</span>
-<span class="sd">    as in QApplication.</span>
+    <span class="sd">&quot;&quot;&quot;A QApplication that performs some taurus-specific initializations</span>
+<span class="sd">    and (optionally but deprecated) also parses the command line for taurus</span>
+<span class="sd">    options.</span>
 
 <span class="sd">    The optional keyword parameters:</span>
 <span class="sd">        - app_name: (str) application name</span>
 <span class="sd">        - app_version: (str) application version</span>
 <span class="sd">        - org_name: (str) organization name</span>
 <span class="sd">        - org_domain: (str) organization domain</span>
+<span class="sd">        - cmd_line_parser (None [or DEPRECATED :class:`optparse.OptionParser`])</span>
 
-<span class="sd">    ...And at last the &#39;cmd_line_parser&#39; which should be an instance of</span>
-<span class="sd">    :class:`optparse.OptionParser`. Simple example::</span>
+<span class="sd">    If cmd_line_parser is explicitly set to None (recommended), no parsing will</span>
+<span class="sd">    be done at all. If a  :class:`optparse.OptionParser` instance is passed as</span>
+<span class="sd">    cmd_line_parser (deprecated), it will be used for parsing the command line</span>
+<span class="sd">    arguments. If it is not explicitly passed (not recommended), a default</span>
+<span class="sd">    parser will be assumed with the default taurus options.</span>
+
+<span class="sd">    Simple example::</span>
 
 <span class="sd">        import sys</span>
-<span class="sd">        import taurus.qt.qtgui.application</span>
+<span class="sd">        from taurus.qt.qtgui.application import TaurusApplication</span>
 <span class="sd">        import taurus.qt.qtgui.display</span>
 
-<span class="sd">        app = taurus.qt.qtgui.application.TaurusApplication()</span>
+<span class="sd">        app = TaurusApplication(cmd_line_parser=None)</span>
 
 <span class="sd">        w = taurus.qt.qtgui.display.TaurusLabel()</span>
 <span class="sd">        w.model = &#39;sys/tg_test/1/double_scalar&#39;</span>
@@ -289,37 +292,14 @@
 
 <span class="sd">        sys.exit(app.exec_())</span>
 
-<span class="sd">    A more complex example showing how to add options and a usage help::</span>
-
-<span class="sd">        import sys</span>
-<span class="sd">        import taurus.core.util.argparse</span>
-<span class="sd">        import taurus.qt.qtgui.application</span>
-<span class="sd">        import taurus.qt.qtgui.display</span>
-
-<span class="sd">        parser = taurus.core.util.argparse.get_taurus_parser()</span>
-<span class="sd">        parser.usage = &quot;%prog [options] &lt;model&gt;&quot;</span>
-<span class="sd">        parser.add_option(&quot;--hello&quot;)</span>
-
-<span class="sd">        app = taurus.qt.qtgui.application.TaurusApplication(cmd_line_parser=parser)</span>
-<span class="sd">        args = app.get_command_line_args()</span>
-<span class="sd">        if len(args) &lt; 1:</span>
-<span class="sd">            sys.stderr.write(&quot;Need to supply model attribute&quot;)</span>
-<span class="sd">            sys.exit(1)</span>
-
-<span class="sd">        w = taurus.qt.qtgui.display.TaurusLabel()</span>
-<span class="sd">        w.model = args[1]</span>
-<span class="sd">        w.show()</span>
-
-<span class="sd">        sys.exit(app.exec_())</span>
-
-<span class="sd">    For more details on taurus command line parsing check</span>
-<span class="sd">    :mod:`taurus.core.util.argparse`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The constructor. Parameters are the same as QApplication plus a</span>
-<span class="sd">        keyword parameter: &#39;cmd_line_parser&#39; which should be an instance of</span>
-<span class="sd">        :class:`optparse.OptionParser`&quot;&quot;&quot;</span>
+<span class="sd">        keyword parameter: &#39;cmd_line_parser&#39; which should be None or an</span>
+<span class="sd">        instance of :class:`optparse.OptionParser`. If cmd_line_parser is None</span>
+<span class="sd">        no command line parsing will be done ()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># lock to safely get singleton elements (like IPython taurus</span>
         <span class="c1"># console app)</span>
@@ -328,18 +308,11 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;argv&#39;</span><span class="p">,</span> <span class="p">[]),</span>
 
-        <span class="n">parser</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">app_name</span><span class="p">,</span> <span class="n">app_version</span><span class="p">,</span> <span class="n">org_name</span><span class="p">,</span> <span class="n">org_domain</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="s1">&#39;app_name&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">app_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;app_name&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;app_version&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">app_version</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;app_version&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;org_name&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">org_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_name&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;org_domain&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">org_domain</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_domain&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;cmd_line_parser&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">parser</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cmd_line_parser&#39;</span><span class="p">)</span>
+        <span class="n">app_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;app_name&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">app_version</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;app_version&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">org_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_name&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">org_domain</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_domain&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cmd_line_parser&#39;</span><span class="p">,</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">())</span>
 
         <span class="c1">#######################################################################</span>
         <span class="c1"># Workaround for XInitThreads-related crash.</span>
@@ -374,21 +347,21 @@
         <span class="k">if</span> <span class="n">org_domain</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setOrganizationDomain</span><span class="p">(</span><span class="n">org_domain</span><span class="p">)</span>
 
-        <span class="c1"># if the constructor was called without a parser or with a parser that</span>
-        <span class="c1"># doesn&#39;t contain version information and with an application</span>
-        <span class="c1"># name and/or version, then add the --version capability</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">app_version</span><span class="p">:</span>
-            <span class="n">v</span> <span class="o">=</span> <span class="n">app_version</span>
-            <span class="k">if</span> <span class="n">app_name</span><span class="p">:</span>
-                <span class="n">v</span> <span class="o">=</span> <span class="n">app_name</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">app_version</span>
-            <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">app_version</span><span class="p">:</span>
+                <span class="c1"># if the parser does not contain version information</span>
+                <span class="c1"># but we have an application version, add the</span>
+                <span class="c1"># --version capability</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">app_version</span>
+                <span class="k">if</span> <span class="n">app_name</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">app_name</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">app_version</span>
                 <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">v</span>
                 <span class="n">parser</span><span class="o">.</span><span class="n">_add_version_option</span><span class="p">()</span>
 
-        <span class="n">p</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> \
-            <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">init_taurus_args</span><span class="p">(</span>
+            <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">init_taurus_args</span><span class="p">(</span>
                 <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_parser</span> <span class="o">=</span> <span class="n">p</span>
@@ -445,6 +418,7 @@
 
 <span class="sd">        :return: the parser used in the command line</span>
 <span class="sd">        :rtype: :class:`optparse.OptionParser`&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: issue a warning if this is uninitialized (cmd_line_parser=None)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_parser</span></div>
 
 <div class="viewcode-block" id="TaurusApplication.get_command_line_options"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.get_command_line_options">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -453,6 +427,7 @@
 
 <span class="sd">        :return: the command line options</span>
 <span class="sd">        :rtype: :class:`optparse.Option`&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: issue a warning if this is uninitialized (cmd_line_parser=None)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_options</span></div>
 
 <div class="viewcode-block" id="TaurusApplication.get_command_line_args"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.get_command_line_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_line_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -461,6 +436,7 @@
 
 <span class="sd">        :return: the command line arguments</span>
 <span class="sd">        :rtype: list of strings&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: issue a warning if this is uninitialized (cmd_line_parser=None)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_args</span></div>
 
 <div class="viewcode-block" id="TaurusApplication.setTaurusStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/application/_TaurusApplication.html#taurus.qt.qtgui.application.TaurusApplication.setTaurusStyle">[docs]</a>    <span class="k">def</span> <span class="nf">setTaurusStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">styleName</span><span class="p">):</span>
@@ -546,7 +522,7 @@ licensed under a Creative Commons Attribution 3.0 License.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../../',
-            VERSION:'4.5.1',
+            VERSION:'4.6.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
