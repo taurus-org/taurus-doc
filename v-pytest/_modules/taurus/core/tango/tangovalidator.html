@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.tango.tangovalidator &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.core.tango.tangovalidator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.core.tango.tangovalidator</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains the base taurus name validator classes&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TangoAuthorityNameValidator&quot;</span><span class="p">,</span> <span class="s2">&quot;TangoDeviceNameValidator&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;TangoAttributeNameValidator&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusvalidator</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusAttributeNameValidator</span><span class="p">,</span>
+                                         <span class="n">TaurusDeviceNameValidator</span><span class="p">,</span>
+                                         <span class="n">TaurusAuthorityNameValidator</span><span class="p">)</span>
+
+
+<span class="c1"># todo: I do not understand the behaviour of getNames for Auth, Dev and Attr in</span>
+<span class="c1">#      the case when the fullname does not match the regexp. For Auth it returns</span>
+<span class="c1">#      a 3-tuple, for devs a 2-tuple and for attrs and conf a single None.</span>
+<span class="c1">#      This is not coherent to what the method returns when it matches the</span>
+<span class="c1">#      regexp (always a 3-tuple)</span>
+
+<div class="viewcode-block" id="TangoAuthorityNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoAuthorityNameValidator.html#taurus.core.tango.tangovalidator.TangoAuthorityNameValidator">[docs]</a><span class="k">class</span> <span class="nc">TangoAuthorityNameValidator</span><span class="p">(</span><span class="n">TaurusAuthorityNameValidator</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Validator for Tango authority names. Apart from the standard named</span>
+<span class="sd">    groups (scheme, authority, path, query and fragment), the following named</span>
+<span class="sd">    groups are created:</span>
+
+<span class="sd">     - host: tango host name, without port.</span>
+<span class="sd">     - port: port number</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="s1">&#39;//(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+    <span class="n">fragment</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+
+<div class="viewcode-block" id="TangoAuthorityNameValidator.getUriGroups"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoAuthorityNameValidator.html#taurus.core.tango.tangovalidator.TangoAuthorityNameValidator.getUriGroups">[docs]</a>    <span class="k">def</span> <span class="nf">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplementation of getUriGroups to fix the host and authority</span>
+<span class="sd">        name using fully qualified domain name for the host.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusAuthorityNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fqdn</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;authority&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{host}</span><span class="s2">:</span><span class="si">{port}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<div class="viewcode-block" id="TangoDeviceNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoDeviceNameValidator.html#taurus.core.tango.tangovalidator.TangoDeviceNameValidator">[docs]</a><span class="k">class</span> <span class="nc">TangoDeviceNameValidator</span><span class="p">(</span><span class="n">TaurusDeviceNameValidator</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Validator for Tango device names. Apart from the standard named</span>
+<span class="sd">    groups (scheme, authority, path, query and fragment), the following named</span>
+<span class="sd">    groups are created:</span>
+
+<span class="sd">     - devname: device name (either alias or slashed name)</span>
+<span class="sd">     - [_devalias]: device alias</span>
+<span class="sd">     - [_devslashname]: device name in slashed (a/b/c) form</span>
+<span class="sd">     - [host] as in :class:`TangoAuthorityNameValidator`</span>
+<span class="sd">     - [port] as in :class:`TangoAuthorityNameValidator`</span>
+
+<span class="sd">    Note: brackets on the group name indicate that this group will only contain</span>
+<span class="sd">    a string if the URI contains it.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="n">TangoAuthorityNameValidator</span><span class="o">.</span><span class="n">authority</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;/?(?P&lt;devname&gt;((?P&lt;_devalias&gt;[^/?#:]+)|&#39;</span> <span class="o">+</span> \
+           <span class="sa">r</span><span class="s1">&#39;(?P&lt;_devslashname&gt;[^/?#:]+/[^/?#:]+/[^/?#:]+)))&#39;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+    <span class="n">fragment</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+
+<div class="viewcode-block" id="TangoDeviceNameValidator.getUriGroups"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoDeviceNameValidator.html#taurus.core.tango.tangovalidator.TangoDeviceNameValidator.getUriGroups">[docs]</a>    <span class="k">def</span> <span class="nf">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplementation of getUriGroups to fix the host and authority</span>
+<span class="sd">        name using fully qualified domain name for the host.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusDeviceNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fqdn</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;authority&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{host}</span><span class="s2">:</span><span class="si">{port}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TangoDeviceNameValidator.getNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoDeviceNameValidator.html#taurus.core.tango.tangovalidator.TangoDeviceNameValidator.getNames">[docs]</a>    <span class="k">def</span> <span class="nf">getNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">queryAuth</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusDeviceNameValidator`. It accepts an</span>
+<span class="sd">        extra keyword arg `queryAuth` which, if set to False, will prevent the</span>
+<span class="sd">        validator from trying to query a TaurusAuthority to obtain missing info</span>
+<span class="sd">        such as the devslashname &lt;--&gt; devalias correspondence.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">groups</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">default_authority</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Factory</span>
+            <span class="n">factory</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scheme</span><span class="p">)</span>
+        <span class="n">default_authority</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">get_default_tango_host</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">default_authority</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">PyTango</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">ApiUtil</span><span class="o">.</span><span class="n">get_env_var</span><span class="p">(</span><span class="s1">&#39;TANGO_HOST&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="c1"># Get the fully qualified domain name</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+            <span class="n">default_authority</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+        <span class="n">authority</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;authority&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">authority</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;authority&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">authority</span> <span class="o">=</span> <span class="n">default_authority</span>
+
+        <span class="n">db</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">queryAuth</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">db</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getAuthority</span><span class="p">(</span><span class="s1">&#39;tango:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">authority</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># note, since we validated, we either have alias or slashname (not</span>
+        <span class="c1"># both)</span>
+        <span class="n">_devalias</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_devalias&#39;</span><span class="p">)</span>
+        <span class="n">_devslashname</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_devslashname&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">_devslashname</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># get _devslashname from the alias using the DB</span>
+            <span class="n">_devslashname</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getElementFullName</span><span class="p">(</span><span class="n">_devalias</span><span class="p">)</span>
+            <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;_devslashname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_devslashname</span>
+
+        <span class="k">if</span> <span class="n">_devslashname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if we still do not have a slashname, we can only give the short</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">_devalias</span>
+
+        <span class="c1"># we can now construct everything. First the complete:</span>
+        <span class="n">complete</span> <span class="o">=</span> <span class="s1">&#39;tango:</span><span class="si">%(authority)s</span><span class="s1">/</span><span class="si">%(_devslashname)s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">groups</span>
+
+        <span class="c1"># then the normal</span>
+        <span class="k">if</span> <span class="n">authority</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">default_authority</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">normal</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(_devslashname)s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">groups</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">normal</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(authority)s</span><span class="s1">/</span><span class="si">%(_devslashname)s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">groups</span>
+
+        <span class="c1"># and finally the short</span>
+        <span class="k">if</span> <span class="n">_devalias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">short</span> <span class="o">=</span> <span class="n">_devalias</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># get the alias from the DB (if it is defined)</span>
+                <span class="n">short</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">getElementAlias</span><span class="p">(</span><span class="n">_devslashname</span><span class="p">)</span> <span class="ow">or</span> <span class="n">_devslashname</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">short</span> <span class="o">=</span> <span class="n">_devslashname</span>
+
+        <span class="k">return</span> <span class="n">complete</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">short</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nonStrictNamePattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;In non-strict mode, allow double-slash even if there is no Authority.</span>
+<span class="sd">        (e.g., &quot;tango://a/b/c&quot; passes this non-strict form)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^((?P&lt;scheme&gt;</span><span class="si">%(scheme)s</span><span class="s1">)://)?&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;((?P&lt;authority&gt;</span><span class="si">%(authority)s</span><span class="s1">)(?=/))?&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;(?P&lt;path&gt;</span><span class="si">%(path)s</span><span class="s1">)&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;(\?(?P&lt;query&gt;</span><span class="si">%(query)s</span><span class="s1">))?&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;(#</span><span class="si">%(fragment)s</span><span class="s1">)?$&#39;</span>
+        <span class="n">authority</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/?(?P&lt;devname&gt;((?P&lt;_devalias&gt;([^/?#:]+))|&#39;</span> <span class="o">+</span> \
+               <span class="s1">&#39;(?P&lt;_devslashname&gt;[^/?#:]+/[^/?#:]+/[^/?#:]+)))&#39;</span>
+
+        <span class="k">return</span> <span class="n">pattern</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                              <span class="n">authority</span><span class="o">=</span><span class="n">authority</span><span class="p">,</span>
+                              <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                              <span class="n">query</span><span class="o">=</span><span class="s1">&#39;(?!)&#39;</span><span class="p">,</span>
+                              <span class="n">fragment</span><span class="o">=</span><span class="s1">&#39;(?!)&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TangoAttributeNameValidator"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoAttributeNameValidator.html#taurus.core.tango.tangovalidator.TangoAttributeNameValidator">[docs]</a><span class="k">class</span> <span class="nc">TangoAttributeNameValidator</span><span class="p">(</span><span class="n">TaurusAttributeNameValidator</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Validator for Tango attribute names. Apart from the standard named</span>
+<span class="sd">    groups (scheme, authority, path, query and fragment), the following named</span>
+<span class="sd">    groups are created:</span>
+
+<span class="sd">     - attrname: attribute name including device name</span>
+<span class="sd">     - _shortattrname: attribute name excluding device name</span>
+<span class="sd">     - devname: as in :class:`TangoDeviceNameValidator`</span>
+<span class="sd">     - [_devalias]: as in :class:`TangoDeviceNameValidator`</span>
+<span class="sd">     - [_devslashname]: as in :class:`TangoDeviceNameValidator`</span>
+<span class="sd">     - [host] as in :class:`TangoAuthorityNameValidator`</span>
+<span class="sd">     - [port] as in :class:`TangoAuthorityNameValidator`</span>
+<span class="sd">     - [cfgkey] same as fragment (for bck-compat use only)</span>
+
+<span class="sd">    Note: brackets on the group name indicate that this group will only contain</span>
+<span class="sd">    a string if the URI contains it.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="n">TangoAuthorityNameValidator</span><span class="o">.</span><span class="n">authority</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;(?P&lt;attrname&gt;</span><span class="si">%s</span><span class="s1">/(?P&lt;_shortattrname&gt;[^/?:#]+))&#39;</span> <span class="o">%</span>
+            <span class="n">TangoDeviceNameValidator</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
+    <span class="n">fragment</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;cfgkey&gt;[^# ]*)&#39;</span>
+
+<div class="viewcode-block" id="TangoAttributeNameValidator.getUriGroups"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoAttributeNameValidator.html#taurus.core.tango.tangovalidator.TangoAttributeNameValidator.getUriGroups">[docs]</a>    <span class="k">def</span> <span class="nf">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Reimplementation of getUriGroups to fix the host and authority</span>
+<span class="sd">        name using fully qualified domain name for the host.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusAttributeNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fqdn</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;authority&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{host}</span><span class="s2">:</span><span class="si">{port}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TangoAttributeNameValidator.getNames"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/tangovalidator/_TangoAttributeNameValidator.html#taurus.core.tango.tangovalidator.TangoAttributeNameValidator.getNames">[docs]</a>    <span class="k">def</span> <span class="nf">getNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">queryAuth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fragment</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the complete and short names&quot;&quot;&quot;</span>
+
+        <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">groups</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">complete</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">short</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_shortattrname&#39;</span><span class="p">)</span>
+
+        <span class="c1"># reuse the getNames from the Device validator...</span>
+        <span class="n">devname</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">TangoDeviceNameValidator</span><span class="p">()</span>
+        <span class="n">devcomplete</span><span class="p">,</span> <span class="n">devnormal</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getNames</span><span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="n">factory</span><span class="p">,</span>
+                                               <span class="n">queryAuth</span><span class="o">=</span><span class="n">queryAuth</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">devcomplete</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">complete</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">devcomplete</span><span class="p">,</span> <span class="n">short</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">devnormal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">normal</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">devnormal</span><span class="p">,</span> <span class="n">short</span><span class="p">)</span>
+
+        <span class="c1"># return fragment if requested</span>
+        <span class="k">if</span> <span class="n">fragment</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fragment&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">complete</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">short</span><span class="p">,</span> <span class="n">key</span>
+
+        <span class="k">return</span> <span class="n">complete</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">short</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nonStrictNamePattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In non-strict mode, allow double-slash even if there is no Authority.</span>
+<span class="sd">        Also allow old-style &quot;?configuration[=cfgkey]&quot; instead of fragment.</span>
+<span class="sd">        If cfgkey is present, it is also stored in the &quot;fragment&quot; named group.</span>
+<span class="sd">        For example, &quot;tango://a/b/c/d?configuration=label&quot; passes this</span>
+<span class="sd">        non-strict form, and the named group &quot;fragment&quot; will contain &quot;label&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^((?P&lt;scheme&gt;</span><span class="si">%(scheme)s</span><span class="s1">)://)?&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;((?P&lt;authority&gt;</span><span class="si">%(authority)s</span><span class="s1">)(?=/))?&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;(?P&lt;path&gt;</span><span class="si">%(path)s</span><span class="s1">)&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;(\?(?P&lt;query&gt;</span><span class="si">%(query)s</span><span class="s1">))?&#39;</span> <span class="o">+</span> \
+                  <span class="sa">r</span><span class="s1">&#39;(#</span><span class="si">%(fragment)s</span><span class="s1">)?$&#39;</span>
+        <span class="n">authority</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;configuration(=(?P&lt;fragment&gt;(?P&lt;cfgkey&gt;[^# ]+)))?&#39;</span>
+
+        <span class="k">return</span> <span class="n">pattern</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+                              <span class="n">authority</span><span class="o">=</span><span class="n">authority</span><span class="p">,</span>
+                              <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                              <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+                              <span class="n">fragment</span><span class="o">=</span><span class="s1">&#39;(?!)&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

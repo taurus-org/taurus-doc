@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusAttrForm &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="TaurusCommandsForm" href="_TaurusCommandsForm.html" />
+    <link rel="prev" title="TaurusArrayEditorButton" href="_TaurusArrayEditorButton.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../../qt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+        
+          <li><a href="../../qtgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+        
+          <li><a href="../panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusAttrForm</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/panel/_TaurusAttrForm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusattrform">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusAttrForm" title="taurus.qt.qtgui.panel.TaurusAttrForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusAttrForm</span></code></a><a class="headerlink" href="#taurusattrform" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../../_images/inheritance-1927c0ac5cb46d40414b4f982b7d45c4af5d15e0.png" alt="Inheritance diagram of TaurusAttrForm" class="inheritance graphviz" /></div>
+<dl class="class">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm">
+<em class="property">class </em><code class="sig-name descname">TaurusAttrForm</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em>, <em class="sig-param">designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusAttrForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.container.tauruswidget.TaurusWidget</span></code></p>
+<p>A form that displays the attributes of a Device Server</p>
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.getModelClass">
+<code class="sig-name descname">getModelClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusAttrForm.getModelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.getModelClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>see <code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseComponent.getModelClass()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="sig-name descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusAttrForm.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pertinent information in order to be able to build a valid
+QtDesigner widget plugin.</p>
+<p>The dictionary returned by this method should contain <em>at least</em> the
+following keys and values:
+- ‘module’ : a string representing the full python module name (ex.: ‘taurus.qt.qtgui.base’)
+- ‘icon’ : a string representing valid resource icon (ex.: ‘designer:combobox.png’)
+- ‘container’ : a bool telling if this widget is a container widget or not.</p>
+<p>This default implementation returns the following dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s1">&#39;group&#39;</span>     <span class="p">:</span> <span class="s1">&#39;Taurus [Unclassified]&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;icon&#39;</span>      <span class="p">:</span> <span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;container&#39;</span> <span class="p">:</span> <span class="kc">False</span> <span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a map with pertinent designer information</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.getViewFilters">
+<code class="sig-name descname">getViewFilters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusAttrForm.getViewFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.getViewFilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the filters used in deciding which attributes are displayed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence</span></code> &lt;<code class="xref py py-class docutils literal notranslate"><span class="pre">callable</span></code>&gt;</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a sequence of filters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the model name for this component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the model name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.setExpertView">
+<code class="sig-name descname">setExpertView</code><span class="sig-paren">(</span><em class="sig-param">expert</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusAttrForm.setExpertView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.setExpertView" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the expert view mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expert</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – If expert is True, attributes won’t be filtered. If
+it is False, attributes with display level Expert won’t
+be shown</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.setSortKey">
+<code class="sig-name descname">setSortKey</code><span class="sig-paren">(</span><em class="sig-param">sortkey</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusAttrForm.setSortKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.setSortKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the key function used to sort the attributes in the form</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sortkey</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">callable</span></code>) – a function that takes a <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeInfo</span></code>
+as argument and returns a key to use for sorting purposes
+(e.g. the default sortKey is <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">x:x.name</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.setViewFilters">
+<code class="sig-name descname">setViewFilters</code><span class="sig-paren">(</span><em class="sig-param">filterlist</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusAttrForm.setViewFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.setViewFilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the filters to be applied when displaying the attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filterlist</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sequence</span></code> &lt;<code class="xref py py-class docutils literal notranslate"><span class="pre">callable</span></code>&gt;) – a sequence of attr filters. All
+filters will be applied to each attribute name to
+decide whether to display it or not. for an attribute
+to be plotted, the following condition must be true
+for all filters: <code class="docutils literal notranslate"><span class="pre">bool(filter(attrname))==True</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusAttrForm.useParentModel">
+<code class="sig-name descname">useParentModel</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusAttrForm.useParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether this component is using the parent model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if using parent model or False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusCommandsForm.html" class="btn btn-neutral float-right" title="TaurusCommandsForm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusArrayEditorButton.html" class="btn btn-neutral float-left" title="TaurusArrayEditorButton" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

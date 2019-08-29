@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.core.util.init_lightweight &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="ArrayBuffer" href="init_lightweight/_ArrayBuffer.html" />
+    <link rel="prev" title="taurus.core.util.decorator.typecheck" href="decorator/typecheck.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+        
+          <li><a href="../util.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.init_lightweight</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../_sources/devel/api/taurus/core/util/init_lightweight.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-taurus.core.util.init_lightweight">
+<span id="taurus-core-util-init-lightweight"></span><h1><a class="reference internal" href="#module-taurus.core.util.init_lightweight" title="taurus.core.util.init_lightweight"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.init_lightweight</span></code></a><a class="headerlink" href="#module-taurus.core.util.init_lightweight" title="Permalink to this headline">¶</a></h1>
+<p>This package consists of a collection of useful classes and functions. Most of
+the elements are taurus independent and can be used generically.</p>
+<p>This module contains a python implementation of <a class="reference external" href="https://docs.python.org/dev/library/json.html#module-json" title="(in Python v3.9)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a>. This was done because
+json only became part of python since version 2.6.
+The json implementation follows the rule:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>if python &gt;= 2.6 use standard json from python distribution</p></li>
+<li><p>otherwise use private implementation distributed with taurus</p></li>
+</ol>
+</div></blockquote>
+<p class="rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="hlist"><tr><td><ul class="simple">
+<li><p><a class="reference internal" href="init_lightweight/_ArrayBuffer.html#taurus.core.util.init_lightweight.ArrayBuffer" title="taurus.core.util.init_lightweight.ArrayBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayBuffer</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_AttributeEventIterator.html#taurus.core.util.init_lightweight.AttributeEventIterator" title="taurus.core.util.init_lightweight.AttributeEventIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeEventIterator</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_AttributeEventWait.html#taurus.core.util.init_lightweight.AttributeEventWait" title="taurus.core.util.init_lightweight.AttributeEventWait"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeEventWait</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_BoundMethodWeakref.html#taurus.core.util.init_lightweight.BoundMethodWeakref" title="taurus.core.util.init_lightweight.BoundMethodWeakref"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoundMethodWeakref</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_CaselessDefaultDict.html#taurus.core.util.init_lightweight.CaselessDefaultDict" title="taurus.core.util.init_lightweight.CaselessDefaultDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">CaselessDefaultDict</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_CaselessDict.html#taurus.core.util.init_lightweight.CaselessDict" title="taurus.core.util.init_lightweight.CaselessDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">CaselessDict</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_CaselessList.html#taurus.core.util.init_lightweight.CaselessList" title="taurus.core.util.init_lightweight.CaselessList"><code class="xref py py-class docutils literal notranslate"><span class="pre">CaselessList</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_CaselessWeakValueDict.html#taurus.core.util.init_lightweight.CaselessWeakValueDict" title="taurus.core.util.init_lightweight.CaselessWeakValueDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">CaselessWeakValueDict</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_CircBuf.html#taurus.core.util.init_lightweight.CircBuf" title="taurus.core.util.init_lightweight.CircBuf"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircBuf</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_ConfigEventGenerator.html#taurus.core.util.init_lightweight.ConfigEventGenerator" title="taurus.core.util.init_lightweight.ConfigEventGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigEventGenerator</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_CriticalIt.html#taurus.core.util.init_lightweight.CriticalIt" title="taurus.core.util.init_lightweight.CriticalIt"><code class="xref py py-class docutils literal notranslate"><span class="pre">CriticalIt</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_DebugIt.html#taurus.core.util.init_lightweight.DebugIt" title="taurus.core.util.init_lightweight.DebugIt"><code class="xref py py-class docutils literal notranslate"><span class="pre">DebugIt</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_DefaultThreadDict.html#taurus.core.util.init_lightweight.DefaultThreadDict" title="taurus.core.util.init_lightweight.DefaultThreadDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultThreadDict</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_EnumException.html#taurus.core.util.init_lightweight.EnumException" title="taurus.core.util.init_lightweight.EnumException"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumException</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_Enumeration.html#taurus.core.util.init_lightweight.Enumeration" title="taurus.core.util.init_lightweight.Enumeration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enumeration</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_ErrorIt.html#taurus.core.util.init_lightweight.ErrorIt" title="taurus.core.util.init_lightweight.ErrorIt"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorIt</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_EventGenerator.html#taurus.core.util.init_lightweight.EventGenerator" title="taurus.core.util.init_lightweight.EventGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventGenerator</span></code></a></p></li>
+</ul>
+</td><td><ul class="simple">
+<li><p><a class="reference internal" href="init_lightweight/_EventListener.html#taurus.core.util.init_lightweight.EventListener" title="taurus.core.util.init_lightweight.EventListener"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventListener</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_InfoIt.html#taurus.core.util.init_lightweight.InfoIt" title="taurus.core.util.init_lightweight.InfoIt"><code class="xref py py-class docutils literal notranslate"><span class="pre">InfoIt</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_LIFO.html#taurus.core.util.init_lightweight.LIFO" title="taurus.core.util.init_lightweight.LIFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">LIFO</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_ListEventGenerator.html#taurus.core.util.init_lightweight.ListEventGenerator" title="taurus.core.util.init_lightweight.ListEventGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListEventGenerator</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_LogExceptHook.html#taurus.core.util.init_lightweight.LogExceptHook" title="taurus.core.util.init_lightweight.LogExceptHook"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogExceptHook</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_LogFilter.html#taurus.core.util.init_lightweight.LogFilter" title="taurus.core.util.init_lightweight.LogFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogFilter</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_LogIt.html#taurus.core.util.init_lightweight.LogIt" title="taurus.core.util.init_lightweight.LogIt"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogIt</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_Logger.html#taurus.core.util.init_lightweight.Logger" title="taurus.core.util.init_lightweight.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_LoopList.html#taurus.core.util.init_lightweight.LoopList" title="taurus.core.util.init_lightweight.LoopList"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoopList</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_MemoryLogHandler.html#taurus.core.util.init_lightweight.MemoryLogHandler" title="taurus.core.util.init_lightweight.MemoryLogHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryLogHandler</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_Object.html#taurus.core.util.init_lightweight.Object" title="taurus.core.util.init_lightweight.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_Singleton.html#taurus.core.util.init_lightweight.Singleton" title="taurus.core.util.init_lightweight.Singleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">Singleton</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_ThreadDict.html#taurus.core.util.init_lightweight.ThreadDict" title="taurus.core.util.init_lightweight.ThreadDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadDict</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_TimedQueue.html#taurus.core.util.init_lightweight.TimedQueue" title="taurus.core.util.init_lightweight.TimedQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimedQueue</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_TraceIt.html#taurus.core.util.init_lightweight.TraceIt" title="taurus.core.util.init_lightweight.TraceIt"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraceIt</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_WarnIt.html#taurus.core.util.init_lightweight.WarnIt" title="taurus.core.util.init_lightweight.WarnIt"><code class="xref py py-class docutils literal notranslate"><span class="pre">WarnIt</span></code></a></p></li>
+<li><p><a class="reference internal" href="init_lightweight/_defaultdict_fromkey.html#taurus.core.util.init_lightweight.defaultdict_fromkey" title="taurus.core.util.init_lightweight.defaultdict_fromkey"><code class="xref py py-class docutils literal notranslate"><span class="pre">defaultdict_fromkey</span></code></a></p></li>
+</ul>
+</td></tr></table>
+<p class="rubric">Functions</p>
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.CallableRef">
+<code class="sig-name descname">CallableRef</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">del_cb=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#CallableRef"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.CallableRef" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns a callable weak reference to a callable object.
+Object can be a callable object, a function or a method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> (<em>callable object</em>) – a callable object</p></li>
+<li><p><strong>del_cb</strong> (<em>callable object</em><em> or </em><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – calback function. Default is None meaning to callback.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a weak reference for the given callable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="_BoundMethodWeakref.html#taurus.core.util.BoundMethodWeakref" title="taurus.core.util.BoundMethodWeakref">taurus.core.util.BoundMethodWeakref</a> or <a class="reference external" href="https://docs.python.org/dev/library/weakref.html#weakref.ref" title="(in Python v3.9)">weakref.ref</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.critical">
+<code class="sig-name descname">critical</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.critical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.debug">
+<code class="sig-name descname">debug</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.deprecated">
+<code class="sig-name descname">deprecated</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#deprecated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.deprecated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.deprecation_decorator">
+<code class="sig-name descname">deprecation_decorator</code><span class="sig-paren">(</span><em class="sig-param">func=None</em>, <em class="sig-param">alt=None</em>, <em class="sig-param">rel=None</em>, <em class="sig-param">dbg_msg=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#deprecation_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.deprecation_decorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>decorator to mark methods as deprecated</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.dictFromSequence">
+<code class="sig-name descname">dictFromSequence</code><span class="sig-paren">(</span><em class="sig-param">seq</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/init_lightweight.html#dictFromSequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.dictFromSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates a sequence into a dictionary by converting each to elements of
+the sequence (k,v) into a k:v pair in the dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seq</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sequence</span></code>) – any sequence object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dictionary built from the given sequence</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.fatal">
+<code class="sig-name descname">fatal</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#fatal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.fatal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.getDictAsTree">
+<code class="sig-name descname">getDictAsTree</code><span class="sig-paren">(</span><em class="sig-param">dct</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#getDictAsTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.getDictAsTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will print a recursive dict in a tree-like
+shape:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">getDictAsTree</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:{</span><span class="s1">&#39;B&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">&#39;C&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">]}}))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.info">
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.self_locked">
+<code class="sig-name descname">self_locked</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">reentrant=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/containers.html#self_locked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.self_locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to make thread-safe class members
+Decorator to create thread-safe objects.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>With Lock() this decorator should not be used to decorate
+nested functions; it will cause Deadlock!</p></li>
+<li><p>With RLock this problem is avoided … but you should rely more
+on python threading</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.trace">
+<code class="sig-name descname">trace</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#trace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.trace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="taurus.core.util.init_lightweight.warning">
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="init_lightweight/_ArrayBuffer.html" class="btn btn-neutral float-right" title="ArrayBuffer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="decorator/typecheck.html" class="btn btn-neutral float-left" title="taurus.core.util.decorator.typecheck" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

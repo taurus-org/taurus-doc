@@ -1,0 +1,748 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusLabel &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="TaurusLed" href="_TaurusLed.html" />
+    <link rel="prev" title="TaurusLCD" href="_TaurusLCD.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../../qt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+        
+          <li><a href="../../qtgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+        
+          <li><a href="../display.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.display</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusLabel</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/display/_TaurusLabel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tauruslabel">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel" title="taurus.qt.qtgui.display.TaurusLabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusLabel</span></code></a><a class="headerlink" href="#tauruslabel" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../../_images/inheritance-5a27695f993453921a927dd55ee79e4e54660dd4.png" alt="Inheritance diagram of TaurusLabel" class="inheritance graphviz" /></div>
+<dl class="class">
+<dt id="taurus.qt.qtgui.display.TaurusLabel">
+<em class="property">class </em><code class="sig-name descname">TaurusLabel</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em>, <em class="sig-param">designMode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QLabel</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.base.taurusbase.TaurusBaseWidget</span></code></p>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultAlignment">
+<code class="sig-name descname">DefaultAlignment</code><em class="property"> = &lt;PyQt5.QtCore.Alignment object&gt;</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultAlignment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultAutoTrim">
+<code class="sig-name descname">DefaultAutoTrim</code><em class="property"> = True</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultAutoTrim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultBgRole">
+<code class="sig-name descname">DefaultBgRole</code><em class="property"> = 'quality'</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultBgRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultFgRole">
+<code class="sig-name descname">DefaultFgRole</code><em class="property"> = 'rvalue'</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultFgRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultModelIndex">
+<code class="sig-name descname">DefaultModelIndex</code><em class="property"> = None</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultModelIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultPrefix">
+<code class="sig-name descname">DefaultPrefix</code><em class="property"> = ''</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultPrefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultShowText">
+<code class="sig-name descname">DefaultShowText</code><em class="property"> = True</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultShowText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.DefaultSuffix">
+<code class="sig-name descname">DefaultSuffix</code><em class="property"> = ''</em><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.DefaultSuffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.autoTrim">
+<code class="sig-name descname">autoTrim</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.autoTrim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies wether the text will be trimmed when it doesn’t fit in the
+available space</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.getAutoTrim" title="taurus.qt.qtgui.display.TaurusLabel.getAutoTrim"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.getAutoTrim()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setAutoTrim" title="taurus.qt.qtgui.display.TaurusLabel.setAutoTrim"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setAutoTrim()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.resetAutoTrim" title="taurus.qt.qtgui.display.TaurusLabel.resetAutoTrim"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.resetAutoTrim()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.bgRole">
+<code class="sig-name descname">bgRole</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.bgRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the background role.
+Valid values are ‘’/’None’, ‘quality’, ‘state’</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.getBgRole" title="taurus.qt.qtgui.display.TaurusLabel.getBgRole"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.getBgRole()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setBgRole" title="taurus.qt.qtgui.display.TaurusLabel.setBgRole"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setBgRole()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.resetBgRole" title="taurus.qt.qtgui.display.TaurusLabel.resetBgRole"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.resetBgRole()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.controller">
+<code class="sig-name descname">controller</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.controller" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.controllerUpdate">
+<code class="sig-name descname">controllerUpdate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.controllerUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.controllerUpdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.displayValue">
+<code class="sig-name descname">displayValue</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.displayValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.displayValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplementation of displayValue for TaurusLabel</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.dragEnabled">
+<code class="sig-name descname">dragEnabled</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.dragEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether the user can drag data from this widget</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.isDragEnabled()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setDragEnabled()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.resetDragEnabled()</span></code></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.fgRole">
+<code class="sig-name descname">fgRole</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.fgRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the foreground role (the text).
+Valid values are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>‘’/’None’ - no value is displayed</p></li>
+<li><p>‘rvalue’ - the value is displayed</p></li>
+<li><p>‘wvalue’ - the write value is displayed</p></li>
+<li><p>‘quality’ - the quality is displayed</p></li>
+<li><p>‘state’ - the device state is displayed</p></li>
+</ol>
+</div></blockquote>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.getFgRole" title="taurus.qt.qtgui.display.TaurusLabel.getFgRole"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.getFgRole()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setFgRole" title="taurus.qt.qtgui.display.TaurusLabel.setFgRole"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setFgRole()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.resetFgRole" title="taurus.qt.qtgui.display.TaurusLabel.resetFgRole"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.resetFgRole()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getAutoTrim">
+<code class="sig-name descname">getAutoTrim</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getAutoTrim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getAutoTrim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether auto-trimming of the text is enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getBgRole">
+<code class="sig-name descname">getBgRole</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getBgRole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getBgRole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getFgRole">
+<code class="sig-name descname">getFgRole</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getFgRole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getFgRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the foreground role for this label (see <a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setFgRole" title="taurus.qt.qtgui.display.TaurusLabel.setFgRole"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setFgRole()</span></code></a>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getModelIndex">
+<code class="sig-name descname">getModelIndex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getModelIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getModelIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getModelIndexValue">
+<code class="sig-name descname">getModelIndexValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getModelIndexValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getModelIndexValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called inside getDisplayValue to use with spectrum attributes.
+By default not used, but some widget might want to support this
+feature.</p>
+<p>Override when needed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getModelMimeData">
+<code class="sig-name descname">getModelMimeData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getModelMimeData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getModelMimeData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a MimeData object containing the model data. The default implementation
+fills the <cite>TAURUS_MODEL_MIME_TYPE</cite>. If the widget’s Model class is
+Attribute or Device, it also fills <cite>TAURUS_ATTR_MIME_TYPE</cite> or
+<cite>TAURUS_DEV_MIME_TYPE</cite>, respectively</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">QMimeData</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getPermanentText">
+<code class="sig-name descname">getPermanentText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getPermanentText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getPermanentText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getPrefixText">
+<code class="sig-name descname">getPrefixText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getPrefixText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getPrefixText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="sig-name descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pertinent information in order to be able to build a valid
+QtDesigner widget plugin.</p>
+<p>The dictionary returned by this method should contain <em>at least</em> the
+following keys and values:
+- ‘module’ : a string representing the full python module name (ex.: ‘taurus.qt.qtgui.base’)
+- ‘icon’ : a string representing valid resource icon (ex.: ‘designer:combobox.png’)
+- ‘container’ : a bool telling if this widget is a container widget or not.</p>
+<p>This default implementation returns the following dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s1">&#39;group&#39;</span>     <span class="p">:</span> <span class="s1">&#39;Taurus [Unclassified]&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;icon&#39;</span>      <span class="p">:</span> <span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;container&#39;</span> <span class="p">:</span> <span class="kc">False</span> <span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a map with pertinent designer information</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.getSuffixText">
+<code class="sig-name descname">getSuffixText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.getSuffixText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.getSuffixText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.handleEvent">
+<code class="sig-name descname">handleEvent</code><span class="sig-paren">(</span><em class="sig-param">evt_src</em>, <em class="sig-param">evt_type</em>, <em class="sig-param">evt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.handleEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.handleEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>very basic and generalistic handling of events.</p>
+<p>Override when necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>evt_src</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>) – object that triggered the event</p></li>
+<li><p><strong>evt_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusEventType</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>) – type of event</p></li>
+<li><p><strong>evt_value</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>) – event value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.hasDynamicTextInteractionFlags">
+<code class="sig-name descname">hasDynamicTextInteractionFlags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.hasDynamicTextInteractionFlags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.hasDynamicTextInteractionFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.isReadOnly">
+<code class="sig-name descname">isReadOnly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.isReadOnly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.isReadOnly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if this component is read-only or not in the sense that the
+user can interact with it. Default implementation returns True.</p>
+<p>Override when necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether or not this component is read-only</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the unique URI string representing the model name
+with which this widget will get its data from. The convention used for
+the string can be found <a class="reference internal" href="../../../../../core_tutorial.html#model-concept"><span class="std std-ref">here</span></a>.</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.getModel()</span></code></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setModel" title="taurus.qt.qtgui.display.TaurusLabel.setModel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setModel()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.resetModel()</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../../../../core_tutorial.html#model-concept"><span class="std std-ref">Model concept</span></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.modelIndex">
+<code class="sig-name descname">modelIndex</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.modelIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the index inside the model value that should be
+displayed</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.getModelIndex" title="taurus.qt.qtgui.display.TaurusLabel.getModelIndex"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.getModelIndex()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setModelIndex" title="taurus.qt.qtgui.display.TaurusLabel.setModelIndex"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setModelIndex()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.resetModelIndex" title="taurus.qt.qtgui.display.TaurusLabel.resetModelIndex"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.resetModelIndex()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../../../../core_tutorial.html#model-concept"><span class="std std-ref">Model concept</span></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.prefixText">
+<code class="sig-name descname">prefixText</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.prefixText" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds a prefix text</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.getPrefixText" title="taurus.qt.qtgui.display.TaurusLabel.getPrefixText"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.getPrefixText()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setPrefixText" title="taurus.qt.qtgui.display.TaurusLabel.setPrefixText"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setPrefixText()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.resetPrefixText" title="taurus.qt.qtgui.display.TaurusLabel.resetPrefixText"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.resetPrefixText()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resetAutoTrim">
+<code class="sig-name descname">resetAutoTrim</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resetAutoTrim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resetAutoTrim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset auto-trimming to its default value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resetBgRole">
+<code class="sig-name descname">resetBgRole</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resetBgRole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resetBgRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the background role to its default value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resetFgRole">
+<code class="sig-name descname">resetFgRole</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resetFgRole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resetFgRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the foreground role to its default value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resetModelIndex">
+<code class="sig-name descname">resetModelIndex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resetModelIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resetModelIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resetPrefixText">
+<code class="sig-name descname">resetPrefixText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resetPrefixText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resetPrefixText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resetSuffixText">
+<code class="sig-name descname">resetSuffixText</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resetSuffixText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resetSuffixText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resetTextInteractionFlags">
+<code class="sig-name descname">resetTextInteractionFlags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resetTextInteractionFlags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resetTextInteractionFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.resizeEvent">
+<code class="sig-name descname">resizeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">QResizeEvent</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.resizeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.resizeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setAutoTrim">
+<code class="sig-name descname">setAutoTrim</code><span class="sig-paren">(</span><em class="sig-param">trim</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setAutoTrim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setAutoTrim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable/disable auto-trimming of the text. If trim is True, the text
+in the label will be trimmed when it doesn’t fit in the available space</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>trim</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setBgRole">
+<code class="sig-name descname">setBgRole</code><span class="sig-paren">(</span><em class="sig-param">bgRole</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setBgRole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setBgRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the background role. The label background will be set according
+to the current palette and the role. Valid roles are:
+- ‘none’ : no background
+- ‘state’ a color depending on the device state
+- ‘quality’ a color depending on the attribute quality
+- ‘rvalue’ a color depending on the rvalue of the attribute
+- &lt;arbitrary member name&gt; a color based on the value of an arbitrary
+member of the model object (warning: experimental feature!)</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>the &lt;arbitrary member name&gt; support is still experimental
+and its API may change in future versions</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setDynamicTextInteractionFlags">
+<code class="sig-name descname">setDynamicTextInteractionFlags</code><span class="sig-paren">(</span><em class="sig-param">flags</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setDynamicTextInteractionFlags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setDynamicTextInteractionFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setFgRole">
+<code class="sig-name descname">setFgRole</code><span class="sig-paren">(</span><em class="sig-param">fgRole</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setFgRole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setFgRole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set what is shown as the foreground (the text) of the label
+Valid Roles are:</p>
+<ul class="simple">
+<li><p>‘rvalue’ the read value of the attribute</p></li>
+<li><p>‘wvalue’ the write value of the attribute</p></li>
+<li><p>‘none’ : no text</p></li>
+<li><p>‘quality’ - the quality of the attribute is displayed</p></li>
+<li><p>‘state’ - the device state</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setModel">
+<code class="sig-name descname">setModel</code><span class="sig-paren">(</span><em class="sig-param">m</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets/unsets the model name for this component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the new model name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setModelIndex">
+<code class="sig-name descname">setModelIndex</code><span class="sig-paren">(</span><em class="sig-param">modelIndex</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setModelIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setModelIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setPrefixText">
+<code class="sig-name descname">setPrefixText</code><span class="sig-paren">(</span><em class="sig-param">prefix</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setPrefixText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setPrefixText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setSuffixText">
+<code class="sig-name descname">setSuffixText</code><span class="sig-paren">(</span><em class="sig-param">suffix</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setSuffixText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setSuffixText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setText">
+<code class="sig-name descname">setText</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplementation of setText to set permanentText</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setTextInteractionFlags">
+<code class="sig-name descname">setTextInteractionFlags</code><span class="sig-paren">(</span><em class="sig-param">self, Union[Qt.TextInteractionFlags, Qt.TextInteractionFlag]</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setTextInteractionFlags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setTextInteractionFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.setText_">
+<code class="sig-name descname">setText_</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.setText_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.setText_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to expose QLabel.setText</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.showValueDialog">
+<code class="sig-name descname">showValueDialog</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/display/tauruslabel.html#TaurusLabel.showValueDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.showValueDialog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.suffixText">
+<code class="sig-name descname">suffixText</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.suffixText" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds a suffix text</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.getSuffixText" title="taurus.qt.qtgui.display.TaurusLabel.getSuffixText"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.getSuffixText()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.setSuffixText" title="taurus.qt.qtgui.display.TaurusLabel.setSuffixText"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.setSuffixText()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#taurus.qt.qtgui.display.TaurusLabel.resetSuffixText" title="taurus.qt.qtgui.display.TaurusLabel.resetSuffixText"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusLabel.resetSuffixText()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.textInteractionFlags">
+<code class="sig-name descname">textInteractionFlags</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.textInteractionFlags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies how the label should interact with user input if it displays text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.display.TaurusLabel.useParentModel">
+<code class="sig-name descname">useParentModel</code><a class="headerlink" href="#taurus.qt.qtgui.display.TaurusLabel.useParentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds whether or not this widget should search in the
+widget hierarchy for a model prefix in a parent widget.</p>
+<p><strong>Access functions:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.getUseParentModel()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.setUseParentModel()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.resetUseParentModel()</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../../../../core_tutorial.html#model-concept"><span class="std std-ref">Model concept</span></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusLed.html" class="btn btn-neutral float-right" title="TaurusLed" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusLCD.html" class="btn btn-neutral float-left" title="TaurusLCD" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ResourcesFactory &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="taurus.core.tango" href="../tango.html" />
+    <link rel="prev" title="ResourceDeviceNameValidator" href="resvalidator/_ResourceDeviceNameValidator.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+        
+          <li><a href="../resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.resource</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcesFactory</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../_sources/devel/api/taurus/core/resource/_ResourcesFactory.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="resourcesfactory">
+<h1><a class="reference internal" href="#taurus.core.resource.ResourcesFactory" title="taurus.core.resource.ResourcesFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourcesFactory</span></code></a><a class="headerlink" href="#resourcesfactory" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../_images/inheritance-2dc2c0da7a3569ad58e5cb4a499804fdc0e4044c.png" alt="Inheritance diagram of ResourcesFactory" class="inheritance graphviz" /></div>
+<dl class="class">
+<dt id="taurus.core.resource.ResourcesFactory">
+<em class="property">class </em><code class="sig-name descname">ResourcesFactory</code><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.singleton.Singleton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.taurusfactory.TaurusFactory</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.log.Logger</span></code></p>
+<p>A Singleton class designed to provide Simulation related objects.</p>
+<dl class="attribute">
+<dt id="taurus.core.resource.ResourcesFactory.DftResourceName">
+<code class="sig-name descname">DftResourceName</code><em class="property"> = 'taurus_resources.py'</em><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.DftResourceName" title="Permalink to this definition">¶</a></dt>
+<dd><p>the default resource file name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.ResourcesFactory.DftResourcePriority">
+<code class="sig-name descname">DftResourcePriority</code><em class="property"> = 10</em><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.DftResourcePriority" title="Permalink to this definition">¶</a></dt>
+<dd><p>priority for the default resource</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.clear">
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.findObjectClass">
+<code class="sig-name descname">findObjectClass</code><span class="sig-paren">(</span><em class="sig-param">absolute_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.findObjectClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.findObjectClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the class object corresponding to the given name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>absolute_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the object absolute name string</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the class
+for the model object mapped by absolute_name, or None if
+absolute_name is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.getAttribute">
+<code class="sig-name descname">getAttribute</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.getAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.getAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the attribute model object referenced by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusAttribute</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>attribute object</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>(<code class="xref py py-exc docutils literal notranslate"><span class="pre">TaurusException</span></code>)  if name is invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.getAttributeNameValidator">
+<code class="sig-name descname">getAttributeNameValidator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.getAttributeNameValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.getAttributeNameValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ResourceAttributeNameValidator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.getAuthority">
+<code class="sig-name descname">getAuthority</code><span class="sig-paren">(</span><em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.getAuthority"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.getAuthority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the authority model object referenced by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusAuthority</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>authority object</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>(<code class="xref py py-exc docutils literal notranslate"><span class="pre">TaurusException</span></code>)  if name is invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.getAuthorityNameValidator">
+<code class="sig-name descname">getAuthorityNameValidator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.getAuthorityNameValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.getAuthorityNameValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ResourceAuthorityNameValidator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.getDevice">
+<code class="sig-name descname">getDevice</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.getDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.getDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the device model object referenced by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusDevice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>device object</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>(<code class="xref py py-exc docutils literal notranslate"><span class="pre">TaurusException</span></code>)  if name is invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.getDeviceNameValidator">
+<code class="sig-name descname">getDeviceNameValidator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.getDeviceNameValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.getDeviceNameValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ResourceDeviceNameValidator</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.getValue">
+<code class="sig-name descname">getValue</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.getValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.getValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value for a given key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – a key</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the value for the given key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.init">
+<code class="sig-name descname">init</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Singleton instance initialization.
+<strong>For internal usage only</strong></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.loadResource">
+<code class="sig-name descname">loadResource</code><span class="sig-paren">(</span><em class="sig-param">obj=None</em>, <em class="sig-param">priority=1</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.loadResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Re)Loads the given resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">file</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>) – the resource object. Default is
+None meaning in will (re)load the default resource:
+taurus_resources.py from the application directory</p></li>
+<li><p><strong>priority</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the resource priority. Default is 1 meaning
+maximum priority</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – an optional name to give to the resource</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionary version of the given resource object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.resource.ResourcesFactory.reloadResource">
+<code class="sig-name descname">reloadResource</code><span class="sig-paren">(</span><em class="sig-param">obj=None</em>, <em class="sig-param">priority=1</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/resource/resfactory.html#ResourcesFactory.reloadResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.reloadResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Re)Loads the given resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">file</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>) – the resource object. Default is
+None meaning in will (re)load the default resource:
+taurus_resources.py from the application directory</p></li>
+<li><p><strong>priority</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the resource priority. Default is 1 meaning
+maximum priority</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – an optional name to give to the resource</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionary version of the given resource object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.core.resource.ResourcesFactory.schemes">
+<code class="sig-name descname">schemes</code><em class="property"> = ('res', 'resource')</em><a class="headerlink" href="#taurus.core.resource.ResourcesFactory.schemes" title="Permalink to this definition">¶</a></dt>
+<dd><p>the list of schemes that this factory supports. For this factory: ‘res’
+and ‘resources’ are the supported schemes</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tango.html" class="btn btn-neutral float-right" title="taurus.core.tango" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="resvalidator/_ResourceDeviceNameValidator.html" class="btn btn-neutral float-left" title="ResourceDeviceNameValidator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
