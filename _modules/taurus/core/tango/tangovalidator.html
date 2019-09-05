@@ -169,10 +169,10 @@
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
 
-<span class="kn">import</span> <span class="nn">socket</span>
 <span class="kn">from</span> <span class="nn">taurus.core.taurusvalidator</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusAttributeNameValidator</span><span class="p">,</span>
                                          <span class="n">TaurusDeviceNameValidator</span><span class="p">,</span>
                                          <span class="n">TaurusAuthorityNameValidator</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.fqdn</span> <span class="k">import</span> <span class="n">fqdn_no_alias</span>
 
 
 <span class="c1"># todo: I do not understand the behaviour of getNames for Auth, Dev and Attr in</span>
@@ -202,7 +202,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusAuthorityNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
+            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">fqdn_no_alias</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
             <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fqdn</span>
             <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;authority&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{host}</span><span class="s2">:</span><span class="si">{port}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div></div>
@@ -236,7 +236,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusDeviceNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
+            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">fqdn_no_alias</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
             <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fqdn</span>
             <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;authority&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{host}</span><span class="s2">:</span><span class="si">{port}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
@@ -261,7 +261,7 @@
             <span class="kn">import</span> <span class="nn">PyTango</span>
             <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">PyTango</span><span class="o">.</span><span class="n">ApiUtil</span><span class="o">.</span><span class="n">get_env_var</span><span class="p">(</span><span class="s1">&#39;TANGO_HOST&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
             <span class="c1"># Get the fully qualified domain name</span>
-            <span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="n">fqdn_no_alias</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
             <span class="n">default_authority</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
 
         <span class="n">authority</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;authority&#39;</span><span class="p">)</span>
@@ -361,7 +361,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusAttributeNameValidator</span><span class="o">.</span><span class="n">getUriGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ret</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
+            <span class="n">fqdn</span> <span class="o">=</span> <span class="n">fqdn_no_alias</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">])</span>
             <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fqdn</span>
             <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;authority&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{host}</span><span class="s2">:</span><span class="si">{port}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
