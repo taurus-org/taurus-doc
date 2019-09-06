@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtcore.util.properties &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.qt.qtcore.util.properties</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtcore.util.properties</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">properties.py: Methods for adding QProperties to QObjects</span>
+
+<span class="sd">A call like</span>
+<span class="sd">        set_property_methods(self,&#39;Filters&#39;,&#39;QString&#39;,default=&#39;&#39;,</span>
+<span class="sd">            set_callback=lambda s=self:s.loadTree(s.getFilters(),clear=True),</span>
+<span class="sd">            reset_callback=lambda s=self:s.loadTree(&#39;&#39;,clear=True)</span>
+<span class="sd">            )</span>
+
+<span class="sd">Would replace all these lines:</span>
+
+<span class="sd">    def setFilters(self,filters):</span>
+<span class="sd">        self._filters = filters</span>
+<span class="sd">        self.loadTree(self._filters,clear=True)</span>
+
+<span class="sd">    def getFilters(self):</span>
+<span class="sd">        return self._filters</span>
+
+<span class="sd">    def resetFilters(self):</span>
+<span class="sd">        self._filters=&quot;&quot;</span>
+<span class="sd">        self.loadTree(self._filters)</span>
+
+<span class="sd">    filters = QtCore.pyqtProperty(&quot;QString&quot;, getFilters, setFilters, resetFilters)</span>
+
+<span class="sd">Not tested yet with the classical declaration:</span>
+
+<span class="sd">    #model = QtCore.pyqtProperty(&quot;QString&quot;, TaurusBaseWidget.getModel,</span>
+<span class="sd">                            #TaurusBaseWidget.setModel,</span>
+<span class="sd">                            #TaurusBaseWidget.resetModel)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">map</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.fandango_search</span> <span class="k">import</span> <span class="n">isSequence</span><span class="p">,</span> <span class="n">isDictionary</span>
+
+
+<div class="viewcode-block" id="join"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/properties.html#taurus.qt.qtcore.util.properties.join">[docs]</a><span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="o">*</span><span class="n">seqs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; It returns a list containing the objects of all given sequences. &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">isSequence</span><span class="p">(</span><span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">seqs</span> <span class="o">=</span> <span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">seqs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">isSequence</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+    <span class="c1">#    result += list(seq)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="djoin"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/properties.html#taurus.qt.qtcore.util.properties.djoin">[docs]</a><span class="k">def</span> <span class="nf">djoin</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This method merges dictionaries and/or lists &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">isDictionary</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))):</span>
+        <span class="k">return</span> <span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">other</span><span class="p">,</span> <span class="n">dct</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">isDictionary</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDictionary</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+        <span class="n">other</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">other</span> <span class="k">if</span> <span class="n">isSequence</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">other</span><span class="p">,</span> <span class="p">])</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">dct</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">dct</span> <span class="k">else</span> <span class="n">djoin</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dct</span></div>
+
+
+<div class="viewcode-block" id="get_property_attribute"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/properties.html#taurus.qt.qtcore.util.properties.get_property_attribute">[docs]</a><span class="k">def</span> <span class="nf">get_property_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_property"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/properties.html#taurus.qt.qtcore.util.properties.get_property">[docs]</a><span class="k">def</span> <span class="nf">get_property</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">callback</span> <span class="ow">and</span> <span class="n">callback</span><span class="p">())</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">get_property_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="set_property"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/properties.html#taurus.qt.qtcore.util.properties.set_property">[docs]</a><span class="k">def</span> <span class="nf">set_property</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># print &#39;set_property(%s,%s,%s,%s)&#39;%(obj,name,value,callback)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">get_property_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">callback</span> <span class="ow">and</span> <span class="n">callback</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">callback</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="reset_property"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/properties.html#taurus.qt.qtcore.util.properties.reset_property">[docs]</a><span class="k">def</span> <span class="nf">reset_property</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">get_property_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">default</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
+        <span class="n">callback</span><span class="p">()</span></div>
+
+<span class="n">COMMON_PROPERTIES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;ModelInConfig&#39;</span><span class="p">,</span>  <span class="c1"># If True, it will automatically register Model</span>
+    <span class="s1">&#39;modifiableByUser&#39;</span><span class="p">,</span>
+    <span class="c1">#&#39;useParentModel&#39;, #Only for widgets, not for components</span>
+    <span class="c1">#&#39;Model&#39;, #Controlled by ModelInConfig</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="set_property_methods"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/properties.html#taurus.qt.qtcore.util.properties.set_property_methods">[docs]</a><span class="k">def</span> <span class="nf">set_property_methods</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">getter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">setter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">get_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">set_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reset_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">qt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">config</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method allows to add QProperties dynamically with calls like::</span>
+
+<span class="sd">        set_property_methods(self,&#39;Filters&#39;,&#39;QString&#39;,default=&#39;&#39;,</span>
+<span class="sd">            set_callback=lambda s=self:s.loadTree(s.getFilters(),clear=True),</span>
+<span class="sd">            reset_callback=lambda s=self:s.loadTree(&#39;&#39;,clear=True)</span>
+<span class="sd">            )</span>
+
+
+<span class="sd">    .. todo: This method should be refactored using python</span>
+<span class="sd">             descriptors/properties and types.MethodType</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">klass</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span>
+    <span class="n">mname</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">getter</span> <span class="o">=</span> <span class="n">getter</span> <span class="ow">or</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">o</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">get_callback</span><span class="p">:</span> <span class="n">get_property</span><span class="p">(</span>
+        <span class="n">o</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>  <span class="c1"># partial(get_property,name=name,callback=get_callback)</span>
+    <span class="n">setter</span> <span class="o">=</span> <span class="n">setter</span> <span class="ow">or</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">set_callback</span><span class="p">:</span> <span class="n">set_property</span><span class="p">(</span>
+        <span class="n">o</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">obj</span> <span class="k">else</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>  <span class="c1"># partial(set_property),name=name,callback=set_callback)</span>
+    <span class="n">reset</span> <span class="o">=</span> <span class="n">reset</span> <span class="ow">or</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">o</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">reset_callback</span><span class="p">:</span> <span class="n">reset_property</span><span class="p">(</span>
+        <span class="n">o</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>  <span class="c1"># partial(reset_property,name=name,default=default,callback=reset_callback)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;set</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mname</span><span class="p">,</span> <span class="n">setter</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;get</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mname</span><span class="p">,</span> <span class="n">getter</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;reset</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mname</span><span class="p">,</span> <span class="n">reset</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">qt</span><span class="p">:</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">lname</span><span class="p">,</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtProperty</span><span class="p">(</span><span class="s2">&quot;QString&quot;</span><span class="p">,</span> <span class="n">getter</span><span class="p">,</span> <span class="n">setter</span><span class="p">,</span> <span class="n">reset</span><span class="p">)</span>
+                <span class="p">)</span>
+    <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">registerConfigProperty</span><span class="p">(</span><span class="n">getter</span><span class="p">,</span> <span class="n">setter</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">reset</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
