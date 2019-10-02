@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TangoAuthority &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="TangoConfiguration" href="_TangoConfiguration.html" />
+    <link rel="prev" title="TangoAttributeEventListener" href="_TangoAttributeEventListener.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+        
+          <li><a href="../tango.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.tango</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">TangoAuthority</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../_sources/devel/api/taurus/core/tango/_TangoAuthority.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tangoauthority">
+<h1><a class="reference internal" href="#taurus.core.tango.TangoAuthority" title="taurus.core.tango.TangoAuthority"><code class="xref py py-class docutils literal notranslate"><span class="pre">TangoAuthority</span></code></a><a class="headerlink" href="#tangoauthority" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../_images/inheritance-7f878b8f19a2e0feb09d68e787b30b42309fcf81.png" alt="Inheritance diagram of TangoAuthority" class="inheritance graphviz" /></div>
+<dl class="class">
+<dt id="taurus.core.tango.TangoAuthority">
+<em class="property">class </em><code class="sig-name descname">TangoAuthority</code><span class="sig-paren">(</span><em class="sig-param">host=None</em>, <em class="sig-param">port=None</em>, <em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.taurusauthority.TaurusAuthority</span></code></p>
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.addListener">
+<code class="sig-name descname">addListener</code><span class="sig-paren">(</span><em class="sig-param">listener</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.addListener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.addListener" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.cache">
+<code class="sig-name descname">cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.deviceTree">
+<code class="sig-name descname">deviceTree</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.deviceTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.deviceTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tree container with all devices in three levels : domain,
+family and member</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TangoDevTree</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tree containning all devices</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getAliasNames">
+<code class="sig-name descname">getAliasNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getAliasNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getAliasNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of registered tango device alias</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>&gt;</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a sequence with all registered tango device alias</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getClassNames">
+<code class="sig-name descname">getClassNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getClassNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getClassNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of registered tango device classes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>&gt;</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a sequence with all registered tango device classes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDescription">
+<code class="sig-name descname">getDescription</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDescription" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.0: </span>Use .description instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDevice">
+<code class="sig-name descname">getDevice</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplemented from <code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusDevice</span></code> to use cache and return
+<a class="reference internal" href="_TangoDevInfo.html#taurus.core.tango.TangoDevInfo" title="taurus.core.tango.TangoDevInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.tango.TangoDevInfo</span></code></a> objects with information
+about the given device name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the device name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="_TangoDevInfo.html#taurus.core.tango.TangoDevInfo" title="taurus.core.tango.TangoDevInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">TangoDevInfo</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>information about the tango device</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDeviceDomainNames">
+<code class="sig-name descname">getDeviceDomainNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getDeviceDomainNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDeviceDomainNames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDeviceFamilyNames">
+<code class="sig-name descname">getDeviceFamilyNames</code><span class="sig-paren">(</span><em class="sig-param">domain</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getDeviceFamilyNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDeviceFamilyNames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDeviceMemberNames">
+<code class="sig-name descname">getDeviceMemberNames</code><span class="sig-paren">(</span><em class="sig-param">domain</em>, <em class="sig-param">family</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getDeviceMemberNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDeviceMemberNames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDeviceNames">
+<code class="sig-name descname">getDeviceNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getDeviceNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDeviceNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of registered tango device names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>&gt;</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a sequence with all registered tango device names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDisplayValue">
+<code class="sig-name descname">getDisplayValue</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDisplayValue" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.0: </span>Use getFullName instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getDomainDevices">
+<code class="sig-name descname">getDomainDevices</code><span class="sig-paren">(</span><em class="sig-param">domain</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getDomainDevices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getDomainDevices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getElementAlias">
+<code class="sig-name descname">getElementAlias</code><span class="sig-paren">(</span><em class="sig-param">full_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getElementAlias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getElementAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the alias of an element from its full name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getElementFullName">
+<code class="sig-name descname">getElementFullName</code><span class="sig-paren">(</span><em class="sig-param">alias</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getElementFullName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getElementFullName" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the full name of an element from its alias</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getFamilyDevices">
+<code class="sig-name descname">getFamilyDevices</code><span class="sig-paren">(</span><em class="sig-param">domain</em>, <em class="sig-param">family</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getFamilyDevices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getFamilyDevices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getServerNameInstances">
+<code class="sig-name descname">getServerNameInstances</code><span class="sig-paren">(</span><em class="sig-param">serverName</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getServerNameInstances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getServerNameInstances" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getServerNames">
+<code class="sig-name descname">getServerNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getServerNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getServerNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of registered tango device servers in format&lt;name&gt;/&lt;instance&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence</span></code> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>&gt;</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a sequence with all registered tango device servers</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getTangoDB">
+<code class="sig-name descname">getTangoDB</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.getTangoDB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getTangoDB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.getValueObj">
+<code class="sig-name descname">getValueObj</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.tango.TangoAuthority.getValueObj" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.0: </span>Use getTangoDB instead</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.get_default_tango_host">
+<em class="property">static </em><code class="sig-name descname">get_default_tango_host</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.get_default_tango_host"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.get_default_tango_host" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.get_device_attribute_list">
+<code class="sig-name descname">get_device_attribute_list</code><span class="sig-paren">(</span><em class="sig-param">dev_name</em>, <em class="sig-param">wildcard</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.get_device_attribute_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.get_device_attribute_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.core.tango.TangoAuthority.refreshCache">
+<code class="sig-name descname">refreshCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangodatabase.html#TangoAuthority.refreshCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAuthority.refreshCache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TangoConfiguration.html" class="btn btn-neutral float-right" title="TangoConfiguration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TangoAttributeEventListener.html" class="btn btn-neutral float-left" title="TangoAttributeEventListener" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

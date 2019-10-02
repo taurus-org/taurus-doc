@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtcore.util.emitter &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.qt.qtcore.util.emitter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtcore.util.emitter</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">emitter.py: This module provides a task scheduler used by TaurusGrid and </span>
+<span class="sd">    TaurusDevTree widgets</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">Empty</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+
+<span class="kn">import</span> <span class="nn">taurus</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1"># Helping methods</span>
+
+
+<div class="viewcode-block" id="isString"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter.html#taurus.qt.qtcore.util.emitter.isString">[docs]</a><span class="k">def</span> <span class="nf">isString</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># It matches most python str-like classes</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;vector&#39;</span><span class="p">,</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">,)):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="s1">&#39;qstring&#39;</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># It matches QString</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="modelSetter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter.html#taurus.qt.qtcore.util.emitter.modelSetter">[docs]</a><span class="k">def</span> <span class="nf">modelSetter</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is used for convenience as TaurusEmitterThread standard method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># print &#39;In modelSetter(%s,%s)&#39; % (str(obj),str(model))</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;setModel&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="MethodModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_MethodModel.html#taurus.qt.qtcore.util.emitter.MethodModel">[docs]</a><span class="k">class</span> <span class="nc">MethodModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to emulate method execution as a setModel</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+
+<div class="viewcode-block" id="MethodModel.setModel"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_MethodModel.html#taurus.qt.qtcore.util.emitter.MethodModel.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="QEmitter"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_QEmitter.html#taurus.qt.qtcore.util.emitter.QEmitter">[docs]</a><span class="k">class</span> <span class="nc">QEmitter</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Emitter class providing two signals.&quot;&quot;&quot;</span>
+
+    <span class="n">doSomething</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">somethingDone</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">newQueue</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span></div>
+
+
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="TaurusEmitterThread"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread">[docs]</a><span class="k">class</span> <span class="nc">TaurusEmitterThread</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QThread</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This object get items from a python Queue and performs a thread safe </span>
+<span class="sd">    operation on them.</span>
+<span class="sd">    It is useful to serialize Qt tasks in a background thread.</span>
+
+<span class="sd">    :param parent: a Qt/Taurus object</span>
+<span class="sd">    :param name: identifies object logs</span>
+<span class="sd">    :param queue: if None parent.getQueue() is used, if not then the queue </span>
+<span class="sd">        passed as argument is used</span>
+<span class="sd">    :param method: the method to be executed using each queue item as argument</span>
+<span class="sd">    :param cursor: if True or QCursor a custom cursor is set while </span>
+<span class="sd">        the Queue is not empty</span>
+
+<span class="sd">    How TaurusEmitterThread works:</span>
+
+<span class="sd">    TaurusEmitterThread is a worker thread that processes a queue of iterables </span>
+<span class="sd">    passed as arguments to the specified method every time that  </span>
+<span class="sd">    ``doSomething()`` is called:</span>
+
+<span class="sd">     * ``self.method(*item)`` will be called if TaurusEmitterThread.method </span>
+<span class="sd">        has been initialized.</span>
+<span class="sd">     * ``item[0](item[1:])`` will be called if ``method`` is not initialized </span>
+<span class="sd">        and the first element of the queued iterable is *callable*.</span>
+
+<span class="sd">    TaurusEmitterThread uses two queues:</span>
+
+<span class="sd">     * ``self.queue`` manages the objects added externally:</span>
+
+<span class="sd">      + the ``next()`` method passes objects from ``self.queue`` </span>
+<span class="sd">        to ``self.todo queue``</span>
+<span class="sd">      + every time that a *somethingDone* signal arrives ``next()`` is called.</span>
+<span class="sd">      + ``next()`` can be called also externally to ensure that the main queue </span>
+<span class="sd">        is being processed.</span>
+<span class="sd">      + the queue can be accessed externally using ``getQueue()``</span>
+<span class="sd">      + ``getQueue().qsize()`` returns number of remaining objects in queue.</span>
+<span class="sd">      + while there are objects in queue the ``.next()`` method will </span>
+<span class="sd">        override applications cursor. a call to ``next()`` with an empty queue </span>
+<span class="sd">        will restore the original cursor.</span>
+
+<span class="sd">     * ``self.todo`` is managed by the ``run()/start()`` method:</span>
+
+<span class="sd">      - a loop waits continuously for new objects in ``self.todo`` queue.</span>
+<span class="sd">      - if an object is found, it is sent in a *doSomething* signal.</span>
+<span class="sd">      - if *&quot;exit&quot;* is found the loop exits.</span>
+
+<span class="sd">    Usage example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        #Applying TaurusEmitterThread to an existing class:</span>
+<span class="sd">        from queue import Queue</span>
+<span class="sd">        from functools import partial</span>
+
+<span class="sd">        def modelSetter(args):</span>
+<span class="sd">            obj,model = args[0],args[1]</span>
+<span class="sd">            obj.setModel(model)</span>
+
+<span class="sd">        klass TaurusGrid(Qt.QFrame, TaurusBaseWidget):</span>
+<span class="sd">            ...</span>
+<span class="sd">            def __init__(self, parent = None, designMode = False):</span>
+<span class="sd">                ...</span>
+<span class="sd">                self.modelsQueue = Queue()</span>
+<span class="sd">                self.modelsThread = TaurusEmitterThread(parent=self,</span>
+<span class="sd">                        queue=self.modelsQueue,method=modelSetter )</span>
+<span class="sd">                ...</span>
+<span class="sd">            def build_widgets(...):</span>
+<span class="sd">                ...</span>
+<span class="sd">                            previous,synoptic_value = \</span>
+<span class="sd">                                synoptic_value,TaurusValue(cell_frame)</span>
+<span class="sd">                            #synoptic_value.setModel(model)</span>
+<span class="sd">                            self.modelsQueue.put((synoptic_value,model))</span>
+<span class="sd">                ...</span>
+<span class="sd">            def setModel(self,model):</span>
+<span class="sd">                ...</span>
+<span class="sd">                if hasattr(self,&#39;modelsThread&#39;) and \</span>
+<span class="sd">                        not self.modelsThread.isRunning():</span>
+<span class="sd">                    self.modelsThread.start()</span>
+<span class="sd">                elif self.modelsQueue.qsize():</span>
+<span class="sd">                    self.modelsThread.next()</span>
+<span class="sd">                ...</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">queue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">cursor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sleep</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">polling</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">loopwait</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parent must be not None and must be a TaurusGraphicsScene!</span>
+
+<span class="sd">        :param queue: pass an external action queue (optional)</span>
+<span class="sd">        :param method: action processor (e.g. modelSetter)</span>
+<span class="sd">        :param cursor: QCursor during process (optional)</span>
+<span class="sd">        :param sleep: delay in ms before thread start</span>
+<span class="sd">        :param polling: process actions at fix period (milliseconds)</span>
+<span class="sd">        :param loopwait: wait N milliseconds between actions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QThread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s1">&#39;TaurusEmitterThread(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">Info</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span> <span class="ow">or</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">todo</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QCursor</span><span class="p">(</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span> <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">cursor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timewait</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sleep</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polling</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">polling</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loopwait</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">loopwait</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refreshTimer</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTimer</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refreshTimer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onRefresh</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refreshTimer</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitter</span> <span class="o">=</span> <span class="n">QEmitter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">moveToThread</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">thread</span><span class="p">())</span>
+        <span class="c1"># Mandatory!!! if parent is set before changing thread it could lead to</span>
+        <span class="c1"># segFaults!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_done</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Moved to the end to prevent segfaults ...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">doSomething</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_doSomething</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">refreshTimer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">somethingDone</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaurusEmitterThread.onRefresh"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread.onRefresh">[docs]</a>    <span class="k">def</span> <span class="nf">onRefresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">size</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;onRefresh(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">size</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;onRefresh()&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TaurusEmitterThread.getQueue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread.getQueue">[docs]</a>    <span class="k">def</span> <span class="nf">getQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="s1">&#39;getQueue&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaurusEmitterThread.getDone"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread.getDone">[docs]</a>    <span class="k">def</span> <span class="nf">getDone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns % of done tasks in 0-1 range &quot;&quot;&quot;</span>
+        <span class="n">pending</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_done</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_done</span> <span class="o">+</span> <span class="n">pending</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusEmitterThread.clear"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_done</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="TaurusEmitterThread.purge"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread.purge">[docs]</a>    <span class="k">def</span> <span class="nf">purge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a given object from all queues</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nqueue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">nqueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">nqueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">nqueue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">nqueue</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_doSomething</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;At TaurusEmitterThread._doSomething(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">:</span>
+            <span class="n">method</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">method</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="n">params</span>
+        <span class="k">if</span> <span class="n">method</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;At TaurusEmitterThread._doSomething(</span><span class="si">%s</span><span class="s1">): </span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span>
+                               <span class="o">%</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">)),</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">somethingDone</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_done</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span>
+
+<div class="viewcode-block" id="TaurusEmitterThread.next"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;At TaurusEmitterThread.next(), </span><span class="si">%d</span><span class="s1"> items remaining.&#39;</span>
+               <span class="o">%</span> <span class="n">queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">())</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">setOverrideCursor</span><span class="p">(</span>
+                        <span class="n">Qt</span><span class="o">.</span><span class="n">QCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="c1"># A blocking get here would hang the GUIs!!!</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Item added to todo queue: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">:</span>
+                <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">restoreOverrideCursor</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">except</span> <span class="n">Empty</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="k">pass</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="TaurusEmitterThread.run"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_TaurusEmitterThread.html#taurus.qt.qtcore.util.emitter.TaurusEmitterThread.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">thread</span><span class="p">()</span><span class="o">.</span><span class="n">msleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timewait</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;At TaurusEmitterThread.run()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">refreshTimer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refreshTimer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">polling</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;At TaurusEmitterThread.run() loop.&#39;</span><span class="p">)</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">isString</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s2">&quot;exit&quot;</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Emitting doSomething signal ...&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">doSomething</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loopwait</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">msleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loopwait</span><span class="p">)</span>
+                <span class="c1"># End of while</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">80</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Out of TaurusEmitterThread.run()&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span></div></div>
+        <span class="c1"># End of Thread</span>
+
+
+<div class="viewcode-block" id="DelayedSubscriber"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_DelayedSubscriber.html#taurus.qt.qtcore.util.emitter.DelayedSubscriber">[docs]</a><span class="k">class</span> <span class="nc">DelayedSubscriber</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DelayedSubscriber(schema) will use a TaurusEmitterThread to perform</span>
+<span class="sd">    a thread safe delayed subscribing on all Attributes of a given </span>
+<span class="sd">    Taurus Schema that has not been previously subscribed.</span>
+
+<span class="sd">    .. warning:: This class belongs to a &quot;Delayed Event Subscription&quot; API added</span>
+<span class="sd">                 in v.4.2.1-alpha as an *experimental* feature. This API may</span>
+<span class="sd">                 not be stable and/or it may be removed in a future release</span>
+<span class="sd">                 (even on a minor version change)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sleep</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">pause</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="n">schema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">Logger</span><span class="p">,</span> <span class="s1">&#39;DelayedSubscriber(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_factory</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelsQueue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelsThread</span> <span class="o">=</span> <span class="n">TaurusEmitterThread</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span>
+                                                 <span class="n">queue</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelsQueue</span><span class="p">,</span>
+                                                 <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelSubscriber</span><span class="p">,</span>
+                                                 <span class="n">sleep</span><span class="o">=</span><span class="n">sleep</span><span class="p">,</span> <span class="n">loopwait</span><span class="o">=</span><span class="n">pause</span><span class="p">,</span>
+                                                 <span class="n">polling</span><span class="o">=</span><span class="n">period</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">addUnsubscribedAttributes</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelsThread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_modelSubscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;modelSubscriber(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DelayedSubscriber.getUnsubscribedAttributes"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_DelayedSubscriber.html#taurus.qt.qtcore.util.emitter.DelayedSubscriber.getUnsubscribedAttributes">[docs]</a>    <span class="k">def</span> <span class="nf">getUnsubscribedAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check all pending subscriptions in the current factory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factory</span><span class="o">.</span><span class="n">getExistingAttributes</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">attr</span><span class="o">.</span><span class="n">hasListeners</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">attr</span><span class="o">.</span><span class="n">isUsingEvents</span><span class="p">():</span>
+                <span class="n">attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">attrs</span></div>
+
+<div class="viewcode-block" id="DelayedSubscriber.addUnsubscribedAttributes"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_DelayedSubscriber.html#taurus.qt.qtcore.util.emitter.DelayedSubscriber.addUnsubscribedAttributes">[docs]</a>    <span class="k">def</span> <span class="nf">addUnsubscribedAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Schedule subscription for all pending attributes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUnsubscribedAttributes</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;addUnsubscribedAttributes([</span><span class="si">%d</span><span class="s1">])&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_addModelObj</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_modelsThread</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Thread queue: [</span><span class="si">%d</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelsQueue</span><span class="o">.</span><span class="n">qsize</span><span class="p">()))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+    <span class="k">def</span> <span class="nf">_addModelObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelObj</span><span class="p">):</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">modelObj</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
+            <span class="n">proxy</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">getDeviceProxy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">proxy</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;addModelObj(</span><span class="si">%s</span><span class="s1">), proxy not available&#39;</span> <span class="o">%</span> <span class="n">modelObj</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelsQueue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">modelObj</span><span class="o">.</span><span class="n">subscribePendingEvents</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;addModelObj(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">modelObj</span><span class="p">))</span>
+
+<div class="viewcode-block" id="DelayedSubscriber.cleanUp"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_DelayedSubscriber.html#taurus.qt.qtcore.util.emitter.DelayedSubscriber.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;[DelayedSubscriber] cleanUp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelsThread</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SingletonWorker"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker">[docs]</a><span class="k">class</span> <span class="nc">SingletonWorker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    SingletonWorker is used to manage TaurusEmitterThread as Singleton objects</span>
+
+<span class="sd">    SingletonWorker is constructed using the same arguments </span>
+<span class="sd">    than TaurusTreadEmitter ; but instead of creating a QThread for each </span>
+<span class="sd">    instance it creates a single QThread for all instances.</span>
+
+<span class="sd">    The Queue is still different for each of the instances; it is connected </span>
+<span class="sd">    to the TaurusEmitterThread signals (*next()* and *somethingDone()*) </span>
+<span class="sd">    and each Worker queue is used as a feed for the shared QThread.</span>
+
+<span class="sd">    This implementation reduced the cpu of vacca application in a 50% factor.</span>
+
+<span class="sd">    :param parent: a Qt/Taurus object</span>
+<span class="sd">    :param name: identifies object logs</span>
+<span class="sd">    :param queue: if None parent.getQueue() is used, if not then the queue </span>
+<span class="sd">        passed as argument is used</span>
+<span class="sd">    :param method: the method to be executed using each queue item as argument</span>
+<span class="sd">    :param cursor: if True or QCursor a custom cursor is set while </span>
+<span class="sd">        the Queue is not empty</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_thread</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">queue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">cursor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sleep</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">Logger</span><span class="o">.</span><span class="n">Warning</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s1">&#39;SingletonWorker(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;At SingletonWorker.__init__(</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">SingletonWorker</span><span class="o">.</span><span class="n">_thread</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">SingletonWorker</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="n">TaurusEmitterThread</span><span class="p">(</span>
+                <span class="n">parent</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;SingletonWorker&#39;</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="n">cursor</span><span class="p">,</span> <span class="n">sleep</span><span class="o">=</span><span class="n">sleep</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">SingletonWorker</span><span class="o">.</span><span class="n">_thread</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span> <span class="ow">or</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">start</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SingletonWorker.put"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.size"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.size">[docs]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.next"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;At SingletonWorker.next(), &#39;</span>
+               <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> items not passed yet to Emitter.&#39;</span>
+               <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="c1"># (queue.empty() and self.log.info or self.log.debug)(msg)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="c1"># A blocking get here would hang the GUIs!!!</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">put</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">getQueue</span><span class="p">()</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> Items added to emitter queue&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">newQueue</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">Empty</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.getQueue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.getQueue">[docs]</a>    <span class="k">def</span> <span class="nf">getQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.getDone"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.getDone">[docs]</a>    <span class="k">def</span> <span class="nf">getDone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">getDone</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.start"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">somethingDone</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">newQueue</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.stop"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">somethingDone</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">emitter</span><span class="o">.</span><span class="n">newQueue</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.clear"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method will clear queue only if next() has not been called.</span>
+<span class="sd">        If you call self.thread.clear() it will clear objects for all workers!,</span>
+<span class="sd">        be careful</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span></div>
+            <span class="c1"># self.thread.clear()</span>
+
+<div class="viewcode-block" id="SingletonWorker.purge"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.purge">[docs]</a>    <span class="k">def</span> <span class="nf">purge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a given object from all queues</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nqueue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">nqueue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">nqueue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">nqueue</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.isRunning"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.isRunning">[docs]</a>    <span class="k">def</span> <span class="nf">isRunning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_running</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.isFinished"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.isFinished">[docs]</a>    <span class="k">def</span> <span class="nf">isFinished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">isFinished</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.finished"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.finished">[docs]</a>    <span class="k">def</span> <span class="nf">finished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">finished</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.started"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.started">[docs]</a>    <span class="k">def</span> <span class="nf">started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_running</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.terminated"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.terminated">[docs]</a>    <span class="k">def</span> <span class="nf">terminated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">terminated</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SingletonWorker.sleep"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtcore/util/emitter/_SingletonWorker.html#taurus.qt.qtcore.util.emitter.SingletonWorker.sleep">[docs]</a>    <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.console.table &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.console.table</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.console.table</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">map</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">past.utils</span> <span class="k">import</span> <span class="n">old_div</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Table&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+
+<div class="viewcode-block" id="Table"><a class="viewcode-back" href="../../../devel/api/taurus/console/table/_Table.html#taurus.console.table.Table">[docs]</a><span class="k">class</span> <span class="nc">Table</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">DefTermWidth</span> <span class="o">=</span> <span class="mi">80</span>
+
+    <span class="n">PrettyOpts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;col_sep&#39;</span><span class="p">:</span> <span class="s1">&#39; |&#39;</span><span class="p">,</span> <span class="s1">&#39;col_head_sep&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;border&#39;</span><span class="p">:</span> <span class="s1">&#39;=&#39;</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem_list</span><span class="p">,</span> <span class="n">elem_fmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">term_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">row_head_str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">row_head_fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%-*s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">row_head_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">col_head_str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_head_fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%*s</span><span class="s1">&#39;</span><span class="p">,</span>  <span class="n">col_head_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">col_sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">row_sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">col_head_sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nr_col</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elem_list</span> <span class="o">=</span> <span class="n">elem_list</span>
+
+        <span class="k">if</span> <span class="n">elem_fmt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">elem_fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span> <span class="o">*</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%*s</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_fmt</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">elem_fmt</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elem_fmt</span> <span class="o">=</span> <span class="n">elem_fmt</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">term_width</span> <span class="o">=</span> <span class="n">term_width</span> <span class="ow">or</span> <span class="n">Table</span><span class="o">.</span><span class="n">DefTermWidth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_sep</span> <span class="o">=</span> <span class="n">col_sep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_sep</span> <span class="o">=</span> <span class="n">row_sep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_head_sep</span> <span class="o">=</span> <span class="n">col_head_sep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">border</span> <span class="o">=</span> <span class="n">border</span>
+
+        <span class="n">max_len_fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">reduce</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">x</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_head_str</span> <span class="o">=</span> <span class="n">row_head_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_head_fmt</span> <span class="o">=</span> <span class="n">row_head_fmt</span>
+        <span class="k">if</span> <span class="n">row_head_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_head_str</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;RowHeadStr nr (</span><span class="si">%d</span><span class="s1">) and RowNr (</span><span class="si">%d</span><span class="s1">) mistmatch&#39;</span> <span class="o">%</span> \
+                  <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row_head_str</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">row_head_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">row_head_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">row_head_width</span> <span class="o">=</span> <span class="n">max_len_fn</span><span class="p">(</span><span class="n">row_head_str</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">row_head_width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_head_width</span> <span class="o">=</span> <span class="n">row_head_width</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_head_str</span> <span class="o">=</span> <span class="n">col_head_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_head_fmt</span> <span class="o">=</span> <span class="n">col_head_fmt</span>
+        <span class="k">if</span> <span class="n">col_head_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_head_str</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_col</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;ColHeadStr nr (</span><span class="si">%d</span><span class="s1">) and ColNr (</span><span class="si">%d</span><span class="s1">) mistmatch&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                  <span class="nb">len</span><span class="p">(</span><span class="n">col_head_str</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_col</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col_head_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col_head_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">col_head_width</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">max_len_fn</span><span class="p">,</span> <span class="n">col_head_str</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">col_head_width</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_head_width</span> <span class="o">=</span> <span class="n">col_head_width</span>
+        <span class="k">if</span> <span class="n">col_head_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">col_head_lines</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_head_str</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">col_head_lines</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="Table.updateElem"><a class="viewcode-back" href="../../../devel/api/taurus/console/table/_Table.html#taurus.console.table.Table.updateElem">[docs]</a>    <span class="k">def</span> <span class="nf">updateElem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem_list</span><span class="p">):</span>
+        <span class="n">new_col</span><span class="p">,</span> <span class="n">new_row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_list</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">new_col</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_col</span> <span class="ow">or</span> <span class="n">new_row</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="s1">&#39;Invalid new elem list size </span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">, was </span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> \
+                  <span class="p">(</span><span class="n">new_col</span><span class="p">,</span> <span class="n">new_row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_col</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elem_list</span> <span class="o">=</span> <span class="n">elem_list</span></div>
+
+<div class="viewcode-block" id="Table.genOutput"><a class="viewcode-back" href="../../../devel/api/taurus/console/table/_Table.html#taurus.console.table.Table.genOutput">[docs]</a>    <span class="k">def</span> <span class="nf">genOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_width</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">term_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">term_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">term_width</span>
+
+        <span class="n">rhw</span><span class="p">,</span> <span class="n">chw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_head_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_head_width</span>
+        <span class="n">chl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_head_lines</span>
+        <span class="n">lcs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_sep</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">term_width</span> <span class="o">-</span> <span class="n">chw</span>   <span class="c1"># At least one disp column!</span>
+        <span class="k">if</span> <span class="n">rhw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">width</span> <span class="o">-=</span> <span class="n">rhw</span> <span class="o">+</span> <span class="n">lcs</span>
+        <span class="n">disp_cols</span> <span class="o">=</span> <span class="n">old_div</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="p">(</span><span class="n">chw</span> <span class="o">+</span> <span class="n">lcs</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">tot_width</span> <span class="o">=</span> <span class="n">chw</span> <span class="o">+</span> <span class="p">(</span><span class="n">disp_cols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">chw</span> <span class="o">+</span> <span class="n">lcs</span><span class="p">)</span>
+        <span class="n">tot_rows</span> <span class="o">=</span> <span class="n">chl</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span>
+        <span class="k">if</span> <span class="n">rhw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">tot_width</span> <span class="o">+=</span> <span class="n">rhw</span> <span class="o">+</span> <span class="n">lcs</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_head_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">row_head</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_head_fmt</span>
+            <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">chl</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_head_str</span><span class="p">:</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">rhw</span><span class="p">,</span> <span class="n">head</span><span class="p">)</span>
+                <span class="n">row_head</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_sep</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">row_head</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">tot_rows</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_col</span><span class="p">,</span> <span class="n">disp_cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">nr_sep</span> <span class="o">=</span> <span class="n">old_div</span><span class="p">(</span><span class="n">tot_width</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row_sep</span><span class="p">))</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row_sep</span> <span class="o">*</span> <span class="n">nr_sep</span><span class="p">)</span>
+
+            <span class="n">row_end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">disp_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_col</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row_head</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">row_end</span><span class="p">):</span>
+                <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elem_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">chl</span><span class="p">:</span>
+                    <span class="n">col_head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_head_str</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tot_rows</span><span class="p">):</span>
+                            <span class="n">line</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_sep</span>
+                    <span class="n">fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_head_fmt</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chl</span><span class="p">):</span>
+                        <span class="n">line</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">chw</span><span class="p">,</span> <span class="n">col_head</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nr_row</span><span class="p">):</span>
+                    <span class="n">fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elem_fmt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="n">line</span><span class="p">[</span><span class="n">chl</span> <span class="o">+</span> <span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">chw</span><span class="p">,</span> <span class="n">elem</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+            <span class="n">max_width</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">line</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">border</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">nr_border</span> <span class="o">=</span> <span class="n">old_div</span><span class="p">(</span><span class="n">max_width</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">border</span><span class="p">))</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">border</span> <span class="o">*</span> <span class="n">nr_border</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[:</span><span class="n">chl</span><span class="p">]:</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_head_sep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">nr_sep</span> <span class="o">=</span> <span class="n">old_div</span><span class="p">(</span><span class="n">max_width</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_head_sep</span><span class="p">))</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_head_sep</span> <span class="o">*</span> <span class="n">nr_sep</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[</span><span class="n">chl</span><span class="p">:]:</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">border</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">border</span> <span class="o">*</span> <span class="n">nr_border</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">output</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

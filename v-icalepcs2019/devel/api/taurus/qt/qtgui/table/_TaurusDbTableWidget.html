@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusDbTableWidget &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="TaurusGrid" href="_TaurusGrid.html" />
+    <link rel="prev" title="TaurusBaseTableWidget" href="_TaurusBaseTableWidget.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../../qt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+        
+          <li><a href="../../qtgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+        
+          <li><a href="../table.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.table</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusDbTableWidget</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/table/_TaurusDbTableWidget.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusdbtablewidget">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.table.TaurusDbTableWidget" title="taurus.qt.qtgui.table.TaurusDbTableWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusDbTableWidget</span></code></a><a class="headerlink" href="#taurusdbtablewidget" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../../_images/inheritance-bafe4510684b743981ae343b5aad170bb2569e45.png" alt="Inheritance diagram of TaurusDbTableWidget" class="inheritance graphviz" /></div>
+<dl class="class">
+<dt id="taurus.qt.qtgui.table.TaurusDbTableWidget">
+<em class="property">class </em><code class="sig-name descname">TaurusDbTableWidget</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em>, <em class="sig-param">designMode=False</em>, <em class="sig-param">with_filter_widget=True</em>, <em class="sig-param">perspective=None</em>, <em class="sig-param">proxy=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/table/taurusdbtable.html#TaurusDbTableWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.table.TaurusDbTableWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.table.taurustable.TaurusBaseTableWidget</span></code></p>
+<p>A class:<cite>taurus.qt.qtgui.tree.TaurusBaseTableWidget</cite> that connects to a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.taurusauthority.TaurusAuthority</span></code> model. It can show
+the list of database elements in two different perspectives:</p>
+<ul class="simple">
+<li><p>device : a device list based perspective</p></li>
+<li><p>server : a server list based perspective</p></li>
+</ul>
+<p>Filters can be inserted into this widget to restrict the items that are
+seen.</p>
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.table.TaurusDbTableWidget.DftPerspective">
+<code class="sig-name descname">DftPerspective</code><em class="property"> = 3</em><a class="headerlink" href="#taurus.qt.qtgui.table.TaurusDbTableWidget.DftPerspective" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.table.TaurusDbTableWidget.KnownPerspectives">
+<code class="sig-name descname">KnownPerspectives</code><em class="property"> = {3: {'icon': 'applications-system', 'label': 'Devices', 'model': [&lt;class 'taurus.qt.qtcore.model.taurusdatabasemodel.TaurusDbDeviceProxyModel'&gt;, &lt;class 'taurus.qt.qtcore.model.taurusdatabasemodel.TaurusDbBaseModel'&gt;], 'tooltip': 'View by device'}, 8: {'icon': 'application-x-executable', 'label': 'Servers', 'model': [&lt;class 'taurus.qt.qtcore.model.taurusdatabasemodel.TaurusDbServerProxyModel'&gt;, &lt;class 'taurus.qt.qtcore.model.taurusdatabasemodel.TaurusDbPlainServerModel'&gt;], 'tooltip': 'View by server'}}</em><a class="headerlink" href="#taurus.qt.qtgui.table.TaurusDbTableWidget.KnownPerspectives" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.table.TaurusDbTableWidget.getModelClass">
+<code class="sig-name descname">getModelClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/table/taurusdbtable.html#TaurusDbTableWidget.getModelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.table.TaurusDbTableWidget.getModelClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the class object for the widget.
+Default behavior is to do a ‘best effort’ to determine which model
+type corresponds to the current model name.
+Overwrite as necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">class</span> <span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The class object corresponding to the type
+of Taurus model this widget handles or None if no valid class is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.table.TaurusDbTableWidget.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="sig-name descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/table/taurusdbtable.html#TaurusDbTableWidget.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.table.TaurusDbTableWidget.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pertinent information in order to be able to build a valid
+QtDesigner widget plugin.</p>
+<p>The dictionary returned by this method should contain <em>at least</em> the
+following keys and values:
+- ‘module’ : a string representing the full python module name (ex.: ‘taurus.qt.qtgui.base’)
+- ‘icon’ : a string representing valid resource icon (ex.: ‘designer:combobox.png’)
+- ‘container’ : a bool telling if this widget is a container widget or not.</p>
+<p>This default implementation returns the following dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s1">&#39;group&#39;</span>     <span class="p">:</span> <span class="s1">&#39;Taurus [Unclassified]&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;icon&#39;</span>      <span class="p">:</span> <span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;container&#39;</span> <span class="p">:</span> <span class="kc">False</span> <span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a map with pertinent designer information</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.table.TaurusDbTableWidget.sizeHint">
+<code class="sig-name descname">sizeHint</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; QSize<a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/table/taurusdbtable.html#TaurusDbTableWidget.sizeHint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.table.TaurusDbTableWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusGrid.html" class="btn btn-neutral float-right" title="TaurusGrid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusBaseTableWidget.html" class="btn btn-neutral float-left" title="TaurusBaseTableWidget" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

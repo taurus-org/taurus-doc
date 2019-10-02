@@ -1,0 +1,943 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusValue &mdash; taurus 4.6.2-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="TaurusValuesFrame" href="_TaurusValuesFrame.html" />
+    <link rel="prev" title="TaurusPlotButton" href="_TaurusPlotButton.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../../qt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+        
+          <li><a href="../../qtgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+        
+          <li><a href="../panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusValue</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/panel/_TaurusValue.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusvalue">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusValue" title="taurus.qt.qtgui.panel.TaurusValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusValue</span></code></a><a class="headerlink" href="#taurusvalue" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../../_images/inheritance-e40126a9eeb33a6bbf3561739b0d4b3874dbc244.png" alt="Inheritance diagram of TaurusValue" class="inheritance graphviz" /></div>
+<dl class="class">
+<dt id="taurus.qt.qtgui.panel.TaurusValue">
+<em class="property">class </em><code class="sig-name descname">TaurusValue</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em>, <em class="sig-param">designMode=False</em>, <em class="sig-param">customWidgetMap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.base.taurusbase.TaurusBaseWidget</span></code></p>
+<p>Internal TaurusValue class</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusValue" title="taurus.qt.qtgui.panel.TaurusValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusValue</span></code></a> (and any derived class from it) should never be instantiated directly.
+It is designed to be instantiated by a <a class="reference internal" href="_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm" title="taurus.qt.qtgui.panel.TaurusForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusForm</span></code></a> class, since it
+breaks some conventions on the way it manages layouts of its parent model.</p>
+</div>
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.addCustomWidgetToLayout">
+<code class="sig-name descname">addCustomWidgetToLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.addCustomWidgetToLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.addCustomWidgetToLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.addExtraWidgetToLayout">
+<code class="sig-name descname">addExtraWidgetToLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.addExtraWidgetToLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.addExtraWidgetToLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.addLabelWidgetToLayout">
+<code class="sig-name descname">addLabelWidgetToLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.addLabelWidgetToLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.addLabelWidgetToLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.addReadWidgetToLayout">
+<code class="sig-name descname">addReadWidgetToLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.addReadWidgetToLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.addReadWidgetToLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.addUnitsWidgetToLayout">
+<code class="sig-name descname">addUnitsWidgetToLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.addUnitsWidgetToLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.addUnitsWidgetToLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.addWriteWidgetToLayout">
+<code class="sig-name descname">addWriteWidgetToLayout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.addWriteWidgetToLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.addWriteWidgetToLayout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.allowWrite">
+<code class="sig-name descname">allowWrite</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.allowWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.applyConfig">
+<code class="sig-name descname">applyConfig</code><span class="sig-paren">(</span><em class="sig-param">configdict</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.applyConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.applyConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>extending <code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.applyConfig()</span></code> to restore the subwidget’s classes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>configdict</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – </p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.applyConfig()</span></code>, <a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusValue.createConfig" title="taurus.qt.qtgui.panel.TaurusValue.createConfig"><code class="xref py py-meth docutils literal notranslate"><span class="pre">createConfig()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.createConfig">
+<code class="sig-name descname">createConfig</code><span class="sig-paren">(</span><em class="sig-param">allowUnpickable=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.createConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.createConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>extending  <code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.createConfig()</span></code> to store also the class names for subwidgets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alllowUnpickable</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>&gt;</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>configurations (which can be loaded with <a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusValue.applyConfig" title="taurus.qt.qtgui.panel.TaurusValue.applyConfig"><code class="xref py py-meth docutils literal notranslate"><span class="pre">applyConfig()</span></code></a>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.customWidget">
+<code class="sig-name descname">customWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.customWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.customWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the custom widget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.customWidgetClassFactory">
+<code class="sig-name descname">customWidgetClassFactory</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.customWidgetClassFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.customWidgetClassFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.extraWidget">
+<code class="sig-name descname">extraWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.extraWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.extraWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the extra widget</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.extraWidgetClass">
+<code class="sig-name descname">extraWidgetClass</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.extraWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.extraWidgetClassFactory">
+<code class="sig-name descname">extraWidgetClassFactory</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.extraWidgetClassFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.extraWidgetClassFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getAllowWrite">
+<code class="sig-name descname">getAllowWrite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getAllowWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getAllowWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getCustomWidgetClass">
+<code class="sig-name descname">getCustomWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getCustomWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getCustomWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getCustomWidgetMap">
+<code class="sig-name descname">getCustomWidgetMap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the map used to create custom widgets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code>&gt;</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dictionary whose keys are device
+type strings (i.e. see <code class="xref py py-class docutils literal notranslate"><span class="pre">PyTango.DeviceInfo</span></code>) and whose
+values are widgets to be used</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getDefaultCustomWidgetClass">
+<code class="sig-name descname">getDefaultCustomWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getDefaultCustomWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getDefaultCustomWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getDefaultExtraWidgetClass">
+<code class="sig-name descname">getDefaultExtraWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getDefaultExtraWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getDefaultExtraWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getDefaultLabelWidgetClass">
+<code class="sig-name descname">getDefaultLabelWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getDefaultLabelWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getDefaultLabelWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getDefaultReadWidgetClass">
+<code class="sig-name descname">getDefaultReadWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">returnAll=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getDefaultReadWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getDefaultReadWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the default class (or classes) to use as read widget for the
+current model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>returnAll</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if True, the return value is a list of valid
+classes instead of just one class</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">class</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> &lt;<code class="xref py py-class docutils literal notranslate"><span class="pre">class</span></code>&gt;</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the default class  to use for the read
+widget (or, if returnAll==True, a list of classes that can show
+the attribute ). If a list is returned, it will be loosely
+ordered by preference, being the first element always the
+default one.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getDefaultUnitsWidgetClass">
+<code class="sig-name descname">getDefaultUnitsWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getDefaultUnitsWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getDefaultUnitsWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getDefaultWriteWidgetClass">
+<code class="sig-name descname">getDefaultWriteWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">returnAll=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getDefaultWriteWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getDefaultWriteWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the default class (or classes) to use as write widget for the
+current model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>returnAll</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if True, the return value is a list of valid
+classes instead of just one class</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">class</span></code> or <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> &lt;<code class="xref py py-class docutils literal notranslate"><span class="pre">class</span></code>&gt;</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the default class  to use for the write
+widget (or, if returnAll==True, a list of classes that can show
+the attribute ). If a list is returned, it will be loosely
+ordered by preference, being the first element always the
+default one.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getExtraWidgetClass">
+<code class="sig-name descname">getExtraWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getExtraWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getExtraWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getLabelConfig">
+<code class="sig-name descname">getLabelConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getLabelConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getLabelConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getLabelWidgetClass">
+<code class="sig-name descname">getLabelWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getLabelWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getLabelWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getModelClass">
+<code class="sig-name descname">getModelClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getModelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getModelClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the class object for the widget.
+Default behavior is to do a ‘best effort’ to determine which model
+type corresponds to the current model name.
+Overwrite as necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">class</span> <span class="pre">TaurusModel</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The class object corresponding to the type
+of Taurus model this widget handles or None if no valid class is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getPreferredRow">
+<code class="sig-name descname">getPreferredRow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getPreferredRow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getPreferredRow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><code class="sig-name descname">getQtDesignerPluginInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getQtDesignerPluginInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pertinent information in order to be able to build a valid
+QtDesigner widget plugin.</p>
+<p>The dictionary returned by this method should contain <em>at least</em> the
+following keys and values:
+- ‘module’ : a string representing the full python module name (ex.: ‘taurus.qt.qtgui.base’)
+- ‘icon’ : a string representing valid resource icon (ex.: ‘designer:combobox.png’)
+- ‘container’ : a bool telling if this widget is a container widget or not.</p>
+<p>This default implementation returns the following dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s1">&#39;group&#39;</span>     <span class="p">:</span> <span class="s1">&#39;Taurus [Unclassified]&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;icon&#39;</span>      <span class="p">:</span> <span class="s1">&#39;logos:taurus.png&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;container&#39;</span> <span class="p">:</span> <span class="kc">False</span> <span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a map with pertinent designer information</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getReadWidgetClass">
+<code class="sig-name descname">getReadWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getReadWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getReadWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getRow">
+<code class="sig-name descname">getRow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getRow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getRow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getSwitcherClass">
+<code class="sig-name descname">getSwitcherClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getSwitcherClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getSwitcherClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the TaurusValue switcher class (used in compact mode).
+Override this method if you want to use a custom switcher in
+TaurusValue subclasses.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getUnitsWidgetClass">
+<code class="sig-name descname">getUnitsWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getUnitsWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getUnitsWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.getWriteWidgetClass">
+<code class="sig-name descname">getWriteWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.getWriteWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.getWriteWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.handleEvent">
+<code class="sig-name descname">handleEvent</code><span class="sig-paren">(</span><em class="sig-param">evt_src</em>, <em class="sig-param">evt_type</em>, <em class="sig-param">evt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.handleEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.handleEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplemented from <code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.handleEvent()</span></code>
+to update subwidgets on config events</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.hasPendingOperations">
+<code class="sig-name descname">hasPendingOperations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.hasPendingOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.hasPendingOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>self.getPendingOperations will always return an empty list, but still
+self.hasPendingOperations will look at the writeWidget’s operations.
+If you want to ask the TaurusValue for its pending operations, call
+self.writeWidget().getPendingOperations()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.isCompact">
+<code class="sig-name descname">isCompact</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.isCompact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.isCompact" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.isReadOnly">
+<code class="sig-name descname">isReadOnly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.isReadOnly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.isReadOnly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if this component is read-only or not in the sense that the
+user can interact with it. Default implementation returns True.</p>
+<p>Override when necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether or not this component is read-only</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.isValueChangedByUser">
+<code class="sig-name descname">isValueChangedByUser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.isValueChangedByUser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.isValueChangedByUser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.labelConfig">
+<code class="sig-name descname">labelConfig</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.labelConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.labelWidget">
+<code class="sig-name descname">labelWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.labelWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.labelWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the label widget</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.labelWidgetClass">
+<code class="sig-name descname">labelWidgetClass</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.labelWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.labelWidgetClassFactory">
+<code class="sig-name descname">labelWidgetClassFactory</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.labelWidgetClassFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.labelWidgetClassFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.minimumHeight">
+<code class="sig-name descname">minimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.minimumHeight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.minimumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the model name for this component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the model name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.modifiableByUser">
+<code class="sig-name descname">modifiableByUser</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.modifiableByUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>whether the user can change the contents of the widget</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the user is allowed to modify the look&amp;feel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.onChangeLabelConfig">
+<code class="sig-name descname">onChangeLabelConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.onChangeLabelConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.onChangeLabelConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.onChangeReadWidget">
+<code class="sig-name descname">onChangeReadWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.onChangeReadWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.onChangeReadWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.onChangeWriteWidget">
+<code class="sig-name descname">onChangeWriteWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.onChangeWriteWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.onChangeWriteWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.onSetFormatter">
+<code class="sig-name descname">onSetFormatter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.onSetFormatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.onSetFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplemented to call onSetFormatter of the read widget (if provided)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.parentModelChanged">
+<code class="sig-name descname">parentModelChanged</code><span class="sig-paren">(</span><em class="sig-param">parentmodel_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.parentModelChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.parentModelChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoked when the parent model changes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parentmodel_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the new name of the parent model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.preferredRow">
+<code class="sig-name descname">preferredRow</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.preferredRow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.readWidget">
+<code class="sig-name descname">readWidget</code><span class="sig-paren">(</span><em class="sig-param">followCompact=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.readWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.readWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the read widget. If followCompact=True, and compact mode is
+used, it returns the switcher’s readWidget instead of the switcher
+itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.readWidgetClass">
+<code class="sig-name descname">readWidgetClass</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.readWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.readWidgetClassFactory">
+<code class="sig-name descname">readWidgetClassFactory</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.readWidgetClassFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.readWidgetClassFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetAllowWrite">
+<code class="sig-name descname">resetAllowWrite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetAllowWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetAllowWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetCustomWidgetClass">
+<code class="sig-name descname">resetCustomWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetCustomWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetCustomWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetExtraWidgetClass">
+<code class="sig-name descname">resetExtraWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetExtraWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetExtraWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetLabelConfig">
+<code class="sig-name descname">resetLabelConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetLabelConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetLabelConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetLabelWidgetClass">
+<code class="sig-name descname">resetLabelWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetLabelWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetLabelWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetPreferredRow">
+<code class="sig-name descname">resetPreferredRow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetPreferredRow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetPreferredRow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetReadWidgetClass">
+<code class="sig-name descname">resetReadWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetReadWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetReadWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetUnitsWidgetClass">
+<code class="sig-name descname">resetUnitsWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetUnitsWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetUnitsWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.resetWriteWidgetClass">
+<code class="sig-name descname">resetWriteWidgetClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.resetWriteWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.resetWriteWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setAllowWrite">
+<code class="sig-name descname">setAllowWrite</code><span class="sig-paren">(</span><em class="sig-param">mode</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setAllowWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setAllowWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setCompact">
+<code class="sig-name descname">setCompact</code><span class="sig-paren">(</span><em class="sig-param">compact</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setCompact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setCompact" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setCustomWidgetClass">
+<code class="sig-name descname">setCustomWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setCustomWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setCustomWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>substitutes the current widget by a new one. classID can be one of:
+None, ‘Auto’, a TaurusWidget class name, or any class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setCustomWidgetMap">
+<code class="sig-name descname">setCustomWidgetMap</code><span class="sig-paren">(</span><em class="sig-param">cwmap</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a map map for custom widgets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cwmap</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code>&gt;) – a dictionary whose keys are device
+class strings (see <code class="xref py py-class docutils literal notranslate"><span class="pre">PyTango.DeviceInfo</span></code>) and
+whose values are widget classes to be used</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setDangerMessage">
+<code class="sig-name descname">setDangerMessage</code><span class="sig-paren">(</span><em class="sig-param">dangerMessage=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setDangerMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setDangerMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the danger message when applying an operation. If dangerMessage is None,
+the apply operation is considered safe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dangerMessage</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>) – the danger message. If None is given (default)
+the apply operation is considered safe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setExtraWidgetClass">
+<code class="sig-name descname">setExtraWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setExtraWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setExtraWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>substitutes the current widget by a new one. classID can be one of:
+None, ‘Auto’, a TaurusWidget class name, or any class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setForceDangerousOperations">
+<code class="sig-name descname">setForceDangerousOperations</code><span class="sig-paren">(</span><em class="sig-param">yesno</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setForceDangerousOperations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setForceDangerousOperations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forces/clears the dangerous operations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>yesno</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – force or not the dangerous operations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setFormat">
+<code class="sig-name descname">setFormat</code><span class="sig-paren">(</span><em class="sig-param">format</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplemented to call setFormat of the read widget (if provided)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setLabelConfig">
+<code class="sig-name descname">setLabelConfig</code><span class="sig-paren">(</span><em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setLabelConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setLabelConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets fragment configuration to the label widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – fragment</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setLabelWidgetClass">
+<code class="sig-name descname">setLabelWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setLabelWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setLabelWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>substitutes the current widget by a new one. classID can be one of:
+None, ‘Auto’, a TaurusWidget class name, or any class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setMinimumHeight">
+<code class="sig-name descname">setMinimumHeight</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">int</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setMinimumHeight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setMinimumHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setModel">
+<code class="sig-name descname">setModel</code><span class="sig-paren">(</span><em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>extending <code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusBaseWidget.setModel()</span></code> to change the modelclass
+dynamically and to update the subwidgets</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setParent">
+<code class="sig-name descname">setParent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">QWidget</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setParent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>setParent(self, QWidget, Union[Qt.WindowFlags, Qt.WindowType])</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setPreferredRow">
+<code class="sig-name descname">setPreferredRow</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setPreferredRow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setPreferredRow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setReadWidgetClass">
+<code class="sig-name descname">setReadWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setReadWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setReadWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>substitutes the current widget by a new one. classID can be one of:
+None, ‘Auto’, a TaurusWidget class name, or any class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setUnitsWidgetClass">
+<code class="sig-name descname">setUnitsWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setUnitsWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setUnitsWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>substitutes the current widget by a new one. classID can be one of:
+None, ‘Auto’, a TaurusWidget class name, or any class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setVisible">
+<code class="sig-name descname">setVisible</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">bool</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setVisible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setVisible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.setWriteWidgetClass">
+<code class="sig-name descname">setWriteWidgetClass</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.setWriteWidgetClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.setWriteWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>substitutes the current widget by a new one. classID can be one of:
+None, ‘Auto’, a TaurusWidget class name, or any class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.unitsWidget">
+<code class="sig-name descname">unitsWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.unitsWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.unitsWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the units widget</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.unitsWidgetClass">
+<code class="sig-name descname">unitsWidgetClass</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.unitsWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.unitsWidgetClassFactory">
+<code class="sig-name descname">unitsWidgetClassFactory</code><span class="sig-paren">(</span><em class="sig-param">classID</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.unitsWidgetClassFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.unitsWidgetClassFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.updateCustomWidget">
+<code class="sig-name descname">updateCustomWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.updateCustomWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.updateCustomWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.updateExtraWidget">
+<code class="sig-name descname">updateExtraWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.updateExtraWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.updateExtraWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.updateLabelWidget">
+<code class="sig-name descname">updateLabelWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.updateLabelWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.updateLabelWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.updatePendingOpsStyle">
+<code class="sig-name descname">updatePendingOpsStyle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.updatePendingOpsStyle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.updatePendingOpsStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method should be reimplemented by derived classes that want to
+change their appearance depending whether there are pending operations or not</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.updateReadWidget">
+<code class="sig-name descname">updateReadWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.updateReadWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.updateReadWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.updateUnitsWidget">
+<code class="sig-name descname">updateUnitsWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.updateUnitsWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.updateUnitsWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.updateWriteWidget">
+<code class="sig-name descname">updateWriteWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.updateWriteWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.updateWriteWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.writeWidget">
+<code class="sig-name descname">writeWidget</code><span class="sig-paren">(</span><em class="sig-param">followCompact=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.writeWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.writeWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the write widget. If followCompact=True, and compact mode is
+used, it returns the switcher’s writeWidget instead of None.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.writeWidgetClass">
+<code class="sig-name descname">writeWidgetClass</code><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.writeWidgetClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="taurus.qt.qtgui.panel.TaurusValue.writeWidgetClassFactory">
+<code class="sig-name descname">writeWidgetClassFactory</code><span class="sig-paren">(</span><em class="sig-param">classID</em>, <em class="sig-param">ignoreCompact=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusvalue.html#TaurusValue.writeWidgetClassFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusValue.writeWidgetClassFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusValuesFrame.html" class="btn btn-neutral float-right" title="TaurusValuesFrame" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusPlotButton.html" class="btn btn-neutral float-left" title="TaurusPlotButton" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
