@@ -240,11 +240,8 @@
         <span class="nb">setattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;DEFAULT_FORMATTER&#39;</span><span class="p">,</span> <span class="n">default_formatter</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../devel/api/taurus/cli.html#taurus.cli.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="c1"># set the log level to WARNING avoid spamming the CLI while loading</span>
-    <span class="c1"># subcommands</span>
-    <span class="c1"># it will be restored to the desired one first thing in taurus_cmd()</span>
-    <span class="n">taurus</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">Warning</span><span class="p">)</span>
+<div class="viewcode-block" id="register_subcommands"><a class="viewcode-back" href="../../../devel/api/taurus/cli.html#taurus.cli.register_subcommands">[docs]</a><span class="k">def</span> <span class="nf">register_subcommands</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Discover and add subcommands to taurus_cmd&quot;&quot;&quot;</span>
 
     <span class="c1"># Add subcommands from the taurus_subcommands entry point</span>
     <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">iter_entry_points</span><span class="p">(</span><span class="s1">&#39;taurus.cli.subcommands&#39;</span><span class="p">):</span>
@@ -265,7 +262,19 @@
                 <span class="k">continue</span>
             <span class="c1"># -----------------------------------------------------------</span>
             <span class="n">taurus</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cannot add &quot;</span><span class="si">%s</span><span class="s1">&quot; subcommand to taurus. Reason: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span>
-                 <span class="n">ep</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                           <span class="n">ep</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../devel/api/taurus/cli.html#taurus.cli.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Register subcommands and run taurus_cmd&quot;&quot;&quot;</span>
+
+    <span class="c1"># set the log level to WARNING avoid spamming the CLI while loading</span>
+    <span class="c1"># subcommands</span>
+    <span class="c1"># it will be restored to the desired one first thing in taurus_cmd()</span>
+    <span class="n">taurus</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">Warning</span><span class="p">)</span>
+
+    <span class="c1">#register the subcommands</span>
+    <span class="n">register_subcommands</span><span class="p">()</span>
 
     <span class="c1"># launch the taurus command</span>
     <span class="n">taurus_cmd</span><span class="p">()</span></div>
