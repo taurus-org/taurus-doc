@@ -208,22 +208,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">numberChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notifyValueChanged</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">returnPressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">valueChangedSignal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">updatePendingOperations</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configured</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
     <span class="c1"># TaurusBaseWidget overwriting</span>
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
 
 <div class="viewcode-block" id="TaurusWheelEdit.handleEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusWheelEdit.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusWheelEdit.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span> <span class="ow">and</span> <span class="n">evt_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
-            <span class="c1"># set decimal digits</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">setDigitCount</span><span class="p">(</span><span class="n">int_nb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dec_nb</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
-            <span class="c1"># set min and max values</span>
-            <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">getRange</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">min_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">setMinValue</span><span class="p">(</span><span class="n">min_</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">max_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">setMaxValue</span><span class="p">(</span><span class="n">max_</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Config</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configured</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">evt_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
+                <span class="c1"># set decimal digits</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setDigitCount</span><span class="p">(</span><span class="n">int_nb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dec_nb</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+                <span class="c1"># set min and max values</span>
+                <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">getRange</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">min_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setMinValue</span><span class="p">(</span><span class="n">min_</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">max_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setMaxValue</span><span class="p">(</span><span class="n">max_</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_configured</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">handleEvent</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span></div>
