@@ -195,6 +195,7 @@
 <span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span>
 <span class="kn">from</span> <span class="nn">taurus.core.util</span> <span class="k">import</span> <span class="n">eventfilters</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
 
 
 <div class="viewcode-block" id="TaurusValueComboBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueComboBox">[docs]</a><span class="k">class</span> <span class="nc">TaurusValueComboBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="p">):</span>
@@ -274,8 +275,26 @@
 <span class="sd">        Set the value for the widget to display, not the value of the</span>
 <span class="sd">        attribute.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findData</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findData</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pymatch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setCurrentIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaurusValueComboBox.findData"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueComboBox.findData">[docs]</a>    <span class="k">def</span> <span class="nf">findData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reimplemented from :meth:`Qt.QComboBox.findData` to accept</span>
+<span class="sd">        the extra `pymatch` keyword arg. If `pymatch` is True, the</span>
+<span class="sd">        match will be attempted using python&#39;s `==` operator.</span>
+<span class="sd">        This is required to bypass some limitations imposed by C++&#39;s QVariant .</span>
+<span class="sd">        By default, pymatch is False and behaves just as</span>
+<span class="sd">        :meth:`Qt.QComboBox.findData`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pymatch</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;pymatch&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QComboBox</span><span class="o">.</span><span class="n">findData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pymatch</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemData</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="n">data</span><span class="p">):</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">index</span></div>
 
 <div class="viewcode-block" id="TaurusValueComboBox.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueComboBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueComboBox.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWritableWidget`&#39;&#39;&#39;</span>
