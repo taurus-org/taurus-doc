@@ -866,12 +866,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">toolTipObj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoneValue</span><span class="p">()</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;&lt;TABLE width=&quot;500&quot; border=&quot;0&quot; cellpadding=&quot;1&quot; cellspacing=&quot;0&quot;&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&lt;TABLE width=&quot;500&quot; border=&quot;0&quot; cellpadding=&quot;1&quot; cellspacing=&quot;0&quot;&gt;&#39;</span>
 
         <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">toolTipObj</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;&lt;TR&gt;&lt;TD WIDTH=&quot;80&quot; ALIGN=&quot;RIGHT&quot; VALIGN=&quot;MIDDLE&quot;&gt;&lt;B&gt;</span><span class="si">%s</span><span class="s1">:&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;</span><span class="si">%s</span><span class="s1">&lt;/TD&gt;&lt;/TR&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;TR&gt;&lt;TD WIDTH=&quot;80&quot; ALIGN=&quot;RIGHT&quot; VALIGN=&quot;MIDDLE&quot;&gt;&lt;B&gt;</span><span class="si">%s</span><span class="s1">:&lt;/B&gt;&lt;/TD&gt;&lt;TD&gt;</span><span class="si">%s</span><span class="s1">&lt;/TD&gt;&lt;/TR&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
                 <span class="nb">id</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">value</span><span class="p">)</span>
-        <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/TABLE&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/TABLE&gt;&#39;</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="TaurusBaseComponent.displayValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue">[docs]</a>    <span class="k">def</span> <span class="nf">displayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
@@ -942,7 +942,7 @@
             <span class="n">fmt_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">bc</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Invalid format </span><span class="si">%r</span><span class="s2"> for </span><span class="si">%r</span><span class="s2">. Using &#39;</span><span class="si">{0}</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-            <span class="n">fmt_v</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">fmt_v</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">fmt_v</span></div>
 
