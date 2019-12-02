@@ -455,13 +455,13 @@ a Taurus 3 application is to use the Quantity objects, not their magnitudes
 <p>…which is a very direct translation (and exactly what the automated backwards
 compatibility layer already does for you). However, the recommended
 conversion should use Quantities rather than magnitudes, e.g:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">UR</span>  <span class="c1"># import the taurus unit registry</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="kn">import</span> <span class="n">UR</span>  <span class="c1"># import the taurus unit registry</span>
 <span class="n">v</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/ampli&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">UR</span><span class="o">.</span><span class="n">meters</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span>  <span class="c1"># use explicit units</span>
 </pre></div>
 </div>
 <p>Or, using the Quantity constructor instead of the <cite>Unit Registry</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Q_</span>  <span class="c1"># import the taurus Quantity factory</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="kn">import</span> <span class="n">Q_</span>  <span class="c1"># import the taurus Quantity factory</span>
 <span class="n">v</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/ampli&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="s2">&quot;5 meters&quot;</span><span class="p">)</span>  <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span>
 </pre></div>

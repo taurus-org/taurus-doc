@@ -185,23 +185,23 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Extension of :mod:`guiqwt.plot`</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">next</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">next</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span>
 
 <span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
-<span class="kn">from</span> <span class="nn">guiqwt.plot</span> <span class="k">import</span> <span class="n">ImageDialog</span><span class="p">,</span> <span class="n">CurveDialog</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">guiqwt.plot</span> <span class="kn">import</span> <span class="n">ImageDialog</span><span class="p">,</span> <span class="n">CurveDialog</span>
 
 <span class="kn">import</span> <span class="nn">taurus.core</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessList</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.builder</span> <span class="k">import</span> <span class="n">make</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.curve</span> <span class="k">import</span> <span class="n">TaurusCurveItem</span><span class="p">,</span> <span class="n">TaurusTrendParam</span><span class="p">,</span> <span class="n">TaurusTrendItem</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="kn">import</span> <span class="n">CaselessList</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="kn">import</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.builder</span> <span class="kn">import</span> <span class="n">make</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.curve</span> <span class="kn">import</span> <span class="n">TaurusCurveItem</span><span class="p">,</span> <span class="n">TaurusTrendParam</span><span class="p">,</span> <span class="n">TaurusTrendItem</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusCurveDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrendDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusImageDialog&quot;</span><span class="p">]</span>
@@ -218,7 +218,7 @@
     <span class="n">_modifiableByUser</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">modelChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">([],</span> <span class="p">[</span><span class="s1">&#39;QStringList&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;QString&#39;</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;see :class:`guiqwt.plot.CurveDialog` for other valid initialization parameters&#39;&#39;&#39;</span>
         <span class="n">CurveDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="n">toolbar</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;TaurusCurveDialog&#39;</span><span class="p">)</span>
@@ -226,11 +226,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Widget</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span> <span class="o">=</span> <span class="n">designMode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">=</span> <span class="n">CaselessList</span><span class="p">()</span>
-        <span class="kn">from</span> <span class="nn">guiqwt.styles</span> <span class="k">import</span> <span class="n">style_generator</span>
+        <span class="kn">from</span> <span class="nn">guiqwt.styles</span> <span class="kn">import</span> <span class="n">style_generator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">style_generator</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSupportedMimeTypes</span><span class="p">(</span>
             <span class="p">[</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">])</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TaurusCurveChooserTool</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TaurusCurveChooserTool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_tool</span><span class="p">(</span><span class="n">TaurusCurveChooserTool</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiableByUser</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setContextMenuPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomContextMenu</span><span class="p">)</span>
@@ -333,7 +333,7 @@
 
 <div class="viewcode-block" id="TaurusCurveDialog.setModifiableByUser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusCurveDialog.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusCurveDialog.setModifiableByUser">[docs]</a>    <span class="k">def</span> <span class="nf">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TaurusCurveChooserTool</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TaurusCurveChooserTool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TaurusCurveChooserTool</span><span class="p">)</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span><span class="o">.</span><span class="n">set_items_readonly</span><span class="p">(</span><span class="ow">not</span> <span class="n">modifiable</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">)</span></div>
@@ -365,7 +365,7 @@
 
     <span class="n">modelChanged</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">([],</span> <span class="p">[</span><span class="s1">&#39;QStringList&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;QString&#39;</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">taurusparam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">taurusparam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;see :class:`guiqwt.plot.CurveDialog` for other valid initialization parameters&#39;&#39;&#39;</span>
         <span class="n">CurveDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="n">toolbar</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;TaurusTrendDialog&#39;</span><span class="p">)</span>
@@ -373,11 +373,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Widget</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_designMode</span> <span class="o">=</span> <span class="n">designMode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modelNames</span> <span class="o">=</span> <span class="n">CaselessList</span><span class="p">()</span>
-        <span class="kn">from</span> <span class="nn">guiqwt.styles</span> <span class="k">import</span> <span class="n">style_generator</span>
+        <span class="kn">from</span> <span class="nn">guiqwt.styles</span> <span class="kn">import</span> <span class="n">style_generator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">style_generator</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSupportedMimeTypes</span><span class="p">(</span>
             <span class="p">[</span><span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">])</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TaurusModelChooserTool</span><span class="p">,</span> <span class="n">AutoScrollTool</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TaurusModelChooserTool</span><span class="p">,</span> <span class="n">AutoScrollTool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_tool</span><span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_tool</span><span class="p">(</span><span class="n">AutoScrollTool</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modifiableByUser</span><span class="p">)</span>
@@ -525,7 +525,7 @@
 
 <span class="sd">        :param mode:(one of &#39;datetime&#39;, &#39;timedelta&#39; or &#39;event&#39;)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TimeAxisTool</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TimeAxisTool</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;datetime&#39;</span><span class="p">:</span>
             <span class="n">timetool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TimeAxisTool</span><span class="p">)</span>
@@ -534,7 +534,7 @@
                 <span class="n">timetool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TimeAxisTool</span><span class="p">)</span>
             <span class="n">timetool</span><span class="o">.</span><span class="n">set_scale_y_t</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;deltatime&#39;</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.scales</span> <span class="k">import</span> <span class="n">DeltaTimeScaleEngine</span>
+            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.scales</span> <span class="kn">import</span> <span class="n">DeltaTimeScaleEngine</span>
             <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span>
             <span class="n">DeltaTimeScaleEngine</span><span class="o">.</span><span class="n">enableInAxis</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">plot</span><span class="o">.</span><span class="n">xBottom</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=-</span><span class="mi">45</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;event&#39;</span><span class="p">:</span>
@@ -559,7 +559,7 @@
 
 <div class="viewcode-block" id="TaurusTrendDialog.setModifiableByUser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrendDialog.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusTrendDialog.setModifiableByUser">[docs]</a>    <span class="k">def</span> <span class="nf">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;reimplemented from :class:`TaurusBaseWidget`&quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TaurusModelChooserTool</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TaurusModelChooserTool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">)</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span><span class="o">.</span><span class="n">set_items_readonly</span><span class="p">(</span><span class="ow">not</span> <span class="n">modifiable</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">)</span></div>
@@ -599,13 +599,13 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">_rgbmode</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;see :class:`guiqwt.plot.ImageDialog` for other valid initialization parameters&#39;&#39;&#39;</span>
         <span class="n">ImageDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="n">toolbar</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;TaurusImageDialog&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowFlags</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Widget</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imgItem</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TaurusModelChooserTool</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TaurusModelChooserTool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_tool</span><span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">,</span> <span class="n">singleModel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setContextMenuPolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomContextMenu</span><span class="p">)</span>
@@ -667,7 +667,7 @@
 
 <div class="viewcode-block" id="TaurusImageDialog.setModifiableByUser"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusImageDialog.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusImageDialog.setModifiableByUser">[docs]</a>    <span class="k">def</span> <span class="nf">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;reimplemented from :class:`TaurusBaseWidget`&#39;&#39;&#39;</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TaurusModelChooserTool</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TaurusModelChooserTool</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">TaurusModelChooserTool</span><span class="p">)</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">modifiable</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_plot</span><span class="p">()</span><span class="o">.</span><span class="n">set_items_readonly</span><span class="p">(</span><span class="ow">not</span> <span class="n">modifiable</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifiable</span><span class="p">)</span></div>
@@ -693,8 +693,8 @@
 
 
 <span class="k">def</span> <span class="nf">taurusCurveDlgMain</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="k">import</span> <span class="n">TimeAxisTool</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.tools</span> <span class="kn">import</span> <span class="n">TimeAxisTool</span>
     <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 
@@ -730,7 +730,7 @@
 
 
 <span class="k">def</span> <span class="nf">taurusTrendDlgMain</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">import</span> <span class="nn">taurus.core</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 
@@ -800,7 +800,7 @@
               <span class="n">default</span><span class="o">=</span><span class="s1">&#39;TaurusPlot (qwt5)&#39;</span><span class="p">,</span>
               <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of the window&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">image_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">color_mode</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 
     <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>

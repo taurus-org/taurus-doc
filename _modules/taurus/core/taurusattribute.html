@@ -190,10 +190,10 @@
 
 <span class="kn">import</span> <span class="nn">weakref</span>
 
-<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="k">import</span> <span class="n">TaurusModel</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">DataType</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
-<span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">.taurusmodel</span> <span class="kn">import</span> <span class="n">TaurusModel</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">DataType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecation_decorator</span>
+<span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
 
 
 <div class="viewcode-block" id="TaurusAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute">[docs]</a><span class="k">class</span> <span class="nc">TaurusAttribute</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">):</span>
@@ -202,7 +202,7 @@
     <span class="n">_description</span> <span class="o">=</span> <span class="s2">&quot;A Taurus Attribute&quot;</span>
     <span class="n">defaultFragmentName</span> <span class="o">=</span> <span class="s2">&quot;rvalue&quot;</span>  <span class="c1"># fragment to be used if none is specified</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusModel</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
         <span class="c1"># User enabled/disabled polling</span>
@@ -437,7 +437,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span><span class="s2">&quot;use disablePolling()&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disablePolling</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TaurusAttribute.getDisplayDescription"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusAttribute.html#taurus.core.TaurusAttribute.getDisplayDescription">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplayDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>

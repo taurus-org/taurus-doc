@@ -185,8 +185,8 @@
 
 <span class="sd">&quot;&quot;&quot;This module contains all taurus tango attribute&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span>
 
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -194,27 +194,27 @@
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">import</span> <span class="nn">PyTango</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
-<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Manager</span>
-<span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="kn">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span>
 
-<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">tauruscustomsettings</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">tauruscustomsettings</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="kn">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="p">,</span>
                                          <span class="n">TaurusSerializationMode</span><span class="p">,</span>
                                          <span class="n">SubscriptionState</span><span class="p">,</span> <span class="n">TaurusAttrValue</span><span class="p">,</span>
                                          <span class="n">DataFormat</span><span class="p">,</span> <span class="n">DataType</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusoperation</span> <span class="k">import</span> <span class="n">WriteAttrOperation</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.event</span> <span class="k">import</span> <span class="n">EventListener</span><span class="p">,</span> <span class="n">_BoundMethodWeakrefWithCall</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="p">(</span><span class="n">debug</span><span class="p">,</span> <span class="n">taurus4_deprecation</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusoperation</span> <span class="kn">import</span> <span class="n">WriteAttrOperation</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.event</span> <span class="kn">import</span> <span class="n">EventListener</span><span class="p">,</span> <span class="n">_BoundMethodWeakrefWithCall</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="p">(</span><span class="n">debug</span><span class="p">,</span> <span class="n">taurus4_deprecation</span><span class="p">,</span>
                                   <span class="n">deprecation_decorator</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.tango.enums</span> <span class="k">import</span> <span class="p">(</span><span class="n">EVENT_TO_POLLING_EXCEPTIONS</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tango.enums</span> <span class="kn">import</span> <span class="p">(</span><span class="n">EVENT_TO_POLLING_EXCEPTIONS</span><span class="p">,</span>
                                      <span class="n">FROM_TANGO_TO_NUMPY_TYPE</span><span class="p">,</span>
                                      <span class="n">DevState</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">.util.tango_taurus</span> <span class="k">import</span> <span class="p">(</span><span class="n">description_from_tango</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">.util.tango_taurus</span> <span class="kn">import</span> <span class="p">(</span><span class="n">description_from_tango</span><span class="p">,</span>
                                 <span class="n">display_level_from_tango</span><span class="p">,</span>
                                 <span class="n">quality_from_tango</span><span class="p">,</span>
                                 <span class="n">standard_display_format_from_tango</span><span class="p">,</span>
@@ -232,11 +232,11 @@
 <span class="sd">    objects</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pytango_dev_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pytango_dev_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># config parameter is kept for backwards compatibility only</span>
         <span class="n">TaurusAttrValue</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecated</span>
+            <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecated</span>
             <span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;&quot;config&quot; kwarg&#39;</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;&quot;attr&quot;&#39;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
             <span class="n">attr</span> <span class="o">=</span> <span class="n">config</span>
         <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -296,7 +296,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">time</span>  <span class="c1"># TODO: decode this into a TaurusTimeVal</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quality</span> <span class="o">=</span> <span class="n">quality_from_tango</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">quality</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If the member `name` is not defined in this class, try to get it</span>
 <span class="sd">        from the TangoAttribute (configuration) or from the PyTango value</span>
@@ -324,7 +324,7 @@
                 <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; object has no attribute </span><span class="si">%s</span><span class="s2">&quot;</span>
                                      <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
         <span class="c1"># return the attr but only after warning</span>
-        <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecated</span>
+        <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecated</span>
         <span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;TangoAttrValue.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span>
                    <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;TangoAttribute.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span>
@@ -429,7 +429,7 @@
     <span class="n">_scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span>
     <span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;A Tango Attribute&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># the last attribute value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -479,7 +479,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">is_tango_subscribe_enabled</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeConfEvents</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TangoAttribute.cleanUp"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -490,7 +490,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__dev_hw_obj</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pytango_attrinfoex</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pytango_attrinfoex</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
@@ -1328,11 +1328,13 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">isWritable</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
 
     <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;self.data_format&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">isScalar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">isScalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="c1"># cache is ignored, it is only for back. compat.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_0D</span>
 
     <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;self.data_format&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">isSpectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">isSpectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="c1"># cache is ignored, it is only for back. compat.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">_1D</span>
 
     <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;self.data_format&#39;</span><span class="p">)</span>
@@ -1557,7 +1559,7 @@
 <span class="sd">    it occured, it should only be used for events for which the event value</span>
 <span class="sd">    domain (possible values) is limited and well known (ex: an enum)&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="n">EventListener</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attr</span> <span class="o">=</span> <span class="n">attr</span>
         <span class="n">attr</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -1570,7 +1572,7 @@
 
 <span class="k">def</span> <span class="nf">test1</span><span class="p">():</span>
     <span class="kn">import</span> <span class="nn">numpy</span>
-    <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Attribute</span>
+    <span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">Attribute</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;sys/tg_test/1/ulong64_scalar&#39;</span><span class="p">)</span>
 
     <span class="n">a</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint64</span><span class="p">(</span><span class="mi">88</span><span class="p">))</span>

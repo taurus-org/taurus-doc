@@ -187,16 +187,16 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">SubscriptionState</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="kn">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="n">SubscriptionState</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span> \
     <span class="n">TaurusAttrValue</span><span class="p">,</span> <span class="n">TaurusTimeVal</span><span class="p">,</span> <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">DataType</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurushelper</span> <span class="k">import</span> <span class="n">Attribute</span><span class="p">,</span> <span class="n">Manager</span>
-<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">DataFormat</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">debug</span><span class="p">,</span> <span class="n">taurus4_deprecation</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusexception</span> <span class="kn">import</span> <span class="n">TaurusException</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurushelper</span> <span class="kn">import</span> <span class="n">Attribute</span><span class="p">,</span> <span class="n">Manager</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="kn">import</span> <span class="n">DataFormat</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">debug</span><span class="p">,</span> <span class="n">taurus4_deprecation</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.evaluation.evalvalidator</span> <span class="k">import</span> <span class="n">QUOTED_TEXT_RE</span><span class="p">,</span> <span class="n">PY_VAR_RE</span>
+<span class="kn">from</span> <span class="nn">taurus.core.evaluation.evalvalidator</span> <span class="kn">import</span> <span class="n">QUOTED_TEXT_RE</span><span class="p">,</span> <span class="n">PY_VAR_RE</span>
 
 
 <span class="k">class</span> <span class="nc">EvaluationAttrValue</span><span class="p">(</span><span class="n">TaurusAttrValue</span><span class="p">):</span>
@@ -205,11 +205,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO: remove this class once the standard widgets are adapted to TEP14</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># config parameter is kept for backwards compatibility only</span>
         <span class="n">TaurusAttrValue</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecated</span>
+            <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecated</span>
             <span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;&quot;config&quot; kwarg&#39;</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;&quot;attr&quot;&#39;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
             <span class="n">attr</span> <span class="o">=</span> <span class="n">config</span>
         <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -218,7 +218,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attrRef</span>
 
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="c1"># Do not try to delegate special methods</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; object has no attribute </span><span class="si">%s</span><span class="s2">&quot;</span>
@@ -229,7 +229,7 @@
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> has no attribute </span><span class="si">%s</span><span class="s1">&#39;</span>
                                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
         <span class="c1"># return the attr but only after warning</span>
-        <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecated</span>
+        <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecated</span>
         <span class="n">deprecated</span><span class="p">(</span><span class="n">dep</span><span class="o">=</span><span class="s1">&#39;EvaluationAttrValue.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span>
                    <span class="n">alt</span><span class="o">=</span><span class="s1">&#39;EvaluationAttribute.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span>
@@ -330,7 +330,7 @@
     <span class="n">_factory</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_scheme</span> <span class="o">=</span> <span class="s1">&#39;eval&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusAttribute</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">EvaluationAttrValue</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 

@@ -185,10 +185,10 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">safeeval.py: Safe eval replacement with whitelist support</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">object</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SafeEvaluator&quot;</span><span class="p">]</span>
 
@@ -208,7 +208,7 @@
 <span class="sd">    Note: In order to use variables defined outside, the user must explicitly declare them safe.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">safedict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">defaultSafe</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">safedict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">defaultSafe</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_numpy</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;abs&#39;</span><span class="p">,</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span> <span class="s1">&#39;arange&#39;</span><span class="p">,</span> <span class="s1">&#39;arccos&#39;</span><span class="p">,</span> <span class="s1">&#39;arcsin&#39;</span><span class="p">,</span> <span class="s1">&#39;arctan&#39;</span><span class="p">,</span> <span class="s1">&#39;arctan2&#39;</span><span class="p">,</span> <span class="s1">&#39;average&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;ceil&#39;</span><span class="p">,</span> <span class="s1">&#39;cos&#39;</span><span class="p">,</span> <span class="s1">&#39;cosh&#39;</span><span class="p">,</span> <span class="s1">&#39;degrees&#39;</span><span class="p">,</span> <span class="s1">&#39;dot&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">,</span> <span class="s1">&#39;fabs&#39;</span><span class="p">,</span> <span class="s1">&#39;floor&#39;</span><span class="p">,</span> <span class="s1">&#39;fmod&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;frexp&#39;</span><span class="p">,</span> <span class="s1">&#39;hypot&#39;</span><span class="p">,</span> <span class="s1">&#39;ldexp&#39;</span><span class="p">,</span> <span class="s1">&#39;linspace&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;log10&#39;</span><span class="p">,</span> <span class="s1">&#39;logspace&#39;</span><span class="p">,</span>
@@ -221,7 +221,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span> <span class="o">=</span> <span class="n">safedict</span>
         <span class="k">if</span> <span class="n">defaultSafe</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">numpy</span>
-            <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="k">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span>
+            <span class="kn">from</span> <span class="nn">taurus.core.units</span> <span class="kn">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">UR</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;pow&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">pow</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;len&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_dict</span><span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span>

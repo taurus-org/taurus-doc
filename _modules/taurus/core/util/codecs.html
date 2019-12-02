@@ -221,8 +221,8 @@
 <span class="sd">    &gt;&gt;&gt; codec = CodecFactory().getCodec(v.format)</span>
 <span class="sd">    &gt;&gt;&gt; f, d = codec.decode((v.format, v.value))</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
 
@@ -231,11 +231,11 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="p">(</span><span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
-<span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
+<span class="kn">from</span> <span class="nn">.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">.containers</span> <span class="kn">import</span> <span class="n">CaselessDict</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;NullCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;ZIPCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;BZ2Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;JSONCodec&quot;</span><span class="p">,</span>
            <span class="s2">&quot;Utf8Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;FunctionCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;PlotCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;CodecPipeline&quot;</span><span class="p">,</span>
@@ -252,7 +252,7 @@
 <div class="viewcode-block" id="Codec"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_Codec.html#taurus.core.util.Codec">[docs]</a><span class="k">class</span> <span class="nc">Codec</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The base class for all codecs&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor&quot;&quot;&quot;</span>
         <span class="n">Logger</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -280,10 +280,10 @@
 <span class="sd">        :raises: NotImplementedError&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;decode cannot be called on abstract Codec&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">()&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">()&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span></div>
 
 
@@ -669,7 +669,7 @@
 <div class="viewcode-block" id="FunctionCodec"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_FunctionCodec.html#taurus.core.util.FunctionCodec">[docs]</a><span class="k">class</span> <span class="nc">FunctionCodec</span><span class="p">(</span><span class="n">Codec</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A generic function codec&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_name</span><span class="p">):</span>
         <span class="n">Codec</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_func_name</span> <span class="o">=</span> <span class="n">func_name</span>
 
@@ -689,7 +689,7 @@
 <div class="viewcode-block" id="PlotCodec"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_PlotCodec.html#taurus.core.util.PlotCodec">[docs]</a><span class="k">class</span> <span class="nc">PlotCodec</span><span class="p">(</span><span class="n">FunctionCodec</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A specialization of the :class:`FunctionCodec` for plot function&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">FunctionCodec</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;plot&#39;</span><span class="p">)</span></div>
 
 
@@ -990,7 +990,7 @@
 <span class="sd">        format, decoded_data = codec.decode((format, encoded_data))</span>
 <span class="sd">        print decoded_data&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor. The CodecPipeline object will be created using</span>
 <span class="sd">        the :class:`CodecFactory` to search for format(s) given in the format</span>
 <span class="sd">        parameter.</span>
@@ -1086,7 +1086,7 @@
         <span class="s1">&#39;none&#39;</span><span class="p">:</span> <span class="n">NullCodec</span><span class="p">,</span>
         <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="n">NullCodec</span><span class="p">})</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 

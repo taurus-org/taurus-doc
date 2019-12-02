@@ -191,17 +191,17 @@
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.util.colors</span> <span class="k">import</span> <span class="n">ColorPalette</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">taurus.core.util.colors</span> <span class="kn">import</span> <span class="n">ColorPalette</span><span class="p">,</span> \
     <span class="n">DEVICE_STATE_DATA</span><span class="p">,</span> <span class="n">ATTRIBUTE_QUALITY_DATA</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">AttrQuality</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">deprecation_decorator</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="n">AttrQuality</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecation_decorator</span>
 
 
 <div class="viewcode-block" id="QtColorPalette"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/_QtColorPalette.html#taurus.qt.qtgui.util.QtColorPalette">[docs]</a><span class="k">class</span> <span class="nc">QtColorPalette</span><span class="p">(</span><span class="n">ColorPalette</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">int_decoder_dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">int_decoder_dict</span><span class="p">):</span>
         <span class="n">ColorPalette</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">int_decoder_dict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_qcolor_cache_fg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_qcolor_cache_bg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -251,7 +251,7 @@
 
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># TODO: Tango-centric</span>
-    <span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">DevState</span>
+    <span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="kn">import</span> <span class="n">DevState</span>
     <span class="n">QT_DEVICE_STATE_PALETTE</span> <span class="o">=</span> <span class="n">QtColorPalette</span><span class="p">(</span><span class="n">DEVICE_STATE_DATA</span><span class="p">,</span> <span class="n">DevState</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">QT_DEVICE_STATE_PALETTE</span> <span class="o">=</span> <span class="n">QtColorPalette</span><span class="p">(</span><span class="n">DEVICE_STATE_DATA</span><span class="p">,</span> <span class="p">{})</span>

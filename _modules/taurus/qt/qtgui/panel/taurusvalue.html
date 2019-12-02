@@ -194,32 +194,32 @@
 
 <span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
 
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
-<span class="kn">from</span> <span class="nn">future.builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">future.builtins</span> <span class="kn">import</span> <span class="nb">str</span>
 
 <span class="kn">import</span> <span class="nn">weakref</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">import</span> <span class="nn">taurus.core</span>
-<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">DataFormat</span><span class="p">,</span> <span class="n">TaurusEventType</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="kn">import</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">DataFormat</span><span class="p">,</span> <span class="n">TaurusEventType</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="k">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="k">import</span> <span class="n">BaseConfigurableClass</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusFrame</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLabel</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="k">import</span> <span class="n">TaurusLed</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="k">import</span> <span class="n">TaurusValueSpinBox</span><span class="p">,</span> <span class="n">TaurusValueCheckBox</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="k">import</span> <span class="n">TaurusWheelEdit</span><span class="p">,</span> <span class="n">TaurusValueLineEdit</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.button</span> <span class="k">import</span> <span class="n">TaurusLauncherButton</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="n">TaurusWidgetFactory</span><span class="p">,</span> <span class="n">ConfigurationMenu</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.compact</span> <span class="k">import</span> <span class="n">TaurusReadWriteSwitcher</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="kn">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.configuration</span> <span class="kn">import</span> <span class="n">BaseConfigurableClass</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="kn">import</span> <span class="n">TaurusFrame</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="kn">import</span> <span class="n">TaurusLabel</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="kn">import</span> <span class="n">TaurusLed</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="kn">import</span> <span class="n">TaurusValueSpinBox</span><span class="p">,</span> <span class="n">TaurusValueCheckBox</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.input</span> <span class="kn">import</span> <span class="n">TaurusWheelEdit</span><span class="p">,</span> <span class="n">TaurusValueLineEdit</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.button</span> <span class="kn">import</span> <span class="n">TaurusLauncherButton</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="kn">import</span> <span class="n">TaurusWidgetFactory</span><span class="p">,</span> <span class="n">ConfigurationMenu</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.compact</span> <span class="kn">import</span> <span class="n">TaurusReadWriteSwitcher</span>
 
 
 <div class="viewcode-block" id="DefaultTaurusValueCheckBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_DefaultTaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.DefaultTaurusValueCheckBox">[docs]</a><span class="k">class</span> <span class="nc">DefaultTaurusValueCheckBox</span><span class="p">(</span><span class="n">TaurusValueCheckBox</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">TaurusValueCheckBox</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setShowText</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
@@ -239,7 +239,7 @@
 
     <span class="n">_dragEnabled</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">TaurusLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span><span class="p">)</span>
@@ -339,7 +339,7 @@
 <span class="k">class</span> <span class="nc">ExpandingLabel</span><span class="p">(</span><span class="n">TaurusLabel</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;just a expanding TaurusLabel&#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">TaurusLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">)</span>
 
@@ -376,7 +376,7 @@
 
     <span class="n">FORMAT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">TaurusLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setNoneValue</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Preferred</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span><span class="p">)</span>
@@ -404,7 +404,7 @@
     <span class="n">_deleteWidgetOnClose</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">_text</span> <span class="o">=</span> <span class="s1">&#39;Show&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">TaurusLauncherButton</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span><span class="p">)</span>
@@ -456,7 +456,7 @@
 <span class="k">class</span> <span class="nc">TaurusStatusLabel</span><span class="p">(</span><span class="n">TaurusLabel</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;just a taurusLabel but showing the state as its background by default&#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">TaurusLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setBgRole</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Maximum</span><span class="p">)</span>
@@ -478,7 +478,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">_compact</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">customWidgetMap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">customWidgetMap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseWidget</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">)</span>
@@ -708,7 +708,7 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="c1"># unused import but useful to determine if</span>
                         <span class="c1"># TaurusImageButton should be added</span>
-                        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt</span> <span class="k">import</span> <span class="n">TaurusImageDialog</span>
+                        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt</span> <span class="kn">import</span> <span class="n">TaurusImageDialog</span>
                         <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">TaurusImageButton</span><span class="p">,</span>
                                   <span class="n">TaurusValuesTableButton</span><span class="p">,</span> <span class="n">DefaultReadWidgetLabel</span><span class="p">]</span>
                     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -1557,20 +1557,20 @@
 
     <span class="kn">import</span> <span class="nn">sys</span>
 
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
 
     <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">form</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
     <span class="c1"># ly=Qt.QVBoxLayout(form)</span>
     <span class="c1"># container=Qt.QWidget()</span>
 <span class="c1">#    container = TaurusValuesFrame()</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusForm</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="kn">import</span> <span class="n">TaurusForm</span>
     <span class="n">container</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
     <span class="c1"># ly.addWidget(container)</span>
     <span class="n">form</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_pool</span> <span class="k">import</span> <span class="n">PoolMotorSlim</span><span class="p">,</span> <span class="n">PoolChannel</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_pool</span> <span class="kn">import</span> <span class="n">PoolMotorSlim</span><span class="p">,</span> <span class="n">PoolChannel</span>
         <span class="n">container</span><span class="o">.</span><span class="n">setCustomWidgetMap</span><span class="p">({</span><span class="s1">&#39;SimuMotor&#39;</span><span class="p">:</span> <span class="n">PoolMotorSlim</span><span class="p">,</span>
                                       <span class="s1">&#39;Motor&#39;</span><span class="p">:</span> <span class="n">PoolMotorSlim</span><span class="p">,</span>
                                       <span class="s1">&#39;PseudoMotor&#39;</span><span class="p">:</span> <span class="n">PoolMotorSlim</span><span class="p">,</span>
@@ -1611,7 +1611,7 @@
 
     <span class="c1"># show an Attributechooser dialog if no model was given</span>
     <span class="k">if</span> <span class="n">models</span> <span class="o">==</span> <span class="p">[]:</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="k">import</span> <span class="n">TaurusModelChooser</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="kn">import</span> <span class="n">TaurusModelChooser</span>
         <span class="n">modelChooser</span> <span class="o">=</span> <span class="n">TaurusModelChooser</span><span class="p">()</span>
         <span class="n">modelChooser</span><span class="o">.</span><span class="n">updateModels</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">container</span><span class="o">.</span><span class="n">setModel</span><span class="p">)</span>
         <span class="n">modelChooser</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>

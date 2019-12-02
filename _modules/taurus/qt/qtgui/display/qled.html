@@ -190,10 +190,10 @@
 
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="k">import</span> <span class="n">getCachedPixmap</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display.qpixmapwidget</span> <span class="k">import</span> <span class="n">QPixmapWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="kn">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="kn">import</span> <span class="n">getCachedPixmap</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display.qpixmapwidget</span> <span class="kn">import</span> <span class="n">QPixmapWidget</span>
 
 <span class="n">LedColor</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s2">&quot;LedColor&quot;</span><span class="p">,</span>  <span class="p">[</span>
                        <span class="s2">&quot;BLUE&quot;</span><span class="p">,</span> <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span> <span class="s2">&quot;RED&quot;</span><span class="p">,</span> <span class="s2">&quot;YELLOW&quot;</span><span class="p">,</span> <span class="s2">&quot;ORANGE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAGENTA&quot;</span><span class="p">,</span> <span class="s2">&quot;GRENOBLE&quot;</span><span class="p">,</span> <span class="s2">&quot;BLACK&quot;</span><span class="p">,</span> <span class="s2">&quot;WHITE&quot;</span><span class="p">])</span>
@@ -209,7 +209,7 @@
     <span class="n">DefaultLedInverted</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">DefaultBlinkingInterval</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ledStatus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedStatus</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ledColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedColor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedPattern</span>
@@ -448,7 +448,7 @@
 <div class="viewcode-block" id="QLedOld"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld">[docs]</a><span class="k">class</span> <span class="nc">QLedOld</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
     <span class="n">ledDirPattern</span> <span class="o">=</span> <span class="s2">&quot;:leds/images</span><span class="si">%(size)d</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ledsize</span><span class="o">=</span><span class="n">LedSize</span><span class="o">.</span><span class="n">SMALL</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ledsize</span><span class="o">=</span><span class="n">LedSize</span><span class="o">.</span><span class="n">SMALL</span><span class="p">,</span>
                  <span class="n">ledcolor</span><span class="o">=</span><span class="n">LedColor</span><span class="o">.</span><span class="n">GREEN</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
@@ -541,7 +541,7 @@
     <span class="n">owns_app</span> <span class="o">=</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="n">owns_app</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+        <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
         <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="n">w</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>

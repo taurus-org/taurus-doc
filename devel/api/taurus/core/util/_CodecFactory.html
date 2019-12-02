@@ -201,7 +201,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.singleton.Singleton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.log.Logger</span></code></p>
 <p>The singleton CodecFactory class.</p>
 <p>To get the singleton object do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.util.codecs</span> <span class="k">import</span> <span class="n">CodecFactory</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taurus.core.util.codecs</span> <span class="kn">import</span> <span class="n">CodecFactory</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">CodecFactory</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -210,7 +210,7 @@ format and also to register new codecs.
 The <a class="reference internal" href="_CodecPipeline.html#taurus.core.util.CodecPipeline" title="taurus.core.util.CodecPipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodecPipeline</span></code></a> is a special codec that is able to code/decode a
 sequence of codecs. This way you can have codecs ‘inside’ codecs.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">taurus.core.util.codecs</span> <span class="k">import</span> <span class="n">CodecFactory</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">taurus.core.util.codecs</span> <span class="kn">import</span> <span class="n">CodecFactory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cf</span> <span class="o">=</span> <span class="n">CodecFactory</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">json_codec</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">getCodec</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bz2_json_codec</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">getCodec</span><span class="p">(</span><span class="s1">&#39;bz2_json&#39;</span><span class="p">)</span>
@@ -227,7 +227,7 @@ sequence of codecs. This way you can have codecs ‘inside’ codecs.</p>
 <p>A Taurus related example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># this example shows how to automatically get the data from a DEV_ENCODED attribute</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">taurus</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">taurus.core.util.codecs</span> <span class="k">import</span> <span class="n">CodecFactory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">taurus.core.util.codecs</span> <span class="kn">import</span> <span class="n">CodecFactory</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cf</span> <span class="o">=</span> <span class="n">CodecFactory</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">devenc_attr</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s1">&#39;a/b/c/devenc_attr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">devenc_attr</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>

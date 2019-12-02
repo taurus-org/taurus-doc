@@ -192,9 +192,9 @@
 
 <span class="kn">import</span> <span class="nn">weakref</span>
 
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="kn">import</span> <span class="n">Enumeration</span>
 
 <span class="n">QObjectRepresentation</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s1">&#39;QObjectRepresentation&#39;</span><span class="p">,</span>
                                     <span class="p">(</span><span class="s1">&#39;ClassName&#39;</span><span class="p">,</span> <span class="s1">&#39;ObjectName&#39;</span><span class="p">,</span> <span class="s1">&#39;FullName&#39;</span><span class="p">))</span>
@@ -278,15 +278,15 @@
     <span class="k">return</span> <span class="n">str_tree</span></div>
 
 
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.tree.qtree</span> <span class="k">import</span> <span class="n">QBaseTreeWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.model</span> <span class="k">import</span> <span class="n">TaurusBaseModel</span><span class="p">,</span> <span class="n">TaurusBaseTreeItem</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.tree.qtree</span> <span class="kn">import</span> <span class="n">QBaseTreeWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.model</span> <span class="kn">import</span> <span class="n">TaurusBaseModel</span><span class="p">,</span> <span class="n">TaurusBaseTreeItem</span>
 
 <span class="n">QR</span> <span class="o">=</span> <span class="n">QObjectRepresentation</span>
 
 
 <div class="viewcode-block" id="TreeQObjecttItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/tauruswidgettree/_TreeQObjecttItem.html#taurus.qt.qtgui.util.tauruswidgettree.TreeQObjecttItem">[docs]</a><span class="k">class</span> <span class="nc">TreeQObjecttItem</span><span class="p">(</span><span class="n">TaurusBaseTreeItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">TaurusBaseTreeItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">qobject</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -300,7 +300,7 @@
     <span class="n">ColumnNames</span> <span class="o">=</span> <span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Object name&quot;</span>
     <span class="n">ColumnRoles</span> <span class="o">=</span> <span class="p">(</span><span class="n">QR</span><span class="o">.</span><span class="n">ClassName</span><span class="p">,),</span> <span class="n">QR</span><span class="o">.</span><span class="n">ObjectName</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">TaurusBaseModel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 
 <span class="c1">#    def createNewRootItem(self):</span>
@@ -349,7 +349,7 @@
 
     <span class="n">DftPerspective</span> <span class="o">=</span> <span class="s2">&quot;Default&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_navigation_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_navigation_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">with_filter_widget</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">perspective</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">qobject_root</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">QBaseTreeWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="n">designMode</span><span class="p">,</span>
@@ -379,7 +379,7 @@
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/util/tauruswidgettree.html#taurus.qt.qtgui.util.tauruswidgettree.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="n">w</span> <span class="o">=</span> <span class="n">build_gui</span><span class="p">()</span>

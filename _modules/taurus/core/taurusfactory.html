@@ -214,18 +214,18 @@
 <span class="sd">  &lt;https://tools.ietf.org/html/rfc3986#section-3.3&gt;)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">atexit</span>
-<span class="kn">from</span> <span class="nn">weakref</span> <span class="k">import</span> <span class="n">WeakValueDictionary</span>
-<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusElementType</span>
-<span class="kn">from</span> <span class="nn">.taurusauthority</span> <span class="k">import</span> <span class="n">TaurusAuthority</span>
-<span class="kn">from</span> <span class="nn">.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
-<span class="kn">from</span> <span class="nn">.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
-<span class="kn">from</span> <span class="nn">.taurusconfiguration</span> <span class="k">import</span> <span class="n">TaurusConfiguration</span><span class="p">,</span> <span class="n">TaurusConfigurationProxy</span>
-<span class="kn">from</span> <span class="nn">.taurusexception</span> <span class="k">import</span> <span class="n">TaurusException</span>
-<span class="kn">from</span> <span class="nn">taurus.core.tauruspollingtimer</span> <span class="k">import</span> <span class="n">TaurusPollingTimer</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">WeakValueDictionary</span>
+<span class="kn">from</span> <span class="nn">.taurusbasetypes</span> <span class="kn">import</span> <span class="n">TaurusElementType</span>
+<span class="kn">from</span> <span class="nn">.taurusauthority</span> <span class="kn">import</span> <span class="n">TaurusAuthority</span>
+<span class="kn">from</span> <span class="nn">.taurusdevice</span> <span class="kn">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">.taurusattribute</span> <span class="kn">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">.taurusconfiguration</span> <span class="kn">import</span> <span class="n">TaurusConfiguration</span><span class="p">,</span> <span class="n">TaurusConfigurationProxy</span>
+<span class="kn">from</span> <span class="nn">.taurusexception</span> <span class="kn">import</span> <span class="n">TaurusException</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tauruspollingtimer</span> <span class="kn">import</span> <span class="n">TaurusPollingTimer</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusFactory&quot;</span><span class="p">]</span>
 
@@ -245,7 +245,7 @@
 
     <span class="n">DefaultPollingPeriod</span> <span class="o">=</span> <span class="mi">3000</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_polling_period</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultPollingPeriod</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span> <span class="o">=</span> <span class="p">{}</span>
@@ -254,7 +254,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_devs</span> <span class="o">=</span> <span class="n">WeakValueDictionary</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_auths</span> <span class="o">=</span> <span class="n">WeakValueDictionary</span><span class="p">()</span>
 
-        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">taurusmanager</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">taurusmanager</span>
         <span class="n">manager</span> <span class="o">=</span> <span class="n">taurusmanager</span><span class="o">.</span><span class="n">TaurusManager</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_serialization_mode</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">getSerializationMode</span><span class="p">()</span>
 
@@ -523,10 +523,10 @@
         <span class="k">if</span> <span class="n">p</span><span class="p">:</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">[</span><span class="n">period</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">(schemes=</span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schemes</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TaurusFactory.getValidTypesForName"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusFactory.html#taurus.core.TaurusFactory.getValidTypesForName">[docs]</a>    <span class="k">def</span> <span class="nf">getValidTypesForName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

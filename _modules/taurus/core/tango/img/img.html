@@ -186,12 +186,12 @@
 
 <span class="sd">&quot;&quot;&quot;The img submodule. It contains specific device implementation for CCDs and</span>
 <span class="sd">2D detectors&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="n">TaurusEventType</span>
-<span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">TangoDevice</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span><span class="p">,</span> <span class="n">CaselessList</span>
-<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Lock</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="n">TaurusEventType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="kn">import</span> <span class="n">TangoDevice</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="kn">import</span> <span class="n">CaselessDict</span><span class="p">,</span> <span class="n">CaselessList</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ImageDevice&#39;</span><span class="p">,</span> <span class="s1">&#39;ImageCounterDevice&#39;</span><span class="p">,</span> <span class="s1">&#39;PyImageViewer&#39;</span><span class="p">,</span> <span class="s1">&#39;ImgGrabber&#39;</span><span class="p">,</span>
            <span class="s1">&#39;CCDPVCAM&#39;</span><span class="p">,</span> <span class="s1">&#39;ImgBeamAnalyzer&#39;</span><span class="p">,</span> <span class="s1">&#39;Falcon&#39;</span><span class="p">,</span> <span class="s1">&#39;LimaCCDs&#39;</span><span class="p">]</span>
@@ -203,7 +203,7 @@
 
     <span class="sd">&quot;&quot;&quot;A class encapsulating a generic image device&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TangoDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setImageAttrName</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
 
@@ -227,7 +227,7 @@
     <span class="sd">&quot;&quot;&quot;A class encapsulating a generic image device that has an image counter</span>
 <span class="sd">    attribute&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">image_ct</span><span class="o">=</span><span class="s1">&#39;imagecounter&#39;</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">image_ct</span><span class="o">=</span><span class="s1">&#39;imagecounter&#39;</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image_data</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">()</span>
@@ -320,7 +320,7 @@
 
 <div class="viewcode-block" id="Falcon"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_Falcon.html#taurus.core.tango.img.Falcon">[docs]</a><span class="k">class</span> <span class="nc">Falcon</span><span class="p">(</span><span class="n">ImageCounterDevice</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_color</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">ImageCounterDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
                           <span class="n">image_name</span><span class="o">=</span><span class="n">image_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
@@ -345,13 +345,13 @@
 
 <div class="viewcode-block" id="ImgBeamAnalyzer"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_ImgBeamAnalyzer.html#taurus.core.tango.img.ImgBeamAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">ImgBeamAnalyzer</span><span class="p">(</span><span class="n">ImageCounterDevice</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;roiimage&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;roiimage&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">ImageCounterDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LimaCCDs"><a class="viewcode-back" href="../../../../../devel/api/taurus/core/tango/img/_LimaCCDs.html#taurus.core.tango.img.LimaCCDs">[docs]</a><span class="k">class</span> <span class="nc">LimaCCDs</span><span class="p">(</span><span class="n">ImageCounterDevice</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;video_last_image&#39;</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;video_last_image&#39;</span><span class="p">,</span>
                  <span class="n">image_ct</span><span class="o">=</span><span class="s1">&#39;video_last_image_counter&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">ImageCounterDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">image_ct</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Prepared to listen image counter (</span><span class="si">%s</span><span class="s2">) for the </span><span class="si">%s</span><span class="s2"> images&quot;</span>

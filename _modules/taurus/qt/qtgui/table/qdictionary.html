@@ -183,15 +183,15 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module provides basic python dictionary/list editor widgets&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">SortedDict</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="k">import</span> <span class="n">TaurusBaseContainer</span><span class="p">,</span> <span class="n">TaurusWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util.properties</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">djoin</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="kn">import</span> <span class="n">SortedDict</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="kn">import</span> <span class="n">TaurusBaseContainer</span><span class="p">,</span> <span class="n">TaurusWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util.properties</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">djoin</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QDictionaryEditor&quot;</span><span class="p">,</span> <span class="s2">&quot;QListEditor&quot;</span><span class="p">]</span>
@@ -309,7 +309,7 @@
 
 <span class="k">class</span> <span class="nc">QBaseDictionaryEditor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">,</span> <span class="n">TaurusBaseContainer</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># An {(x,y):value} array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dctmodel</span> <span class="o">=</span> <span class="n">SortedDict</span><span class="p">()</span>
@@ -526,7 +526,7 @@
 <span class="c1">###############################################################################</span>
 
 <span class="k">def</span> <span class="nf">prepare</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="k">import</span> <span class="n">TaurusApplication</span>
+    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s1">&#39;DictionaryEditor&#39;</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_command_line_args</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">app</span><span class="p">,</span> <span class="n">args</span>

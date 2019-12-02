@@ -183,22 +183,22 @@
 <span class="c1">#############################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;This module provides a set of basic Taurus widgets based on QLabel&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
                                          <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">TaurusDevState</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseController</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusScalarAttributeControllerHelper</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusConfigurationControllerHelper</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">updateLabelBackground</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseController</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusScalarAttributeControllerHelper</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusConfigurationControllerHelper</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">updateLabelBackground</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusLabel&quot;</span><span class="p">]</span>
@@ -219,7 +219,7 @@
 
     <span class="n">StyleSheetTemplate</span> <span class="o">=</span> <span class="s2">&quot;border-style: outset; border-width: 2px; border-color: </span><span class="si">{0}</span><span class="s2">; </span><span class="si">{1}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trimmedText</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trimPattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;&lt;[^&lt;]*&gt;&#39;</span><span class="p">)</span>
@@ -285,7 +285,7 @@
 
 <span class="k">class</span> <span class="nc">TaurusLabelControllerAttribute</span><span class="p">(</span><span class="n">TaurusScalarAttributeControllerHelper</span><span class="p">,</span> <span class="n">TaurusLabelController</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="n">TaurusScalarAttributeControllerHelper</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLabelController</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
@@ -298,7 +298,7 @@
 
 <span class="k">class</span> <span class="nc">TaurusLabelControllerConfiguration</span><span class="p">(</span><span class="n">TaurusConfigurationControllerHelper</span><span class="p">,</span> <span class="n">TaurusLabelController</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="n">TaurusConfigurationControllerHelper</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLabelController</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
@@ -341,14 +341,14 @@
 
 <span class="k">class</span> <span class="nc">TaurusLabelControllerAttributeDesignMode</span><span class="p">(</span><span class="n">TaurusLabelControllerDesignMode</span><span class="p">,</span> <span class="n">TaurusLabelControllerAttribute</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="n">TaurusLabelControllerDesignMode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLabelControllerAttribute</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">TaurusLabelControllerConfigurationDesignMode</span><span class="p">(</span><span class="n">TaurusLabelControllerDesignMode</span><span class="p">,</span> <span class="n">TaurusLabelControllerConfiguration</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="n">TaurusLabelControllerDesignMode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLabelControllerConfiguration</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
@@ -388,7 +388,7 @@
 
     <span class="n">_deprecatedRoles</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;rvalue&#39;</span><span class="p">,</span> <span class="n">w_value</span><span class="o">=</span><span class="s1">&#39;wvalue&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultPrefix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultSuffix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span> <span class="o">=</span> <span class="kc">None</span>
@@ -810,7 +810,7 @@
 
 <span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
     <span class="s2">&quot;Label&quot;</span>
-    <span class="kn">from</span> <span class="nn">.demo</span> <span class="k">import</span> <span class="n">tauruslabeldemo</span>
+    <span class="kn">from</span> <span class="nn">.demo</span> <span class="kn">import</span> <span class="n">tauruslabeldemo</span>
     <span class="k">return</span> <span class="n">tauruslabeldemo</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 
 

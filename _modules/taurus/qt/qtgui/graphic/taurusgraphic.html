@@ -184,15 +184,15 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">taurusgraphic.py:</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="c1"># TODO: Tango-centric</span>
 
-<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+<span class="kn">from</span> <span class="nn">future</span> <span class="kn">import</span> <span class="n">standard_library</span>
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -200,19 +200,19 @@
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">collections</span>
 
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">string_types</span>
-<span class="kn">from</span> <span class="nn">queue</span> <span class="k">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
 
-<span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">Manager</span>
-<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">DataType</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="k">import</span> <span class="n">CaselessDefaultDict</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="k">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">deprecation_decorator</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="k">import</span> <span class="n">TaurusDevice</span>
-<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="k">import</span> <span class="n">TaurusAttribute</span>
-<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="k">import</span> <span class="n">Enumeration</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseComponent</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="kn">import</span> <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">DataType</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.containers</span> <span class="kn">import</span> <span class="n">CaselessDefaultDict</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">deprecation_decorator</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusdevice</span> <span class="kn">import</span> <span class="n">TaurusDevice</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusattribute</span> <span class="kn">import</span> <span class="n">TaurusAttribute</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.enumeration</span> <span class="kn">import</span> <span class="n">Enumeration</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">compat</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseComponent</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="kn">import</span> <span class="p">(</span><span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span><span class="p">,</span> <span class="n">QT_DEVICE_STATE_PALETTE</span><span class="p">,</span>
                                   <span class="n">ExternalAppAction</span><span class="p">,</span> <span class="n">TaurusWidgetFactory</span><span class="p">)</span>
 
 
@@ -254,8 +254,8 @@
 
 <div class="viewcode-block" id="parseTangoUri"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic.html#taurus.qt.qtgui.graphic.parseTangoUri">[docs]</a><span class="k">def</span> <span class="nf">parseTangoUri</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="c1"># TODO: Tango-centric</span>
-    <span class="kn">from</span> <span class="nn">taurus.core</span> <span class="k">import</span> <span class="n">tango</span>
-    <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span><span class="n">TangoDeviceNameValidator</span><span class="p">,</span>
+    <span class="kn">from</span> <span class="nn">taurus.core</span> <span class="kn">import</span> <span class="n">tango</span>
+    <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TangoDeviceNameValidator</span><span class="p">,</span>
                                                   <span class="n">TangoAttributeNameValidator</span><span class="p">)</span>
 
     <span class="n">validator</span> <span class="o">=</span> <span class="p">{</span><span class="n">tango</span><span class="o">.</span><span class="n">TangoDevice</span><span class="p">:</span> <span class="n">TangoDeviceNameValidator</span><span class="p">,</span>
@@ -274,7 +274,7 @@
 
 <div class="viewcode-block" id="TaurusGraphicsUpdateThread"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsUpdateThread.html#taurus.qt.qtgui.graphic.TaurusGraphicsUpdateThread">[docs]</a><span class="k">class</span> <span class="nc">TaurusGraphicsUpdateThread</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QThread</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Parent most not be None and must be a TaurusGraphicsScene!&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">TaurusGraphicsScene</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Illegal parent for TaurusGraphicsUpdateThread&quot;</span><span class="p">)</span>
@@ -354,7 +354,7 @@
     <span class="n">graphicItemSelected</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">)</span>
     <span class="n">graphicSceneClicked</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="s1">&#39;QPoint&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="c1"># self.call__init__(Logger, name, parent) #Inheriting from Logger</span>
         <span class="c1"># caused exceptions in CONNECT</span>
@@ -394,7 +394,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">panel_launcher</span> <span class="o">=</span> <span class="n">defaultClass</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic.jdraw</span> <span class="k">import</span> <span class="n">TaurusJDrawSynopticsView</span>
+                <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic.jdraw</span> <span class="kn">import</span> <span class="n">TaurusJDrawSynopticsView</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">panel_launcher</span> <span class="o">=</span> <span class="n">TaurusJDrawSynopticsView</span><span class="o">.</span><span class="n">defaultPanelClass</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
@@ -404,7 +404,7 @@
         <span class="k">if</span> <span class="n">strt</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">closeAllPanels</span><span class="p">()</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsScene</span><span class="o">.</span><span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -519,7 +519,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># TODO: Tango-centric</span>
-        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span>
+        <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="kn">import</span> <span class="p">(</span>
             <span class="n">TangoDeviceNameValidator</span><span class="p">,</span> <span class="n">TangoAttributeNameValidator</span><span class="p">)</span>
 
         <span class="n">strict</span> <span class="o">=</span> <span class="p">(</span>
@@ -692,7 +692,7 @@
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">item_name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic</span> <span class="k">import</span> <span class="n">jdraw_parser</span>
+            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic</span> <span class="kn">import</span> <span class="n">jdraw_parser</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">item_name</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;JD&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">jdraw_parser</span><span class="o">.</span><span class="n">reserved</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
                     <span class="s1">&#39;In TauGraphicsScene.selectGraphicItem(</span><span class="si">%s</span><span class="s1">): item name not found or name is a reserved keyword.&#39;</span> <span class="o">%</span> <span class="n">item_name</span><span class="p">)</span>
@@ -1025,7 +1025,7 @@
 
     <span class="n">_TEXT_RATIO</span> <span class="o">=</span> <span class="mf">0.8</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItemGroup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -1132,7 +1132,7 @@
 
 <div class="viewcode-block" id="QSpline"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_QSpline.html#taurus.qt.qtgui.graphic.QSpline">[docs]</a><span class="k">class</span> <span class="nc">QSpline</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPathItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">control_points</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">control_points</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">QSpline</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__closed</span> <span class="o">=</span> <span class="n">closed</span>
         <span class="k">if</span> <span class="n">control_points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1174,7 +1174,7 @@
 <div class="viewcode-block" id="TaurusGraphicsItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsItem.html#taurus.qt.qtgui.graphic.TaurusGraphicsItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusGraphicsItem</span><span class="p">(</span><span class="n">TaurusBaseComponent</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class for all Taurus Graphics Items&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusBaseComponent</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
                           <span class="n">parent</span><span class="p">)</span>  <span class="c1"># &lt;- log created here</span>
         <span class="c1">#self.debug(&#39;TaurusGraphicsItem(%s,%s)&#39; % (name,parent))</span>
@@ -1274,7 +1274,7 @@
 <div class="viewcode-block" id="TaurusGraphicsItem.isReadOnly"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsItem.html#taurus.qt.qtgui.graphic.TaurusGraphicsItem.isReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">isReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_name</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelName</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
 
 <div class="viewcode-block" id="TaurusGraphicsItem.getModelClass"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsItem.html#taurus.qt.qtgui.graphic.TaurusGraphicsItem.getModelClass">[docs]</a>    <span class="k">def</span> <span class="nf">getModelClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1287,7 +1287,7 @@
 <span class="sd">    Quality is shown in background</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unitVisible</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_currValue</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1351,13 +1351,13 @@
 <span class="sd">    This item will modify only foreground/background colors</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusGraphicsItem</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusGraphicsStateItem.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGraphicsStateItem.html#taurus.qt.qtgui.graphic.TaurusGraphicsStateItem.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="k">import</span> <span class="n">DevState</span>  <span class="c1"># Tango-centric</span>
+        <span class="kn">from</span> <span class="nn">taurus.core.tango</span> <span class="kn">import</span> <span class="n">DevState</span>  <span class="c1"># Tango-centric</span>
 
         <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelValueObj</span><span class="p">()</span>
 
@@ -1407,7 +1407,7 @@
 
 <div class="viewcode-block" id="TaurusEllipseStateItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusEllipseStateItem.html#taurus.qt.qtgui.graphic.TaurusEllipseStateItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusEllipseStateItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsEllipseItem</span><span class="p">,</span> <span class="n">TaurusGraphicsStateItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsEllipseItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1423,7 +1423,7 @@
 
 <div class="viewcode-block" id="TaurusRectStateItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusRectStateItem.html#taurus.qt.qtgui.graphic.TaurusRectStateItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusRectStateItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsRectItem</span><span class="p">,</span> <span class="n">TaurusGraphicsStateItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsRectItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1439,7 +1439,7 @@
 
 <div class="viewcode-block" id="TaurusSplineStateItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusSplineStateItem.html#taurus.qt.qtgui.graphic.TaurusSplineStateItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusSplineStateItem</span><span class="p">(</span><span class="n">QSpline</span><span class="p">,</span> <span class="n">TaurusGraphicsStateItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">QSpline</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1455,7 +1455,7 @@
 
 <div class="viewcode-block" id="TaurusRoundRectItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusRoundRectItem.html#taurus.qt.qtgui.graphic.TaurusRoundRectItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusRoundRectItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPathItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPathItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -1491,7 +1491,7 @@
 
 <div class="viewcode-block" id="TaurusRoundRectStateItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusRoundRectStateItem.html#taurus.qt.qtgui.graphic.TaurusRoundRectStateItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusRoundRectStateItem</span><span class="p">(</span><span class="n">TaurusRoundRectItem</span><span class="p">,</span> <span class="n">TaurusGraphicsStateItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">TaurusRoundRectItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusGraphicsStateItem</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
@@ -1505,7 +1505,7 @@
 
 <div class="viewcode-block" id="TaurusGroupItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGroupItem.html#taurus.qt.qtgui.graphic.TaurusGroupItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusGroupItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItemGroup</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItemGroup</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
@@ -1513,7 +1513,7 @@
 
 <div class="viewcode-block" id="TaurusGroupStateItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusGroupStateItem.html#taurus.qt.qtgui.graphic.TaurusGroupStateItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusGroupStateItem</span><span class="p">(</span><span class="n">TaurusGroupItem</span><span class="p">,</span> <span class="n">TaurusGraphicsStateItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">TaurusGroupItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusGraphicsStateItem</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
@@ -1524,7 +1524,7 @@
 
 <div class="viewcode-block" id="TaurusPolygonStateItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusPolygonStateItem.html#taurus.qt.qtgui.graphic.TaurusPolygonStateItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusPolygonStateItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPolygonItem</span><span class="p">,</span> <span class="n">TaurusGraphicsStateItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="c1">#Qt.QGraphicsRectItem.__init__(self, parent)</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPolygonItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
@@ -1541,7 +1541,7 @@
 
 <div class="viewcode-block" id="TaurusLineStateItem"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusLineStateItem.html#taurus.qt.qtgui.graphic.TaurusLineStateItem">[docs]</a><span class="k">class</span> <span class="nc">TaurusLineStateItem</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsLineItem</span><span class="p">,</span> <span class="n">TaurusGraphicsStateItem</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsLineItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1560,7 +1560,7 @@
 <span class="sd">    A QGraphicsItem that represents a text related to a device state or attribute quality</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">QGraphicsTextBoxing</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusGraphicsStateItem</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
@@ -1578,7 +1578,7 @@
 <span class="sd">    A QGraphicsItem that represents a text related to an attribute value</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scene</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">QGraphicsTextBoxing</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">scene</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">TaurusGraphicsAttributeItem</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
@@ -1630,7 +1630,7 @@
 
 <div class="viewcode-block" id="TaurusBaseGraphicsFactory"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusBaseGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusBaseGraphicsFactory">[docs]</a><span class="k">class</span> <span class="nc">TaurusBaseGraphicsFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
 <div class="viewcode-block" id="TaurusBaseGraphicsFactory.getSceneObj"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/graphic/_TaurusBaseGraphicsFactory.html#taurus.qt.qtgui.graphic.TaurusBaseGraphicsFactory.getSceneObj">[docs]</a>    <span class="k">def</span> <span class="nf">getSceneObj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1705,7 +1705,7 @@
         <span class="c1">#       feature (taurus-org/taurus#734)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="k">import</span> <span class="p">(</span>
+                <span class="kn">from</span> <span class="nn">taurus.core.tango.tangovalidator</span> <span class="kn">import</span> <span class="p">(</span>
                     <span class="n">TangoDeviceNameValidator</span><span class="p">,</span>
                     <span class="n">TangoAttributeNameValidator</span><span class="p">,</span>
                 <span class="p">)</span>
@@ -1720,7 +1720,7 @@
                             <span class="n">nname</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                             <span class="n">params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">getNameParam</span><span class="p">()]</span> <span class="o">=</span> <span class="n">name</span> <span class="o">=</span> <span class="n">nname</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="kn">from</span> <span class="nn">taurus</span> <span class="k">import</span> <span class="n">warning</span>
+                        <span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">warning</span>
                         <span class="n">warning</span><span class="p">(</span><span class="s2">&quot;if you use a tango name as JD name it must &quot;</span>
                                 <span class="s2">&quot;with tango:&quot;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/state&#39;</span><span class="p">):</span>

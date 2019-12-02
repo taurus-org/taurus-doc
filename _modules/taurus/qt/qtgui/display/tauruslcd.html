@@ -184,21 +184,21 @@
 
 <span class="sd">&quot;&quot;&quot;This module provides a Taurus widget based on QLCDNumber&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">object</span>
 
 <span class="kn">import</span> <span class="nn">collections</span>
 
-<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="k">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
                                          <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">TaurusDevState</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="k">import</span> <span class="n">Qt</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseWidget</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusBaseController</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusScalarAttributeControllerHelper</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">TaurusConfigurationControllerHelper</span>
-<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="k">import</span> <span class="n">updateLabelBackground</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseWidget</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseController</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusScalarAttributeControllerHelper</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusConfigurationControllerHelper</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">updateLabelBackground</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusLCD&quot;</span><span class="p">]</span>
@@ -257,7 +257,7 @@
 
 <span class="k">class</span> <span class="nc">TaurusLCDControllerAttribute</span><span class="p">(</span><span class="n">TaurusScalarAttributeControllerHelper</span><span class="p">,</span> <span class="n">TaurusLCDController</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lcd</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lcd</span><span class="p">):</span>
         <span class="n">TaurusScalarAttributeControllerHelper</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLCDController</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lcd</span><span class="p">)</span>
 
@@ -277,7 +277,7 @@
 
 <span class="k">class</span> <span class="nc">TaurusLCDControllerConfiguration</span><span class="p">(</span><span class="n">TaurusConfigurationControllerHelper</span><span class="p">,</span> <span class="n">TaurusLCDController</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lcd</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lcd</span><span class="p">):</span>
         <span class="n">TaurusConfigurationControllerHelper</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLCDController</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lcd</span><span class="p">)</span>
 
@@ -315,14 +315,14 @@
 
 <span class="k">class</span> <span class="nc">TaurusLCDControllerAttributeDesignMode</span><span class="p">(</span><span class="n">TaurusLCDControllerDesignMode</span><span class="p">,</span> <span class="n">TaurusLCDControllerAttribute</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="n">TaurusLCDControllerDesignMode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLCDControllerAttribute</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">TaurusLCDControllerConfigurationDesignMode</span><span class="p">(</span><span class="n">TaurusLCDControllerDesignMode</span><span class="p">,</span> <span class="n">TaurusLCDControllerConfiguration</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="n">TaurusLCDControllerDesignMode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">TaurusLCDControllerConfiguration</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
@@ -369,7 +369,7 @@
     <span class="n">DefaultShowText</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">DefaultModelIndex</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bgRole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultBgRole</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fgRole</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultFgRole</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modelIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultModelIndex</span>
@@ -548,7 +548,7 @@
 
 <span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
     <span class="s2">&quot;LCD&quot;</span>
-    <span class="kn">from</span> <span class="nn">.demo</span> <span class="k">import</span> <span class="n">tauruslcddemo</span>
+    <span class="kn">from</span> <span class="nn">.demo</span> <span class="kn">import</span> <span class="n">tauruslcddemo</span>
     <span class="k">return</span> <span class="n">tauruslcddemo</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 
 
