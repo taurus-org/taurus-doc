@@ -188,7 +188,7 @@
 <span class="kn">import</span> <span class="nn">threading</span>
 
 <span class="kn">from</span> <span class="nn">.util.log</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">.util.containers</span> <span class="kn">import</span> <span class="n">CaselessWeakValueDict</span>
+<span class="kn">from</span> <span class="nn">.util.containers</span> <span class="kn">import</span> <span class="n">CaselessWeakValueDict</span><span class="p">,</span> <span class="n">CaselessDict</span>
 <span class="kn">from</span> <span class="nn">.util.timer</span> <span class="kn">import</span> <span class="n">Timer</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusPollingTimer&quot;</span><span class="p">]</span>
@@ -217,9 +217,9 @@
         <span class="sd">&quot;&quot;&quot; Starts the polling timer &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TaurusPollingTimer.stop"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusPollingTimer.stop"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Stop the polling timer&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="n">sync</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusPollingTimer.containsAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.containsAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">containsAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines if the polling timer already contains this attribute</span>
@@ -252,21 +252,22 @@
 <span class="sd">                              that it should startup as soon as there is at least</span>
 <span class="sd">                              one attribute registered.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dev</span><span class="p">,</span> <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
-        <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">attr_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">caseSensitive</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_dict</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">dev</span><span class="p">,</span> <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+            <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">caseSensitive</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_dict</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_dict</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="p">:</span>
+                <span class="n">attr_dict</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attribute</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">auto_start</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_dict</span> <span class="o">=</span> <span class="n">CaselessWeakValueDict</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="p">:</span>
-            <span class="n">attr_dict</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attribute</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">auto_start</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">taurus</span>
-            <span class="n">taurus</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">enqueueJob</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">poll</span><span class="p">)</span></div>
+                <span class="kn">import</span> <span class="nn">taurus</span>
+                <span class="n">taurus</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">enqueueJob</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">poll</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusPollingTimer.removeAttribute"><a class="viewcode-back" href="../../../devel/api/taurus/core/_TaurusPollingTimer.html#taurus.core.TaurusPollingTimer.removeAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">removeAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Unregisters the attribute from this polling. If the number of registered</span>
@@ -275,35 +276,46 @@
 
 <span class="sd">           :param attribute: (taurus.core.taurusattribute.TaurusAttribute) the attribute to be added</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dev</span><span class="p">,</span> <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
-        <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">attr_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="p">:</span>
-            <span class="k">del</span> <span class="n">attr_dict</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">dev</span><span class="p">,</span> <span class="n">attr_name</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getParentObj</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">.</span><span class="n">getSimpleName</span><span class="p">()</span>
+            <span class="n">attr_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">attr_dict</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">attr_dict</span><span class="p">:</span>
                 <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">-=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_nb</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_pollAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Polls the registered attributes. This method is called by the timer</span>
 <span class="sd">           when it is time to poll. Do not call this method directly</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">req_ids</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">dev</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">dev_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">dev</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">dev</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">caseSensitive</span><span class="p">:</span>
+                    <span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dev_dict</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">CaselessDict</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">dev</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="n">dev_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">req_id</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">asynch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">req_ids</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;poll_asynch error&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Details:&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">dev</span><span class="p">,</span> <span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span><span class="p">)</span> <span class="ow">in</span> <span class="n">req_ids</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">dev</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">req_id</span><span class="o">=</span><span class="n">req_id</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;poll_reply error&quot;</span><span class="p">)</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;poll_reply error </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

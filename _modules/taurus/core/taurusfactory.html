@@ -499,7 +499,8 @@
         <span class="sd">&quot;&quot;&quot;Activates the polling (client side) for the given attribute with the</span>
 <span class="sd">           given period (seconds).</span>
 
-<span class="sd">           :param attribute: (taurus.core.tango.TangoAttribute) attribute name.</span>
+<span class="sd">           :param attribute: (taurus.core.taurusattribute.TaurusAttribute)</span>
+<span class="sd">                             the attribute to be added</span>
 <span class="sd">           :param period: (float) polling period (in seconds)</span>
 <span class="sd">           :param unsubscribe_evts: (bool) whether or not to unsubscribe from events</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -511,17 +512,14 @@
         <span class="sd">&quot;&quot;&quot;Deactivate the polling (client side) for the given attribute. If the</span>
 <span class="sd">           polling of the attribute was not previously enabled, nothing happens.</span>
 
-<span class="sd">           :param attribute: (str) attribute name.</span>
+<span class="sd">           :param attribute: (taurus.core.taurusattribute.TaurusAttribute)</span>
+<span class="sd">                             the attribute to be removed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">containsAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">):</span>
-                <span class="n">timer</span><span class="o">.</span><span class="n">removeAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">timer</span><span class="o">.</span><span class="n">getAttributeCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">p</span> <span class="o">=</span> <span class="n">period</span>
-                <span class="k">break</span>
-        <span class="k">if</span> <span class="n">p</span><span class="p">:</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">[</span><span class="n">period</span><span class="p">]</span></div>
+        <span class="n">timers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">period</span><span class="p">,</span> <span class="n">timer</span> <span class="ow">in</span> <span class="n">timers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">timer</span><span class="o">.</span><span class="n">removeAttribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">timer</span><span class="o">.</span><span class="n">dev_dict</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">polling_timers</span><span class="p">[</span><span class="n">period</span><span class="p">]</span></div>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
