@@ -490,9 +490,10 @@
         <span class="k">except</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">obj</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                    <span class="s1">&#39;Cannot handle model &quot;</span><span class="si">%s</span><span class="s1">&quot;. Using default widget.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="p">))</span>
+                    <span class="s1">&#39;Cannot handle model &quot;</span><span class="si">%s</span><span class="s1">&quot;. Using default widget.&#39;</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Model error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_defaultFormWidget</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{}</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">key</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">getDeviceProxy</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">dev_class</span>  <span class="c1"># TODO: Tango-centric</span>
