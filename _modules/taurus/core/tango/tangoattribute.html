@@ -1246,6 +1246,8 @@
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;[^\.]*\.(?P&lt;precision&gt;[0-9]+)[eEfFgG%]&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;%[0-9]*d&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1"># self._units and self._display_format is to be used by</span>
         <span class="c1"># TangoAttrValue for performance reasons. Do not rely on it in other</span>
         <span class="c1"># code</span>
