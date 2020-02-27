@@ -254,11 +254,12 @@
                 <span class="n">val</span> <span class="o">=</span> <span class="n">PintValidator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
             <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getModelObj</span><span class="p">()</span>
-            <span class="n">bottom</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">range</span>
-            <span class="k">if</span> <span class="n">bottom</span> <span class="o">!=</span> <span class="n">val</span><span class="o">.</span><span class="n">bottom</span><span class="p">:</span>
-                <span class="n">val</span><span class="o">.</span><span class="n">setBottom</span><span class="p">(</span><span class="n">bottom</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">top</span> <span class="o">!=</span> <span class="n">val</span><span class="o">.</span><span class="n">top</span><span class="p">:</span>
-                <span class="n">val</span><span class="o">.</span><span class="n">setTop</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">bottom</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">range</span>
+                <span class="k">if</span> <span class="n">bottom</span> <span class="o">!=</span> <span class="n">val</span><span class="o">.</span><span class="n">bottom</span><span class="p">:</span>
+                    <span class="n">val</span><span class="o">.</span><span class="n">setBottom</span><span class="p">(</span><span class="n">bottom</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">top</span> <span class="o">!=</span> <span class="n">val</span><span class="o">.</span><span class="n">top</span><span class="p">:</span>
+                    <span class="n">val</span><span class="o">.</span><span class="n">setTop</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
             <span class="n">units</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">wvalue</span><span class="o">.</span><span class="n">units</span>
             <span class="k">if</span> <span class="n">units</span> <span class="o">!=</span> <span class="n">val</span><span class="o">.</span><span class="n">units</span><span class="p">:</span>
                 <span class="n">val</span><span class="o">.</span><span class="n">setUnits</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
