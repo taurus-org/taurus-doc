@@ -370,58 +370,64 @@ Taurus 4 are the following two Enhancement proposals:</p>
 </tr>
 <tr class="row-even"><td><p>TangoDevice.getState</p></td>
 <td><p>TangoDevice.stateObj.read().rvalue <em>tango</em> or
-.state <em>agnostic</em></p></td>
+.state  <em>agnostic</em></p></td>
 </tr>
-<tr class="row-odd"><td><p>TangoDevice.getStateObj</p></td>
+<tr class="row-odd"><td><p>TangoDevice.state() <em>PyTango.DeviceProxy API</em></p></td>
+<td><p>TangoDevice.stateObj.read(cache=False).rvalue <em>tango</em> or
+.state  <em>agnostic</em></p></td>
+</tr>
+<tr class="row-even"><td><p>TangoDevice.getStateObj</p></td>
 <td><p>TangoDevice.stateObj  <em>tango</em> or
-.factory.getAttribute(state_full_name) <em>agnostic</em></p></td>
+.factory.getAttribute(state_full_name)  <em>agnostic</em></p></td>
 </tr>
-<tr class="row-even"><td><p>TangoDevice.getSWState</p></td>
+<tr class="row-odd"><td><p>TangoDevice.getSWState</p></td>
 <td><p>TangoDevice.state</p></td>
 </tr>
-<tr class="row-odd"><td><p>TangoDevice.getValueObj</p></td>
-<td><p>TangoDevice.state <em>agnostic or</em> stateObj.read <em>tango</em></p></td>
+<tr class="row-even"><td><p>TangoDevice.getValueObj</p></td>
+<td><p>TangoDevice.stateObj.read  <em>tango</em> or
+.state  <em>agnostic</em></p></td>
 </tr>
-<tr class="row-even"><td><p>TangoDevice.getDisplayValue</p></td>
-<td><p>TangoDevice.state().name</p></td>
+<tr class="row-odd"><td><p>TangoDevice.getDisplayValue</p></td>
+<td><p>TangoDevice.stateObj.read().rvalue.name  <em>tango</em>  or
+.state.name  <em>agnostic</em></p></td>
 </tr>
-<tr class="row-odd"><td><p>TangoDevice.getHWObj</p></td>
+<tr class="row-even"><td><p>TangoDevice.getHWObj</p></td>
 <td><p>TangoDevice.getDeviceProxy</p></td>
 </tr>
-<tr class="row-even"><td><p>TangoDevice.isValidDev</p></td>
+<tr class="row-odd"><td><p>TangoDevice.isValidDev</p></td>
 <td><p>(TangoDevice.getDeviceProxy() is not None)</p></td>
 </tr>
-<tr class="row-odd"><td><p>TangoDevice.getDescription</p></td>
+<tr class="row-even"><td><p>TangoDevice.getDescription</p></td>
 <td><p>TangoDevice.description</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>TangoDatabase</p></td>
+<tr class="row-even"><td><p>TangoDatabase</p></td>
 <td><p>TangoAuthority</p></td>
 </tr>
-<tr class="row-even"><td><p>TangoAuthority.getHWObj</p></td>
+<tr class="row-odd"><td><p>TangoAuthority.getHWObj</p></td>
 <td><p>TangoAuthority.getDeviceProxy</p></td>
 </tr>
-<tr class="row-odd"><td><p>TangoAuthority.getValueObj</p></td>
+<tr class="row-even"><td><p>TangoAuthority.getValueObj</p></td>
 <td><p>TangoAuthority.getTangoDB</p></td>
 </tr>
-<tr class="row-even"><td><p>TangoAuthority.getDisplayValue</p></td>
+<tr class="row-odd"><td><p>TangoAuthority.getDisplayValue</p></td>
 <td><p>TangoAuthority.getFullName</p></td>
 </tr>
-<tr class="row-odd"><td><p>TangoAuthority.getDescription</p></td>
+<tr class="row-even"><td><p>TangoAuthority.getDescription</p></td>
 <td><p>TangoAuthority.description</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>TangoFactory.getAttributeInfo</p></td>
+<tr class="row-even"><td><p>TangoFactory.getAttributeInfo</p></td>
 <td><p>TangoFactory.getAttribute</p></td>
 </tr>
-<tr class="row-even"><td><p>TangoFactory.getConfiguration</p></td>
+<tr class="row-odd"><td><p>TangoFactory.getConfiguration</p></td>
 <td><p>TangoFactory.getAttribute</p></td>
 </tr>
-<tr class="row-odd"><td><p>TangoDevice.{g,s}etOperationMode</p></td>
+<tr class="row-even"><td><p>TangoDevice.{g,s}etOperationMode</p></td>
 <td><p>–</p></td>
 </tr>
 </tbody>

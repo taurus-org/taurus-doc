@@ -359,9 +359,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_deviceObj</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">TaurusDevice</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-    <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;.state().name&#39;</span><span class="p">)</span>
+    <span class="nd">@taurus4_deprecation</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s1">&#39;.state.name&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">getDisplayValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stateObj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span><span class="o">.</span><span class="n">rvalue</span><span class="o">.</span><span class="n">name</span>
 
     <span class="k">def</span> <span class="nf">_createHWObject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
