@@ -520,12 +520,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">newShortMessage</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultConfigRecursionDepth</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Fail-proof mode&quot;</span><span class="p">,</span>
-                                       <span class="p">(</span><span class="s1">&#39;Running in fail-proof mode.&#39;</span> <span class="o">+</span>
-                                        <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Loading of potentially problematic settings is disabled.&#39;</span> <span class="o">+</span>
-                                        <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Some panels may not be loaded or may ignore previous user configuration&#39;</span> <span class="o">+</span>
-                                        <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">This will also apply when loading perspectives&#39;</span><span class="p">),</span>
-                                       <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">NoButton</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">newShortMessage</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+                <span class="s2">&quot;Running in Safe Mode. Settings not loaded&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Safe mode: </span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">Loading of potentially problematic settings is disabled.&#39;</span>
+                <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">Some panels may not be loaded or may ignore previous &#39;</span>
+                <span class="o">+</span> <span class="s1">&#39;user configuration&#39;</span>
+                <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">This will also apply when loading perspectives&#39;</span>
+            <span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusGui.closeEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/taurusgui/_TaurusGui.html#taurus.qt.qtgui.taurusgui.TaurusGui.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -995,7 +999,9 @@
             <span class="n">w</span><span class="o">.</span><span class="n">setCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getCustomWidgetMap</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">paneldesc</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">paneldesc</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">TaurusBaseComponent</span><span class="p">):</span>
+            <span class="c1"># TODO: allow to select these options in the dialog</span>
             <span class="n">w</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">w</span><span class="o">.</span><span class="n">setModelInConfig</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1446,18 +1452,55 @@
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="k">pass</span>
                 <span class="n">w</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">getWidget</span><span class="p">(</span><span class="n">sdm</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">SDM</span><span class="p">,</span> <span class="n">setModel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">widget_properties</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="c1"># set additional configuration for the</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="nb">setattr</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot set </span><span class="si">%r</span><span class="s2">.</span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Info</span><span class="p">)</span>
+                            <span class="n">result</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+                                <span class="bp">self</span><span class="p">,</span>
+                                <span class="s2">&quot;Initialization error&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n\n</span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">e</span><span class="p">),</span>
+                                <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ignore</span>
+                            <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Abort</span><span class="p">:</span>
+                                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
                 <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s2">&quot;setCustomWidgetMap&quot;</span><span class="p">):</span>
                     <span class="n">w</span><span class="o">.</span><span class="n">setCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getCustomWidgetMap</span><span class="p">())</span>
                 <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">instrumentkey</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">instrumentkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IMPLICIT_ASSOCIATION</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">TaurusBaseComponent</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">modifiable_by_user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">w</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">modifiable_by_user</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">model_in_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">w</span><span class="o">.</span><span class="n">setModelInConfig</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">model_in_config</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">widget_formatter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">w</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">widget_formatter</span><span class="p">)</span>
+
+                <span class="n">icon</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">icon</span>
                 <span class="c1"># the pool instruments may change when the pool config changes,</span>
                 <span class="c1"># so we do not store their config</span>
                 <span class="n">registerconfig</span> <span class="o">=</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">poolinstruments</span>
                 <span class="c1"># create a panel</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">floating</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span> <span class="n">registerconfig</span><span class="o">=</span><span class="n">registerconfig</span><span class="p">,</span>
-                                 <span class="n">instrumentkey</span><span class="o">=</span><span class="n">instrumentkey</span><span class="p">,</span> <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">createPanel</span><span class="p">(</span>
+                    <span class="n">w</span><span class="p">,</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">floating</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span>
+                    <span class="n">registerconfig</span><span class="o">=</span><span class="n">registerconfig</span><span class="p">,</span>
+                    <span class="n">instrumentkey</span><span class="o">=</span><span class="n">instrumentkey</span><span class="p">,</span>
+                    <span class="n">permanent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">icon</span><span class="o">=</span><span class="n">icon</span>
+                <span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot create panel </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">getattr</span><span class="p">(</span>
                     <span class="n">p</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;__Unknown__&quot;</span><span class="p">)</span>
