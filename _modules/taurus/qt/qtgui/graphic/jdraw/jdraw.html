@@ -310,6 +310,15 @@
 
         <span class="k">return</span> <span class="n">item</span></div>
 
+<div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getBarObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawGraphicsFactory.getBarObj">[docs]</a>    <span class="k">def</span> <span class="nf">getBarObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="c1"># TODO: properly implement JDBar support</span>
+        <span class="c1"># As a workaround, use a filled rectangle as a substitute of a JDBar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;JDBar not yet supported. Using a JDRectangle instead&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;fillStyle&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;fillStyle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRectangleObj</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TaurusJDrawGraphicsFactory.getRoundRectangleObj"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/graphic/jdraw/_TaurusJDrawGraphicsFactory.html#taurus.qt.qtgui.graphic.jdraw.TaurusJDrawGraphicsFactory.getRoundRectangleObj">[docs]</a>    <span class="k">def</span> <span class="nf">getRoundRectangleObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsItem</span><span class="p">(</span><span class="s1">&#39;RoundRectangle&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
         <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;summit&#39;</span><span class="p">)</span>
