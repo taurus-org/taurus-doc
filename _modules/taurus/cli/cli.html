@@ -184,29 +184,21 @@
 <span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">import</span> <span class="nn">taurus</span>
 
+<span class="kn">import</span> <span class="nn">taurus.cli.common</span>
+<span class="kn">from</span> <span class="nn">.import</span> <span class="n">common</span>
+
+
 <span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;taurus&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--log-level&#39;</span><span class="p">,</span> <span class="s1">&#39;log_level&#39;</span><span class="p">,</span>
-              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;Critical&#39;</span><span class="p">,</span> <span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="s1">&#39;Warning&#39;</span><span class="p">,</span> <span class="s1">&#39;Info&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;Debug&#39;</span><span class="p">,</span> <span class="s1">&#39;Trace&#39;</span><span class="p">]),</span>
-              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;Info&#39;</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Show only logs with priority LEVEL or above&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--polling-period&quot;</span><span class="p">,</span> <span class="s2">&quot;polling_period&quot;</span><span class="p">,</span>
-              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;MILLISEC&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Change the Default Taurus polling period&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--serialization-mode&quot;</span><span class="p">,</span> <span class="s2">&quot;serialization_mode&quot;</span><span class="p">,</span>
-              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;Serial&#39;</span><span class="p">,</span> <span class="s1">&#39;Concurrent&#39;</span><span class="p">,</span> <span class="s1">&#39;TangoSerial&#39;</span><span class="p">]),</span>
-              <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Set the default Taurus serialization mode for those &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;models that do not explicitly define it)&quot;</span><span class="p">))</span>
+<span class="nd">@common</span><span class="o">.</span><span class="n">log_level</span>
+<span class="nd">@common</span><span class="o">.</span><span class="n">poll_period</span>
+<span class="nd">@common</span><span class="o">.</span><span class="n">serial_mode</span>
+<span class="nd">@common</span><span class="o">.</span><span class="n">default_formatter</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--rconsole&quot;</span><span class="p">,</span> <span class="s2">&quot;rconsole_port&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span>
               <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
               <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable remote debugging with rfoo on the given PORT&quot;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--default-formatter&quot;</span><span class="p">,</span> <span class="s2">&quot;default_formatter&quot;</span><span class="p">,</span>
-              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;FORMATTER&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Override the default formatter (use with caution!)&quot;</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">version_option</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">taurus_cmd</span><span class="p">(</span><span class="n">log_level</span><span class="p">,</span> <span class="n">polling_period</span><span class="p">,</span> <span class="n">serialization_mode</span><span class="p">,</span> <span class="n">rconsole_port</span><span class="p">,</span>
-               <span class="n">default_formatter</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">taurus_cmd</span><span class="p">(</span><span class="n">log_level</span><span class="p">,</span> <span class="n">polling_period</span><span class="p">,</span> <span class="n">serialization_mode</span><span class="p">,</span> <span class="n">default_formatter</span><span class="p">,</span>
+               <span class="n">rconsole_port</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The main taurus command&quot;&quot;&quot;</span>
 
     <span class="c1"># set log level</span>

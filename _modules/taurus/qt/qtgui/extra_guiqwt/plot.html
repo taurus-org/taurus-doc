@@ -202,6 +202,7 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="kn">import</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.builder</span> <span class="kn">import</span> <span class="n">make</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.extra_guiqwt.curve</span> <span class="kn">import</span> <span class="n">TaurusCurveItem</span><span class="p">,</span> <span class="n">TaurusTrendParam</span><span class="p">,</span> <span class="n">TaurusTrendItem</span>
+<span class="kn">import</span> <span class="nn">taurus.cli.common</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusCurveDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusTrendDialog&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusImageDialog&quot;</span><span class="p">]</span>
@@ -788,18 +789,17 @@
 
 
 <span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--color-mode&#39;</span><span class="p">,</span> <span class="s1">&#39;color_mode&#39;</span><span class="p">,</span>
-              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;rgb&#39;</span><span class="p">]),</span>
-              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
-              <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Color mode expected from the attribute&#39;</span><span class="p">)</span>
-              <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--demo&quot;</span><span class="p">,</span> <span class="n">is_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;show a demo of the widget&quot;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--window-name&#39;</span><span class="p">,</span> <span class="s1">&#39;window_name&#39;</span><span class="p">,</span>
-              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;TaurusPlot (qwt5)&#39;</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of the window&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">image_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">color_mode</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">):</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">model</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s1">&#39;TaurusPlot (qwt5)&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--color-mode&#39;</span><span class="p">,</span> <span class="s1">&#39;color_mode&#39;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;rgb&#39;</span><span class="p">]),</span>
+    <span class="n">default</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Color mode expected from the attribute&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">image_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">,</span> <span class="n">color_mode</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 

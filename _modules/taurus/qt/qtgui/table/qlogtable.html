@@ -206,6 +206,7 @@
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.model</span> <span class="kn">import</span> <span class="n">FilterToolBar</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util</span> <span class="kn">import</span> <span class="n">ActionFactory</span>
+<span class="kn">import</span> <span class="nn">taurus.cli.common</span>
 
 <span class="kn">from</span> <span class="nn">.qtable</span> <span class="kn">import</span> <span class="n">QBaseTableWidget</span>
 
@@ -759,17 +760,18 @@
 
 
 <span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;qlogmon&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--port&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-              <span class="n">default</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">,</span>
-              <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;port where log server is running&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--log-name&#39;</span><span class="p">,</span> <span class="s1">&#39;log_name&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;filter specific log object&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--log-level&#39;</span><span class="p">,</span> <span class="s1">&#39;log_level&#39;</span><span class="p">,</span>
-              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;critical&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;trace&#39;</span><span class="p">]),</span>
-              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;filter specific log level&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;--port&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Port where log server is running&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;--log-name&#39;</span><span class="p">,</span> <span class="s1">&#39;log_name&#39;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Filter specific log object&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">log_level</span>
 <span class="k">def</span> <span class="nf">qlogmon_cmd</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">log_name</span><span class="p">,</span> <span class="n">log_level</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Show the Taurus Remote Log Monitor&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">taurus</span>

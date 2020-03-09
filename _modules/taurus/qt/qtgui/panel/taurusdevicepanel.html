@@ -208,6 +208,7 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel.taurusform</span> <span class="kn">import</span> <span class="n">TaurusCommandsForm</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="kn">import</span> <span class="n">UILoadable</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.icon</span> <span class="kn">import</span> <span class="n">getCachedPixmap</span>
+<span class="kn">import</span> <span class="nn">taurus.cli.common</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusDevicePanel&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusDevPanel&quot;</span><span class="p">]</span>
@@ -770,8 +771,7 @@
                     <span class="o">+</span> <span class="s1">&#39;(it can be passed more than once)&#39;</span><span class="p">),</span>
               <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
               <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;rb&#39;</span><span class="p">),</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;configuration file for initialization&#39;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">config_file</span>
 <span class="k">def</span> <span class="nf">device_cmd</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">config_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Show a Device Panel&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">sys</span>

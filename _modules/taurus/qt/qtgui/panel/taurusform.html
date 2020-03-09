@@ -203,6 +203,7 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="kn">import</span> <span class="n">TaurusWidget</span><span class="p">,</span> <span class="n">TaurusScrollArea</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.button</span> <span class="kn">import</span> <span class="n">QButtonBox</span><span class="p">,</span> <span class="n">TaurusCommandButton</span>
 <span class="kn">from</span> <span class="nn">.taurusmodelchooser</span> <span class="kn">import</span> <span class="n">TaurusModelChooser</span>
+<span class="kn">import</span> <span class="nn">taurus.cli.common</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusAttrForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusCommandsForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusForm&quot;</span><span class="p">]</span>
 
@@ -1208,12 +1209,9 @@
 
 
 <span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--window-name&#39;</span><span class="p">,</span> <span class="s1">&#39;window_name&#39;</span><span class="p">,</span>
-              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;Taurus Form&#39;</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of the window&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;rb&#39;</span><span class="p">),</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;configuration file for initialization&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s2">&quot;TaurusForm&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">config_file</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">models</span>
 <span class="k">def</span> <span class="nf">form_cmd</span><span class="p">(</span><span class="n">window_name</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Shows a Taurus form populated with the given model names&quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>

@@ -199,6 +199,7 @@
                                                 <span class="n">TimeAxisTool</span><span class="p">,</span> <span class="n">AutoScrollTool</span><span class="p">,</span>
                                                 <span class="n">AutoScaleXTool</span><span class="p">,</span> <span class="n">AutoScaleYTool</span><span class="p">,</span>
                                                 <span class="n">AutoScaleZTool</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">taurus.cli.common</span>
 
 
 <div class="viewcode-block" id="TaurusTrend2DDialog"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusTrend2DDialog">[docs]</a><span class="k">class</span> <span class="nc">TaurusTrend2DDialog</span><span class="p">(</span><span class="n">ImageDialog</span><span class="p">,</span> <span class="n">TaurusBaseWidget</span><span class="p">):</span>
@@ -468,27 +469,28 @@
 
 
 <span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;trend2d&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;--x-axis-mode&quot;</span><span class="p">,</span> <span class="s2">&quot;x_axis_mode&quot;</span><span class="p">,</span>
-              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">]),</span>
-              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span>
-              <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;interpret X values as timestamps (t), &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;time deltas (d) or event numbers (e). &quot;</span><span class="p">)</span>
-              <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="s1">&#39;--buffer&#39;</span><span class="p">,</span> <span class="s1">&#39;max_buffer_size&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-              <span class="n">default</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-              <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;maximum number of values to be stacked &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;(when reached, the oldest values will be &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;discarded)&quot;</span><span class="p">)</span>
-              <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--demo&quot;</span><span class="p">,</span> <span class="n">is_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;show a demo of the widget&quot;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--window-name&#39;</span><span class="p">,</span> <span class="s1">&#39;window_name&#39;</span><span class="p">,</span>
-              <span class="n">default</span><span class="o">=</span><span class="s1">&#39;TaurusPlot (qwt5)&#39;</span><span class="p">,</span>
-              <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of the window&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">trend2d_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_axis_mode</span><span class="p">,</span> <span class="n">max_buffer_size</span><span class="p">,</span>
-                <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">):</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">model</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s1">&#39;TaurusTrend2D&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="s1">&#39;--buffer&#39;</span><span class="p">,</span> <span class="s1">&#39;max_buffer_size&#39;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Maximum number of values to be stacked &quot;</span>
+          <span class="o">+</span> <span class="s2">&quot;(when reached, the oldest values will be &quot;</span>
+          <span class="o">+</span> <span class="s2">&quot;discarded)&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;--x-axis-mode&quot;</span><span class="p">,</span> <span class="s2">&quot;x_axis_mode&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">]),</span>
+    <span class="n">default</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Interpret X values as timestamps (t), time deltas (d) &quot;</span>
+          <span class="o">+</span> <span class="s2">&quot; or event numbers (e). &quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">trend2d_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">,</span> <span class="n">max_buffer_size</span><span class="p">,</span>
+                <span class="n">x_axis_mode</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 
