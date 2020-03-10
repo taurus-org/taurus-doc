@@ -190,12 +190,12 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">optparse</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">LogExceptHook</span><span class="p">,</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">tauruscustomsettings</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusApplication&quot;</span><span class="p">]</span>
@@ -292,11 +292,12 @@
 <span class="sd">        - org_domain: (str) organization domain</span>
 <span class="sd">        - cmd_line_parser (None [or DEPRECATED :class:`optparse.OptionParser`])</span>
 
-<span class="sd">    If cmd_line_parser is explicitly set to None (recommended), no parsing will</span>
+<span class="sd">    If cmd_line_parser is explicitly set to None, no parsing will</span>
 <span class="sd">    be done at all. If a  :class:`optparse.OptionParser` instance is passed as</span>
 <span class="sd">    cmd_line_parser (deprecated), it will be used for parsing the command line</span>
-<span class="sd">    arguments. If it is not explicitly passed (not recommended), a default</span>
-<span class="sd">    parser will be assumed with the default taurus options.</span>
+<span class="sd">    arguments. If cmd_line_parser is not explicitly passed, the behaviour will</span>
+<span class="sd">    depend on the value of tauruscustomsettings.IMPLICIT_OPTPARSE (which by</span>
+<span class="sd">    default is False, indicating that no parsing is done).</span>
 
 <span class="sd">    Simple example::</span>
 
@@ -332,7 +333,13 @@
         <span class="n">app_version</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;app_version&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">org_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_name&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">org_domain</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;org_domain&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">parser</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cmd_line_parser&#39;</span><span class="p">,</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;IMPLICIT_OPTPARSE&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="kn">import</span> <span class="nn">optparse</span>
+            <span class="n">default_parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">default_parser</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cmd_line_parser&#39;</span><span class="p">,</span> <span class="n">default_parser</span><span class="p">)</span>
 
         <span class="c1">#######################################################################</span>
         <span class="c1"># Workaround for XInitThreads-related crash.</span>
@@ -370,19 +377,25 @@
         <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">p</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">app_version</span><span class="p">:</span>
-                <span class="c1"># if the parser does not contain version information</span>
-                <span class="c1"># but we have an application version, add the</span>
-                <span class="c1"># --version capability</span>
-                <span class="n">v</span> <span class="o">=</span> <span class="n">app_version</span>
-                <span class="k">if</span> <span class="n">app_name</span><span class="p">:</span>
-                    <span class="n">v</span> <span class="o">=</span> <span class="n">app_name</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">app_version</span>
-                <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">v</span>
-                <span class="n">parser</span><span class="o">.</span><span class="n">_add_version_option</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">app_version</span><span class="p">:</span>
+                    <span class="c1"># if the parser does not contain version information</span>
+                    <span class="c1"># but we have an application version, add the</span>
+                    <span class="c1"># --version capability</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">app_version</span>
+                    <span class="k">if</span> <span class="n">app_name</span><span class="p">:</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="n">app_name</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">app_version</span>
+                    <span class="n">parser</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">v</span>
+                    <span class="n">parser</span><span class="o">.</span><span class="n">_add_version_option</span><span class="p">()</span>
 
-            <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
-            <span class="n">p</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">init_taurus_args</span><span class="p">(</span>
-                <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="kn">import</span> <span class="nn">taurus.core.util.argparse</span>
+                <span class="n">p</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">argparse</span><span class="o">.</span><span class="n">init_taurus_args</span><span class="p">(</span>
+                    <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error while using the given cmd_line_parser. </span><span class="se">\n</span><span class="s2">&quot;</span>
+                           <span class="o">+</span> <span class="s2">&quot;hint: it must be either None or an &quot;</span>
+                           <span class="o">+</span> <span class="s2">&quot;optparse.OptionParser instance&quot;</span><span class="p">)</span>
+                <span class="k">raise</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_parser</span> <span class="o">=</span> <span class="n">p</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_line_options</span> <span class="o">=</span> <span class="n">opt</span>

@@ -221,6 +221,19 @@ False (or commented out) for backwards (pre 4.1) compatibility</p>
 </dd></dl>
 
 <dl class="data">
+<dt id="taurus.tauruscustomsettings.IMPLICIT_OPTPARSE">
+<code class="sig-name descname">IMPLICIT_OPTPARSE</code><em class="property"> = False</em><a class="headerlink" href="#taurus.tauruscustomsettings.IMPLICIT_OPTPARSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implicit optparse legacy support:
+In taurus &lt; 4.6.5 if TaurusApplication did not receive an explicit
+<cite>cmd_line_parser</cite> keyword argument, it implicitly used a
+<cite>optparse.OptionParser</cite> instance. This was inconvenient because it forced
+the user to explicitly pass <cite>cmd_line_parser=None</cite> when using other
+mechanisms such as <cite>click</cite> or <cite>argparse</cite> to parse CLI options.
+In taurus &gt;=4.6.5 this is no longer the case by default, but the old
+behaviour can be restored by setting IMPLICIT_OPTPARSE=True</p>
+</dd></dl>
+
+<dl class="data">
 <dt id="taurus.tauruscustomsettings.LIGHTWEIGHT_IMPORTS">
 <code class="sig-name descname">LIGHTWEIGHT_IMPORTS</code><em class="property"> = False</em><a class="headerlink" href="#taurus.tauruscustomsettings.LIGHTWEIGHT_IMPORTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lightweight imports:

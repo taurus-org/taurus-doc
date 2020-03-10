@@ -215,11 +215,12 @@ options.</p>
 </ul>
 </dd>
 </dl>
-<p>If cmd_line_parser is explicitly set to None (recommended), no parsing will
+<p>If cmd_line_parser is explicitly set to None, no parsing will
 be done at all. If a  <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optparse.OptionParser</span></code></a> instance is passed as
 cmd_line_parser (deprecated), it will be used for parsing the command line
-arguments. If it is not explicitly passed (not recommended), a default
-parser will be assumed with the default taurus options.</p>
+arguments. If cmd_line_parser is not explicitly passed, the behaviour will
+depend on the value of tauruscustomsettings.IMPLICIT_OPTPARSE (which by
+default is False, indicating that no parsing is done).</p>
 <p>Simple example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
