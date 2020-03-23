@@ -188,15 +188,14 @@ download and install the latest release of Taurus (see pip –help for options):
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import taurus; print taurus.Release.version&quot;</span>
 </pre></div>
 </div>
-<p>Note: pip is already included in python&gt;2.7.9</p>
 <p>Note: some “extra” features of taurus have additional <a class="reference internal" href="#dependencies">dependencies</a>.</p>
 </div>
 <div class="section" id="linux-debian-based">
 <h3>Linux (Debian-based)<a class="headerlink" href="#linux-debian-based" title="Permalink to this headline">¶</a></h3>
-<p>Since v3.0, Taurus is part of the official repositories of Debian (and Ubuntu
+<p>Taurus is part of the official repositories of Debian (and Ubuntu
 and other Debian-based distros). You can install it and all its dependencies by
 doing (as root):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">aptitude</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">taurus</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">taurus</span>
 </pre></div>
 </div>
 <p>Note: <cite>python3-taurus</cite> and <cite>python3-taurus-pyqtgraph</cite> packages are already
@@ -233,21 +232,21 @@ on each change:</p>
 </div>
 <div class="section" id="dependencies">
 <span id="id3"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>Strictly speaking, Taurus only depends on <a class="reference external" href="http://numpy.org/">numpy</a>, <a class="reference external" href="http://pint.readthedocs.org/">pint</a> and <a class="reference external" href="https://python-future.org/">future</a>
+<p>Strictly speaking, Taurus only depends on <a class="reference external" href="http://numpy.org/">numpy</a>, <a class="reference external" href="https://pypi.org/project/click/">click</a>, <a class="reference external" href="http://pint.readthedocs.org/">pint</a> and <a class="reference external" href="https://python-future.org/">future</a>
 but that will leave out most of the features normally
 expected of Taurus (which are considered “extras”). For example:</p>
 <ul class="simple">
 <li><p>Interacting with a Tango controls system requires <a class="reference external" href="http://pytango.readthedocs.io">PyTango</a>.</p></li>
-<li><p>Interacting with an Epics controls system requires <a class="reference external" href="http://pypi.python.org/pypi/pyepics">pyepics</a>.</p></li>
+<li><p>Interacting with an Epics controls system requires <a class="reference external" href="https://pypi.org/project/pyepics/">pyepics</a>.</p></li>
 <li><p>Using the taurus <a class="reference external" href="http://qt.nokia.com/products/">Qt</a> widgets, requires either <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/">PyQt</a> (v4 or v5)
 or <a class="reference external" href="https://wiki.qt.io/Qt_for_Python">PySide</a> (v1 or v2). Note that most development and testing of
-is done with PyQt4 and PyQt5, so many features may not be
+is done with PyQt, so many features may not be
 regularly tested with PySide and PySide2.</p></li>
 <li><p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.qwt5</span></code> module requires <a class="reference external" href="http://pyqwt.sourceforge.net/">PyQwt</a>, which is
 only available when using PyQt4 and python2. As an alternative
 that supports both python2 and python3 and all the Qt bindings,
 refer to the <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> plugin.</p></li>
-<li><p>The image widgets require the <a class="reference external" href="https://pypi.python.org/pypi/guiqtw">guiqwt</a> library.</p></li>
+<li><p>The image widgets require the <a class="reference external" href="https://pypi.org/project/guiqwt/">guiqwt</a> library.</p></li>
 <li><p>The JDraw synoptics widgets require the <a class="reference external" href="http://www.dabeaz.com/ply/">PLY</a> package.</p></li>
 <li><p>The NeXus browser widget requires <a class="reference external" href="http://pymca.sourceforge.net/">PyMca5</a>.</p></li>
 <li><p>The TaurusEditor widget requires <a class="reference external" href="http://pythonhosted.org/spyder">spyder</a>.</p></li>
