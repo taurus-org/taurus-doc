@@ -197,20 +197,20 @@
             
   <div class="section" id="starter">
 <h1><a class="reference internal" href="#taurus.core.tango.starter.Starter" title="taurus.core.tango.starter.Starter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Starter</span></code></a><a class="headerlink" href="#starter" title="Permalink to this headline">¶</a></h1>
-<div class="graphviz"><img src="../../../../../../_images/inheritance-ef089e4ec6952c783c1f46550d2cb9561b71e5ad.png" alt="Inheritance diagram of Starter" usemap="#inheritance0703eecbcd" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../../../../../_images/inheritance-ea714b7cb1bb8d62a37e83d48f765cb1e21cd32a.png" alt="Inheritance diagram of Starter" usemap="#inheritance0703eecbcd" class="inheritance graphviz" /></div>
 <map id="inheritance0703eecbcd" name="inheritance0703eecbcd">
 <area shape="rect" id="node1" href="#taurus.core.tango.starter.Starter" target="_top" title="Abstract class for managing (starting, stopping, registering and" alt="" coords="5,5,77,53"/>
-</map><dl class="class">
+</map><dl class="py class">
 <dt id="taurus.core.tango.starter.Starter">
-<em class="property">class </em><code class="sig-name descname">Starter</code><span class="sig-paren">(</span><em class="sig-param">ds_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Starter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ds_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Abstract class for managing (starting, stopping, registering and
 removing) a Tango Device Server.</p>
 <p>Derived classes should provide the methods for starting and stopping a
 device.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.addNewDevice">
-<code class="sig-name descname">addNewDevice</code><span class="sig-paren">(</span><em class="sig-param">device</em>, <em class="sig-param">klass=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.addNewDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.addNewDevice" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">addNewDevice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device</span></em>, <em class="sig-param"><span class="n">klass</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.addNewDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.addNewDevice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a device of this server in the DB (register the server if
 not present)
 e.g. to create Starter in an init script:</p>
@@ -225,9 +225,9 @@ name (without instance name)</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.cleanDb">
-<code class="sig-name descname">cleanDb</code><span class="sig-paren">(</span><em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.cleanDb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.cleanDb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cleanDb</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.cleanDb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.cleanDb" title="Permalink to this definition">¶</a></dt>
 <dd><p>removes devices which have been added by <a class="reference internal" href="#taurus.core.tango.starter.Starter.addNewDevice" title="taurus.core.tango.starter.Starter.addNewDevice"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addNewDevice()</span></code></a>
 and then removes the server if it was registered by this starter
 (or, if force is True, it removes the server in any case)</p>
@@ -239,32 +239,32 @@ not registered within this starter</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.hardKill">
 <code class="sig-name descname">hardKill</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.hardKill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.hardKill" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.isRunning">
 <code class="sig-name descname">isRunning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.isRunning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.isRunning" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.start">
 <code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.start" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.startDs">
-<code class="sig-name descname">startDs</code><span class="sig-paren">(</span><em class="sig-param">synch=True</em>, <em class="sig-param">wait_seconds=10</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.startDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.startDs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">startDs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">synch</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">wait_seconds</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.startDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.startDs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.stopDs">
-<code class="sig-name descname">stopDs</code><span class="sig-paren">(</span><em class="sig-param">synch=True</em>, <em class="sig-param">hard_kill=False</em>, <em class="sig-param">wait_seconds=10</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.stopDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.stopDs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stopDs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">synch</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">hard_kill</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">wait_seconds</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.stopDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.stopDs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.tango.starter.Starter.terminate">
 <code class="sig-name descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/tango/starter.html#Starter.terminate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.starter.Starter.terminate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>

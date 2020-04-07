@@ -197,10 +197,10 @@
             
   <div class="section" id="arraybuffer">
 <h1><a class="reference internal" href="#taurus.core.util.init_lightweight.ArrayBuffer" title="taurus.core.util.init_lightweight.ArrayBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayBuffer</span></code></a><a class="headerlink" href="#arraybuffer" title="Permalink to this headline">¶</a></h1>
-<div class="graphviz"><img src="../../../../../../_images/inheritance-4a87f8c5081da04e6c0db172bea3317486cd5a5f.png" alt="Inheritance diagram of ArrayBuffer" class="inheritance graphviz" /></div>
-<dl class="class">
+<div class="graphviz"><img src="../../../../../../_images/inheritance-0850c7c41a0749eee92df5c42d3409724c06a749.png" alt="Inheritance diagram of ArrayBuffer" class="inheritance graphviz" /></div>
+<dl class="py class">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer">
-<em class="property">class </em><code class="sig-name descname">ArrayBuffer</code><span class="sig-paren">(</span><em class="sig-param">buffer</em>, <em class="sig-param">maxSize=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ArrayBuffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">buffer</span></em>, <em class="sig-param"><span class="n">maxSize</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A data buffer which internally uses a preallocated numpy.array.
 An ArrayBuffer will only present the actual contents, not the full internal
@@ -219,9 +219,9 @@ discarded (in a FIFO way)</p>
 <p>The <a class="reference internal" href="#taurus.core.util.init_lightweight.ArrayBuffer.append" title="taurus.core.util.init_lightweight.ArrayBuffer.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code></a> and meth:<cite>extend</cite> methods are designed to be cheap
 (especially if the internal buffer size is already at the maximum size), at
 the expense of memory usage</p>
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.append">
-<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.append" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>similar to the append method in a list, except that once the maximum
 buffer size is reached, elements get discarded on the begginning to keep
 the size within the limit</p>
@@ -236,7 +236,7 @@ the size within the limit</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.bufferSize">
 <code class="sig-name descname">bufferSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.bufferSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.bufferSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current size of the internal buffer</p>
@@ -254,7 +254,7 @@ the size within the limit</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.contents">
 <code class="sig-name descname">contents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.contents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.contents" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the array of the contents that have already been filled. Note
@@ -275,7 +275,7 @@ been already set.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.contentsSize">
 <code class="sig-name descname">contentsSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.contentsSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.contentsSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Equivalent to len(b)</p>
@@ -294,9 +294,9 @@ the maximum size of the buffer)</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.extend">
-<code class="sig-name descname">extend</code><span class="sig-paren">(</span><em class="sig-param">a</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.extend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.extend" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.extend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>similar to the extend method of a list, except that once the maximum
 buffer size is reached, elements get discarded on the begginning to keep
 the size within the limit</p>
@@ -311,9 +311,9 @@ the size within the limit</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.extendLeft">
-<code class="sig-name descname">extendLeft</code><span class="sig-paren">(</span><em class="sig-param">a</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.extendLeft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.extendLeft" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extendLeft</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.extendLeft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.extendLeft" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepends data to the current contents. Note that, contrary to the
 extent method, no data will be discarded if the maximum size limit is
 reached. Instead, an exception will be raised.</p>
@@ -328,7 +328,7 @@ reached. Instead, an exception will be raised.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.isFull">
 <code class="sig-name descname">isFull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.isFull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.isFull" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the contents fill the whole of the internal buffer</p>
@@ -346,7 +346,7 @@ reached. Instead, an exception will be raised.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.maxSize">
 <code class="sig-name descname">maxSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.maxSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.maxSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the maximum size of the internal buffer, beyond which the
@@ -365,9 +365,9 @@ ArrayBuffer starts discarding elements when appending</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.moveLeft">
-<code class="sig-name descname">moveLeft</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.moveLeft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.moveLeft" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">moveLeft</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.moveLeft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.moveLeft" title="Permalink to this definition">¶</a></dt>
 <dd><p>discards n elements from the begginning to make space at the end of
 the buffer. Moves all elements n positions to the left and the contents
 size gets decreased by n</p>
@@ -380,7 +380,7 @@ whole buffer is wiped</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.remainingSize">
 <code class="sig-name descname">remainingSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.remainingSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.remainingSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the remaining free space in the internal buffer (e.g., 0 if it is full)</p>
@@ -398,15 +398,15 @@ whole buffer is wiped</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.resizeBuffer">
-<code class="sig-name descname">resizeBuffer</code><span class="sig-paren">(</span><em class="sig-param">newlen</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.resizeBuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.resizeBuffer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">resizeBuffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">newlen</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.resizeBuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.resizeBuffer" title="Permalink to this definition">¶</a></dt>
 <dd><p>resizes the internal buffer</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.setMaxSize">
-<code class="sig-name descname">setMaxSize</code><span class="sig-paren">(</span><em class="sig-param">maxSize</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.setMaxSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.setMaxSize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setMaxSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">maxSize</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.setMaxSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.setMaxSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the maximum size of the internal buffer, beyond which the
 ArrayBuffer starts discarding elements when appending</p>
 <dl class="field-list simple">
@@ -420,7 +420,7 @@ ArrayBuffer starts discarding elements when appending</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.init_lightweight.ArrayBuffer.toArray">
 <code class="sig-name descname">toArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#ArrayBuffer.toArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.ArrayBuffer.toArray" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns a copy of the array of the contents. It is equivalent to

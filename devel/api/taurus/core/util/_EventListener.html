@@ -195,8 +195,8 @@
             
   <div class="section" id="eventlistener">
 <h1><a class="reference internal" href="#taurus.core.util.EventListener" title="taurus.core.util.EventListener"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventListener</span></code></a><a class="headerlink" href="#eventlistener" title="Permalink to this headline">¶</a></h1>
-<div class="graphviz"><img src="../../../../../_images/inheritance-0020592e72e2a69a96c6b205c5c587431d23ff05.png" alt="Inheritance diagram of EventListener" class="inheritance graphviz" /></div>
-<dl class="class">
+<div class="graphviz"><img src="../../../../../_images/inheritance-27306b4f034281ac9adc8580d6249f77c53c450f.png" alt="Inheritance diagram of EventListener" class="inheritance graphviz" /></div>
+<dl class="py class">
 <dt id="taurus.core.util.EventListener">
 <em class="property">class </em><code class="sig-name descname">EventListener</code><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -204,15 +204,15 @@
 <p>Note: Since this class stores for each event value the last timestamp when
 it occured, it should only be used for events for which the event value
 domain (possible values) is limited and well known (ex: an enum)</p>
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.EventListener.clearEventSet">
 <code class="sig-name descname">clearEventSet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener.clearEventSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener.clearEventSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears the internal event buffer</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.EventListener.fireEvent">
-<code class="sig-name descname">fireEvent</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener.fireEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener.fireEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fireEvent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener.fireEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener.fireEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Notifies that a given event has arrived
 This function is protected inside with the object’s lock. Do NOT call
 this function when you have the lock acquired on this object.</p>
@@ -223,21 +223,21 @@ this function when you have the lock acquired on this object.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.EventListener.lock">
 <code class="sig-name descname">lock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener.lock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener.lock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locks this event listener</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.EventListener.unlock">
 <code class="sig-name descname">unlock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener.unlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener.unlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unlocks this event listener</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.core.util.EventListener.waitEvent">
-<code class="sig-name descname">waitEvent</code><span class="sig-paren">(</span><em class="sig-param">val</em>, <em class="sig-param">after=0</em>, <em class="sig-param">equal=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener.waitEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener.waitEvent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">waitEvent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">after</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">equal</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/event.html#EventListener.waitEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.EventListener.waitEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for an event with the given value. You MUST protect this function
 with this object’s lock before calling this method and always unlock it
 afterward, of course:</p>

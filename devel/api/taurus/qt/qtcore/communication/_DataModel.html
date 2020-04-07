@@ -197,10 +197,10 @@
             
   <div class="section" id="datamodel">
 <h1><a class="reference internal" href="#taurus.qt.qtcore.communication.DataModel" title="taurus.qt.qtcore.communication.DataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataModel</span></code></a><a class="headerlink" href="#datamodel" title="Permalink to this headline">¶</a></h1>
-<div class="graphviz"><img src="../../../../../../_images/inheritance-751642931f6268234621cbd48074abc1e1595346.png" alt="Inheritance diagram of DataModel" class="inheritance graphviz" /></div>
-<dl class="class">
+<div class="graphviz"><img src="../../../../../../_images/inheritance-8203b0dc47b4f47e907de536849c37c637b6bdde.png" alt="Inheritance diagram of DataModel" class="inheritance graphviz" /></div>
+<dl class="py class">
 <dt id="taurus.qt.qtcore.communication.DataModel">
-<em class="property">class </em><code class="sig-name descname">DataModel</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">dataUID</em>, <em class="sig-param">defaultData=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">DataModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parent</span></em>, <em class="sig-param"><span class="n">dataUID</span></em>, <em class="sig-param"><span class="n">defaultData</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtCore.QObject</span></code></p>
 <p>An object containing one piece of data which is intended to be shared. The
 data will be identified by its UID (a unique identifier known to objects
@@ -209,9 +209,9 @@ that intend to access the data)</p>
 directly. Instead, you should interact via the <a class="reference internal" href="_SharedDataManager.html#taurus.qt.qtcore.communication.SharedDataManager" title="taurus.qt.qtcore.communication.SharedDataManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">SharedDataManager</span></code></a>,
 which uses <code class="xref py py-meth docutils literal notranslate"><span class="pre">SharedDataManager.__getDataModel()</span></code> to ensure that the
 DataModels are singletons.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.connectReader">
-<code class="sig-name descname">connectReader</code><span class="sig-paren">(</span><em class="sig-param">slot</em>, <em class="sig-param">readOnConnect=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.connectReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.connectReader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connectReader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">slot</span></em>, <em class="sig-param"><span class="n">readOnConnect</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.connectReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.connectReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers the given slot method to receive notifications whenever the
 data is changed.</p>
 <dl class="field-list simple">
@@ -232,9 +232,9 @@ if the data has been already initialized</p></li>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.connectWriter">
-<code class="sig-name descname">connectWriter</code><span class="sig-paren">(</span><em class="sig-param">writer</em>, <em class="sig-param">signalname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.connectWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.connectWriter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connectWriter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">writer</span></em>, <em class="sig-param"><span class="n">signalname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.connectWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.connectWriter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers the given writer object as a writer of the data. The writer is
 then expected to emit a <cite>QtCore.SIGNAL(signalname)</cite> with the new data as the
 first parameter.</p>
@@ -253,12 +253,12 @@ of the data</p></li>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="taurus.qt.qtcore.communication.DataModel.dataChanged">
 <code class="sig-name descname">dataChanged</code><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.dataChanged" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.dataUID">
 <code class="sig-name descname">dataUID</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.dataUID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.dataUID" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the data unique identifier</p>
@@ -272,9 +272,9 @@ of the data</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.disconnectReader">
-<code class="sig-name descname">disconnectReader</code><span class="sig-paren">(</span><em class="sig-param">slot</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.disconnectReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.disconnectReader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnectReader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">slot</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.disconnectReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.disconnectReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>unregister a reader</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -287,9 +287,9 @@ of the data</p></li>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.disconnectWriter">
-<code class="sig-name descname">disconnectWriter</code><span class="sig-paren">(</span><em class="sig-param">writer</em>, <em class="sig-param">signalname</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.disconnectWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.disconnectWriter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnectWriter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">writer</span></em>, <em class="sig-param"><span class="n">signalname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.disconnectWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.disconnectWriter" title="Permalink to this definition">¶</a></dt>
 <dd><p>unregister a writer from this data model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -305,7 +305,7 @@ of the data</p></li>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.getData">
 <code class="sig-name descname">getData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.getData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.getData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the data object.</p>
@@ -319,12 +319,12 @@ of the data</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.info">
 <code class="sig-name descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.info" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.isDataSet">
 <code class="sig-name descname">isDataSet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.isDataSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.isDataSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the data has been set at least once or if it is uninitialized</p>
@@ -338,7 +338,7 @@ of the data</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.readerCount">
 <code class="sig-name descname">readerCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.readerCount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.readerCount" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the number of currently registered readers of this model</p>
@@ -352,9 +352,9 @@ of the data</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.setData">
-<code class="sig-name descname">setData</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.setData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.setData" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.setData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.setData" title="Permalink to this definition">¶</a></dt>
 <dd><p>sets the data object and emits a “dataChanged” signal with the data as the parameter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -363,7 +363,7 @@ of the data</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="taurus.qt.qtcore.communication.DataModel.writerCount">
 <code class="sig-name descname">writerCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtcore/communication/communication.html#DataModel.writerCount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtcore.communication.DataModel.writerCount" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the number of currently registered writers of this model</p>
