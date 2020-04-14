@@ -236,9 +236,10 @@
         <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">postDetach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">writeIndexValue</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
             <span class="c1"># In new style-signal if a signal is disconnected without</span>
-            <span class="c1"># previously was connected it, it raises a TypeError</span>
+            <span class="c1"># previously was connected it, it raises a TypeError (PyQt)</span>
+            <span class="c1"># or RuntimeError (PySide)</span>
             <span class="k">pass</span></div>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
