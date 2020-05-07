@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>defaultdict_fromkey &mdash; taurus 4.6.5-alpha documentation</title>
+  <title>LazyModule &mdash; taurus 4.6.5-alpha documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../../search.html" />
-    <link rel="next" title="taurus.core.util.lazymodule" href="../lazymodule.html" />
-    <link rel="prev" title="WarnIt" href="_WarnIt.html" /> 
+    <link rel="next" title="taurus.core.util.lock" href="../lock.html" />
+    <link rel="prev" title="taurus.core.util.lazymodule" href="../lazymodule.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -174,15 +174,15 @@
         
           <li><a href="../../util.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util</span></code></a> &raquo;</li>
         
-          <li><a href="../init_lightweight.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.init_lightweight</span></code></a> &raquo;</li>
+          <li><a href="../lazymodule.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.lazymodule</span></code></a> &raquo;</li>
         
-      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">defaultdict_fromkey</span></code></li>
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">LazyModule</span></code></li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../../../../_sources/devel/api/taurus/core/util/init_lightweight/_defaultdict_fromkey.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../../../_sources/devel/api/taurus/core/util/lazymodule/_LazyModule.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -195,17 +195,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="defaultdict-fromkey">
-<h1><a class="reference internal" href="#taurus.core.util.init_lightweight.defaultdict_fromkey" title="taurus.core.util.init_lightweight.defaultdict_fromkey"><code class="xref py py-class docutils literal notranslate"><span class="pre">defaultdict_fromkey</span></code></a><a class="headerlink" href="#defaultdict-fromkey" title="Permalink to this headline">¶</a></h1>
-<div class="graphviz"><img src="../../../../../../_images/inheritance-9b7ccbf541757a928c3147965249b5d4c0eb1c51.png" alt="Inheritance diagram of defaultdict_fromkey" class="inheritance graphviz" /></div>
-<dl class="py class">
-<dt id="taurus.core.util.init_lightweight.defaultdict_fromkey">
-<em class="property">class </em><code class="sig-name descname">defaultdict_fromkey</code><a class="reference internal" href="../../../../../../_modules/taurus/core/util/containers.html#defaultdict_fromkey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.init_lightweight.defaultdict_fromkey" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/collections.html#collections.defaultdict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a></p>
-<p>Creates a dictionary with a default_factory function that creates new elements using key as argument.
-Usage : new_dict = defaultdict_fromkey(method); where method like (lambda key: return new_obj(key))
-Each time that new_dict[key] is called with a key that doesn’t exist, method(key) is used to create the value
-Copied from PyAlarm device server</p>
+  <div class="section" id="lazymodule">
+<h1><a class="reference internal" href="#taurus.core.util.lazymodule.LazyModule" title="taurus.core.util.lazymodule.LazyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazyModule</span></code></a><a class="headerlink" href="#lazymodule" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../../_images/inheritance-592b551806636dea71747ab1afc0fb5cf14062bb.png" alt="Inheritance diagram of LazyModule" usemap="#inheritancefc01df6fdc" class="inheritance graphviz" /></div>
+<map id="inheritancefc01df6fdc" name="inheritancefc01df6fdc">
+<area shape="rect" id="node1" href="#taurus.core.util.lazymodule.LazyModule" target="_top" title="It provides a ModuleType object that acts as a placeholder for modules" alt="" coords="5,101,104,149"/>
+</map><dl class="py class">
+<dt id="taurus.core.util.lazymodule.LazyModule">
+<em class="property">class </em><code class="sig-name descname">LazyModule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">package</span></em>, <em class="sig-param"><span class="n">entry_point</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/lazymodule.html#LazyModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.lazymodule.LazyModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">module</span></code></p>
+<p>It provides a ModuleType object that acts as a placeholder for modules
+registered via entry-points. It replaces the actual module without actually
+importing it until a member of the module is requested, which automatically
+triggers the load of the entry-point and the substitution of this
+placeholder by the actual module</p>
+<dl class="py method">
+<dt id="taurus.core.util.lazymodule.LazyModule.import_ep">
+<em class="property">static </em><code class="sig-name descname">import_ep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">package</span></em>, <em class="sig-param"><span class="n">entry_point</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/core/util/lazymodule.html#LazyModule.import_ep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.lazymodule.LazyModule.import_ep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lazily imports a module defined in an entry point. The LazyModule is
+inserted in sys.modules as &lt;package&gt;.&lt;name&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the module</p></li>
+<li><p><strong>package</strong> – name of the package to which the module belongs</p></li>
+<li><p><strong>entry_point</strong> – entry-point for a module</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A LazyModule object</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -218,10 +240,10 @@ Copied from PyAlarm device server</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../lazymodule.html" class="btn btn-neutral float-right" title="taurus.core.util.lazymodule" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../lock.html" class="btn btn-neutral float-right" title="taurus.core.util.lock" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="_WarnIt.html" class="btn btn-neutral float-left" title="WarnIt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../lazymodule.html" class="btn btn-neutral float-left" title="taurus.core.util.lazymodule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

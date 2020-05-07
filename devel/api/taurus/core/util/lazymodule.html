@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.lock &mdash; taurus 4.6.5-alpha documentation</title>
+  <title>taurus.core.util.lazymodule &mdash; taurus 4.6.5-alpha documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
-    <link rel="next" title="taurus.core.util.parse_args" href="parse_args.html" />
-    <link rel="prev" title="LazyModule" href="lazymodule/_LazyModule.html" /> 
+    <link rel="next" title="LazyModule" href="lazymodule/_LazyModule.html" />
+    <link rel="prev" title="defaultdict_fromkey" href="init_lightweight/_defaultdict_fromkey.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -174,13 +174,13 @@
         
           <li><a href="../util.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util</span></code></a> &raquo;</li>
         
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.lock</span></code></li>
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.lazymodule</span></code></li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../../../_sources/devel/api/taurus/core/util/lock.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../../_sources/devel/api/taurus/core/util/lazymodule.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -193,14 +193,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-taurus.core.util.lock">
-<span id="taurus-core-util-lock"></span><h1><a class="reference internal" href="#module-taurus.core.util.lock" title="taurus.core.util.lock"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.lock</span></code></a><a class="headerlink" href="#module-taurus.core.util.lock" title="Permalink to this headline">¶</a></h1>
-<p>This module defines a <em>slow</em> lock class that provides additional debugging
-information</p>
+  <div class="section" id="module-taurus.core.util.lazymodule">
+<span id="taurus-core-util-lazymodule"></span><h1><a class="reference internal" href="#module-taurus.core.util.lazymodule" title="taurus.core.util.lazymodule"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.lazymodule</span></code></a><a class="headerlink" href="#module-taurus.core.util.lazymodule" title="Permalink to this headline">¶</a></h1>
+<p>This module provides LazyModule for loading plugin modules in lazy way -
+only when members of actual plugin are requested.</p>
+<p class="rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="hlist"><tr><td><ul class="simple">
+<li><p><a class="reference internal" href="lazymodule/_LazyModule.html#taurus.core.util.lazymodule.LazyModule" title="taurus.core.util.lazymodule.LazyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazyModule</span></code></a></p></li>
+</ul>
+</td><td><ul class="simple">
+</ul>
+</td></tr></table>
 <p class="rubric">Functions</p>
 <dl class="py function">
-<dt id="taurus.core.util.lock.TaurusLock">
-<code class="sig-name descname">TaurusLock</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">lock</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/lock.html#TaurusLock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.lock.TaurusLock" title="Permalink to this definition">¶</a></dt>
+<dt id="taurus.core.util.lazymodule.info">
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.lazymodule.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="taurus.core.util.lazymodule.warning">
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/log.html#warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.lazymodule.warning" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -213,10 +227,10 @@ information</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="parse_args.html" class="btn btn-neutral float-right" title="taurus.core.util.parse_args" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lazymodule/_LazyModule.html" class="btn btn-neutral float-right" title="LazyModule" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lazymodule/_LazyModule.html" class="btn btn-neutral float-left" title="LazyModule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="init_lightweight/_defaultdict_fromkey.html" class="btn btn-neutral float-left" title="defaultdict_fromkey" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
