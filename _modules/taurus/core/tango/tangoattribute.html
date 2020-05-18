@@ -676,9 +676,22 @@
 
 <div class="viewcode-block" id="TangoAttribute.read"><a class="viewcode-back" href="../../../../devel/api/taurus/core/tango/_TangoAttribute.html#taurus.core.tango.TangoAttribute.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Returns the current value of the attribute.</span>
-<span class="sd">            if cache is set to True (default) or the attribute has events</span>
-<span class="sd">            active then it will return the local cached value. Otherwise it will</span>
-<span class="sd">            read the attribute value from the tango device.&quot;&quot;&quot;</span>
+
+<span class="sd">        If `cache` is not False, or expired, or the attribute has events</span>
+<span class="sd">        active, then it will return the local cached value. Otherwise it will</span>
+<span class="sd">        read the attribute value from the tango device.</span>
+
+<span class="sd">        The cached value expires if it is older than the value (im ms) passed </span>
+<span class="sd">        as the `cache` argument or the *polling period* if `cache==True` </span>
+<span class="sd">        (default). If the cache is expired a reading will be done just as if </span>
+<span class="sd">        cache was False.</span>
+
+<span class="sd">        :param cache: use cache value or make readout, eventually pass a</span>
+<span class="sd">             cache&#39;s expiration period in milliseconds</span>
+<span class="sd">        :type cache: :obj:`bool` or :obj:`float`</span>
+<span class="sd">        :return: attribute value</span>
+<span class="sd">        :rtype: :obj:`~taurus.core.tango.TangoAttributeValue`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">curr_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">cache</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -686,7 +699,11 @@
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="n">attr_timestamp</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">curr_time</span> <span class="o">-</span> <span class="n">attr_timestamp</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
-            <span class="k">if</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPollingPeriod</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># cache *is* a bool True</span>
+                <span class="n">expiration_period</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPollingPeriod</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># cache is a non-zero numeric value</span>
+                <span class="n">expiration_period</span> <span class="o">=</span> <span class="n">cache</span>
+            <span class="k">if</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="n">expiration_period</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_value</span>
                 <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attr_err</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

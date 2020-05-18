@@ -769,10 +769,26 @@ specific handlers for different event types.</p>
 <dl class="py method">
 <dt id="taurus.core.tango.TangoAttribute.read">
 <code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/tango/tangoattribute.html#TangoAttribute.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.tango.TangoAttribute.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the current value of the attribute.
-if cache is set to True (default) or the attribute has events
-active then it will return the local cached value. Otherwise it will
+<dd><p>Returns the current value of the attribute.</p>
+<p>If <cite>cache</cite> is not False, or expired, or the attribute has events
+active, then it will return the local cached value. Otherwise it will
 read the attribute value from the tango device.</p>
+<p>The cached value expires if it is older than the value (im ms) passed 
+as the <cite>cache</cite> argument or the <em>polling period</em> if <cite>cache==True</cite> 
+(default). If the cache is expired a reading will be done just as if 
+cache was False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cache</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a> or <a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – use cache value or make readout, eventually pass a
+cache’s expiration period in milliseconds</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>attribute value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">TangoAttributeValue</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
