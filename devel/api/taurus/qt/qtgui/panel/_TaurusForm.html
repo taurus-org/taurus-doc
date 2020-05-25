@@ -209,8 +209,8 @@ is represented in a row consisting of a label, a read widget, a write
 widget, a units widget and an “extra” widget (some of them may not be shown)
 which are vertically aligned with their counterparts from other items.</p>
 <p>By default a <a class="reference internal" href="_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue" title="taurus.qt.qtgui.panel.TaurusValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusValue</span></code></a> object is used for each item, but this
-can be changed and specific mappings can be defined using the
-<a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusForm.setCustomWidgetMap" title="taurus.qt.qtgui.panel.TaurusForm.setCustomWidgetMap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCustomWidgetMap()</span></code></a> method.</p>
+can be changed and customizations can be provided by enabling/disabling
+item factories with <a class="reference internal" href="#taurus.qt.qtgui.panel.TaurusForm.setItemFactories" title="taurus.qt.qtgui.panel.TaurusForm.setItemFactories"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setItemFactories()</span></code></a>.</p>
 <p>Item objects can be accessed by index using a list-like notation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
 <span class="n">form</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sys/tg_test/1&#39;</span><span class="o">+</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;short_image&#39;</span><span class="p">,</span><span class="s1">&#39;/float_scalar&#39;</span><span class="p">,</span><span class="s1">&#39;/double_scalar&#39;</span><span class="p">)]</span>
@@ -276,38 +276,51 @@ coding examples</span></a></p>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.panel.TaurusForm.getCustomWidgetMap">
-<code class="sig-name descname">getCustomWidgetMap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.getCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.getCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getCustomWidgetMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.getCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the map used to create custom widgets.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>&gt;</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">return</dt>
 <dd class="field-even"><p>a dictionary whose keys are device
 type strings (i.e. see <code class="xref py py-class docutils literal notranslate"><span class="pre">PyTango.DeviceInfo</span></code>) and whose
 values are tuples of classname,args,kwargs</p>
 </dd>
 </dl>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.6.5: </span>Use item factories instead</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.panel.TaurusForm.getFormWidget">
-<code class="sig-name descname">getFormWidget</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.getFormWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.getFormWidget" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">getFormWidget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.getFormWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a tuple that can be used for creating a widget for a given model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – a taurus model name for which the new item of the
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">type model</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+<dt class="field-even">param model</dt>
+<dd class="field-even"><p>a taurus model name for which the new item of the
 form will be created</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/functions.html#type" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>&gt;</p>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/functions.html#type" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>&gt;</p>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a tuple containing a class, a list of
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>a tuple containing a class, a list of
 args and a dict of keyword args. The args and the keyword args
 can be passed to the class constructor</p>
 </dd>
 </dl>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.6.5: </span>Use item factories instead</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -322,6 +335,20 @@ can be passed to the class constructor</p>
 <dd><p>returns the child item with given model. If there is more than one item
 with the same model, the index parameter can be used to distinguish among them
 Please note that his index is only relative to same-model items!</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.qt.qtgui.panel.TaurusForm.getItemFactories">
+<code class="sig-name descname">getItemFactories</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">return_disabled</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.getItemFactories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.getItemFactories" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the list of item factories entry points currently in use</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>return_disabled</strong> – If False (default), it returns only a list of
+the enabled factories. If True, it returns a
+tuple containing two lists: the enabled and
+the available but disabled factories.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -456,8 +483,11 @@ following keys and values:</p>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.panel.TaurusForm.resetFormWidget">
-<code class="sig-name descname">resetFormWidget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.resetFormWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.resetFormWidget" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">resetFormWidget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.resetFormWidget" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.6.5: </span>Use item factories instead</p>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.panel.TaurusForm.resetModel">
@@ -477,26 +507,78 @@ following keys and values:</p>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.panel.TaurusForm.setCustomWidgetMap">
-<code class="sig-name descname">setCustomWidgetMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cwmap</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.setCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.setCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setCustomWidgetMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.setCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a map map for custom widgets.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cwmap</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>&gt;) – a dictionary whose keys are device
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">type cwmap</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>&gt;</p>
+</dd>
+<dt class="field-even">param cwmap</dt>
+<dd class="field-even"><p>a dictionary whose keys are device
 type strings (i.e. see <code class="xref py py-class docutils literal notranslate"><span class="pre">PyTango.DeviceInfo</span></code>) and
 whose values are tuples of classname,args,kwargs</p>
 </dd>
 </dl>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.6.5: </span>Use item factories instead</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.panel.TaurusForm.setFormWidget">
-<code class="sig-name descname">setFormWidget</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formWidget</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.setFormWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.setFormWidget" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">setFormWidget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.setFormWidget" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.6.5: </span>Use item factories instead</p>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.panel.TaurusForm.setFormat">
 <code class="sig-name descname">setFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">format</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.setFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.setFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to call setFormat on the taurusvalues</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.qt.qtgui.panel.TaurusForm.setItemFactories">
+<code class="sig-name descname">setItemFactories</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">include</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">exclude</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/panel/taurusform.html#TaurusForm.setItemFactories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.panel.TaurusForm.setItemFactories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects and prioritizes the factories to be used to create the form’s
+items.</p>
+<p>TaurusForm item factories are functions that receive a TaurusModel as
+their only argument and return either a TaurusValue-like instance
+or None in case the factory does not handle the given model.</p>
+<p>The factories are selected using their entry point names as registered
+in the “taurus.form.item_factories” entry point group.</p>
+<p>The factories entry point name is up to the registrar of the entry
+point (typically a taurus plugin) and should be documented by the
+registrar to allow for selection and prioritization.</p>
+<p>The selection and prioritization is done using
+<a class="reference internal" href="../../../core/util/plugin.html#taurus.core.util.plugin.selectEntryPoints" title="taurus.core.util.plugin.selectEntryPoints"><code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.core.util.plugin.selectEntryPoints()</span></code></a>. See it for
+more details.</p>
+<p>The selected list is updated in the form, and returned.</p>
+<p>The default values for the include and exclude arguments are defined
+in <cite>tauruscustomsettings.T_FORM_ITEM_FACTORIES</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>include</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – . The members in the tuple can be: Regexp
+patterns (in string or compiled form) matching the
+names to be included in the selection. They can also be
+item factory functions (which then are wrapped in an
+EntryPoint-like object and included in the selection).</p></li>
+<li><p><strong>exclude</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) – . Regexp patterns ( either <cite>str</cite> or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">re.Pattern</span></code> objects) matching registered names
+to be excluded.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>selected item factories entry points</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

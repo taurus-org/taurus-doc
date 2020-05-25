@@ -193,17 +193,22 @@
 
 <span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span><span class="p">,</span> <span class="n">binary_type</span>
 
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">tauruscustomsettings</span> <span class="k">as</span> <span class="n">_ts</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 
 <span class="kn">import</span> <span class="nn">taurus.core</span>
-<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="kn">import</span> <span class="n">TaurusDevState</span><span class="p">,</span> <span class="n">DisplayLevel</span>
+<span class="kn">from</span> <span class="nn">taurus.core</span> <span class="kn">import</span> <span class="n">DisplayLevel</span>
 
 <span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span>
                                         <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.container</span> <span class="kn">import</span> <span class="n">TaurusWidget</span><span class="p">,</span> <span class="n">TaurusScrollArea</span>
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.button</span> <span class="kn">import</span> <span class="n">QButtonBox</span><span class="p">,</span> <span class="n">TaurusCommandButton</span>
 <span class="kn">from</span> <span class="nn">.taurusmodelchooser</span> <span class="kn">import</span> <span class="n">TaurusModelChooser</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecation_decorator</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.plugin</span> <span class="kn">import</span> <span class="n">selectEntryPoints</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">warning</span>
 <span class="kn">import</span> <span class="nn">taurus.cli.common</span>
+
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusAttrForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusCommandsForm&quot;</span><span class="p">,</span> <span class="s2">&quot;TaurusForm&quot;</span><span class="p">]</span>
 
@@ -245,8 +250,8 @@
 <span class="sd">    which are vertically aligned with their counterparts from other items.</span>
 
 <span class="sd">    By default a :class:`TaurusValue` object is used for each item, but this</span>
-<span class="sd">    can be changed and specific mappings can be defined using the</span>
-<span class="sd">    :meth:`setCustomWidgetMap` method.</span>
+<span class="sd">    can be changed and customizations can be provided by enabling/disabling</span>
+<span class="sd">    item factories with :meth:`setItemFactories`.</span>
 
 <span class="sd">    Item objects can be accessed by index using a list-like notation::</span>
 
@@ -262,7 +267,7 @@
 <span class="sd">    coding examples &lt;examples&gt;` &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">formWidget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">formWidget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># deprecated</span>
                  <span class="n">buttons</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">withButtons</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -273,10 +278,19 @@
         <span class="k">if</span> <span class="n">buttons</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">buttons</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Apply</span> <span class="o">|</span> \
                 <span class="n">Qt</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Reset</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># deprecated</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># self._children = []</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setFormWidget</span><span class="p">(</span><span class="n">formWidget</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">formWidget</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="kn">import</span> <span class="n">TaurusValue</span>
+            <span class="n">formWidget</span> <span class="o">=</span> <span class="n">TaurusValue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+                <span class="n">dep</span><span class="o">=</span><span class="s2">&quot;formWidget argument&quot;</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="s2">&quot;item factories&quot;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;4.6.5&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_defaultFormWidget</span> <span class="o">=</span> <span class="n">formWidget</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_itemFactories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setItemFactories</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">())</span>
 
@@ -339,6 +353,88 @@
         <span class="sd">&#39;&#39;&#39;returns the number of items contained by the form&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getItems</span><span class="p">())</span>
 
+<div class="viewcode-block" id="TaurusForm.setItemFactories"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.setItemFactories">[docs]</a>    <span class="k">def</span> <span class="nf">setItemFactories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects and prioritizes the factories to be used to create the form&#39;s</span>
+<span class="sd">        items.</span>
+
+<span class="sd">        TaurusForm item factories are functions that receive a TaurusModel as</span>
+<span class="sd">        their only argument and return either a TaurusValue-like instance</span>
+<span class="sd">        or None in case the factory does not handle the given model.</span>
+
+<span class="sd">        The factories are selected using their entry point names as registered</span>
+<span class="sd">        in the &quot;taurus.form.item_factories&quot; entry point group.</span>
+
+<span class="sd">        The factories entry point name is up to the registrar of the entry</span>
+<span class="sd">        point (typically a taurus plugin) and should be documented by the</span>
+<span class="sd">        registrar to allow for selection and prioritization.</span>
+
+<span class="sd">        The selection and prioritization is done using</span>
+<span class="sd">        :meth:`taurus.core.util.plugin.selectEntryPoints()`. See it for</span>
+<span class="sd">        more details.</span>
+
+<span class="sd">        The selected list is updated in the form, and returned.</span>
+
+<span class="sd">        The default values for the include and exclude arguments are defined</span>
+<span class="sd">        in `tauruscustomsettings.T_FORM_ITEM_FACTORIES`</span>
+
+<span class="sd">        :param include: (tuple). The members in the tuple can be: Regexp</span>
+<span class="sd">                        patterns (in string or compiled form) matching the</span>
+<span class="sd">                        names to be included in the selection. They can also be</span>
+<span class="sd">                        item factory functions (which then are wrapped in an</span>
+<span class="sd">                        EntryPoint-like object and included in the selection).</span>
+<span class="sd">        :param exclude: (tuple). Regexp patterns ( either `str` or</span>
+<span class="sd">                        :class:`re.Pattern` objects) matching registered names</span>
+<span class="sd">                        to be excluded.</span>
+<span class="sd">        :return: (list) selected item factories entry points</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">patterns</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_ts</span><span class="p">,</span> <span class="s2">&quot;T_FORM_ITEM_FACTORIES&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="k">if</span> <span class="n">include</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">include</span> <span class="o">=</span> <span class="n">patterns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;include&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;.*&#39;</span><span class="p">,))</span>
+        <span class="k">if</span> <span class="n">exclude</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">exclude</span> <span class="o">=</span> <span class="n">patterns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span> <span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_itemFactories</span> <span class="o">=</span> <span class="n">selectEntryPoints</span><span class="p">(</span>
+            <span class="n">group</span><span class="o">=</span><span class="s1">&#39;taurus.form.item_factories&#39;</span><span class="p">,</span>
+            <span class="n">include</span><span class="o">=</span><span class="n">include</span><span class="p">,</span>
+            <span class="n">exclude</span><span class="o">=</span><span class="n">exclude</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemFactories</span></div>
+
+<div class="viewcode-block" id="TaurusForm.getItemFactories"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.getItemFactories">[docs]</a>    <span class="k">def</span> <span class="nf">getItemFactories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns the list of item factories entry points currently in use</span>
+
+<span class="sd">        :param return_disabled: If False (default), it returns only a list of</span>
+<span class="sd">                                the enabled factories. If True, it returns a</span>
+<span class="sd">                                tuple containing two lists: the enabled and</span>
+<span class="sd">                                the available but disabled factories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">enabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemFactories</span>
+        <span class="k">if</span> <span class="n">return_disabled</span><span class="p">:</span>
+            <span class="n">all_</span> <span class="o">=</span> <span class="n">selectEntryPoints</span><span class="p">(</span><span class="s1">&#39;taurus.form.item_factories&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">enabled</span><span class="p">,</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_</span> <span class="k">if</span> <span class="n">f</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">enabled</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">enabled</span></div>
+
+    <span class="k">def</span> <span class="nf">_customWidgetFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Taurus Value Factory to provide backwards-compatibility for code</span>
+<span class="sd">        relaying on deprecated customWidGetMap API</span>
+
+<span class="sd">        :param model: taurus model object</span>
+
+<span class="sd">        :return: custom TaurusValue class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">getDeviceProxy</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">dev_class</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">pkgname</span><span class="p">,</span> <span class="n">klassname</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">pkg</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">pkgname</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="n">klassname</span><span class="p">])</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">klassname</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">klass</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_splitModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelNames</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;convert str to list if needed (commas and whitespace are considered as separators)&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modelNames</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">):</span>
@@ -348,7 +444,8 @@
             <span class="n">modelNames</span> <span class="o">=</span> <span class="n">modelNames</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">modelNames</span>
 
-<div class="viewcode-block" id="TaurusForm.setCustomWidgetMap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.setCustomWidgetMap">[docs]</a>    <span class="k">def</span> <span class="nf">setCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cwmap</span><span class="p">):</span>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s2">&quot;item factories&quot;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;4.6.5&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">setCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cwmap</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Sets a map map for custom widgets.</span>
 
 <span class="sd">        :param cwmap: (dict&lt;str,tuple&gt;) a dictionary whose keys are device</span>
@@ -356,9 +453,10 @@
 <span class="sd">                      whose values are tuples of classname,args,kwargs</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># TODO: tango-centric</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span> <span class="o">=</span> <span class="n">cwmap</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span> <span class="o">=</span> <span class="n">cwmap</span>
 
-<div class="viewcode-block" id="TaurusForm.getCustomWidgetMap"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.getCustomWidgetMap">[docs]</a>    <span class="k">def</span> <span class="nf">getCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s2">&quot;item factories&quot;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;4.6.5&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getCustomWidgetMap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns the map used to create custom widgets.</span>
 
 <span class="sd">        :return: (dict&lt;str,tuple&gt;) a dictionary whose keys are device</span>
@@ -366,7 +464,7 @@
 <span class="sd">                 values are tuples of classname,args,kwargs</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># TODO: tango-centric</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span>
 
 <div class="viewcode-block" id="TaurusForm.parentModelChanged"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.parentModelChanged">[docs]</a>    <span class="nd">@Qt</span><span class="o">.</span><span class="n">pyqtSlot</span><span class="p">(</span><span class="s1">&#39;QString&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;modelChanged&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">parentModelChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parentmodel_name</span><span class="p">):</span>
@@ -471,7 +569,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">destroyChildren</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="TaurusForm.getFormWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.getFormWidget">[docs]</a>    <span class="k">def</span> <span class="nf">getFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s2">&quot;item factories&quot;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;4.6.5&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Returns a tuple that can be used for creating a widget for a given model.</span>
 
 <span class="sd">        :param model: (str) a taurus model name for which the new item of the</span>
@@ -524,20 +623,18 @@
                 <span class="n">cwmap</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">key</span><span class="p">:</span> <span class="n">klass</span><span class="p">})</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;customWidgetMap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cwmap</span>
                 <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_defaultFormWidget</span>
-            <span class="k">return</span> <span class="n">klass</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span></div>
+            <span class="k">return</span> <span class="n">klass</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
 
-<div class="viewcode-block" id="TaurusForm.setFormWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.setFormWidget">[docs]</a>    <span class="k">def</span> <span class="nf">setFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formWidget</span><span class="p">):</span>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s2">&quot;item factories&quot;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;4.6.5&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">setFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formWidget</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">formWidget</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="kn">import</span> <span class="n">TaurusValue</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_defaultFormWidget</span> <span class="o">=</span> <span class="n">TaurusValue</span>
-        <span class="k">elif</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">formWidget</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_defaultFormWidget</span> <span class="o">=</span> <span class="n">formWidget</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s1">&#39;formWidget must be one of None, QWidget. </span><span class="si">%s</span><span class="s1"> passed&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">formWidget</span><span class="p">)))</span></div>
+            <span class="n">formWidget</span> <span class="o">=</span> <span class="n">TaurusValue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_defaultFormWidget</span> <span class="o">=</span> <span class="n">formWidget</span>
 
-<div class="viewcode-block" id="TaurusForm.resetFormWidget"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.resetFormWidget">[docs]</a>    <span class="k">def</span> <span class="nf">resetFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="s2">&quot;item factories&quot;</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;4.6.5&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">resetFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFormWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TaurusForm.isWithButtons"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusForm.isWithButtons">[docs]</a>    <span class="k">def</span> <span class="nf">isWithButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_withButtons</span></div>
@@ -641,11 +738,46 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getModel</span><span class="p">()):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="p">:</span>
                 <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">model_obj</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;problem adding item &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Debug</span><span class="p">)</span>
+                <span class="k">continue</span>
             <span class="k">if</span> <span class="n">parent_name</span><span class="p">:</span>
                 <span class="c1"># @todo: Change this (it assumes tango model naming!)</span>
                 <span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parent_name</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
-            <span class="n">klass</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFormWidget</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
-            <span class="n">widget</span> <span class="o">=</span> <span class="n">klass</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># check if some item factory handles this model</span>
+            <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemFactories</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># load the plugin</span>
+                    <span class="n">f</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">warning</span><span class="p">(</span><span class="s1">&#39;cannot load item factory &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">widget</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">warning</span><span class="p">(</span><span class="s1">&#39;factory &quot;</span><span class="si">%s</span><span class="s1">&quot; raised &quot;</span><span class="si">%r</span><span class="s1">&quot; for &quot;</span><span class="si">%s</span><span class="s1">&quot;. &#39;</span>
+                            <span class="o">+</span> <span class="s1">&#39;Tip: consider disabling it&#39;</span><span class="p">,</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="s2">&quot;widget for &#39;</span><span class="si">%s</span><span class="s2">&#39; provided by &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
+                        <span class="n">model</span><span class="p">,</span>
+                        <span class="n">ep</span><span class="o">.</span><span class="n">name</span>
+                    <span class="p">)</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># backwards-compat with deprecated custom widget map API</span>
+            <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetMap</span><span class="p">:</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_customWidgetFactory</span><span class="p">(</span><span class="n">model_obj</span><span class="p">)</span>
+
+            <span class="c1"># no factory handles the model and no custom widgets. Use default</span>
+            <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_defaultFormWidget</span><span class="p">()</span>
+
             <span class="c1"># @todo UGLY... See if this can be done in other ways... (this causes trouble with widget that need more vertical space , like PoolMotorTV)</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">setMinimumHeight</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 
@@ -655,8 +787,7 @@
                 <span class="n">widget</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="c1"># raise</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                    <span class="s1">&#39;an error occurred while adding the child &quot;</span><span class="si">%s</span><span class="s1">&quot;. Skipping&#39;</span> <span class="o">%</span> <span class="n">model</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;problem adding item &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">taurus</span><span class="o">.</span><span class="n">Debug</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">widget</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">())</span>
@@ -1171,53 +1302,55 @@
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
 
-<span class="k">def</span> <span class="nf">test4</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;tests customwidgetma in taurusforms&#39;&#39;&#39;</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.display</span> <span class="kn">import</span> <span class="n">TaurusLabel</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
-
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.panel</span> <span class="kn">import</span> <span class="n">TaurusValue</span>
-
-    <span class="k">class</span> <span class="nc">DummyCW</span><span class="p">(</span><span class="n">TaurusValue</span><span class="p">):</span>
-
-        <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;!!!!! IN DUMMYCW.SETMODEL&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
-            <span class="n">TaurusValue</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span> <span class="o">+</span> <span class="s1">&#39;/double_scalar&#39;</span><span class="p">)</span>
-
-    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sys/database/2&#39;</span><span class="p">,</span> <span class="s1">&#39;sys/tg_test/1&#39;</span><span class="p">,</span> <span class="s1">&#39;sys/tg_test/1/short_spectrum&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;sys/tg_test/1/state&#39;</span><span class="p">,</span> <span class="s1">&#39;sys/tg_test/1/short_scalar_ro&#39;</span><span class="p">]</span>
-    <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;tango://controls02:10000/expchan/bl97_simucotictrl_1/1&#39;</span><span class="p">)</span>
-    <span class="nb">map</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="c1"># taurusvalue-like classes given as strings</span>
-        <span class="s1">&#39;PseudoCounter&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;taurus.qt.qtgui.extra_pool.PoolChannelTV&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{}),</span>
-        <span class="s1">&#39;CTExpChannel&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;taurus.qt.qtgui.extra_pool.PoolChannelTV&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{}),</span>
-        <span class="s1">&#39;ZeroDExpChannel&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;taurus.qt.qtgui.extra_pool.PoolChannelTV&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{}),</span>
-        <span class="s1">&#39;OneDExpChannel&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;taurus.qt.qtgui.extra_pool.PoolChannelTV&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{}),</span>
-        <span class="s1">&#39;TwoDExpChannel&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;taurus.qt.qtgui.extra_pool.PoolChannelTV&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{}),</span>
-        <span class="c1"># a TaurusValue-like class given as a class (old way)</span>
-        <span class="s1">&#39;TangoTest&#39;</span><span class="p">:</span> <span class="n">DummyCW</span><span class="p">,</span>
-        <span class="s1">&#39;DataBase&#39;</span><span class="p">:</span> <span class="n">TaurusLabel</span><span class="p">}</span>  <span class="c1"># a non-TaurusValue-like class given as a class (old way)</span>
-
-    <span class="n">dialog</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
-    <span class="n">dialog</span><span class="o">.</span><span class="n">setCustomWidgetMap</span><span class="p">(</span><span class="nb">map</span><span class="p">)</span>
-    <span class="n">dialog</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-    <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
-
-
 <span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">)</span>
 <span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s2">&quot;TaurusForm&quot;</span><span class="p">)</span>
 <span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">config_file</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;--inc-fact&#39;</span><span class="p">,</span>
+    <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;INC&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">_ts</span><span class="p">,</span> <span class="s1">&#39;T_FORM_ITEM_FACTORIES&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;include&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;.*&#39;</span><span class="p">,)),</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Enable item factories matching INC pattern&quot;</span>
+          <span class="o">+</span> <span class="s2">&quot; (can be passed multiple times)&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;--exc-fact&#39;</span><span class="p">,</span>
+    <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;EXC&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">_ts</span><span class="p">,</span> <span class="s1">&#39;T_FORM_ITEM_FACTORIES&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;exclude&#39;</span><span class="p">,</span> <span class="p">()),</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Disable item factories matching EXC pattern&quot;</span>
+          <span class="o">+</span> <span class="s2">&quot; (can be passed multiple times)&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;--ls-fact&#39;</span><span class="p">,</span>
+    <span class="n">is_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;List the available item factories&quot;</span>
+<span class="p">)</span>
 <span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">models</span>
-<span class="k">def</span> <span class="nf">form_cmd</span><span class="p">(</span><span class="n">window_name</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">form_cmd</span><span class="p">(</span><span class="n">window_name</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">inc_fact</span><span class="p">,</span> <span class="n">exc_fact</span><span class="p">,</span> <span class="n">ls_fact</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Shows a Taurus form populated with the given model names&quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">dialog</span> <span class="o">=</span> <span class="n">TaurusForm</span><span class="p">()</span>
+
+    <span class="n">dialog</span><span class="o">.</span><span class="n">setItemFactories</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">inc_fact</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="n">exc_fact</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ls_fact</span><span class="p">:</span>
+        <span class="n">inc</span><span class="p">,</span> <span class="n">exc</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">getItemFactories</span><span class="p">(</span><span class="n">return_disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Item Factories in </span><span class="si">{}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;  [*] &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">inc</span><span class="p">]</span> <span class="o">+</span>
+                         <span class="p">[</span><span class="s2">&quot;  [ ] &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">exc</span><span class="p">])</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Patterns used for item factory selection:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;  INC: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inc_fact</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;  EXC: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exc_fact</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">click</span><span class="o">.</span><span class="n">get_current_context</span><span class="p">()</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
     <span class="n">dialog</span><span class="o">.</span><span class="n">setModifiableByUser</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">dialog</span><span class="o">.</span><span class="n">setModelInConfig</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1243,10 +1376,11 @@
     <span class="n">dialog</span><span class="o">.</span><span class="n">addActions</span><span class="p">(</span>
         <span class="p">(</span><span class="n">saveConfigAction</span><span class="p">,</span> <span class="n">loadConfigAction</span><span class="p">,</span> <span class="n">quitApplicationAction</span><span class="p">))</span>
 
-    <span class="c1"># set the default map for this installation</span>
+    <span class="c1"># backwards-compat: in case T_FORM_CUSTOM_WIDGET_MAP was manually edited</span>
     <span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">tauruscustomsettings</span>
-    <span class="n">dialog</span><span class="o">.</span><span class="n">setCustomWidgetMap</span><span class="p">(</span>
-        <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;T_FORM_CUSTOM_WIDGET_MAP&#39;</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="n">cwmap</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s1">&#39;T_FORM_CUSTOM_WIDGET_MAP&#39;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="k">if</span> <span class="n">cwmap</span><span class="p">:</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">setCustomWidgetMap</span><span class="p">(</span><span class="n">cwmap</span><span class="p">)</span>
 
     <span class="c1"># set a model list from the command line or launch the chooser</span>
     <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

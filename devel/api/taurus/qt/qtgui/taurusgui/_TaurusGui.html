@@ -421,14 +421,15 @@ and whose values are the corresponding associated panels (or None).</p>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap">
-<code class="sig-name descname">getCustomWidgetMap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.getCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the default map used to create custom widgets by the TaurusForms
+<code class="sig-name descname">getCustomWidgetMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns the default map used to create custom widgets by the TaurusForms
 belonging to this GUI</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">rtype</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code>&gt;</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">return</dt>
 <dd class="field-even"><p>a dictionary whose keys are device
 type strings (i.e. see <code class="xref py py-class docutils literal notranslate"><span class="pre">PyTango.DeviceInfo</span></code>) and whose
 values are widgets to be used</p>
@@ -437,6 +438,10 @@ values are widgets to be used</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap" title="taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCustomWidgetMap()</span></code></a></p>
+</div>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.6.5: </span>Use item factories instead</p>
 </div>
 </dd></dl>
 
@@ -620,12 +625,16 @@ updated with those in associationsdict</p></li>
 
 <dl class="py method">
 <dt id="taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap">
-<code class="sig-name descname">setCustomWidgetMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">map</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/taurusgui/taurusgui.html#TaurusGui.setCustomWidgetMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the widget map that is used application-wide. This widget map will
+<code class="sig-name descname">setCustomWidgetMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.qt.qtgui.taurusgui.TaurusGui.setCustomWidgetMap" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Sets the widget map that is used application-wide. This widget map will
 be used by default in all TaurusForm Panels belonging to this gui.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>map</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code>&gt;) – a dictionary whose keys are device
+<dt class="field-odd">type map</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> &lt;<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code>&gt;</p>
+</dd>
+<dt class="field-even">param map</dt>
+<dd class="field-even"><p>a dictionary whose keys are device
 type strings (e.g. see <code class="xref py py-class docutils literal notranslate"><span class="pre">PyTango.DeviceInfo</span></code>) and
 whose values are widgets to be used</p>
 </dd>
@@ -633,6 +642,10 @@ whose values are widgets to be used</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaurusForm.setCustomWidgetMap()</span></code>, <a class="reference internal" href="#taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap" title="taurus.qt.qtgui.taurusgui.TaurusGui.getCustomWidgetMap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCustomWidgetMap()</span></code></a></p>
+</div>
+</div></blockquote>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.6.5: </span>Use item factories instead</p>
 </div>
 </dd></dl>
 

@@ -199,7 +199,7 @@
 <li><p><a class="reference internal" href="#taurusform-user-s-interface" id="id3">TaurusForm User’s Interface</a></p>
 <ul>
 <li><p><a class="reference internal" href="#taurusform-as-a-stand-alone-application" id="id4">TaurusForm as a stand-alone application</a></p></li>
-<li><p><a class="reference internal" href="#the-widgets-used-for-different-types-of-attributes-and-devices" id="id5">The widgets used for different types of attributes and devices</a></p></li>
+<li><p><a class="reference internal" href="#the-widgets-used-for-different-types-of-models" id="id5">The widgets used for different types of models</a></p></li>
 <li><p><a class="reference internal" href="#changing-the-contents-of-a-form" id="id6">Changing the contents of a form</a></p></li>
 <li><p><a class="reference internal" href="#drag-and-drop-support" id="id7">Drag and Drop support</a></p></li>
 <li><p><a class="reference internal" href="#compact-mode" id="id8">Compact Mode</a></p></li>
@@ -254,13 +254,12 @@ with the following command:</p>
 </pre></div>
 </div>
 <p>The model list is optional and is a space-separated list of models for
-TaurusForm. Valid models are: attribute names, device names or alias. See
-<a class="reference internal" href="../../devel/api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm" title="taurus.qt.qtgui.panel.TaurusForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusForm</span></code></a> API for more information about valid models.</p>
+TaurusForm.</p>
 </div>
-<div class="section" id="the-widgets-used-for-different-types-of-attributes-and-devices">
-<h2><a class="toc-backref" href="#id5">The widgets used for different types of attributes and devices</a><a class="headerlink" href="#the-widgets-used-for-different-types-of-attributes-and-devices" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-widgets-used-for-different-types-of-models">
+<h2><a class="toc-backref" href="#id5">The widgets used for different types of models</a><a class="headerlink" href="#the-widgets-used-for-different-types-of-models" title="Permalink to this headline">¶</a></h2>
 <p>By default, TaurusForm tries to use the most appropriate Taurus widget for
-representing its attributes and/or widgets.</p>
+representing its models.</p>
 <div class="figure align-center" id="id1">
 <img alt="../../_images/forms03.png" src="../../_images/forms03.png" />
 <p class="caption"><span class="caption-text">A Taurus form created with the following command <cite>taurus form sys/tg_test/1
@@ -269,19 +268,18 @@ sys/tg_test/1/boolean_scalar sys/tg_test/1/boolean_spectrum
 sys/tg_test/1/float_scalar sys/tg_test/1/float_spectrum
 sys/tg_test/1/float_image</cite></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
-<p>For the attributes, TaurusForm checks the type of attribute (whether it is a
-scalar or an array, whether it is a number or a string or a boolean, whether it
-is writable or read-only, etc.). For certain attributes, more than one widget
-may be adequate, and the form allows the user to switch between them (See the
-<a class="reference internal" href="#changing-the-contents-of-a-form">Changing the contents of a form</a> section).</p>
-<p>For Tango devices, the Tango Class of the device is searched in the
-<cite>T_FORM_CUSTOM_WIDGET_MAP</cite> map defined in
-<a class="reference internal" href="../../devel/tauruscustomsettings.html#tauruscustomsettings"><span class="std std-ref">Taurus custom settings</span></a> and the given widget is used if there is a
-match. Otherwise, the default device representation is used, which shows a
-button that launches an <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeForm</span></code> showing <em>all</em> the attributes for
-that device.</p>
-<p>As an example, <a class="reference external" href="http://www.sardana-controls.org/">Sardana</a> makes heavy use of <cite>T_FORM_CUSTOM_WIDGET_MAP</cite> in order
-to display specific widgets for its motor and channel devices.</p>
+<p>TaurusForm uses “item factories” to obtain the widget with which each model
+is represented. These item factories can be provided by taurus itself or by
+external plugins (e.g. sardana provides a factory to display its pool devices).
+The available factories can be listed, enabled and excluded using CLI arguments
+(see <cite>taurus form –help</cite>). If a given model is not handled by any enabled
+item factory, a default generic widget will be used which introspects the model
+(e.g., if it is an attribute, it checks whether it is a scalar or an array,
+whether it is a number or a string or a boolean, whether it is writable or
+read-only, etc.) and uses adequate subwidgets to display it. In certain cases
+this generic widget may be further customized by the user (e.g. by swithing
+among a set of possible subwidgets). See the <a class="reference internal" href="#changing-the-contents-of-a-form">Changing the contents of a form</a>
+section).</p>
 </div>
 <div class="section" id="changing-the-contents-of-a-form">
 <h2><a class="toc-backref" href="#id6">Changing the contents of a form</a><a class="headerlink" href="#changing-the-contents-of-a-form" title="Permalink to this headline">¶</a></h2>

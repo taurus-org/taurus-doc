@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.parse_args &mdash; taurus 4.6.5-alpha documentation</title>
+  <title>taurus.core.util.plugin &mdash; taurus 4.6.5-alpha documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
-    <link rel="next" title="taurus.core.util.plugin" href="plugin.html" />
-    <link rel="prev" title="taurus.core.util.lock" href="lock.html" /> 
+    <link rel="next" title="EntryPointAlike" href="plugin/_EntryPointAlike.html" />
+    <link rel="prev" title="taurus.core.util.parse_args" href="parse_args.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -174,13 +174,13 @@
         
           <li><a href="../util.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util</span></code></a> &raquo;</li>
         
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.parse_args</span></code></li>
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.plugin</span></code></li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../../../_sources/devel/api/taurus/core/util/parse_args.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../../_sources/devel/api/taurus/core/util/plugin.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -193,25 +193,68 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-taurus.core.util.parse_args">
-<span id="taurus-core-util-parse-args"></span><h1><a class="reference internal" href="#module-taurus.core.util.parse_args" title="taurus.core.util.parse_args"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.parse_args</span></code></a><a class="headerlink" href="#module-taurus.core.util.parse_args" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-taurus.core.util.plugin">
+<span id="taurus-core-util-plugin"></span><h1><a class="reference internal" href="#module-taurus.core.util.plugin" title="taurus.core.util.plugin"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.util.plugin</span></code></a><a class="headerlink" href="#module-taurus.core.util.plugin" title="Permalink to this headline">¶</a></h1>
+<p>Utilities for plugin loading and selection</p>
+<p class="rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="hlist"><tr><td><ul class="simple">
+<li><p><a class="reference internal" href="plugin/_EntryPointAlike.html#taurus.core.util.plugin.EntryPointAlike" title="taurus.core.util.plugin.EntryPointAlike"><code class="xref py py-class docutils literal notranslate"><span class="pre">EntryPointAlike</span></code></a></p></li>
+</ul>
+</td><td><ul class="simple">
+</ul>
+</td></tr></table>
 <p class="rubric">Functions</p>
 <dl class="py function">
-<dt id="taurus.core.util.parse_args.parse_args">
-<code class="sig-name descname">parse_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em>, <em class="sig-param"><span class="n">strip_pars</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/parse_args.html#parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.parse_args.parse_args" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a string representing arguments to a method to return the
-corresponding args and kwargs.</p>
+<dt id="taurus.core.util.plugin.selectEntryPoints">
+<code class="sig-name descname">selectEntryPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">group</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include</span><span class="o">=</span><span class="default_value">'.*'</span></em>, <em class="sig-param"><span class="n">exclude</span><span class="o">=</span><span class="default_value">()</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/util/plugin.html#selectEntryPoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.util.plugin.selectEntryPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects and prioritizes entry points from an entry point group.</p>
+<p>The entry points are selected using their name.</p>
+<p>The selection is done by regex matching on the names: first the entry
+points whose name matches any of the patterns in <cite>excluded</cite> are discarded;
+then each pattern in <cite>included</cite> is used to select from the names of the
+remaining entry points (from highest to lowest priority).</p>
+<p>In this way, the entry points are selected in the order dictated by
+the <cite>included</cite> pattern list. If a pattern matches several names, these
+will be sorted alphabetically. If a name is matched by several patterns,
+it is only selected by the first pattern.</p>
+<p>For example, if there are the following registered entry point names:
+[‘foo1’, ‘foo2’, ‘baz1’, ‘baz2’, ‘bar1’, ‘bar2’]
+And we use <cite>exclude=(“foo2”,)</cite> and <cite>include=(“bar2”, “b.*1”, “f.*”)</cite> ,
+then the selection will be: [“bar2”,”bar1”,”baz1”,”foo1”]</p>
+<p>Note: apart from regex patterns (strings or compiled) the <cite>include</cite> list
+can also contain <code class="xref py py-class docutils literal notranslate"><span class="pre">pkg_resources`EntryPoint</span></code>-like instances
+(more specifically, an object having <cite>.name</cite> and <cite>.load()</cite> members), in
+which case they are added directly to the selected list. If a member is
+something other than a pattern or an EntryPoint-like object, it will be
+wrapped in an <a class="reference internal" href="plugin/_EntryPointAlike.html#taurus.core.util.plugin.EntryPointAlike" title="taurus.core.util.plugin.EntryPointAlike"><code class="xref py py-class docutils literal notranslate"><span class="pre">EntryPointAlike</span></code></a> instance and also included in the
+selection.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> – string representing arguments to a method</p></li>
-<li><p><strong>strip_pars</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – If True, expect s to include surrounding
-parenthesis</p></li>
+<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – entry point group name from which the entry points
+are obtained.</p></li>
+<li><p><strong>include</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">`tuple`</span></code>) – . The members of the tuple can either be
+patterns (both in the form of strings or of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">re.Pattern</span></code> objects), which will be matched against
+registered names in group; or EntryPoint-like objects which
+will be included as they are; or an arbitrary object which
+will be wrapped as an EntryPoint-like object before being
+included. Default is <cite>(“.*”,)</cite>, which matches all
+registered names in group and the sort is purely
+alphabetical.</p></li>
+<li><p><strong>exclude</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">`tuple`</span></code>) – . Regexp patterns (either <cite>str</cite> or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">re.Pattern</span></code> objects) matching names to be excluded.
+Default is <cite>()</cite>, so no entry point is excluded.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>args, kwargs (a list of positional arguments and a dict of keyword
-arguments)</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EntryPoint`</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the selected entry
+points.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -226,10 +269,10 @@ arguments)</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="plugin.html" class="btn btn-neutral float-right" title="taurus.core.util.plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="plugin/_EntryPointAlike.html" class="btn btn-neutral float-right" title="EntryPointAlike" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lock.html" class="btn btn-neutral float-left" title="taurus.core.util.lock" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="parse_args.html" class="btn btn-neutral float-left" title="taurus.core.util.parse_args" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

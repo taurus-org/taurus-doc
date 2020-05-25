@@ -206,7 +206,7 @@ aspects of Taurus.</p>
 <dt id="taurus.tauruscustomsettings.EXTRA_SCHEME_MODULES">
 <code class="sig-name descname">EXTRA_SCHEME_MODULES</code><em class="property"> = []</em><a class="headerlink" href="#taurus.tauruscustomsettings.EXTRA_SCHEME_MODULES" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extra Taurus schemes. You can add a list of modules to be loaded for
-providing support to new schemes 
+providing support to new schemes
 (e.g. EXTRA_SCHEME_MODULES = [‘myownschememodule’]</p>
 </dd></dl>
 
@@ -245,8 +245,8 @@ False (or commented out) for backwards compatibility</p>
 <dt id="taurus.tauruscustomsettings.ORGANIZATION_LOGO">
 <code class="sig-name descname">ORGANIZATION_LOGO</code><em class="property"> = 'logos:taurus.png'</em><a class="headerlink" href="#taurus.tauruscustomsettings.ORGANIZATION_LOGO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Custom organization logo. Set the absolute path to an image file to be used as your
-organization logo. Qt registered paths can also be used. 
-If not set, it defaults to ‘logos:taurus.png” 
+organization logo. Qt registered paths can also be used.
+If not set, it defaults to ‘logos:taurus.png”
 (note that “logos:” is a Qt a registered path for “&lt;taurus&gt;/qt/qtgui/icon/logos/”)</p>
 </dd></dl>
 
@@ -325,11 +325,20 @@ True sets the preferred mode of TaurusForms to use “compact” widgets</p>
 
 <dl class="py data">
 <dt id="taurus.tauruscustomsettings.T_FORM_CUSTOM_WIDGET_MAP">
-<code class="sig-name descname">T_FORM_CUSTOM_WIDGET_MAP</code><em class="property"> = {'CTExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'IORegister': ('sardana.taurus.qt.qtgui.extra_pool.PoolIORegisterTV', (), {}), 'Motor': ('sardana.taurus.qt.qtgui.extra_pool.PoolMotorTV', (), {}), 'OneDExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'PseudoCounter': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'PseudoMotor': ('sardana.taurus.qt.qtgui.extra_pool.PoolMotorTV', (), {}), 'SimuMotor': ('sardana.taurus.qt.qtgui.extra_pool.PoolMotorTV', (), {}), 'TwoDExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {}), 'ZeroDExpChannel': ('sardana.taurus.qt.qtgui.extra_pool.PoolChannelTV', (), {})}</em><a class="headerlink" href="#taurus.tauruscustomsettings.T_FORM_CUSTOM_WIDGET_MAP" title="Permalink to this definition">¶</a></dt>
-<dd><p>A map for using custom widgets for certain devices in TaurusForms. It is a
+<code class="sig-name descname">T_FORM_CUSTOM_WIDGET_MAP</code><em class="property"> = {}</em><a class="headerlink" href="#taurus.tauruscustomsettings.T_FORM_CUSTOM_WIDGET_MAP" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEPRECATED. Use “taurus.form.item_factories” plugin group instead
+A map for using custom widgets for certain devices in TaurusForms. It is a
 dictionary with the following structure:
 device_class_name:(classname_with_full_module_path, args, kwargs)
 where the args and kwargs will be passed to the constructor of the class</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="taurus.tauruscustomsettings.T_FORM_ITEM_FACTORIES">
+<code class="sig-name descname">T_FORM_ITEM_FACTORIES</code><em class="property"> = {'exclude': (), 'include': ('.*',)}</em><a class="headerlink" href="#taurus.tauruscustomsettings.T_FORM_ITEM_FACTORIES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default include and exclude patterns for TaurusForm item factories
+See <cite>TaurusForm.setItemFactories</cite> docs. By default, all available
+factories are enabled (and tried alphabetically)</p>
 </dd></dl>
 
 </div>
