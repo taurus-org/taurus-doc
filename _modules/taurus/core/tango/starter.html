@@ -390,10 +390,10 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
     <span class="kn">from</span> <span class="nn">taurus.test.resource</span> <span class="kn">import</span> <span class="n">getResourcePath</span>
-    <span class="n">timeoutExec</span> <span class="o">=</span> <span class="n">getResourcePath</span><span class="p">(</span><span class="s1">&#39;taurus.qt.qtgui.button.test.res&#39;</span><span class="p">,</span> <span class="s1">&#39;Timeout&#39;</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">ProcessStarter</span><span class="p">(</span><span class="n">timeoutExec</span><span class="p">,</span> <span class="s1">&#39;Timeout/test_removeme&#39;</span><span class="p">)</span>
-    <span class="n">devname</span> <span class="o">=</span> <span class="s1">&#39;testing/timeout/temp-1&#39;</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">addNewDevice</span><span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="s1">&#39;Timeout&#39;</span><span class="p">)</span>
+    <span class="n">exe</span> <span class="o">=</span> <span class="n">getResourcePath</span><span class="p">(</span><span class="s1">&#39;taurus.core.tango.test.res&#39;</span><span class="p">,</span> <span class="s1">&#39;TangoSchemeTest&#39;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">ProcessStarter</span><span class="p">(</span><span class="n">exe</span><span class="p">,</span> <span class="s1">&#39;TangoSchemeTest/test_removeme&#39;</span><span class="p">)</span>
+    <span class="n">devname</span> <span class="o">=</span> <span class="s1">&#39;testing/tangoschemetest/temp-1&#39;</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">addNewDevice</span><span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="s1">&#39;TangoSchemeTest&#39;</span><span class="p">)</span>
     <span class="n">s</span><span class="o">.</span><span class="n">startDs</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Is running:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">isRunning</span><span class="p">())</span>
@@ -402,6 +402,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     <span class="n">s</span><span class="o">.</span><span class="n">stopDs</span><span class="p">()</span>
     <span class="n">s</span><span class="o">.</span><span class="n">cleanDb</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
 </pre></div>
 
            </div>

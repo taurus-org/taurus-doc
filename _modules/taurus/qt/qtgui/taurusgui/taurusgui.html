@@ -1219,7 +1219,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_loadAppName</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">confname</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loadOrgName</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loadCustomLogo</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
-        <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+
+        <span class="c1"># do some extra config if we have a TaurusApplication</span>
+        <span class="n">_app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_app</span><span class="p">,</span> <span class="s1">&#39;basicConfig&#39;</span><span class="p">):</span>
+            <span class="n">_app</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_loadOrgLogo</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_loadSingleInstance</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">xmlroot</span><span class="p">)</span>

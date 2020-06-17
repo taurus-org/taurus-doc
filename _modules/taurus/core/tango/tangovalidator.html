@@ -211,7 +211,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;tango&#39;</span>
-    <span class="n">authority</span> <span class="o">=</span> <span class="s1">&#39;//(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;//(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
     <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
     <span class="n">fragment</span> <span class="o">=</span> <span class="s1">&#39;(?!)&#39;</span>
@@ -340,7 +340,7 @@
                   <span class="sa">r</span><span class="s1">&#39;(?P&lt;path&gt;</span><span class="si">%(path)s</span><span class="s1">)&#39;</span> <span class="o">+</span> \
                   <span class="sa">r</span><span class="s1">&#39;(\?(?P&lt;query&gt;</span><span class="si">%(query)s</span><span class="s1">))?&#39;</span> <span class="o">+</span> \
                   <span class="sa">r</span><span class="s1">&#39;(#</span><span class="si">%(fragment)s</span><span class="s1">)?$&#39;</span>
-        <span class="n">authority</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
+        <span class="n">authority</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/?(?P&lt;devname&gt;((?P&lt;_devalias&gt;([^/?#:]+))|&#39;</span> <span class="o">+</span> \
                <span class="s1">&#39;(?P&lt;_devslashname&gt;[^/?#:]+/[^/?#:]+/[^/?#:]+)))&#39;</span>
 
@@ -426,7 +426,7 @@
                   <span class="sa">r</span><span class="s1">&#39;(?P&lt;path&gt;</span><span class="si">%(path)s</span><span class="s1">)&#39;</span> <span class="o">+</span> \
                   <span class="sa">r</span><span class="s1">&#39;(\?(?P&lt;query&gt;</span><span class="si">%(query)s</span><span class="s1">))?&#39;</span> <span class="o">+</span> \
                   <span class="sa">r</span><span class="s1">&#39;(#</span><span class="si">%(fragment)s</span><span class="s1">)?$&#39;</span>
-        <span class="n">authority</span> <span class="o">=</span> <span class="s1">&#39;(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
+        <span class="n">authority</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(?P&lt;host&gt;([\w\-_]+\.)*[\w\-_]+):(?P&lt;port&gt;\d{1,5})&#39;</span>
         <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;configuration(=(?P&lt;fragment&gt;(?P&lt;cfgkey&gt;[^# ]+)))?&#39;</span>
 
         <span class="k">return</span> <span class="n">pattern</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>

@@ -194,10 +194,12 @@
 <span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
-
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># bck-compat py 2.7</span>
+    <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Sequence</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CaselessList&quot;</span><span class="p">,</span> <span class="s2">&quot;CaselessDict&quot;</span><span class="p">,</span> <span class="s2">&quot;CaselessWeakValueDict&quot;</span><span class="p">,</span> <span class="s2">&quot;LoopList&quot;</span><span class="p">,</span>
            <span class="s2">&quot;CircBuf&quot;</span><span class="p">,</span> <span class="s2">&quot;LIFO&quot;</span><span class="p">,</span> <span class="s2">&quot;TimedQueue&quot;</span><span class="p">,</span> <span class="s2">&quot;self_locked&quot;</span><span class="p">,</span> <span class="s2">&quot;ThreadDict&quot;</span><span class="p">,</span>
@@ -796,7 +798,7 @@
         <span class="sd">&quot;&quot;&quot; Initializes the list with a sequence or an initial value. &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -904,7 +906,7 @@
         <span class="kn">import</span> <span class="nn">threading</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">threaded</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_Thread&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="o">.</span><span class="n">isAlive</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_Thread&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -922,7 +924,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_Thread&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="o">.</span><span class="n">isAlive</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>

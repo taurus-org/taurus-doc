@@ -486,7 +486,10 @@
                 <span class="n">palette</span> <span class="o">=</span> <span class="n">QT_ATTRIBUTE_QUALITY_PALETTE</span>
                 <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">quality</span><span class="p">()</span>
             <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span>
-                <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c1"># protect against calls with state not instantiated</span>
             <span class="k">elif</span> <span class="n">bgRole</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
                 <span class="n">bgItem</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
