@@ -239,6 +239,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_enableWheelEvent</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_singleStep</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allow_auto_enable</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -308,7 +309,10 @@
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Failed attempt to initialize value: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">evt_type</span> <span class="o">!=</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allow_auto_enable</span><span class="p">:</span>
+            <span class="c1"># use QLineEdit.setEnabled in order to avoid changing</span>
+            <span class="c1"># _allow_auto_enable status</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_type</span> <span class="o">!=</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">evt_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Change</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Periodic</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_updateValidator</span><span class="p">(</span><span class="n">evt_value</span><span class="p">)</span>
@@ -318,6 +322,14 @@
 
         <span class="k">if</span> <span class="n">evt_type</span> <span class="o">==</span> <span class="n">TaurusEventType</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaurusValueLineEdit.setEnabled"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueLineEdit.setEnabled">[docs]</a>    <span class="k">def</span> <span class="nf">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reimplement from :class:`QLineEdit` to avoid autoenabling if the</span>
+<span class="sd">        widget is explicitly disabled (but allow auto-disabling if the</span>
+<span class="sd">        widget is explicitly enabled)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allow_auto_enable</span> <span class="o">=</span> <span class="n">enabled</span>
+        <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QLineEdit</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TaurusValueLineEdit.isTextValid"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueLineEdit.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueLineEdit.isTextValid">[docs]</a>    <span class="k">def</span> <span class="nf">isTextValid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
