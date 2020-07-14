@@ -479,8 +479,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_decodeAttrInfoEx</span><span class="p">(</span><span class="n">attr_info</span><span class="p">)</span>
 
         <span class="c1"># subscribe to configuration events (unsubscription done at cleanup)</span>
+        <span class="n">auto_subscribe_conf</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+            <span class="n">tauruscustomsettings</span><span class="p">,</span> <span class="s2">&quot;TANGO_AUTOSUBSCRIBE_CONF&quot;</span><span class="p">,</span> <span class="kc">True</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__cfg_evt_id</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">is_tango_subscribe_enabled</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">auto_subscribe_conf</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span><span class="o">.</span><span class="n">is_tango_subscribe_enabled</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_subscribeConfEvents</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

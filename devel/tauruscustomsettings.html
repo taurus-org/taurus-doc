@@ -313,6 +313,17 @@ False enables a backwards-compatibility mode for pre-sep3 model names</p>
 </dd></dl>
 
 <dl class="py data">
+<dt id="taurus.tauruscustomsettings.TANGO_AUTOSUBSCRIBE_CONF">
+<code class="sig-name descname">TANGO_AUTOSUBSCRIBE_CONF</code><em class="property"> = True</em><a class="headerlink" href="#taurus.tauruscustomsettings.TANGO_AUTOSUBSCRIBE_CONF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether TangoAttribute is subscribed to configuration events by default.
+Setting to True (or not setting it) makes the TangoAttribute auto-subscribe
+Setting to False avoids this subscription, which prevents issues such as
+<a class="reference external" href="https://github.com/taurus-org/taurus/issues/1118">https://github.com/taurus-org/taurus/issues/1118</a>
+but it also prevents clients to be notified when configurations (e.g.,
+units, format) change.</p>
+</dd></dl>
+
+<dl class="py data">
 <dt id="taurus.tauruscustomsettings.TANGO_SERIALIZATION_MODE">
 <code class="sig-name descname">TANGO_SERIALIZATION_MODE</code><em class="property"> = 'TangoSerial'</em><a class="headerlink" href="#taurus.tauruscustomsettings.TANGO_SERIALIZATION_MODE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Default serialization mode <strong>for the tango scheme</strong>. Possible values are:
