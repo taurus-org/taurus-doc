@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EvaluationFactory &mdash; taurus 4.7.0-alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="taurus.core.init_lightweight" href="../init_lightweight.html" />
+    <link rel="prev" title="EvaluationDevice" href="_EvaluationDevice.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../docs.html">Taurus 4.7 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../plotting_guide.html">Plotting guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../plugins.html">Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../docs.html">Taurus 4.7 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+        
+          <li><a href="../evaluation.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.evaluation</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">EvaluationFactory</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../_sources/devel/api/taurus/core/evaluation/_EvaluationFactory.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="evaluationfactory">
+<h1><a class="reference internal" href="#taurus.core.evaluation.EvaluationFactory" title="taurus.core.evaluation.EvaluationFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvaluationFactory</span></code></a><a class="headerlink" href="#evaluationfactory" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../_images/inheritance-d2e6c114b384570edaa73aeeaad579d7c911f352.png" alt="Inheritance diagram of EvaluationFactory" class="inheritance graphviz" /></div>
+<dl class="py class">
+<dt id="taurus.core.evaluation.EvaluationFactory">
+<em class="property">class </em><code class="sig-name descname">EvaluationFactory</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">p</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">k</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.singleton.Singleton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.taurusfactory.TaurusFactory</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.log.Logger</span></code></p>
+<p>A Singleton class that provides Evaluation related objects.</p>
+<dl class="py attribute">
+<dt id="taurus.core.evaluation.EvaluationFactory.DEFAULT_AUTHORITY">
+<code class="sig-name descname">DEFAULT_AUTHORITY</code><em class="property"> = '//localhost'</em><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.DEFAULT_AUTHORITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="taurus.core.evaluation.EvaluationFactory.DEFAULT_DATABASE">
+<code class="sig-name descname">DEFAULT_DATABASE</code><em class="property"> = '_DefaultEvalDB'</em><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.DEFAULT_DATABASE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="taurus.core.evaluation.EvaluationFactory.DEFAULT_DEVICE">
+<code class="sig-name descname">DEFAULT_DEVICE</code><em class="property"> = '&#64;DefaultEvaluator'</em><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.DEFAULT_DEVICE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="taurus.core.evaluation.EvaluationFactory.elementTypesMap">
+<code class="sig-name descname">elementTypesMap</code><em class="property"> = {3: &lt;class 'taurus.core.evaluation.evaldevice.EvaluationDevice'&gt;, 13: &lt;class 'taurus.core.evaluation.evalattribute.EvaluationAttribute'&gt;, 18: &lt;class 'taurus.core.evaluation.evalauthority.EvaluationAuthority'&gt;}</em><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.elementTypesMap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.findObjectClass">
+<code class="sig-name descname">findObjectClass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">absolute_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.findObjectClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.findObjectClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operation models are always OperationAttributes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.getAttribute">
+<code class="sig-name descname">getAttribute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attr_name</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.getAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.getAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the object corresponding to the given attribute name. If the
+corresponding attribute already exists, the existing instance is
+returned. Otherwise a new instance is stored and returned. The evaluator
+device associated to this attribute will also be created if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attr_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the attribute name string. See
+<a class="reference internal" href="../evaluation.html#module-taurus.core.evaluation" title="taurus.core.evaluation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.evaluation</span></code></a> for valid attribute
+names</p>
+</dd>
+</dl>
+<p>Any aditional keyword arguments will be passed directly to the
+constructor of <cite>:class:EvaluationAttribute</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="_EvaluationAttribute.html#taurus.core.evaluation.EvaluationAttribute" title="taurus.core.evaluation.EvaluationAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvaluationAttribute</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+<p>&#64;throws TaurusException if the given name is invalid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.getAttributeNameValidator">
+<code class="sig-name descname">getAttributeNameValidator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.getAttributeNameValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.getAttributeNameValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return EvaluationAttributeNameValidator</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.getAuthority">
+<code class="sig-name descname">getAuthority</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.getAuthority"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.getAuthority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the EvaluationDatabase object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>db_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – this is ignored because only one database is supported</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EvaluationDatabase</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.getAuthorityNameValidator">
+<code class="sig-name descname">getAuthorityNameValidator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.getAuthorityNameValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.getAuthorityNameValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return EvaluationAuthorityNameValidator</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.getDevice">
+<code class="sig-name descname">getDevice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dev_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.getDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.getDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the object corresponding to the given device name. If the
+corresponding device already exists, the existing instance is returned.
+Otherwise a new instance is stored and returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dev_name</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the device name string. See
+<a class="reference internal" href="../evaluation.html#module-taurus.core.evaluation" title="taurus.core.evaluation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core.evaluation</span></code></a> for valid device names</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="_EvaluationDevice.html#taurus.core.evaluation.EvaluationDevice" title="taurus.core.evaluation.EvaluationDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvaluationDevice</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+<p>&#64;throws TaurusException if the given name is invalid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.getDeviceNameValidator">
+<code class="sig-name descname">getDeviceNameValidator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.getDeviceNameValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.getDeviceNameValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return EvaluationDeviceNameValidator</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.evaluation.EvaluationFactory.init">
+<code class="sig-name descname">init</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/taurus/core/evaluation/evalfactory.html#EvaluationFactory.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Singleton instance initialization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="taurus.core.evaluation.EvaluationFactory.schemes">
+<code class="sig-name descname">schemes</code><em class="property"> = ('eval', 'evaluation')</em><a class="headerlink" href="#taurus.core.evaluation.EvaluationFactory.schemes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../init_lightweight.html" class="btn btn-neutral float-right" title="taurus.core.init_lightweight" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_EvaluationDevice.html" class="btn btn-neutral float-left" title="EvaluationDevice" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

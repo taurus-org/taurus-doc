@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusAttribute &mdash; taurus 4.7.0-alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="TaurusAttributeNameValidator" href="_TaurusAttributeNameValidator.html" />
+    <link rel="prev" title="TaurusAttrValue" href="_TaurusAttrValue.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.7 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plotting_guide.html">Plotting guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../docs.html">Taurus 4.7 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.core</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusAttribute</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/devel/api/taurus/core/_TaurusAttribute.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusattribute">
+<h1><a class="reference internal" href="#taurus.core.TaurusAttribute" title="taurus.core.TaurusAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusAttribute</span></code></a><a class="headerlink" href="#taurusattribute" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../_images/inheritance-542b509f03ec7e4dba9fd0754a39eb62edcf8849.png" alt="Inheritance diagram of TaurusAttribute" class="inheritance graphviz" /></div>
+<dl class="py class">
+<dt id="taurus.core.TaurusAttribute">
+<em class="property">class </em><code class="sig-name descname">TaurusAttribute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">parent</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.taurusmodel.TaurusModel</span></code></p>
+<dl class="py attribute">
+<dt id="taurus.core.TaurusAttribute.DftTimeToLive">
+<code class="sig-name descname">DftTimeToLive</code><em class="property"> = 10000</em><a class="headerlink" href="#taurus.core.TaurusAttribute.DftTimeToLive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.activatePolling">
+<code class="sig-name descname">activatePolling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">period</span></em>, <em class="sig-param"><span class="n">unsubscribe_evts</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.activatePolling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.activatePolling" title="Permalink to this definition">¶</a></dt>
+<dd><p>activate polling for attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>period</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – polling period (in miliseconds)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.alarms">
+<em class="property">property </em><code class="sig-name descname">alarms</code><a class="headerlink" href="#taurus.core.TaurusAttribute.alarms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.areStrValuesEqual">
+<code class="sig-name descname">areStrValuesEqual</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v1</span></em>, <em class="sig-param"><span class="n">v2</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.areStrValuesEqual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.areStrValuesEqual" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.buildModelName">
+<em class="property">classmethod </em><code class="sig-name descname">buildModelName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parent_model</span></em>, <em class="sig-param"><span class="n">relative_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.buildModelName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.buildModelName" title="Permalink to this definition">¶</a></dt>
+<dd><p>build an ‘absolute’ model name from the parent model and the
+‘relative’ name.
+- If parent_model is a TaurusDevice, the return is a composition of
+the database model name and its device name
+- If parent_model is a TaurusAttribute, the relative name is ignored and
+the parent name is returned</p>
+<dl class="simple">
+<dt>Note: This is a basic implementation. You may need to reimplement this</dt><dd><p>for a specific scheme if it supports “useParentModel”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.changePollingPeriod">
+<code class="sig-name descname">changePollingPeriod</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">period</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.changePollingPeriod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.changePollingPeriod" title="Permalink to this definition">¶</a></dt>
+<dd><p>change polling period to period miliseconds</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.cleanUp">
+<code class="sig-name descname">cleanUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.cleanUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.cleanUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The cleanUp. Default implementation does nothing
+Overwrite when necessary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.deactivatePolling">
+<code class="sig-name descname">deactivatePolling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">maintain_enabled</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.deactivatePolling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.deactivatePolling" title="Permalink to this definition">¶</a></dt>
+<dd><p>unregister attribute from polling</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.decode">
+<code class="sig-name descname">decode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attr_value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.decode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="taurus.core.TaurusAttribute.defaultFragmentName">
+<code class="sig-name descname">defaultFragmentName</code><em class="property"> = 'rvalue'</em><a class="headerlink" href="#taurus.core.TaurusAttribute.defaultFragmentName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.description">
+<em class="property">property </em><code class="sig-name descname">description</code><a class="headerlink" href="#taurus.core.TaurusAttribute.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.disablePolling">
+<code class="sig-name descname">disablePolling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.disablePolling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.disablePolling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable polling and if polling is active also deactivate it.
+See <a class="reference internal" href="#taurus.core.TaurusAttribute.isPollingEnabled" title="taurus.core.TaurusAttribute.isPollingEnabled"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isPollingEnabled()</span></code></a> for clarification of
+what enabled polling means.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.enablePolling">
+<code class="sig-name descname">enablePolling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.enablePolling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.enablePolling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable polling. See <a class="reference internal" href="#taurus.core.TaurusAttribute.isPollingEnabled" title="taurus.core.TaurusAttribute.isPollingEnabled"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isPollingEnabled()</span></code></a> for clarification of
+what enabled polling means.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – True also activates polling
+(see: <a class="reference internal" href="#taurus.core.TaurusAttribute.activatePolling" title="taurus.core.TaurusAttribute.activatePolling"><code class="xref py py-meth docutils literal notranslate"><span class="pre">activatePolling()</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.encode">
+<code class="sig-name descname">encode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.encode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.encode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getAlarms">
+<code class="sig-name descname">getAlarms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getAlarms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getAlarms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getDataFormat">
+<code class="sig-name descname">getDataFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getDataFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getDataFormat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getDisplayDescrObj">
+<code class="sig-name descname">getDisplayDescrObj</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getDisplayDescrObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getDisplayDescrObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>A brief description of the model. Can be used as tooltip, for example</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getDisplayDescription">
+<code class="sig-name descname">getDisplayDescription</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getDisplayDescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getDisplayDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getLabel">
+<code class="sig-name descname">getLabel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getLabel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getMaxAlarm">
+<code class="sig-name descname">getMaxAlarm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getMaxAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getMaxAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getMaxRange">
+<code class="sig-name descname">getMaxRange</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getMaxRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getMaxRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getMaxWarning">
+<code class="sig-name descname">getMaxWarning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getMaxWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getMaxWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getMinAlarm">
+<code class="sig-name descname">getMinAlarm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getMinAlarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getMinAlarm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getMinRange">
+<code class="sig-name descname">getMinRange</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getMinRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getMinRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getMinWarning">
+<code class="sig-name descname">getMinWarning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getMinWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getMinWarning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getNameValidator">
+<em class="property">classmethod </em><code class="sig-name descname">getNameValidator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getNameValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getNameValidator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getPollingPeriod">
+<code class="sig-name descname">getPollingPeriod</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getPollingPeriod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getPollingPeriod" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the polling period</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getRange">
+<code class="sig-name descname">getRange</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getTaurusElementType">
+<em class="property">classmethod </em><code class="sig-name descname">getTaurusElementType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getTaurusElementType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getTaurusElementType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getType">
+<code class="sig-name descname">getType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getValueObj">
+<code class="sig-name descname">getValueObj</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getValueObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getValueObj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.getWarnings">
+<code class="sig-name descname">getWarnings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.getWarnings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.getWarnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.hasEvents">
+<code class="sig-name descname">hasEvents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.hasEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.hasEvents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isBoolean">
+<code class="sig-name descname">isBoolean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isBoolean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isBoolean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isNumeric">
+<code class="sig-name descname">isNumeric</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isNumeric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isNumeric" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isPolled">
+<code class="sig-name descname">isPolled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isPolled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isPolled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isPollingActive">
+<code class="sig-name descname">isPollingActive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isPollingActive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isPollingActive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate whether polling is active. Active polling means that
+a periodic timer poll the attribute. By default the attribute creation
+does not activate polling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether polling is active</p>
+</dd>
+<dt class="field-odd">See</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#taurus.core.TaurusAttribute.activatePolling" title="taurus.core.TaurusAttribute.activatePolling"><code class="xref py py-meth docutils literal notranslate"><span class="pre">activatePolling()</span></code></a>, <a class="reference internal" href="#taurus.core.TaurusAttribute.disablePolling" title="taurus.core.TaurusAttribute.disablePolling"><code class="xref py py-meth docutils literal notranslate"><span class="pre">disablePolling()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isPollingEnabled">
+<code class="sig-name descname">isPollingEnabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isPollingEnabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isPollingEnabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate whether polling was activated/deactivated by user.
+Enabled polling does not mean that it is active - periodically poll
+the attribute. By default the attribute creation enables polling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether polling is enabled</p>
+</dd>
+<dt class="field-odd">See</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#taurus.core.TaurusAttribute.enablePolling" title="taurus.core.TaurusAttribute.enablePolling"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enablePolling()</span></code></a>, <a class="reference internal" href="#taurus.core.TaurusAttribute.disablePolling" title="taurus.core.TaurusAttribute.disablePolling"><code class="xref py py-meth docutils literal notranslate"><span class="pre">disablePolling()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isPollingForced">
+<code class="sig-name descname">isPollingForced</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isPollingForced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isPollingForced" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isState">
+<code class="sig-name descname">isState</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#taurus.core.TaurusAttribute.isState" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version &gt;4.0.1: </span>Use .type==DataType.DevState instead</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isUsingEvents">
+<code class="sig-name descname">isUsingEvents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isUsingEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isUsingEvents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.isWritable">
+<code class="sig-name descname">isWritable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.isWritable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.isWritable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.label">
+<em class="property">property </em><code class="sig-name descname">label</code><a class="headerlink" href="#taurus.core.TaurusAttribute.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.poll">
+<code class="sig-name descname">poll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.poll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.poll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.quality">
+<em class="property">property </em><code class="sig-name descname">quality</code><a class="headerlink" href="#taurus.core.TaurusAttribute.quality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.range">
+<em class="property">property </em><code class="sig-name descname">range</code><a class="headerlink" href="#taurus.core.TaurusAttribute.range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.read">
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cache</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.rvalue">
+<em class="property">property </em><code class="sig-name descname">rvalue</code><a class="headerlink" href="#taurus.core.TaurusAttribute.rvalue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.setAlarms">
+<code class="sig-name descname">setAlarms</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">limits</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.setAlarms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.setAlarms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.setLabel">
+<code class="sig-name descname">setLabel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lbl</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.setLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.setLabel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.setRange">
+<code class="sig-name descname">setRange</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">limits</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.setRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.setRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.setWarnings">
+<code class="sig-name descname">setWarnings</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">limits</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.setWarnings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.setWarnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.time">
+<em class="property">property </em><code class="sig-name descname">time</code><a class="headerlink" href="#taurus.core.TaurusAttribute.time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.warnings">
+<em class="property">property </em><code class="sig-name descname">warnings</code><a class="headerlink" href="#taurus.core.TaurusAttribute.warnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">with_read</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/core/taurusattribute.html#TaurusAttribute.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.core.TaurusAttribute.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.core.TaurusAttribute.wvalue">
+<em class="property">property </em><code class="sig-name descname">wvalue</code><a class="headerlink" href="#taurus.core.TaurusAttribute.wvalue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_TaurusAttributeNameValidator.html" class="btn btn-neutral float-right" title="TaurusAttributeNameValidator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_TaurusAttrValue.html" class="btn btn-neutral float-left" title="TaurusAttrValue" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

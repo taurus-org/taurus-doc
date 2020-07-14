@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtgui.panel.report.basicreport &mdash; taurus 4.7.0-alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.qt.qtgui.panel.report.basicreport</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtgui.panel.report.basicreport</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides a panel to display taurus messages&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ClipboardReportHandler&quot;</span><span class="p">,</span> <span class="s2">&quot;SMTPReportHandler&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.core.util.report</span> <span class="kn">import</span> <span class="n">TaurusMessageReportHandler</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.util.ui</span> <span class="kn">import</span> <span class="n">UILoadable</span>
+
+
+<div class="viewcode-block" id="ClipboardReportHandler"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_ClipboardReportHandler.html#taurus.qt.qtgui.panel.report.albareport.ClipboardReportHandler">[docs]</a><span class="k">class</span> <span class="nc">ClipboardReportHandler</span><span class="p">(</span><span class="n">TaurusMessageReportHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Report a message by copying it to the clipboard&quot;&quot;&quot;</span>
+
+    <span class="n">Label</span> <span class="o">=</span> <span class="s2">&quot;Copy to Clipboard&quot;</span>
+
+<div class="viewcode-block" id="ClipboardReportHandler.report"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_ClipboardReportHandler.html#taurus.qt.qtgui.panel.report.albareport.ClipboardReportHandler.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">clipboard</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">clipboard</span><span class="p">()</span>
+        <span class="n">clipboard</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Done!&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;Message Copied to clipboard&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SendMailDialog"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog">[docs]</a><span class="nd">@UILoadable</span><span class="p">(</span><span class="n">with_ui</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SendMailDialog</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Qt</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loadUi</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;SendMailForm.ui&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editMessage</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QFont</span><span class="p">(</span><span class="s2">&quot;Monospace&quot;</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SendMailDialog.setFrom"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.setFrom">[docs]</a>    <span class="k">def</span> <span class="nf">setFrom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">efrom</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEditFrom</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">efrom</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.setTo"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.setTo">[docs]</a>    <span class="k">def</span> <span class="nf">setTo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eto</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editTo</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">eto</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.setSubject"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.setSubject">[docs]</a>    <span class="k">def</span> <span class="nf">setSubject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editSubject</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.setMessage"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.setMessage">[docs]</a>    <span class="k">def</span> <span class="nf">setMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editMessage</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.getFrom"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.getFrom">[docs]</a>    <span class="k">def</span> <span class="nf">getFrom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFrom</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.getTo"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.getTo">[docs]</a>    <span class="k">def</span> <span class="nf">getTo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editTo</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.getSubject"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.getSubject">[docs]</a>    <span class="k">def</span> <span class="nf">getSubject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editSubject</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.getMessage"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.getMessage">[docs]</a>    <span class="k">def</span> <span class="nf">getMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editMessage</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SendMailDialog.getMailInfo"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SendMailDialog.html#taurus.qt.qtgui.panel.report.albareport.SendMailDialog.getMailInfo">[docs]</a>    <span class="k">def</span> <span class="nf">getMailInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFrom</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTo</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSubject</span><span class="p">(),</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">getMessage</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="SMTPReportHandler"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SMTPReportHandler.html#taurus.qt.qtgui.panel.report.albareport.SMTPReportHandler">[docs]</a><span class="k">class</span> <span class="nc">SMTPReportHandler</span><span class="p">(</span><span class="n">TaurusMessageReportHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Report a message by sending an email&quot;&quot;&quot;</span>
+
+    <span class="n">Label</span> <span class="o">=</span> <span class="s2">&quot;Send email&quot;</span>
+
+<div class="viewcode-block" id="SMTPReportHandler.report"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SMTPReportHandler.html#taurus.qt.qtgui.panel.report.albareport.SMTPReportHandler.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+        <span class="n">subject</span> <span class="o">=</span> <span class="s2">&quot;Error in &quot;</span> <span class="o">+</span> <span class="n">app</span><span class="o">.</span><span class="n">applicationName</span><span class="p">()</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createDialog</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="n">mail_info</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">getMailInfo</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendMail</span><span class="p">(</span><span class="o">*</span><span class="n">mail_info</span><span class="p">)</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Done!&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;Email has been sent!&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">sys</span>
+            <span class="kn">import</span> <span class="nn">traceback</span>
+            <span class="n">einfo</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception_only</span><span class="p">(</span><span class="o">*</span><span class="n">einfo</span><span class="p">))</span>
+            <span class="n">Qt</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Failed to send email&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;Failed to send email. Reason:</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SMTPReportHandler.sendMail"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SMTPReportHandler.html#taurus.qt.qtgui.panel.report.albareport.SMTPReportHandler.sendMail">[docs]</a>    <span class="k">def</span> <span class="nf">sendMail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">efrom</span><span class="p">,</span> <span class="n">eto</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">smtplib</span>
+        <span class="kn">import</span> <span class="nn">email.mime.text</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">mime</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MIMEText</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">efrom</span>
+        <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">eto</span>
+        <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">efrom</span><span class="p">,</span> <span class="n">eto</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SMTPReportHandler.getDialogClass"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SMTPReportHandler.html#taurus.qt.qtgui.panel.report.albareport.SMTPReportHandler.getDialogClass">[docs]</a>    <span class="k">def</span> <span class="nf">getDialogClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SendMailDialog</span></div>
+
+<div class="viewcode-block" id="SMTPReportHandler.createDialog"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport/_SMTPReportHandler.html#taurus.qt.qtgui.panel.report.albareport.SMTPReportHandler.createDialog">[docs]</a>    <span class="k">def</span> <span class="nf">createDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">efrom</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eto</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDialogClass</span><span class="p">()()</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Compose message&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">efrom</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">setFrom</span><span class="p">(</span><span class="n">efrom</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">eto</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">setFrom</span><span class="p">(</span><span class="n">eto</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">setSubject</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">setMessage</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dialog</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../../../devel/api/taurus/qt/qtgui/panel/report/basicreport.html#taurus.qt.qtgui.panel.report.albareport.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">SendMailDialog</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

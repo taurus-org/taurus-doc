@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TaurusApplication &mdash; taurus 4.7.0-alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="taurus.qt.qtgui.base" href="../base.html" />
+    <link rel="prev" title="taurus.qt.qtgui.application" href="../application.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../docs.html">Taurus 4.7 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../plotting_guide.html">Plotting guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../plugins.html">Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../core.html">core</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../../docs.html">Taurus 4.7 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../../../qt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt</span></code></a> &raquo;</li>
+        
+          <li><a href="../../qtgui.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui</span></code></a> &raquo;</li>
+        
+          <li><a href="../application.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.application</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusApplication</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../../_sources/devel/api/taurus/qt/qtgui/application/_TaurusApplication.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurusapplication">
+<h1><a class="reference internal" href="#taurus.qt.qtgui.application.TaurusApplication" title="taurus.qt.qtgui.application.TaurusApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaurusApplication</span></code></a><a class="headerlink" href="#taurusapplication" title="Permalink to this headline">¶</a></h1>
+<div class="graphviz"><img src="../../../../../../_images/inheritance-08662de8469bfa654fdee1d7ad6036e347eefc17.png" alt="Inheritance diagram of TaurusApplication" class="inheritance graphviz" /></div>
+<dl class="py class">
+<dt id="taurus.qt.qtgui.application.TaurusApplication">
+<em class="property">class </em><code class="sig-name descname">TaurusApplication</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QApplication</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.log.Logger</span></code></p>
+<p>A QApplication that performs some taurus-specific initializations
+and (optionally but deprecated) also parses the command line for taurus
+options.</p>
+<dl class="simple">
+<dt>The optional keyword parameters:</dt><dd><ul class="simple">
+<li><p>app_name: (str) application name</p></li>
+<li><p>app_version: (str) application version</p></li>
+<li><p>org_name: (str) organization name</p></li>
+<li><p>org_domain: (str) organization domain</p></li>
+<li><p>cmd_line_parser (None [or DEPRECATED <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optparse.OptionParser</span></code></a>])</p></li>
+</ul>
+</dd>
+</dl>
+<p>If cmd_line_parser is explicitly set to None, no parsing will
+be done at all. If a  <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optparse.OptionParser</span></code></a> instance is passed as
+cmd_line_parser (deprecated), it will be used for parsing the command line
+arguments. If cmd_line_parser is not explicitly passed, the behaviour will
+depend on the value of tauruscustomsettings.IMPLICIT_OPTPARSE (which by
+default is False, indicating that no parsing is done).</p>
+<p>Simple example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
+<span class="kn">import</span> <span class="nn">taurus.qt.qtgui.display</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">qt</span><span class="o">.</span><span class="n">qtgui</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">TaurusLabel</span><span class="p">()</span>
+<span class="n">w</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;sys/tg_test/1/double_scalar&#39;</span>
+<span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="taurus.qt.qtgui.application.TaurusApplication.basicConfig">
+<code class="sig-name descname">basicConfig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">log_file_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxBytes</span><span class="o">=</span><span class="default_value">10000000.0</span></em>, <em class="sig-param"><span class="n">backupCount</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">with_gui_exc_handler</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication.basicConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication.basicConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.qt.qtgui.application.TaurusApplication.exec_">
+<em class="property">static </em><code class="sig-name descname">exec_</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.10)">int</a><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication.exec_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication.exec_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="taurus.qt.qtgui.application.TaurusApplication.get_command_line_args">
+<code class="sig-name descname">get_command_line_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication.get_command_line_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication.get_command_line_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of arguments that resulted from parsing the
+command line parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the command line arguments</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of strings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.qt.qtgui.application.TaurusApplication.get_command_line_options">
+<code class="sig-name descname">get_command_line_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication.get_command_line_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication.get_command_line_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <code class="xref py py-class docutils literal notranslate"><span class="pre">optparse.Option</span></code> that resulted from parsing the
+command line parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the command line options</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">optparse.Option</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.qt.qtgui.application.TaurusApplication.get_command_line_parser">
+<code class="sig-name descname">get_command_line_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication.get_command_line_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication.get_command_line_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optparse.OptionParser</span></code></a> used to parse the
+command line parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the parser used in the command line</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/dev/library/optparse.html#optparse.OptionParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optparse.OptionParser</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="taurus.qt.qtgui.application.TaurusApplication.setTaurusStyle">
+<code class="sig-name descname">setTaurusStyle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">styleName</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/taurus/qt/qtgui/application/taurusapplication.html#TaurusApplication.setTaurusStyle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.qt.qtgui.application.TaurusApplication.setTaurusStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets taurus application style to the given style name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>styleName</strong> (<a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the new style name to be applied</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../base.html" class="btn btn-neutral float-right" title="taurus.qt.qtgui.base" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../application.html" class="btn btn-neutral float-left" title="taurus.qt.qtgui.application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.console.list &mdash; taurus 4.7.0-alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.console.list</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.console.list</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">map</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># bck-compat py 2.7</span>
+    <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="kn">import</span> <span class="n">Alignment</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;List&quot;</span><span class="p">]</span>
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;restructuredtext&quot;</span>
+
+
+<div class="viewcode-block" id="List"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List">[docs]</a><span class="k">class</span> <span class="nc">List</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+
+    <span class="n">HeaderSeparator</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span>
+    <span class="n">RowSeparator</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">MaxColumnWidth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">TextAlignment</span> <span class="o">=</span> <span class="n">Alignment</span><span class="o">.</span><span class="n">Right</span> <span class="o">|</span> <span class="n">Alignment</span><span class="o">.</span><span class="n">Top</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">header_separator</span><span class="o">=</span><span class="n">HeaderSeparator</span><span class="p">,</span>
+                 <span class="n">row_separator</span><span class="o">=</span><span class="n">RowSeparator</span><span class="p">,</span>
+                 <span class="n">max_col_width</span><span class="o">=</span><span class="n">MaxColumnWidth</span><span class="p">,</span>
+                 <span class="n">text_alignment</span><span class="o">=</span><span class="n">TextAlignment</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_nb</span> <span class="o">=</span> <span class="n">col_nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur_col_width</span> <span class="o">=</span> <span class="n">col_nb</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_separator</span> <span class="o">=</span> <span class="n">header_separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_separator</span> <span class="o">=</span> <span class="n">row_separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_column_width</span> <span class="o">=</span> <span class="n">max_col_width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_alignment</span> <span class="o">=</span> <span class="n">text_alignment</span>
+
+        <span class="k">if</span> <span class="n">header</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+
+<div class="viewcode-block" id="List.setHeaderSeparator"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.setHeaderSeparator">[docs]</a>    <span class="k">def</span> <span class="nf">setHeaderSeparator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header_separator</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">header_separator</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="n">header_separator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_nb</span> <span class="o">*</span> <span class="p">[</span><span class="n">header_separator</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">HeaderSeparator</span> <span class="o">=</span> <span class="n">header_separator</span></div>
+
+<div class="viewcode-block" id="List.getHeaderSeparator"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.getHeaderSeparator">[docs]</a>    <span class="k">def</span> <span class="nf">getHeaderSeparator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">HeaderSeparator</span></div>
+
+    <span class="n">header_separator</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">getHeaderSeparator</span><span class="p">,</span> <span class="n">setHeaderSeparator</span><span class="p">)</span>
+
+<div class="viewcode-block" id="List.setRowSeparator"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.setRowSeparator">[docs]</a>    <span class="k">def</span> <span class="nf">setRowSeparator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_separator</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">row_separator</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="n">row_separator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_nb</span> <span class="o">*</span> <span class="p">[</span><span class="n">row_separator</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RowSeparator</span> <span class="o">=</span> <span class="n">row_separator</span></div>
+
+<div class="viewcode-block" id="List.getRowSeparator"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.getRowSeparator">[docs]</a>    <span class="k">def</span> <span class="nf">getRowSeparator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">RowSeparator</span></div>
+
+    <span class="n">row_separator</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">getRowSeparator</span><span class="p">,</span> <span class="n">setRowSeparator</span><span class="p">)</span>
+
+<div class="viewcode-block" id="List.setMaxColumnWidth"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.setMaxColumnWidth">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxColumnWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_col_width</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">max_col_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">max_col_width</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_col_width</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">max_col_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_nb</span> <span class="o">*</span> <span class="p">[</span><span class="n">max_col_width</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MaxColumnWidth</span> <span class="o">=</span> <span class="n">max_col_width</span></div>
+
+<div class="viewcode-block" id="List.getMaxColumnWidth"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.getMaxColumnWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxColumnWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">MaxColumnWidth</span></div>
+
+    <span class="n">max_column_width</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">getMaxColumnWidth</span><span class="p">,</span> <span class="n">setMaxColumnWidth</span><span class="p">)</span>
+
+<div class="viewcode-block" id="List.setTextAlignment"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.setTextAlignment">[docs]</a>    <span class="k">def</span> <span class="nf">setTextAlignment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_alignment</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_alignment</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">text_alignment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_nb</span> <span class="o">*</span> <span class="p">[</span><span class="n">text_alignment</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TextAlignment</span> <span class="o">=</span> <span class="n">text_alignment</span></div>
+
+<div class="viewcode-block" id="List.getTextAlignment"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.getTextAlignment">[docs]</a>    <span class="k">def</span> <span class="nf">getTextAlignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">TextAlignment</span></div>
+
+    <span class="n">text_alignment</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">getTextAlignment</span><span class="p">,</span> <span class="n">setTextAlignment</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_transform_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">row</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">col_nb</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_row</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+
+<div class="viewcode-block" id="List.append"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_row</span><span class="p">(</span><span class="n">row</span><span class="p">))</span></div>
+
+    <span class="n">appendRow</span> <span class="o">=</span> <span class="n">append</span>
+
+<div class="viewcode-block" id="List.putRow"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.putRow">[docs]</a>    <span class="k">def</span> <span class="nf">putRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span></div>
+
+    <span class="k">def</span> <span class="nf">_calc_column_widths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cur_col_width</span><span class="p">,</span> <span class="n">max_col_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_col_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MaxColumnWidth</span>
+
+        <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">cell</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span>
+                <span class="n">col_width</span> <span class="o">=</span> <span class="n">cur_col_width</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span>
+                <span class="n">max_width</span> <span class="o">=</span> <span class="n">max_col_width</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="n">col_width</span><span class="p">:</span>
+                    <span class="n">col_width</span> <span class="o">=</span> <span class="n">size</span>
+                <span class="k">if</span> <span class="n">max_width</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">col_width</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_width</span><span class="p">,</span> <span class="n">col_width</span><span class="p">)</span>
+                <span class="n">cur_col_width</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">col_width</span>
+
+<div class="viewcode-block" id="List.genOutput"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.genOutput">[docs]</a>    <span class="k">def</span> <span class="nf">genOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_separator_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">separator</span><span class="p">):</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">width</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cur_col_width</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">separator</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">string_types</span><span class="p">):</span>
+                <span class="n">column</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">separator</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">column</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">separator</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+
+<div class="viewcode-block" id="List.lines"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.lines">[docs]</a>    <span class="k">def</span> <span class="nf">lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_calc_column_widths</span><span class="p">()</span>
+        <span class="n">cur_col_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_col_width</span>
+        <span class="n">alignment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TextAlignment</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">wrapper</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">TextWrapper</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">row_nb</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">text_columns</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">cell</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="n">align</span> <span class="o">=</span> <span class="n">alignment</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span>
+                <span class="n">width</span> <span class="o">=</span> <span class="n">cur_col_width</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span>
+                <span class="n">wrapper</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">3</span>
+                <span class="n">cells</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cells</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">align</span> <span class="o">&amp;</span> <span class="n">Alignment</span><span class="o">.</span><span class="n">Left</span><span class="p">:</span>
+                        <span class="n">cells</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">align</span> <span class="o">&amp;</span> <span class="n">Alignment</span><span class="o">.</span><span class="n">Right</span><span class="p">:</span>
+                        <span class="n">cells</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">align</span> <span class="o">&amp;</span> <span class="n">Alignment</span><span class="o">.</span><span class="n">HCenter</span><span class="p">:</span>
+                        <span class="n">cells</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+                <span class="n">row_nb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cells</span><span class="p">),</span> <span class="n">row_nb</span><span class="p">)</span>
+                <span class="n">text_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cells</span><span class="p">)</span>
+
+            <span class="n">text_rows</span> <span class="o">=</span> <span class="n">row_nb</span> <span class="o">*</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">cells</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text_columns</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row_nb</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">cells</span><span class="p">):</span>
+                        <span class="n">text_rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">text_rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">cells</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">width</span> <span class="o">=</span> <span class="n">cur_col_width</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span>
+                        <span class="n">text_rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">text_rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">text_rows</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">row_index</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_separator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_separator_row</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RowSeparator</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_separator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_separator_row</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HeaderSeparator</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="List.str"><a class="viewcode-back" href="../../../devel/api/taurus/console/list/_List.html#taurus.console.list.List.str">[docs]</a>    <span class="k">def</span> <span class="nf">str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">())</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">str</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
