@@ -190,8 +190,6 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TaurusTrend2DDialog&quot;</span><span class="p">]</span>
 
-<span class="kn">import</span> <span class="nn">click</span>
-
 <span class="kn">from</span> <span class="nn">guiqwt.plot</span> <span class="kn">import</span> <span class="n">ImageDialog</span>
 <span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
 <span class="kn">import</span> <span class="nn">taurus.core</span>
@@ -236,6 +234,9 @@
         <span class="n">ImageDialog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">toolbar</span><span class="o">=</span><span class="n">toolbar</span><span class="p">,</span>
                              <span class="n">options</span><span class="o">=</span><span class="n">defaultOptions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;TaurusTrend2DDialog&quot;</span><span class="p">)</span>
+        <span class="c1"># support x_axis_mode values (map them to stackMode values)</span>
+        <span class="n">stackMode</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">t</span><span class="o">=</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="s1">&#39;deltatime&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stackMode</span><span class="p">,</span> <span class="n">stackMode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trendItem</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffersize</span> <span class="o">=</span> <span class="n">buffersize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_useArchiving</span> <span class="o">=</span> <span class="kc">False</span>
@@ -317,9 +318,9 @@
         <span class="sd">&quot;&quot;&quot;set the type of stack to be used. This determines how X values are</span>
 <span class="sd">        interpreted:</span>
 
-<span class="sd">            - as timestamps (&#39;datetime&#39;)</span>
-<span class="sd">            - as time deltas (&#39;timedelta&#39;)</span>
-<span class="sd">            - as event numbers (&#39;event&#39;)</span>
+<span class="sd">            - as timestamps (&#39;datetime&#39; or &#39;t&#39;)</span>
+<span class="sd">            - as time deltas (&#39;deltatime&#39; or &#39;d&#39;)</span>
+<span class="sd">            - as event numbers (&#39;event&#39; or &#39;e&#39;)</span>
 
 <span class="sd">        :param mode:(one of &#39;datetime&#39;, &#39;timedelta&#39; or &#39;event&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -469,52 +470,6 @@
                                        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">isModifiableByUser</span><span class="p">,</span>
                                        <span class="n">setModifiableByUser</span><span class="p">,</span>
                                        <span class="n">TaurusBaseWidget</span><span class="o">.</span><span class="n">resetModifiableByUser</span><span class="p">)</span></div>
-
-
-<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;trend2d&#39;</span><span class="p">)</span>
-<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">model</span>
-<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
-<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s1">&#39;TaurusTrend2D&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
-    <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="s1">&#39;--buffer&#39;</span><span class="p">,</span> <span class="s1">&#39;max_buffer_size&#39;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
-    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Maximum number of values to be stacked &quot;</span>
-          <span class="o">+</span> <span class="s2">&quot;(when reached, the oldest values will be &quot;</span>
-          <span class="o">+</span> <span class="s2">&quot;discarded)&quot;</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
-    <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;--x-axis-mode&quot;</span><span class="p">,</span> <span class="s2">&quot;x_axis_mode&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">]),</span>
-    <span class="n">default</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span>
-    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Interpret X values as timestamps (t), time deltas (d) &quot;</span>
-          <span class="o">+</span> <span class="s2">&quot; or event numbers (e). &quot;</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="k">def</span> <span class="nf">trend2d_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">,</span> <span class="n">max_buffer_size</span><span class="p">,</span>
-                <span class="n">x_axis_mode</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-
-    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;eval:x=linspace(0,3,40);t=rand();sin(x+t)&#39;</span>
-
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus Trend 2D&quot;</span><span class="p">)</span>
-
-    <span class="n">stackMode</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="s1">&#39;deltatime&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">)[</span><span class="n">x_axis_mode</span><span class="p">]</span>
-
-    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusTrend2DDialog</span><span class="p">(</span><span class="n">stackMode</span><span class="o">=</span><span class="n">stackMode</span><span class="p">,</span> <span class="n">wintitle</span><span class="o">=</span><span class="n">window_name</span><span class="p">,</span>
-                            <span class="n">buffersize</span><span class="o">=</span><span class="n">max_buffer_size</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-
-    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">trend2d_cmd</span><span class="p">()</span>
 </pre></div>
 
            </div>

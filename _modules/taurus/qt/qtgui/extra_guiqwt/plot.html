@@ -191,7 +191,6 @@
 <span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">next</span>
 <span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span>
 
-<span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
 <span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="n">string_types</span>
@@ -790,51 +789,6 @@
     <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
 
-
-<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">)</span>
-<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">model</span>
-<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
-<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s1">&#39;TaurusPlot (qwt5)&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
-    <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--color-mode&#39;</span><span class="p">,</span> <span class="s1">&#39;color_mode&#39;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;rgb&#39;</span><span class="p">]),</span>
-    <span class="n">default</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
-    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Color mode expected from the attribute&#39;</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="k">def</span> <span class="nf">image_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">,</span> <span class="n">color_mode</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-
-    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">cmd_line_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus Image Dialog&quot;</span><span class="p">)</span>
-
-    <span class="n">rgb_mode</span> <span class="o">=</span> <span class="p">(</span><span class="n">color_mode</span> <span class="o">==</span> <span class="s1">&#39;rgb&#39;</span><span class="p">)</span>
-
-    <span class="c1"># TODO:  is &quot;-c rgb --demo&quot; doing the right thing?? Check it.</span>
-    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">color_mode</span> <span class="o">==</span> <span class="s1">&#39;rgb&#39;</span><span class="p">:</span>
-            <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;eval:randint(0,256,(10,20,3))&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;eval:rand(256,128)&#39;</span>
-
-    <span class="n">w</span> <span class="o">=</span> <span class="n">TaurusImageDialog</span><span class="p">(</span><span class="n">wintitle</span><span class="o">=</span><span class="n">window_name</span><span class="p">)</span>
-
-    <span class="n">w</span><span class="o">.</span><span class="n">setRGBmode</span><span class="p">(</span><span class="n">rgb_mode</span><span class="p">)</span>
-
-    <span class="c1"># set model</span>
-    <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-
-    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">image_cmd</span><span class="p">()</span>
-    <span class="c1"># taurusCurveDlgMain()</span>
-    <span class="c1"># taurusTrendDlgMain()</span>
-    <span class="c1"># taurusImageDlgMain()</span>
 </pre></div>
 
            </div>

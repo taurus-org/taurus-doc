@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.cli.alt &mdash; taurus 4.6.5-alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="taurus.console" href="../console.html" />
+    <link rel="prev" title="taurus.cli" href="../cli.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../../taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plotting_guide.html">Plotting guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../plugins.html">Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../taurus.html">API</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../cli.html">cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../console.html">console</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../core.html">core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../qt.html">qt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_Release.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">Release</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../../taurus.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> &raquo;</li>
+        
+          <li><a href="../cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.cli</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.cli.alt</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/devel/api/taurus/cli/alt.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-taurus.cli.alt">
+<span id="taurus-cli-alt"></span><h1><a class="reference internal" href="#module-taurus.cli.alt" title="taurus.cli.alt"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.cli.alt</span></code></a><a class="headerlink" href="#module-taurus.cli.alt" title="Permalink to this headline">¶</a></h1>
+<p>This module provides several taurus CLI subcommands (plot, trend, image,…)
+that show a widget which may have more than one alternative implementation.
+The available registered implementations for each command can be listed with
+the <cite>–ls-alt</cite> option. Specific implementations can be selected with the
+<cite>–use-alt</cite> option.</p>
+<p>These commands also honour the default implementation selection configured in
+<a class="reference internal" href="../../../tauruscustomsettings.html#module-taurus.tauruscustomsettings" title="taurus.tauruscustomsettings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.tauruscustomsettings</span></code></a> via the <cite>*_ALT</cite> variables</p>
+<p>The alternative implementations can be registered using the following
+entry-point group names:</p>
+<ul class="simple">
+<li><p><cite>taurus.plot.alt</cite>: the loaded object is expected to be a <cite>TaurusPlot</cite>
+implementation</p></li>
+<li><p><cite>taurus.trend.alt</cite>: the loaded object is expected to be a <cite>TaurusTrend</cite>
+implementation</p></li>
+<li><p><cite>taurus.trend2d.alt</cite>: the loaded object is expected to be a
+<cite>TaurusTrend2dDialog</cite> implementation</p></li>
+<li><p><cite>taurus.image.alt</cite>: the loaded object is expected to be a <cite>TaurusImageDialog</cite>
+implementation</p></li>
+</ul>
+<div class="section" id="expected-api-for-alternative-implementations">
+<h2>Expected API for alternative implementations<a class="headerlink" href="#expected-api-for-alternative-implementations" title="Permalink to this headline">¶</a></h2>
+<p>When registering a widget class to be used for these commands, the classes need
+to provide the following minimum API:</p>
+<ul>
+<li><p>For <strong>all</strong> the classes:
+- must be a Qt.QWidget
+- must implement <cite>setModel()</cite> and <cite>getModel()</cite> equivalent to those in
+<a class="reference internal" href="../qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent" title="taurus.qt.qtgui.base.TaurusBaseComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.base.TaurusBaseComponent</span></code></a></p></li>
+<li><p>For TaurusPlot:
+- should implement <cite>setXAxisMode(mode)</cite> where mode is one of <cite>“n”</cite> or <cite>“t”</cite>
+- should implement <cite>loadConfigFile(name)</cite> equivalent to
+<a class="reference internal" href="../qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile()</span></code></a></p></li>
+<li><p>For TaurusTrend:
+- should implement <cite>setXAxisMode(mode)</cite> where mode is one of <cite>“n”</cite> or <cite>“t”</cite>
+- should implement  <cite>loadConfigFile(name)</cite> equivalent to
+<a class="reference internal" href="../qt/qtcore/configuration/_BaseConfigurableClass.html#taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile" title="taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile()</span></code></a>
+- should implement <cite>setMaxDataBufferSize(n)</cite> where <cite>n</cite> is an integer
+- should implement <cite>setForcedReadingPeriod(period)</cite> where <cite>period</cite> is an
+integer</p></li>
+<li><p>For TaurusTrend2D:
+- should accept the following keyword arguments in its constructor:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>stackMode=x_axis_mode where mode is one of <cite>“d”</cite> or <cite>“n”</cite> or <cite>“t”</cite></p></li>
+<li><p>wintitle=window_name,</p></li>
+<li><p>buffersize=max_buffer_size</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>For TaurusImage:
+- should accept the following keyword arguments in its constructor:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>wintitle=window_name,</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>should implement <cite>setRGBmode(mode)</cite> where mode is one of <cite>“gray”</cite>, <cite>“rgb”</cite></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p class="rubric">Functions</p>
+<dl class="py function">
+<dt id="taurus.cli.alt.max_buffer_option">
+<code class="sig-name descname">max_buffer_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">default</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/cli/alt.html#max_buffer_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.cli.alt.max_buffer_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="taurus.cli.alt.x_axis_mode_option">
+<code class="sig-name descname">x_axis_mode_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">choices</span><span class="o">=</span><span class="default_value">'t', 'n'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/taurus/cli/alt.html#x_axis_mode_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#taurus.cli.alt.x_axis_mode_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../console.html" class="btn btn-neutral float-right" title="taurus.console" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../cli.html" class="btn btn-neutral float-left" title="taurus.cli" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

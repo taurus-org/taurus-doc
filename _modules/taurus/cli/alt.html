@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.cli.alt &mdash; taurus 4.6.5-alpha documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.cli.alt</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.cli.alt</h1><div class="highlight"><pre>
+<span></span><span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module provides several taurus CLI subcommands (plot, trend, image,...)</span>
+<span class="sd">that show a widget which may have more than one alternative implementation.</span>
+<span class="sd">The available registered implementations for each command can be listed with</span>
+<span class="sd">the `--ls-alt` option. Specific implementations can be selected with the</span>
+<span class="sd">`--use-alt` option.</span>
+
+<span class="sd">These commands also honour the default implementation selection configured in</span>
+<span class="sd">:mod:`taurus.tauruscustomsettings` via the `*_ALT` variables</span>
+
+<span class="sd">The alternative implementations can be registered using the following</span>
+<span class="sd">entry-point group names:</span>
+
+<span class="sd">- `taurus.plot.alt`: the loaded object is expected to be a `TaurusPlot`</span>
+<span class="sd">  implementation</span>
+
+<span class="sd">- `taurus.trend.alt`: the loaded object is expected to be a `TaurusTrend`</span>
+<span class="sd">  implementation</span>
+
+<span class="sd">- `taurus.trend2d.alt`: the loaded object is expected to be a</span>
+<span class="sd">  `TaurusTrend2dDialog` implementation</span>
+
+<span class="sd">- `taurus.image.alt`: the loaded object is expected to be a `TaurusImageDialog`</span>
+<span class="sd">  implementation</span>
+
+
+<span class="sd">Expected API for alternative implementations</span>
+<span class="sd">--------------------------------------------</span>
+
+<span class="sd">When registering a widget class to be used for these commands, the classes need</span>
+<span class="sd">to provide the following minimum API:</span>
+
+<span class="sd">- For **all** the classes:</span>
+<span class="sd">  - must be a Qt.QWidget</span>
+<span class="sd">  - must implement `setModel()` and `getModel()` equivalent to those in</span>
+<span class="sd">  :class:`taurus.qt.qtgui.base.TaurusBaseComponent`</span>
+
+<span class="sd">- For TaurusPlot:</span>
+<span class="sd">  - should implement `setXAxisMode(mode)` where mode is one of `&quot;n&quot;` or `&quot;t&quot;`</span>
+<span class="sd">  - should implement `loadConfigFile(name)` equivalent to</span>
+<span class="sd">  :meth:`taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile`</span>
+
+<span class="sd">- For TaurusTrend:</span>
+<span class="sd">  - should implement `setXAxisMode(mode)` where mode is one of `&quot;n&quot;` or `&quot;t&quot;`</span>
+<span class="sd">  - should implement  `loadConfigFile(name)` equivalent to</span>
+<span class="sd">  :meth:`taurus.qt.qtcore.configuration.BaseConfigurableClass.loadConfigFile`</span>
+<span class="sd">  - should implement `setMaxDataBufferSize(n)` where `n` is an integer</span>
+<span class="sd">  - should implement `setForcedReadingPeriod(period)` where `period` is an</span>
+<span class="sd">  integer</span>
+
+<span class="sd">- For TaurusTrend2D:</span>
+<span class="sd">  - should accept the following keyword arguments in its constructor:</span>
+
+<span class="sd">    - stackMode=x_axis_mode where mode is one of `&quot;d&quot;` or `&quot;n&quot;` or `&quot;t&quot;`</span>
+<span class="sd">    - wintitle=window_name,</span>
+<span class="sd">    - buffersize=max_buffer_size</span>
+
+<span class="sd">- For TaurusImage:</span>
+<span class="sd">  - should accept the following keyword arguments in its constructor:</span>
+
+<span class="sd">    - wintitle=window_name,</span>
+
+<span class="sd">  - should implement `setRGBmode(mode)` where mode is one of `&quot;gray&quot;`, `&quot;rgb&quot;`</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">click</span>
+<span class="kn">import</span> <span class="nn">taurus.cli.common</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.plugin</span> <span class="kn">import</span> <span class="n">selectEntryPoints</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">tauruscustomsettings</span> <span class="k">as</span> <span class="n">_ts</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">warning</span><span class="p">,</span> <span class="n">info</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.application</span> <span class="kn">import</span> <span class="n">TaurusApplication</span>
+
+
+<span class="n">EP_GROUP_PLOT</span> <span class="o">=</span> <span class="s2">&quot;taurus.plot.alts&quot;</span>
+<span class="n">EP_GROUP_TREND</span> <span class="o">=</span> <span class="s2">&quot;taurus.trend.alts&quot;</span>
+<span class="n">EP_GROUP_TREND2D</span> <span class="o">=</span> <span class="s2">&quot;taurus.trend2d.alts&quot;</span>
+<span class="n">EP_GROUP_IMAGE</span> <span class="o">=</span> <span class="s2">&quot;taurus.image.alts&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_print_alts</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+    <span class="n">alts</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">selectEntryPoints</span><span class="p">(</span><span class="n">group</span><span class="p">)]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Registered alternatives :</span><span class="se">\n</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">alts</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">_load_class_from_group</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;.*&quot;</span><span class="p">,),</span> <span class="n">exclude</span><span class="o">=</span><span class="p">()):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Factory that returns the first available class from the group entry point.</span>
+<span class="sd">    The selection is done among the classes registered in</span>
+<span class="sd">    the `group` entry-point, prioritized according to the given</span>
+<span class="sd">    `include` and `exclude` patterns</span>
+<span class="sd">    (see :func:`taurus.core.util.plugin.selectEntryPoints`)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="n">selectEntryPoints</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="n">include</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="n">exclude</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">eps</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">(),</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cannot load </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Could not load any class from </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">eps</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="x_axis_mode_option"><a class="viewcode-back" href="../../../devel/api/taurus/cli/alt.html#taurus.cli.alt.x_axis_mode_option">[docs]</a><span class="k">def</span> <span class="nf">x_axis_mode_option</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">)):</span>
+    <span class="n">hlp</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;regular axis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="s2">&quot;event number&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="s2">&quot;absolute time/date axis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="s2">&quot;delta time axis&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+        <span class="s2">&quot;-x&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--x-axis-mode&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;x_axis_mode&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="n">choices</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;X axis mode: &quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">k</span> <span class="o">+</span> <span class="s2">&quot; for &quot;</span> <span class="o">+</span> <span class="n">hlp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">])</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">o</span></div>
+
+
+<div class="viewcode-block" id="max_buffer_option"><a class="viewcode-back" href="../../../devel/api/taurus/cli/alt.html#taurus.cli.alt.max_buffer_option">[docs]</a><span class="k">def</span> <span class="nf">max_buffer_option</span><span class="p">(</span><span class="n">default</span><span class="p">):</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+        <span class="s2">&quot;-b&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--buffer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;max_buffer_size&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+        <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Maximum number of values to be stacked &quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;(when reached, the oldest values will be &quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;discarded)&quot;</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">o</span></div>
+
+
+<span class="n">forced_read_option</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;--forced-read&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;forced_read_period&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;MILLISECONDS&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;force re-reading of the attributes every MILLISECONDS ms&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;plot&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">models</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">config_file</span>
+<span class="nd">@x_axis_mode_option</span><span class="p">([</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">])</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s2">&quot;TaurusPlot&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">use_alternative</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">list_alternatives</span>
+<span class="k">def</span> <span class="nf">plot_cmd</span><span class="p">(</span>
+    <span class="n">models</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">x_axis_mode</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">,</span> <span class="n">use_alt</span><span class="p">,</span> <span class="n">ls_alt</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Shows a plot for the given models&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">ls_alt</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_PLOT</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">use_alt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">use_alt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_ts</span><span class="p">,</span> <span class="s2">&quot;PLOT_ALT&quot;</span><span class="p">,</span> <span class="s2">&quot;.*&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">TPlot</span><span class="p">,</span> <span class="n">epname</span> <span class="o">=</span> <span class="n">_load_class_from_group</span><span class="p">(</span>
+            <span class="n">EP_GROUP_PLOT</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">use_alt</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_PLOT</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurusplot(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epname</span><span class="p">))</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TPlot</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="n">models</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;eval:rand(100)&quot;</span><span class="p">,</span> <span class="s2">&quot;eval:0.5*sqrt(arange(100))&quot;</span><span class="p">])</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setXAxisMode</span><span class="p">(</span><span class="n">x_axis_mode</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">warning</span><span class="p">(</span>
+            <span class="s1">&#39;Could not set X axis mode to &quot;</span><span class="si">%s</span><span class="s1">&quot; on </span><span class="si">%s</span><span class="s1"> plot. Reason: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+            <span class="n">x_axis_mode</span><span class="p">,</span>
+            <span class="n">epname</span><span class="p">,</span>
+            <span class="n">e</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;Could not load config file &quot;</span><span class="si">%s</span><span class="s1">&quot; on </span><span class="si">%s</span><span class="s1"> plot. Reason: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+                <span class="n">config_file</span><span class="p">,</span>
+                <span class="n">epname</span><span class="p">,</span>
+                <span class="n">e</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;trend&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">models</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">config_file</span>
+<span class="nd">@x_axis_mode_option</span><span class="p">([</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">])</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s2">&quot;TaurusTrend&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">use_alternative</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">list_alternatives</span>
+<span class="nd">@max_buffer_option</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="nd">@forced_read_option</span>
+<span class="k">def</span> <span class="nf">trend_cmd</span><span class="p">(</span>
+    <span class="n">models</span><span class="p">,</span>
+    <span class="n">config_file</span><span class="p">,</span>
+    <span class="n">x_axis_mode</span><span class="p">,</span>
+    <span class="n">demo</span><span class="p">,</span>
+    <span class="n">window_name</span><span class="p">,</span>
+    <span class="n">use_alt</span><span class="p">,</span>
+    <span class="n">ls_alt</span><span class="p">,</span>
+    <span class="n">max_buffer_size</span><span class="p">,</span>
+    <span class="n">forced_read_period</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Shows a trend for the given models&quot;&quot;&quot;</span>
+
+    <span class="c1"># list alternatives option</span>
+    <span class="k">if</span> <span class="n">ls_alt</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_TREND</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># use alternative</span>
+    <span class="k">if</span> <span class="n">use_alt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">use_alt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_ts</span><span class="p">,</span> <span class="s2">&quot;TREND_ALT&quot;</span><span class="p">,</span> <span class="s2">&quot;.*&quot;</span><span class="p">)</span>
+
+    <span class="c1"># get the selected alternative</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">TTrend</span><span class="p">,</span> <span class="n">epname</span> <span class="o">=</span> <span class="n">_load_class_from_group</span><span class="p">(</span>
+            <span class="n">EP_GROUP_TREND</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">use_alt</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_TREND</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;taurustrend(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epname</span><span class="p">))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TTrend</span><span class="p">()</span>
+
+    <span class="c1"># window title option</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">window_name</span><span class="p">)</span>
+
+    <span class="c1"># demo option</span>
+    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+        <span class="n">models</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="n">models</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;eval:rand()&quot;</span><span class="p">,</span> <span class="s2">&quot;eval:1+rand(2)&quot;</span><span class="p">])</span>
+
+    <span class="c1"># x axis mode option</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setXAxisMode</span><span class="p">(</span><span class="n">x_axis_mode</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">warning</span><span class="p">(</span>
+            <span class="s1">&#39;Could not set X axis mode to &quot;</span><span class="si">%s</span><span class="s1">&quot; on </span><span class="si">%s</span><span class="s1"> plot. Reason: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+            <span class="n">x_axis_mode</span><span class="p">,</span>
+            <span class="n">epname</span><span class="p">,</span>
+            <span class="n">e</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># configuration file option</span>
+    <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">loadConfigFile</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;Could not load config file &quot;</span><span class="si">%s</span><span class="s1">&quot; on </span><span class="si">%s</span><span class="s1"> plot. Reason: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+                <span class="n">config_file</span><span class="p">,</span>
+                <span class="n">epname</span><span class="p">,</span>
+                <span class="n">e</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># max buffer size option</span>
+    <span class="k">if</span> <span class="n">max_buffer_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">setMaxDataBufferSize</span><span class="p">(</span><span class="n">max_buffer_size</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;Could not set max buffer size on </span><span class="si">%s</span><span class="s1"> trend. Reason: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+                <span class="n">epname</span><span class="p">,</span>
+                <span class="n">e</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># set models</span>
+    <span class="k">if</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
+
+    <span class="c1"># period option</span>
+    <span class="k">if</span> <span class="n">forced_read_period</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setForcedReadingPeriod</span><span class="p">(</span><span class="n">forced_read_period</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;trend2d&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">model</span>
+<span class="nd">@x_axis_mode_option</span><span class="p">([</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">])</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s2">&quot;TaurusTrend2D&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">use_alternative</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">list_alternatives</span>
+<span class="nd">@max_buffer_option</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">trend2d_cmd</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">x_axis_mode</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">,</span> <span class="n">use_alt</span><span class="p">,</span> <span class="n">ls_alt</span><span class="p">,</span> <span class="n">max_buffer_size</span>
+<span class="p">):</span>
+
+    <span class="c1"># list alternatives option</span>
+    <span class="k">if</span> <span class="n">ls_alt</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_TREND2D</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># use alternative</span>
+    <span class="k">if</span> <span class="n">use_alt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">use_alt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_ts</span><span class="p">,</span> <span class="s2">&quot;TREND2D_ALT&quot;</span><span class="p">,</span> <span class="s2">&quot;.*&quot;</span><span class="p">)</span>
+
+    <span class="c1"># get the selected alternative</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">TTrend2D</span><span class="p">,</span> <span class="n">epname</span> <span class="o">=</span> <span class="n">_load_class_from_group</span><span class="p">(</span>
+            <span class="n">EP_GROUP_TREND2D</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">use_alt</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_TREND2D</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus Trend 2D (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epname</span><span class="p">))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TTrend2D</span><span class="p">(</span>
+        <span class="n">stackMode</span><span class="o">=</span><span class="n">x_axis_mode</span><span class="p">,</span> <span class="n">wintitle</span><span class="o">=</span><span class="n">window_name</span><span class="p">,</span> <span class="n">buffersize</span><span class="o">=</span><span class="n">max_buffer_size</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;eval:x=linspace(0,3,40);t=rand();sin(x+t)&quot;</span>
+
+    <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">model</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">demo</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">window_name</span><span class="p">(</span><span class="s2">&quot;TaurusImage&quot;</span><span class="p">)</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">use_alternative</span>
+<span class="nd">@taurus</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">list_alternatives</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;--color-mode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;color_mode&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="s2">&quot;rgb&quot;</span><span class="p">]),</span>
+    <span class="n">default</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Color mode expected from the attribute&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">image_cmd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">window_name</span><span class="p">,</span> <span class="n">color_mode</span><span class="p">,</span> <span class="n">use_alt</span><span class="p">,</span> <span class="n">ls_alt</span><span class="p">):</span>
+    <span class="c1"># list alternatives option</span>
+    <span class="k">if</span> <span class="n">ls_alt</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_IMAGE</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># use alternative</span>
+    <span class="k">if</span> <span class="n">use_alt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">use_alt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_ts</span><span class="p">,</span> <span class="s2">&quot;IMAGE_ALT&quot;</span><span class="p">,</span> <span class="s2">&quot;.*&quot;</span><span class="p">)</span>
+
+    <span class="c1"># get the selected alternative</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">TImage</span><span class="p">,</span> <span class="n">epname</span> <span class="o">=</span> <span class="n">_load_class_from_group</span><span class="p">(</span>
+            <span class="n">EP_GROUP_IMAGE</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">use_alt</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">_print_alts</span><span class="p">(</span><span class="n">EP_GROUP_IMAGE</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TaurusApplication</span><span class="p">(</span><span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;Taurus Image (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epname</span><span class="p">))</span>
+
+    <span class="n">rgb_mode</span> <span class="o">=</span> <span class="n">color_mode</span> <span class="o">==</span> <span class="s2">&quot;rgb&quot;</span>
+
+    <span class="c1"># TODO:  is &quot;-c rgb --demo&quot; doing the right thing?? Check it.</span>
+    <span class="k">if</span> <span class="n">demo</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">color_mode</span> <span class="o">==</span> <span class="s2">&quot;rgb&quot;</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;eval:randint(0,256,(10,20,3))&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;eval:rand(256,128)&quot;</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">TImage</span><span class="p">(</span><span class="n">wintitle</span><span class="o">=</span><span class="n">window_name</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">setRGBmode</span><span class="p">(</span><span class="n">rgb_mode</span><span class="p">)</span>
+
+    <span class="c1"># set model</span>
+    <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

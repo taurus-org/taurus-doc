@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="Taurus plotting guide" href="plotting_guide.html" /> 
+    <link rel="prev" title="Taurus plugins" href="plugins.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -104,6 +104,7 @@
 <li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
 <li class="toctree-l3"><a class="reference internal" href="core_tutorial.html">Core tutorial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plotting_guide.html">Plotting guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html">Plugins</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Taurus Custom Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
@@ -195,8 +196,10 @@ the current execution.</p>
 aspects of Taurus.</p>
 <dl class="py data">
 <dt id="taurus.tauruscustomsettings.DEFAULT_QT_API">
-<code class="sig-name descname">DEFAULT_QT_API</code><em class="property"> = 'pyqt'</em><a class="headerlink" href="#taurus.tauruscustomsettings.DEFAULT_QT_API" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set preferred API (if one is not already loaded)</p>
+<code class="sig-name descname">DEFAULT_QT_API</code><em class="property"> = ''</em><a class="headerlink" href="#taurus.tauruscustomsettings.DEFAULT_QT_API" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set preferred API (if one is not already loaded). Accepted values are
+pyqt5, pyqt, pyside2, pyside. Set to an empty string to let taurus choose
+the first that works from the accepted values.</p>
 </dd></dl>
 
 <dl class="py data">
@@ -251,6 +254,23 @@ False (or commented out) for backwards compatibility</p>
 organization logo. Qt registered paths can also be used.
 If not set, it defaults to ‘logos:taurus.png”
 (note that “logos:” is a Qt a registered path for “&lt;taurus&gt;/qt/qtgui/icon/logos/”)</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="taurus.tauruscustomsettings.PLOT_ALT">
+<code class="sig-name descname">PLOT_ALT</code><em class="property"> = '.*'</em><a class="headerlink" href="#taurus.tauruscustomsettings.PLOT_ALT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget alternatives. Some widgets may be have alternative implementations
+(e.g. the <cite>TaurusPlot</cite> is implemented both by the qwt5 submodule and by the
+taurus_pyqtgraph plugin). The different implementations are registered in
+entry point groups (<cite>taurus.plot.alt</cite>, <cite>taurus.trend.alt</cite>, …) and they
+are tried in alphabetical order of their registered  entry point names
+(the first one that works is used). You can restrict the set of available
+implementation alternatives to be tried (or even just select a given
+alternative) by setting the corresponding <em>_ALT variable with a name
+regexp pattern that must be matched by the entry point name in order to be
+tried. For example, to force the `taurus_pyqtgraph` implementation for the
+plots, set `PLOT_ALT = “tpg”`.
+Leaving the variable undefined is equivalent to setting it to `”.</em>”`</p>
 </dd></dl>
 
 <dl class="py data">
@@ -368,7 +388,7 @@ factories are enabled (and tried alphabetically)</p>
         <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="plotting_guide.html" class="btn btn-neutral float-left" title="Taurus plotting guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="plugins.html" class="btn btn-neutral float-left" title="Taurus plugins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
