@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; taurus 4.6.5-alpha documentation</title>
+  <title>Getting started &mdash; taurus 4.7.1-alpha documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.6
+                4.7
               </div>
             
           
@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.6 documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.7 documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">User’s Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Getting started</a></li>
@@ -153,7 +153,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../docs.html">Taurus 4.6 documentation</a> &raquo;</li>
+          <li><a href="../docs.html">Taurus 4.7 documentation</a> &raquo;</li>
         
           <li><a href="index.html">User’s Guide</a> &raquo;</li>
         
@@ -207,15 +207,14 @@ repositories</p>
 </div>
 <div class="section" id="installing-in-a-conda-environment-platform-independent">
 <h3>Installing in a conda environment (platform-independent)<a class="headerlink" href="#installing-in-a-conda-environment-platform-independent" title="Permalink to this headline">¶</a></h3>
-<p>First create a <a class="reference external" href="http://conda.io/docs/">Conda</a> environment with all the dependencies and activate it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
-<span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">tango</span><span class="o">-</span><span class="n">controls</span>
-<span class="c1"># note: MacOSX users, remove &quot;pytango&quot; from the following command</span>
-<span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">py3qt5</span> <span class="n">python</span><span class="o">=</span><span class="mi">3</span> <span class="n">pyqt</span><span class="o">=</span><span class="mi">5</span> <span class="n">pytango</span> <span class="n">lxml</span> <span class="n">future</span> <span class="n">guidata</span> <span class="n">guiqwt</span> <span class="n">ipython</span> <span class="n">pillow</span> <span class="n">pint</span> <span class="n">ply</span> <span class="n">pyqtgraph</span> <span class="n">pythonqwt</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">pymca</span> <span class="n">click</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">py3qt5</span>
+<p>In a conda environment (we recommend creating one specifically for taurus):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">-</span><span class="n">c</span> <span class="n">taurus</span><span class="o">-</span><span class="n">org</span> <span class="n">taurus</span> <span class="n">taurus_pyqtgraph</span>
 </pre></div>
 </div>
-<p>Then install taurus and taurus_pyqtgraph using pip (as explained above)</p>
+<p>optionally, you may also want to install tango:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="o">-</span><span class="n">c</span> <span class="n">tango</span><span class="o">-</span><span class="n">controls</span> <span class="n">pytango</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="working-from-git-source-directly-in-develop-mode">
