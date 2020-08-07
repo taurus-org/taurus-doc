@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>taurus.qt.qtcore.taurusqlistener &mdash; taurus 4.7.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../../../../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.7 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.qt.qtcore.taurusqlistener</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for taurus.qt.qtcore.taurusqlistener</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1">#############################################################################</span>
+<span class="c1">##</span>
+<span class="c1"># This file is part of Taurus</span>
+<span class="c1">##</span>
+<span class="c1"># http://taurus-scada.org</span>
+<span class="c1">##</span>
+<span class="c1"># Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">##</span>
+<span class="c1"># Taurus is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU Lesser General Public License for more details.</span>
+<span class="c1">##</span>
+<span class="c1"># You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1"># along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">##</span>
+<span class="c1">#############################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QTaurusBaseListener&quot;</span><span class="p">,</span> <span class="s2">&quot;QObjectTaurusListener&quot;</span><span class="p">]</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.util</span> <span class="kn">import</span> <span class="n">baseSignal</span>
+<span class="kn">from</span> <span class="nn">taurus.core.util.log</span> <span class="kn">import</span> <span class="n">deprecation_decorator</span>
+<span class="kn">from</span> <span class="nn">taurus.core.tauruslistener</span> <span class="kn">import</span> <span class="n">TaurusListener</span>
+<span class="kn">from</span> <span class="nn">taurus.external.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
+
+
+<div class="viewcode-block" id="QTaurusBaseListener"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener">[docs]</a><span class="k">class</span> <span class="nc">QTaurusBaseListener</span><span class="p">(</span><span class="n">TaurusListener</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for QObjects listening to taurus events.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">           :meth:`getSignaller` is now unused and deprecated. This is because</span>
+<span class="sd">           `taurusEvent` is implemented using :func:`baseSignal`, that doesn&#39;t</span>
+<span class="sd">           require the class to inherit from QObject.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">taurusEvent</span> <span class="o">=</span> <span class="n">baseSignal</span><span class="p">(</span><span class="s1">&#39;taurusEvent&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QTaurusBaseListener</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eventFilters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filterEvent</span><span class="p">)</span>
+
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+    <span class="c1"># Event handling chain</span>
+    <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
+
+<div class="viewcode-block" id="QTaurusBaseListener.eventReceived"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The basic implementation of the event handling chain is as</span>
+<span class="sd">        follows:</span>
+
+<span class="sd">            - eventReceived just calls :meth:`fireEvent` which emits a &quot;taurusEvent&quot;</span>
+<span class="sd">              PyQt signal that is connected (by :meth:`preAttach`) to the</span>
+<span class="sd">              :meth:`filterEvent` method.</span>
+<span class="sd">            - After filtering, :meth:`handleEvent` is invoked with the resulting</span>
+<span class="sd">              filtered event</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            in the earlier steps of the chain (i.e., in :meth:`eventReceived`/:meth:`fireEvent`),</span>
+<span class="sd">            the code is executed in a Python thread, while from eventFilter</span>
+<span class="sd">            ahead, the code is executed in a Qt thread.</span>
+<span class="sd">            When writing widgets, one should normally work on the Qt thread</span>
+<span class="sd">            (i.e. reimplementing :meth:`handleEvent`)</span>
+
+<span class="sd">        :param evt_src: (object) object that triggered the event</span>
+<span class="sd">        :param evt_type: (taurus.core.taurusbasetypes.TaurusEventType) type of event</span>
+<span class="sd">        :param evt_value: (object) event value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fireEvent</span><span class="p">(</span><span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QTaurusBaseListener.fireEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener.fireEvent">[docs]</a>    <span class="k">def</span> <span class="nf">fireEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">evt_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">evt_value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Emits a &quot;taurusEvent&quot; signal.</span>
+<span class="sd">        It is unlikely that you may need to reimplement this method in subclasses.</span>
+<span class="sd">        Consider reimplementing :meth:`eventReceived` or :meth:`handleEvent`</span>
+<span class="sd">        instead depending on whether you need to execute code in the python</span>
+<span class="sd">        or Qt threads, respectively</span>
+
+<span class="sd">        :param evt_src: (object or None) object that triggered the event</span>
+<span class="sd">        :param evt_type: (taurus.core.taurusbasetypes.TaurusEventType or None) type of event</span>
+<span class="sd">        :param evt_value: (object or None) event value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">taurusEvent</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="QTaurusBaseListener.filterEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener.filterEvent">[docs]</a>    <span class="k">def</span> <span class="nf">filterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">evt_type</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">evt_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The event is processed by each and all filters in strict order</span>
+<span class="sd">        unless one of them returns None (in which case the event is discarded)</span>
+
+<span class="sd">        :param evt_src: (object) object that triggered the event</span>
+<span class="sd">        :param evt_type: (taurus.core.taurusbasetypes.TaurusEventType) type of event</span>
+<span class="sd">        :param evt_value: (object) event value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span>
+
+        <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># @todo In an ideal world the signature of this method should be</span>
+            <span class="c1"># (evt_src, evt_type, evt_value). However there&#39;s a bug in PyQt:</span>
+            <span class="c1"># If a signal is disconnected between the moment it is emitted and</span>
+            <span class="c1"># the moment the slot is called, then the slot is called without</span>
+            <span class="c1"># parameters (!?). We added this default values to detect if</span>
+            <span class="c1"># this is the case without printing an error message each time.</span>
+            <span class="c1"># If this gets fixed, we should remove this line.</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eventFilters</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handleEvent</span><span class="p">(</span><span class="o">*</span><span class="n">r</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QTaurusBaseListener.handleEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Event handling. Default implementation does nothing.</span>
+<span class="sd">        Reimplement as necessary</span>
+
+<span class="sd">        :param evt_src: (object or None) object that triggered the event</span>
+<span class="sd">        :param evt_type: (taurus.core.taurusbasetypes.TaurusEventType or None) type of event</span>
+<span class="sd">        :param evt_value: (object or None) event value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="QTaurusBaseListener.setEventFilters"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener.setEventFilters">[docs]</a>    <span class="k">def</span> <span class="nf">setEventFilters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets the taurus event filters list.</span>
+<span class="sd">        The filters are run in order, using each output to feed the next filter.</span>
+<span class="sd">        A filter must be a function that accepts 3 arguments ``(evt_src, evt_type, evt_value)``</span>
+<span class="sd">        If the event is to be ignored, the filter must return None.</span>
+<span class="sd">        If the event is  not to be ignored, filter must return a</span>
+<span class="sd">        ``(evt_src, evt_type, evt_value)`` tuple which may (or not) differ from the input.</span>
+
+<span class="sd">        For a library of common filters, see taurus/core/util/eventfilters.py</span>
+
+<span class="sd">        :param filters: (sequence) a sequence of filters</span>
+
+<span class="sd">        See also: insertEventFilter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eventFilters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QTaurusBaseListener.getEventFilters"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener.getEventFilters">[docs]</a>    <span class="k">def</span> <span class="nf">getEventFilters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the list of event filters for this widget</span>
+
+<span class="sd">        :return: (sequence&lt;callable&gt;) the event filters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eventFilters</span></div>
+
+<div class="viewcode-block" id="QTaurusBaseListener.insertEventFilter"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QTaurusBaseListener.html#taurus.qt.qtcore.taurusqlistener.QTaurusBaseListener.insertEventFilter">[docs]</a>    <span class="k">def</span> <span class="nf">insertEventFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;insert a filter in a given position</span>
+
+<span class="sd">        :param filter: (callable(evt_src, evt_type, evt_value)) a filter</span>
+<span class="sd">        :param index: (int) index to place the filter (default = -1 meaning place at the end)</span>
+
+<span class="sd">        See also: setEventFilters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eventFilters</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">filter</span><span class="p">)</span></div>
+
+    <span class="nd">@deprecation_decorator</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s1">&#39;4.0&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getSignaller</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="QObjectTaurusListener"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_QObjectTaurusListener.html#taurus.qt.qtcore.taurusqlistener.QObjectTaurusListener">[docs]</a><span class="k">class</span> <span class="nc">QObjectTaurusListener</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QObject</span><span class="p">,</span> <span class="n">QTaurusBaseListener</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__wo_kw</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QObject</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call__init__</span><span class="p">(</span><span class="n">QTaurusBaseListener</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ListenerDemo"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_ListenerDemo.html#taurus.qt.qtcore.taurusqlistener.ListenerDemo">[docs]</a><span class="k">class</span> <span class="nc">ListenerDemo</span><span class="p">(</span><span class="n">QObjectTaurusListener</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ListenerDemo.eventReceived"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_ListenerDemo.html#taurus.qt.qtcore.taurusqlistener.ListenerDemo.eventReceived">[docs]</a>    <span class="k">def</span> <span class="nf">eventReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;New </span><span class="si">%s</span><span class="s2"> event from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                  <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="p">[</span><span class="n">evt_type</span><span class="p">],</span> <span class="n">evt_src</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ListenerDemo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">eventReceived</span><span class="p">(</span><span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ListenerDemo.handleEvent"><a class="viewcode-back" href="../../../../devel/api/taurus/qt/qtcore/taurusqlistener/_ListenerDemo.html#taurus.qt.qtcore.taurusqlistener.ListenerDemo.handleEvent">[docs]</a>    <span class="k">def</span> <span class="nf">handleEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_src</span><span class="p">,</span> <span class="n">evt_type</span><span class="p">,</span> <span class="n">evt_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;New </span><span class="si">%s</span><span class="s2"> event from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                  <span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">taurusbasetypes</span><span class="o">.</span><span class="n">TaurusEventType</span><span class="p">[</span><span class="n">evt_type</span><span class="p">],</span> <span class="n">evt_src</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span> <span class="nn">taurus</span>
+    <span class="n">qlistener</span> <span class="o">=</span> <span class="n">ListenerDemo</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;DemoObject&quot;</span><span class="p">)</span>
+
+    <span class="n">attr</span> <span class="o">=</span> <span class="n">taurus</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="s2">&quot;sys/tg_test/1/double_scalar&quot;</span><span class="p">)</span>
+    <span class="n">attr</span><span class="o">.</span><span class="n">addListener</span><span class="p">(</span><span class="n">qlistener</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished!&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

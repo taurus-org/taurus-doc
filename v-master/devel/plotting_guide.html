@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Taurus plotting guide &mdash; taurus 4.7.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Taurus plugins" href="plugins.html" />
+    <link rel="prev" title="taurus core tutorial" href="core_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+          
+
+          
+            
+            <img src="../_static/taurus.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../docs.html">Taurus 4.7 documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users/index.html">User’s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developer’s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="taurus3to4.html">Taurus 3.x to Taurus 4.x migration guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_guide.html">Development guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="taurusgui_newgui.html">Creating GUIs with the TaurusGUI framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designer_tutorial.html">Designer tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="icon_guide.html">Icon guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core_tutorial.html">Core tutorial</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Plotting guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tauruscustomsettings.html">Taurus Custom Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus.html">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/taurus_AllClasses.html">All Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tep/index.html">Taurus Enhancement Proposals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other_versions.html">Docs for other Taurus versions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">taurus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../docs.html">Taurus 4.7 documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">Developer’s Guide</a> &raquo;</li>
+        
+      <li>Taurus plotting guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/devel/plotting_guide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taurus-plotting-guide">
+<span id="plotting-guide"></span><h1>Taurus plotting guide<a class="headerlink" href="#taurus-plotting-guide" title="Permalink to this headline">¶</a></h1>
+<p><em>TL;DR</em>: Use <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a></p>
+<p>In taurus, the following dependencies are used for its various plotting widgets:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/PyQwt/PyQwt5">PyQwt5</a>: for the <cite>TaurusPlot</cite> and <cite>TaurusTrend</cite> implemented in <code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.qwt5</span></code>
+(former <a class="reference internal" href="api/taurus/qt/qtgui/plot.html#module-taurus.qt.qtgui.plot" title="taurus.qt.qtgui.plot"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.plot</span></code></a>). PyQwt5 is unmaintained, removed from debian10, and only works with py2+Qt4,
+so it needs to be replaced urgently. <strong>DO NOT BASE ANY NEW DEVELOPMENT ON THIS</strong></p></li>
+<li><p><a class="reference external" href="https://pythonhosted.org/guiqwt/">guiqwt</a>: for <cite>TaurusImageDialog</cite> and <cite>TaurusTrend2DDialog</cite> implemented in <a class="reference internal" href="api/taurus/qt/qtgui/extra_guiqwt.html#module-taurus.qt.qtgui.extra_guiqwt" title="taurus.qt.qtgui.extra_guiqwt"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.extra_guiqwt</span></code></a>.
+It does not depend at all of PyQwt5, and supports py2, py3 and Qt4, Qt5 so replacing it is not urgent
+(but still it should be eventually replaced by pyqtgraph-based widgets)</p></li>
+<li><p><a class="reference external" href="http://www.pyqtgraph.org/">pyqtgraph</a>: for <cite>TaurusPlot</cite> and <cite>TaurusTrend</cite> implementions in <code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.qtgui.tpg</span></code> provided by the
+<a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> plugin. It supports py2, py3 and Qt4, Qt5 and is the intended replacement for all taurus plotting
+widgets (<a class="reference external" href="https://github.com/cpascual/taurus/blob/tep17/doc/source/tep/TEP17.md">TEP17</a>).</p></li>
+</ul>
+<p>Even if the <a class="reference external" href="https://github.com/cpascual/taurus/blob/tep17/doc/source/tep/TEP17.md">TEP17</a> is not yet accepted, in practice the <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> widgets are the best (in some cases the only)
+option for new developments involving plotting.</p>
+<p>A lot of <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph#features-implementation-checklist">features are already implemented in taurus_pyqtgraph</a>
+and some features are already better than in the PyQwt5 implementations.</p>
+<p>Still, some features available in the old PyQwt5-based implementations of <cite>TaurusPlot</cite> and <cite>TaurusTrend</cite> are still
+missing in the pyqtgraph-based implementations (any help with this is welcome). The main ones are:</p>
+<ul class="simple">
+<li><p>persistence of user changes related to models (but this is not needed for use cases where the models are set
+programmatically and not altered by the user)</p></li>
+<li><p>full support of tango archiving in TaurusTrend (but basic support already available with the <a class="reference external" href="https://github.com/taurus-org/tangoarchiving-scheme">taurus_tangoarchiving</a> plugin)</p></li>
+<li><p>maturity (certainly these classes are less tested than the qwt5 ones!)</p></li>
+</ul>
+<div class="section" id="tips-for-getting-started-with-taurus-pyqtgraph">
+<h2>Tips for Getting started with <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a><a class="headerlink" href="#tips-for-getting-started-with-taurus-pyqtgraph" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>install the plugin (the module will be installed as <code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus_pyqtgraph</span></code> <strong>and</strong> at the same time will be available as
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.tpg</span></code>)</p></li>
+<li><p>The philosophy is that you should use <cite>tpg</cite> as an extension to regular <a class="reference external" href="http://www.pyqtgraph.org/">pyqtgraph</a> widgets. Therefore you should read
+<a class="reference external" href="http://www.pyqtgraph.org/documentation">the official pyqtgraph docs</a> , and also run the official demo with
+<cite>python -m pyqtgraph.examples</cite></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus_pyqtgraph</span></code> also has <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph/tree/master/taurus_pyqtgraph/examples">some examples</a>.
+Have a look at them. Also have a look at the <cite>__main__</cite> sections of the files in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus_pyqtgraph</span></code> module</p></li>
+<li><p>See <a class="reference external" href="https://github.com/sardana-org/sardana-followup/blob/master/20180605-Prague/08-taurus_pyqtgraph/08-taurus_pyqtgraph.md">this tutorial</a>.</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="plugins.html" class="btn btn-neutral float-right" title="Taurus plugins" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="core_tutorial.html" class="btn btn-neutral float-left" title="taurus core tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

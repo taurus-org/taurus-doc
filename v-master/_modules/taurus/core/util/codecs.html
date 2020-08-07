@@ -1,63 +1,61 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>taurus.core.util.codecs &mdash; taurus 4.6.1 documentation</title>
+  <title>taurus.core.util.codecs &mdash; taurus 4.7.0 documentation</title>
   
 
   
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
   
 
   
-
-  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
-  
-
-  
-  
-    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../../../../genindex.html"/>
-        <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="taurus 4.6.1 documentation" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
-
-  
-  <script src="../../../../_static/js/modernizr.min.js"></script>
-
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../../../index.html" class="icon icon-home"> taurus
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
           
 
           
             
-            <img src="../../../../_static/taurus.png" class="logo" />
+            <img src="../../../../_static/taurus.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -65,7 +63,7 @@
             
             
               <div class="version">
-                4.6
+                4.7
               </div>
             
           
@@ -82,55 +80,80 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference external" href="http://www.taurus-scada.org">Home Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/taurus-org/taurus">Project Page</a></li>
 <li class="toctree-l1"><a class="reference external" href="http://pypi.python.org/pypi/taurus">Download from PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.6 documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs.html">Taurus 4.7 documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../other_versions.html">Docs for other Taurus versions</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../../index.html">taurus</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">taurus</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      
-    <li>taurus.core.util.codecs</li>
+        
+          <li><a href="../../../taurus.html">taurus</a> &raquo;</li>
+        
+      <li>taurus.core.util.codecs</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -201,8 +224,8 @@
 <span class="sd">    &gt;&gt;&gt; codec = CodecFactory().getCodec(v.format)</span>
 <span class="sd">    &gt;&gt;&gt; f, d = codec.decode((v.format, v.value))</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
 
@@ -211,11 +234,11 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="p">(</span><span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">future.utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">.singleton</span> <span class="k">import</span> <span class="n">Singleton</span>
-<span class="kn">from</span> <span class="nn">.log</span> <span class="k">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">.containers</span> <span class="k">import</span> <span class="n">CaselessDict</span>
+<span class="kn">from</span> <span class="nn">.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">.containers</span> <span class="kn">import</span> <span class="n">CaselessDict</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;NullCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;ZIPCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;BZ2Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;JSONCodec&quot;</span><span class="p">,</span>
            <span class="s2">&quot;Utf8Codec&quot;</span><span class="p">,</span> <span class="s2">&quot;FunctionCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;PlotCodec&quot;</span><span class="p">,</span> <span class="s2">&quot;CodecPipeline&quot;</span><span class="p">,</span>
@@ -232,7 +255,7 @@
 <div class="viewcode-block" id="Codec"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_Codec.html#taurus.core.util.Codec">[docs]</a><span class="k">class</span> <span class="nc">Codec</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The base class for all codecs&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor&quot;&quot;&quot;</span>
         <span class="n">Logger</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -260,10 +283,10 @@
 <span class="sd">        :raises: NotImplementedError&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;decode cannot be called on abstract Codec&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">()&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">()&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span></div>
 
 
@@ -649,7 +672,7 @@
 <div class="viewcode-block" id="FunctionCodec"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_FunctionCodec.html#taurus.core.util.FunctionCodec">[docs]</a><span class="k">class</span> <span class="nc">FunctionCodec</span><span class="p">(</span><span class="n">Codec</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A generic function codec&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_name</span><span class="p">):</span>
         <span class="n">Codec</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_func_name</span> <span class="o">=</span> <span class="n">func_name</span>
 
@@ -669,7 +692,7 @@
 <div class="viewcode-block" id="PlotCodec"><a class="viewcode-back" href="../../../../devel/api/taurus/core/util/_PlotCodec.html#taurus.core.util.PlotCodec">[docs]</a><span class="k">class</span> <span class="nc">PlotCodec</span><span class="p">(</span><span class="n">FunctionCodec</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A specialization of the :class:`FunctionCodec` for plot function&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">FunctionCodec</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;plot&#39;</span><span class="p">)</span></div>
 
 
@@ -716,7 +739,7 @@
         <span class="c1"># frameNumber, unknown then -1</span>
         <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__packHeader</span><span class="p">(</span><span class="n">imgMode</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
-        <span class="n">buffer</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tostring</span><span class="p">()</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">header</span> <span class="o">+</span> <span class="n">buffer</span>
 
     <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -741,7 +764,7 @@
 
         <span class="k">if</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
             <span class="c1"># RGB24, 3 bytes per pixel</span>
-            <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">bbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
             <span class="n">gbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
             <span class="n">rbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
@@ -752,7 +775,7 @@
 
         <span class="k">elif</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
             <span class="c1"># RGBA 4 bytes per pixel</span>
-            <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">rgba</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">bbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
             <span class="n">gbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
             <span class="n">rbuf</span> <span class="o">=</span> <span class="n">rgba</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
@@ -765,7 +788,7 @@
 
         <span class="k">elif</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">17</span><span class="p">:</span>
             <span class="c1"># YUV444 3 bytes per pixel</span>
-            <span class="n">yuv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">yuv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
             <span class="n">u</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
@@ -782,7 +805,7 @@
 
         <span class="k">elif</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span>
             <span class="c1"># YUV422 4 bytes per 2 pixels</span>
-            <span class="n">yuv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">yuv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">u</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
             <span class="n">y1</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
@@ -809,7 +832,7 @@
 
         <span class="k">elif</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;imageMode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">15</span><span class="p">:</span>
             <span class="c1"># YUV411 6 bytes per 4 pixels</span>
-            <span class="n">yuv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">yuv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">u</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">6</span><span class="p">]</span>
             <span class="n">y1</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">6</span><span class="p">]</span>
             <span class="n">y2</span> <span class="o">=</span> <span class="n">yuv</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">6</span><span class="p">]</span>
@@ -838,7 +861,7 @@
             <span class="n">img2D</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">img1D</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">img1D</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">imgBuffer</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
             <span class="n">img2D</span> <span class="o">=</span> <span class="n">img1D</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">img2D</span>
@@ -970,7 +993,7 @@
 <span class="sd">        format, decoded_data = codec.decode((format, encoded_data))</span>
 <span class="sd">        print decoded_data&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor. The CodecPipeline object will be created using</span>
 <span class="sd">        the :class:`CodecFactory` to search for format(s) given in the format</span>
 <span class="sd">        parameter.</span>
@@ -1066,7 +1089,7 @@
         <span class="s1">&#39;none&#39;</span><span class="p">:</span> <span class="n">NullCodec</span><span class="p">,</span>
         <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="n">NullCodec</span><span class="p">})</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Initialization. Nothing to be done here for now.&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
@@ -1143,6 +1166,7 @@
 </pre></div>
 
            </div>
+           
           </div>
           <footer>
   
@@ -1151,12 +1175,20 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright Except where otherwise noted, content on this site is
-licensed under a Creative Commons Attribution 3.0 License.
+licensed under a Creative Commons Attribution 3.0 License
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1168,36 +1200,15 @@ licensed under a Creative Commons Attribution 3.0 License.
   </div>
   
 
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../../',
-            VERSION:'4.6.1',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>
