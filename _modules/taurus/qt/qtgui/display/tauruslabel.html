@@ -196,6 +196,7 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># bck-compat py 2.7</span>
     <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Sequence</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">string</span>
 
 <span class="kn">from</span> <span class="nn">taurus.core.taurusbasetypes</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TaurusElementType</span><span class="p">,</span> <span class="n">TaurusEventType</span><span class="p">,</span>
                                          <span class="n">AttrQuality</span><span class="p">,</span> <span class="n">TaurusDevState</span><span class="p">)</span>
@@ -219,6 +220,20 @@
 
 <span class="n">TaurusModelType</span> <span class="o">=</span> <span class="n">TaurusElementType</span>
 <span class="n">EventType</span> <span class="o">=</span> <span class="n">TaurusEventType</span>
+
+
+<span class="k">class</span> <span class="nc">_SafeFormatter</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Like default formatter but leaves unmatched keys in the result string</span>
+<span class="sd">    instead of raising an exception.</span>
+<span class="sd">    Inspired by:</span>
+<span class="sd">    https://github.com/silx-kit/pyFAI/blob/0.19/pyFAI/utils/stringutil.py#L41</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">Formatter</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;{</span><span class="si">%s</span><span class="s2">}&quot;</span> <span class="o">%</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_name</span>
 
 
 <span class="k">class</span> <span class="nc">TaurusLabelController</span><span class="p">(</span><span class="n">TaurusBaseController</span><span class="p">):</span>
@@ -398,6 +413,7 @@
     <span class="n">_deprecatedRoles</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;rvalue&#39;</span><span class="p">,</span> <span class="n">w_value</span><span class="o">=</span><span class="s1">&#39;wvalue&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_safeFormatter</span> <span class="o">=</span> <span class="n">_SafeFormatter</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultPrefix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DefaultSuffix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_permanentText</span> <span class="o">=</span> <span class="kc">None</span>
@@ -674,7 +690,7 @@
             <span class="n">dev</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">v</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dev</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_safeFormatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dev</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;Error formatting display (</span><span class="si">%r</span><span class="s2">). Reverting to raw string&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
