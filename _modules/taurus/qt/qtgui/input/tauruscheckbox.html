@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>taurus.qt.qtgui.input.tauruscheckbox &mdash; taurus 4.7.1-alpha documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,7 +33,6 @@
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
-        <script src="../../../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
 
@@ -50,7 +52,7 @@
           
 
           
-            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
           
 
           
@@ -134,6 +136,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -195,7 +199,7 @@
 <span class="kn">from</span> <span class="nn">taurus.qt.qtgui.base</span> <span class="kn">import</span> <span class="n">TaurusBaseWritableWidget</span>
 
 
-<div class="viewcode-block" id="TaurusValueCheckBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueCheckBox">[docs]</a><span class="k">class</span> <span class="nc">TaurusValueCheckBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusValueCheckBox"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtgui.input.TaurusValueCheckBox">[docs]</a><span class="k">class</span> <span class="nc">TaurusValueCheckBox</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">,</span> <span class="n">TaurusBaseWritableWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A QCheckBox connected to a boolean writable attribute model&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qt_parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">designMode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -208,7 +212,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notifyValueChanged</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaurusValueCheckBox.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueCheckBox.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusValueCheckBox.keyPressEvent"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtgui.input.TaurusValueCheckBox.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Return</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Enter</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">writeValue</span><span class="p">()</span>
             <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
@@ -216,14 +220,14 @@
             <span class="n">Qt</span><span class="o">.</span><span class="n">QCheckBox</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
             <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TaurusValueCheckBox.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueCheckBox.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusValueCheckBox.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtgui.input.TaurusValueCheckBox.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span></div>
 
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
     <span class="c1"># TaurusBaseWritableWidget overwriting</span>
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
 
-<div class="viewcode-block" id="TaurusValueCheckBox.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueCheckBox.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusValueCheckBox.updateStyle"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtgui.input.TaurusValueCheckBox.updateStyle">[docs]</a>    <span class="k">def</span> <span class="nf">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">updateStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="c1"># Show text only if it is not specifically hidden</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showText</span><span class="p">:</span>
@@ -245,13 +249,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;TaurusValueCheckBox </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TaurusValueCheckBox.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueCheckBox.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusValueCheckBox.setValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtgui.input.TaurusValueCheckBox.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">v</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="TaurusValueCheckBox.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueCheckBox.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaurusValueCheckBox.getValue"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtgui.input.TaurusValueCheckBox.getValue">[docs]</a>    <span class="k">def</span> <span class="nf">getValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TaurusValueCheckBox.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtdesigner.tauruspluginplugin.TaurusValueCheckBox.getQtDesignerPluginInfo">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TaurusValueCheckBox.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/input/_TaurusValueCheckBox.html#taurus.qt.qtgui.input.TaurusValueCheckBox.getQtDesignerPluginInfo">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">TaurusBaseWritableWidget</span><span class="o">.</span><span class="n">getQtDesignerPluginInfo</span><span class="p">()</span>
         <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;taurus.qt.qtgui.input&#39;</span>
@@ -287,29 +291,26 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright Except where otherwise noted, content on this site is
-licensed under a Creative Commons Attribution 3.0 License
+        &#169; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

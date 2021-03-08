@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>taurus.qt.qtgui.display.qled &mdash; taurus 4.7.1-alpha documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,7 +33,6 @@
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
-        <script src="../../../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
 
@@ -50,7 +52,7 @@
           
 
           
-            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> taurus
+            <a href="../../../../../index.html" class="icon icon-home"> taurus
           
 
           
@@ -119,6 +121,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -204,7 +208,7 @@
 <span class="n">LedSize</span> <span class="o">=</span> <span class="n">Enumeration</span><span class="p">(</span><span class="s2">&quot;LedSize&quot;</span><span class="p">,</span>   <span class="p">[(</span><span class="s2">&quot;SMALL&quot;</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;LARGE&quot;</span><span class="p">,</span> <span class="mi">48</span><span class="p">)])</span>
 
 
-<div class="viewcode-block" id="QLed"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed">[docs]</a><span class="k">class</span> <span class="nc">QLed</span><span class="p">(</span><span class="n">QPixmapWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed">[docs]</a><span class="k">class</span> <span class="nc">QLed</span><span class="p">(</span><span class="n">QPixmapWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A Led&quot;&quot;&quot;</span>
     <span class="n">DefaultLedPattern</span> <span class="o">=</span> <span class="s2">&quot;leds_images256:led_</span><span class="si">{color}</span><span class="s2">_</span><span class="si">{status}</span><span class="s2">.png&quot;</span>
     <span class="n">DefaultLedColor</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
@@ -222,18 +226,18 @@
         <span class="n">QPixmapWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span>
 
-<div class="viewcode-block" id="QLed.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.sizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.sizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">QPixmapWidget</span><span class="o">.</span><span class="n">sizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLed.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.minimumSizeHint"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.minimumSizeHint">[docs]</a>    <span class="k">def</span> <span class="nf">minimumSizeHint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Overwrite the default minimum size hint (0,0) to be (16,16)</span>
 <span class="sd">        :return: the minimum size hint 16,16</span>
 <span class="sd">        :rtype: PyQt4.Qt.QSize&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLed.toLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.toLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.toLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.toLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gives the led name for the given status and color. If status or</span>
 <span class="sd">        color are not given, the current led status or color are used.</span>
 
@@ -254,7 +258,7 @@
         <span class="n">status</span> <span class="o">=</span> <span class="n">status</span> <span class="ow">and</span> <span class="s2">&quot;on&quot;</span> <span class="ow">or</span> <span class="s2">&quot;off&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLed.isLedColorValid"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.isLedColorValid">[docs]</a>    <span class="k">def</span> <span class="nf">isLedColorValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.isLedColorValid"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.isLedColorValid">[docs]</a>    <span class="k">def</span> <span class="nf">isLedColorValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines if the given color name is valid.</span>
 <span class="sd">        :param color: the color</span>
 <span class="sd">        :type  color: str</span>
@@ -269,7 +273,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-<div class="viewcode-block" id="QLed.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.getQtDesignerPluginInfo">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="QLed.getQtDesignerPluginInfo"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getQtDesignerPluginInfo">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">getQtDesignerPluginInfo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="s1">&#39;taurus.qt.qtgui.display&#39;</span><span class="p">,</span>
@@ -282,13 +286,13 @@
     <span class="c1"># QT property definition</span>
     <span class="c1">#-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span>
 
-<div class="viewcode-block" id="QLed.getLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.getLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">getLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.getLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">getLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the current led pattern name</span>
 <span class="sd">        :return: led pattern name</span>
 <span class="sd">        :rtype: str&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span></div>
 
-<div class="viewcode-block" id="QLed.setLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.setLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">setLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.setLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">setLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the led pattern name. Should be a string containing a path</span>
 <span class="sd">        to valid images. The string can contain the keywords:</span>
 
@@ -304,55 +308,55 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ledPatternName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="QLed.resetLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.resetLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.resetLedPatternName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedPatternName">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resets the led pattern to **:leds/images256/led_{color}_{status}.png**.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLedPatternName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedPattern</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLed.getLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.getLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">getLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.getLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">getLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the led status</span>
 <span class="sd">        :return: led status</span>
 <span class="sd">        :rtype: bool&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledStatus</span></div>
 
-<div class="viewcode-block" id="QLed.setLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.setLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">setLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.setLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">setLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the led status</span>
 <span class="sd">        :param status: the new status</span>
 <span class="sd">        :type  status: bool&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ledStatus</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="QLed.resetLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.resetLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.resetLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resets the led status&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedStatus</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLed.toggleLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.toggleLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">toggleLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.toggleLedStatus"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.toggleLedStatus">[docs]</a>    <span class="k">def</span> <span class="nf">toggleLedStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;toggles the current status of the led&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLedStatus</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLedStatus</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="QLed.getLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.getLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">getLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.getLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">getLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns if the led is inverted.</span>
 <span class="sd">        :return: inverted mode</span>
 <span class="sd">        :rtype: bool&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledInverted</span></div>
 
-<div class="viewcode-block" id="QLed.setLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.setLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">setLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inverted</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.setLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">setLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inverted</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the led inverted mode</span>
 <span class="sd">        :param status: the new inverted mode</span>
 <span class="sd">        :type  status: bool&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ledInverted</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">inverted</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="QLed.resetLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.resetLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.resetLedInverted"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedInverted">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resets the led inverted mode&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLedInverted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedInverted</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLed.getLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.getLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.getLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the led color</span>
 <span class="sd">        :return: led color</span>
 <span class="sd">        :rtype: str&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ledColor</span></div>
 
-<div class="viewcode-block" id="QLed.setLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.setLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">setLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.setLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">setLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the led color</span>
 <span class="sd">        :param status: the new color</span>
 <span class="sd">        :type  status: str&quot;&quot;&quot;</span>
@@ -362,11 +366,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ledColor</span> <span class="o">=</span> <span class="n">color</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="QLed.resetLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.resetLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.resetLedColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetLedColor">[docs]</a>    <span class="k">def</span> <span class="nf">resetLedColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Resets the led color&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLedColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultLedColor</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLed.setBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.setBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">setBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.setBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.setBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">setBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;sets the blinking interval (the time between status switching).</span>
 <span class="sd">        Set to a nonpositive number for disabling blinking</span>
 
@@ -382,7 +386,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="QLed.getBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.getBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">getBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.getBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.getBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">getBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;returns the blinking interval</span>
 
 <span class="sd">        :return: (int) blinking interval or 0 if blinking is not enabled.</span>
@@ -392,7 +396,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">interval</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="QLed.resetBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtdesigner.tauruspluginplugin.QLed.resetBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">resetBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLed.resetBlinkingInterval"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLed.html#taurus.qt.qtgui.display.QLed.resetBlinkingInterval">[docs]</a>    <span class="k">def</span> <span class="nf">resetBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;resets the blinking interval&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setBlinkingInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">DefaultBlinkingInterval</span><span class="p">)</span></div>
 
@@ -448,7 +452,7 @@
                                        <span class="n">resetBlinkingInterval</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;blinking interval&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="QLedOld"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld">[docs]</a><span class="k">class</span> <span class="nc">QLedOld</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld">[docs]</a><span class="k">class</span> <span class="nc">QLedOld</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QLabel</span><span class="p">):</span>
     <span class="n">ledDirPattern</span> <span class="o">=</span> <span class="s2">&quot;:leds/images</span><span class="si">%(size)d</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ledsize</span><span class="o">=</span><span class="n">LedSize</span><span class="o">.</span><span class="n">SMALL</span><span class="p">,</span>
@@ -473,34 +477,34 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">Qt</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="QLedOld.toLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.toLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.toLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.toLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;led&quot;</span> <span class="o">+</span> <span class="n">LedColor</span><span class="o">.</span><span class="n">whatis</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">+=</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">whatis</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">name</span></div>
 
-<div class="viewcode-block" id="QLedOld.toCompleteLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.toCompleteLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toCompleteLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.toCompleteLedName"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.toCompleteLedName">[docs]</a>    <span class="k">def</span> <span class="nf">toCompleteLedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ledDirPattern</span> <span class="o">%</span> <span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">size</span><span class="p">}</span>
         <span class="n">ret</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">toLedName</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
-<div class="viewcode-block" id="QLedOld.tr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.tr">[docs]</a>    <span class="k">def</span> <span class="nf">tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.tr"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.tr">[docs]</a>    <span class="k">def</span> <span class="nf">tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;Led&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLedOld.retranslateUi"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.retranslateUi">[docs]</a>    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Led</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.retranslateUi"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.retranslateUi">[docs]</a>    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Led</span><span class="p">):</span>
         <span class="n">Led</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Form&quot;</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="QLedOld.on"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.on">[docs]</a>    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.on"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.on">[docs]</a>    <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onled</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLedOld.off"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.off">[docs]</a>    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.off"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.off">[docs]</a>    <span class="k">def</span> <span class="nf">off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">ON</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">LedStatus</span><span class="o">.</span><span class="n">OFF</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offled</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLedOld.changeSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.changeSize">[docs]</a>    <span class="k">def</span> <span class="nf">changeSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.changeSize"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.changeSize">[docs]</a>    <span class="k">def</span> <span class="nf">changeSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ledsize</span> <span class="o">=</span> <span class="n">ledSize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">ledSize</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="n">ledSize</span><span class="p">,</span> <span class="n">ledSize</span><span class="p">))</span>
@@ -510,7 +514,7 @@
         <span class="c1"># are fetched</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">changeColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ledcolor</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QLedOld.changeColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtdesigner.tauruspluginplugin.QLedOld.changeColor">[docs]</a>    <span class="k">def</span> <span class="nf">changeColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ledColor</span><span class="p">):</span>
+<div class="viewcode-block" id="QLedOld.changeColor"><a class="viewcode-back" href="../../../../../devel/api/taurus/qt/qtgui/display/_QLedOld.html#taurus.qt.qtgui.display.QLedOld.changeColor">[docs]</a>    <span class="k">def</span> <span class="nf">changeColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ledColor</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ledcolor</span> <span class="o">=</span> <span class="n">ledColor</span>
 
         <span class="n">off_pixmap_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">toCompleteLedName</span><span class="p">(</span>
@@ -580,29 +584,26 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright Except where otherwise noted, content on this site is
-licensed under a Creative Commons Attribution 3.0 License
+        &#169; Copyright Except where otherwise noted, content on this site is
+licensed under a Creative Commons Attribution 3.0 License.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
