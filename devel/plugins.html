@@ -190,88 +190,188 @@
             
   <div class="section" id="taurus-plugins">
 <span id="plugins"></span><h1>Taurus plugins<a class="headerlink" href="#taurus-plugins" title="Permalink to this headline">¶</a></h1>
+<p>Taurus can be extended by third party modules in various ways. The <a class="reference external" href="http://www.taurus-scada.org/tep?TEP13.md">TEP13</a>
+prescribes some generic rules in order to unify the plugins support by using
+entry point APIs.</p>
+<p>The following subsections describe each entry point based pluggable interface
+currently supported by taurus, according to <a class="reference external" href="http://www.taurus-scada.org/tep?TEP13.md">TEP13</a>.</p>
+<div class="section" id="cli-subcommands">
+<h2>CLI subcommands<a class="headerlink" href="#cli-subcommands" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: register subcommands for the <code class="docutils literal notranslate"><span class="pre">taurus</span></code> CLI command. See <a class="reference internal" href="api/taurus/cli.html#module-taurus.cli" title="taurus.cli"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.cli</span></code></a></p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.cli.subcommands</span></code></p></li>
+<li><p>Expected API: <code class="xref py py-class docutils literal notranslate"><span class="pre">click.Command</span></code></p></li>
+<li><p>Entry point name convention: None, the name is ignored. Suggestion: use the
+subcommand name</p></li>
+<li><p>Loading pattern: extension (loaded when invoking the taurus command)</p></li>
+<li><p>Enabling pattern: installation</p></li>
+<li><p>Examples: <a class="reference internal" href="api/taurus.html#module-taurus" title="taurus"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> self-registers all its subcommands (see <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>)</p></li>
+</ul>
+</div>
+<div class="section" id="schemes">
+<h2>Schemes<a class="headerlink" href="#schemes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: new schemes in taurus.core to support other sources of data.</p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.core.schemes</span></code></p></li>
+<li><p>Expected API: python module implementing a Taurus scheme. It should at least
+provide a <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.taurusfactory.TaurusFactory</span></code> specialization.
+See more details in the <a class="reference external" href="http://taurus-scada.org/devel/core_tutorial.html">Taurus Core Tutorial</a></p></li>
+<li><p>Entry point name convention: the name must match the module name.
+For example: <code class="docutils literal notranslate"><span class="pre">h5file</span> <span class="pre">=</span> <span class="pre">h5file</span></code></p></li>
+<li><p>Loading pattern: Driver</p></li>
+<li><p>Enabling pattern: installation</p></li>
+<li><p>Examples: <a class="reference external" href="https://github.com/taurus-org/taurus_tangoarchiving">taurus_tangoarchiving</a> registers itself as a scheme</p></li>
+</ul>
+</div>
+<div class="section" id="formatters">
+<h2>Formatters<a class="headerlink" href="#formatters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: adding formatter objects for taurus widgets, as used by
+<a class="reference internal" href="api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue" title="taurus.qt.qtgui.base.TaurusBaseComponent.displayValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtgui.base.TaurusBaseComponent.displayValue()</span></code></a></p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.qt.formatters</span></code></p></li>
+<li><p>Expected API: a formatter accepted by <code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtgui.TaurusBaseComponent.setFormat()</span></code></p></li>
+<li><p>Entry point name convention: A short descriptive string of the formatter. It
+may be used by the UI when offering the user to select formatters.</p></li>
+<li><p>Loading pattern: installation</p></li>
+<li><p>Enabling pattern: Explicit (e.g. via a selection dialog when calling
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtgui.TaurusBaseWidget.onSetFormatter()</span></code>)</p></li>
+<li><p>Examples: <a class="reference internal" href="api/taurus.html#module-taurus" title="taurus"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> self-registers several formatters (see <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>)</p></li>
+</ul>
+</div>
+<div class="section" id="model-chooser-selectors">
+<h2>Model Chooser Selectors<a class="headerlink" href="#model-chooser-selectors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: Adding widgets to be used by <a class="reference internal" href="api/taurus/qt/qtgui/panel/_TaurusModelSelector.html#taurus.qt.qtgui.panel.TaurusModelSelector" title="taurus.qt.qtgui.panel.TaurusModelSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel.TaurusModelSelector</span></code></a>
+for supporting models from other schemes</p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.model_selector.items</span></code></p></li>
+<li><p>Expected API: <a class="reference internal" href="api/taurus/qt/qtgui/panel/_TaurusModelSelectorItem.html#taurus.qt.qtgui.panel.TaurusModelSelectorItem" title="taurus.qt.qtgui.panel.TaurusModelSelectorItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel.TaurusModelSelectorItem</span></code></a></p></li>
+<li><p>Entry point name convention: the name should be a short description of the
+scheme or type of models supported by this item (e.g.
+<code class="docutils literal notranslate"><span class="pre">TangoArchiving</span> <span class="pre">=</span> <span class="pre">...</span></code>).
+It is used as a tab title in <a class="reference internal" href="api/taurus/qt/qtgui/panel/_TaurusModelSelector.html#taurus.qt.qtgui.panel.TaurusModelSelector" title="taurus.qt.qtgui.panel.TaurusModelSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel.TaurusModelSelector</span></code></a></p></li>
+<li><p>Loading pattern: Extension</p></li>
+<li><p>Enabling pattern: installation (but it may be changed in the future to a
+explicit or self-enabled pattern)</p></li>
+<li><p>Examples: <a class="reference external" href="https://github.com/taurus-org/taurus_tangoarchiving">taurus_tangoarchiving</a> registers
+<code class="xref py py-class docutils literal notranslate"><span class="pre">taurus_tangoarchiving.widget.tangoarchivingmodelchooser.TangoArchivingModelSelectorItem</span></code>
+as a model selector item</p></li>
+</ul>
+</div>
+<div class="section" id="plot-widget-alternatives">
+<h2>Plot widget Alternatives<a class="headerlink" href="#plot-widget-alternatives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: alternative implementations of TaurusPlot.</p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.plot.alts</span></code></p></li>
+<li><p>Expected API: <em>to be formally defined with an Abstract Base Class</em>. For now,
+informally, the API is defined by what is used in
+<code class="xref py py-func docutils literal notranslate"><span class="pre">taurus.cli.alt.plot_cmd()</span></code>:  at minimum, a <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code> that has a
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">setModel()</span></code> that accepts a sequence of attribute names.</p></li>
+<li><p>Entry point name convention: a short descriptive identifier of the
+implementation (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;qwt5&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tpg&quot;</span></code>, …). The name is used in the UI
+for user selection of the implementation.</p></li>
+<li><p>Loading pattern: Extension</p></li>
+<li><p>Enabling pattern: explicit</p></li>
+<li><p>Examples: <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> registers <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus_tauruspyqtgraph.TaurusPlot</span></code>
+as a plot alternative</p></li>
+</ul>
+</div>
+<div class="section" id="trend-widget-alternatives">
+<h2>Trend widget Alternatives<a class="headerlink" href="#trend-widget-alternatives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: alternative implementations of TaurusTrend</p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.trend.alts</span></code></p></li>
+<li><p>Expected API:<em>to be formally defined with an Abstract Base Class</em>. For now,
+informally, the API is defined by what is used in
+<code class="xref py py-func docutils literal notranslate"><span class="pre">taurus.cli.alt.trend_cmd()</span></code>:  at minimum, a <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code> that has a
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">setModel()</span></code> that accepts a sequence of attribute names.</p></li>
+<li><p>Entry point name convention: a short descriptive identifier of the
+implementation (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;qwt5&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tpg&quot;</span></code>, …). The name is used in the UI
+for user selection of the implementation.</p></li>
+<li><p>Loading pattern: Extension</p></li>
+<li><p>Enabling pattern: explicit</p></li>
+<li><p>Examples: <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> registers <code class="xref py py-class docutils literal notranslate"><span class="pre">taurus_tauruspyqtgraph.TaurusTrend</span></code>
+as a trend alternative</p></li>
+</ul>
+</div>
+<div class="section" id="image-widget-alternatives">
+<h2>Image widget Alternatives<a class="headerlink" href="#image-widget-alternatives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: alternative implementations of TaurusImage</p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.image.alts</span></code></p></li>
+<li><p>Expected API: <em>to be formally defined with an Abstract Base Class</em>. For now,
+informally, the API is defined by what is used in
+<code class="xref py py-func docutils literal notranslate"><span class="pre">taurus.cli.alt.image_cmd()</span></code>:  at minimum, a <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code> that has a
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">setModel()</span></code> that accepts an attribute name. At this moment, the
+widget creator needs to accept the <code class="docutils literal notranslate"><span class="pre">wintitle</span></code> keyword argument (it may
+change when the API is formalized)</p></li>
+<li><p>Entry point name convention: a short descriptive identifier of the
+implementation (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;guiqwt&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tpg&quot;</span></code>, …). The name is used in the UI
+for user selection of the implementation.</p></li>
+<li><p>Loading pattern: Extension</p></li>
+<li><p>Enabling pattern: explicit</p></li>
+<li><p>Examples: <a class="reference internal" href="api/taurus.html#module-taurus" title="taurus"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> self-registers its
+<a class="reference internal" href="api/taurus/qt/qtgui/extra_guiqwt/_TaurusImageDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusImageDialog" title="taurus.qt.qtgui.extra_guiqwt.TaurusImageDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.extra_guiqwt.TaurusImageDialog</span></code></a> as an image widget
+alternative (see <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>)</p></li>
+</ul>
+</div>
+<div class="section" id="trend2d-widget-alternatives">
+<h2>Trend2D widget Alternatives<a class="headerlink" href="#trend2d-widget-alternatives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: alternative implementations of TaurusTrend2D</p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.trend2d.alts</span></code></p></li>
+<li><p>Expected API: <em>to be formally defined with an Abstract Base Class</em>. For now,
+informally, the API is defined by what is used in
+<code class="xref py py-func docutils literal notranslate"><span class="pre">taurus.cli.alt.trend2d_cmd()</span></code>:  at minimum, a <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code> that has a
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">setModel()</span></code> that accepts an attribute name. At this moment, the
+widget creator needs to accept the following keyword arguments: <code class="docutils literal notranslate"><span class="pre">stackMode</span></code>,
+<code class="docutils literal notranslate"><span class="pre">wintitle</span></code>, <code class="docutils literal notranslate"><span class="pre">buffersize</span></code>. (it may change when the API is formalized)</p></li>
+<li><p>Entry point name convention: a short descriptive identifier of the
+implementation (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;guiqwt&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tpg&quot;</span></code>, …). The name is used in the UI
+for user selection of the implementation.</p></li>
+<li><p>Loading pattern: Extension</p></li>
+<li><p>Enabling pattern: explicit</p></li>
+<li><p>Examples: <a class="reference internal" href="api/taurus.html#module-taurus" title="taurus"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus</span></code></a> self-registers its
+<a class="reference internal" href="api/taurus/qt/qtgui/extra_guiqwt/_TaurusTrend2DDialog.html#taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog" title="taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.extra_guiqwt.TaurusTrend2DDialog</span></code></a> as trend2d widget
+alternative (see <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>)</p></li>
+</ul>
+</div>
+<div class="section" id="form-factories">
+<h2>Form Factories<a class="headerlink" href="#form-factories" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Description: factories for custom “taurus value” widgets to be used in taurus
+forms. See <a class="reference internal" href="api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm.setItemFactories" title="taurus.qt.qtgui.panel.TaurusForm.setItemFactories"><code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel.TaurusForm.setItemFactories()</span></code></a></p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.form.item_factories</span></code></p></li>
+<li><p>Expected API: a factory function that accepts a model name as its first
+argument and which returns either a <a class="reference internal" href="api/taurus/qt/qtgui/panel/_TaurusValue.html#taurus.qt.qtgui.panel.TaurusValue" title="taurus.qt.qtgui.panel.TaurusValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel.TaurusValue</span></code></a>
+type object (or <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p>Entry point name convention:</p></li>
+<li><p>Loading pattern: extension</p></li>
+<li><p>Enabling pattern: installation, but allowing explicit (de)selection based
+on <code class="xref py py-func docutils literal notranslate"><span class="pre">taurus.core.util.plugin.selectEntryPoints()</span></code>.</p></li>
+<li><p>Examples: <a class="reference external" href="https://sardana-controls.org/">sardana</a> registers
+<code class="xref py py-func docutils literal notranslate"><span class="pre">sardana.taurus.qt.qtgui.extra_pool.formitemfactory.pool_item_factory()</span></code>
+to provide custom widgets for sardana elements in taurus forms.</p></li>
+</ul>
+</div>
+<div class="section" id="qtgui-submodules">
+<h2>qtgui submodules<a class="headerlink" href="#qtgui-submodules" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The taurus plugins API is still experimental. Current entry point
-group names, and expected entry point objects API may be modified or
-removed in later versions.</p>
+<p>This entry point is for internal use only (to be used for backwards
+compatibility when “outsourcing” submodules).</p>
 </div>
-<p>Taurus can be extended by third party modules in various ways. For example, a
-mechanism exists since before v4.0.0 to use add new schemes to the
-<cite>taurus.core</cite> module. But these extension mechanisms grew organically and
-independently of each other, resulting in several non-consistent plugin APIs.
-This has been long-standing pending issue as can be seen by date of the draft
-of the <a class="reference external" href="http://www.taurus-scada.org/tep?TEP13.md">TEP13</a></p>
-<p>Since taurus v4.3 we started introducing some experimental <cite>pkg_resources</cite>-
-based entry points, in an effort to test their viability for being used as a
-more generic and standard mechanism for plugins. Here we describe such
-APIs which, for now and until <a class="reference external" href="http://www.taurus-scada.org/tep?TEP13.md">TEP13</a> is approved, should be still considered
-experimental.</p>
-<div class="section" id="entry-point-based-plugins">
-<h2>Entry point-based plugins:<a class="headerlink" href="#entry-point-based-plugins" title="Permalink to this headline">¶</a></h2>
-<p>The following table lists the entry-point groups used by taurus, with links to
-the appropriate docs.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 41%" />
-<col style="width: 50%" />
-<col style="width: 9%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Entry point group</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Notes</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>taurus.qt.qtgui</p></td>
-<td><p>submodules of taurus.qt.qtgui</p></td>
-<td><p>1</p></td>
-</tr>
-<tr class="row-odd"><td><p>taurus.cli.subcommands</p></td>
-<td><p>click subcommands for the <cite>taurus</cite>
-command.</p></td>
-<td><p>2</p></td>
-</tr>
-<tr class="row-even"><td><p>taurus.model_selector.items</p></td>
-<td><p>items for <cite>TaurusModelSelector</cite></p></td>
-<td><p>3</p></td>
-</tr>
-<tr class="row-odd"><td><p>taurus.qt.formatters</p></td>
-<td><p>formatter objects for taurus widgets</p></td>
-<td><p>4</p></td>
-</tr>
-<tr class="row-even"><td><ul class="simple">
-<li><p>taurus.plot.alts</p></li>
-<li><p>taurus.trend.alts</p></li>
-<li><p>taurus.trend2d.alts</p></li>
-<li><p>taurus.image.alts</p></li>
+<ul class="simple">
+<li><p>Description: adding submodules to <a class="reference internal" href="api/taurus/qt/qtgui.html#module-taurus.qt.qtgui" title="taurus.qt.qtgui"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui</span></code></a>.</p></li>
+<li><p>Group: <code class="docutils literal notranslate"><span class="pre">taurus.qt.qtgui</span></code></p></li>
+<li><p>Expected API: python module (typically exposing <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code> classes)</p></li>
+<li><p>Entry point name convention: the name must match the module name</p></li>
+<li><p>Loading pattern: Extension (for performance, we use a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.core.util.lazymodule.LazyModule</span></code> to delay the actual import
+of the module until one of its members is actually used).</p></li>
+<li><p>Enabling pattern: installation</p></li>
+<li><p>Examples: <a class="reference external" href="https://github.com/taurus-org/taurus_pyqtgraph">taurus_pyqtgraph</a> registers itself to be exported as
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.qt.qtgui.tpg</span></code></p></li>
 </ul>
-</td>
-<td><p>Alternative implementations for
-various basic widgets. To be used in
-in, e.g. the <cite>taurus plot</cite> subcommand,
-etc.</p></td>
-<td><p>2</p></td>
-</tr>
-<tr class="row-odd"><td><p>taurus.form.item_factories</p></td>
-<td><p>Factories for custom “taurus value”
-widgets to be used in taurus forms</p></td>
-<td><p>5</p></td>
-</tr>
-<tr class="row-even"><td><p>taurus.core.schemes</p></td>
-<td><p>Schemes in taurus.core</p></td>
-<td><p>6</p></td>
-</tr>
-</tbody>
-</table>
-<p>Notes:</p>
-<p>1. For internal use only (used backwards compatibility when “outsourcing”
-submodules).
-2. See <a class="reference internal" href="api/taurus/cli.html#module-taurus.cli" title="taurus.cli"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taurus.cli</span></code></a>
-3. See <a class="reference internal" href="api/taurus/qt/qtgui/panel/_TaurusModelSelector.html#taurus.qt.qtgui.panel.TaurusModelSelector" title="taurus.qt.qtgui.panel.TaurusModelSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel.TaurusModelSelector</span></code></a>
-4. See <a class="reference internal" href="api/taurus/qt/qtgui/base/_TaurusBaseComponent.html#taurus.qt.qtgui.base.TaurusBaseComponent.displayValue" title="taurus.qt.qtgui.base.TaurusBaseComponent.displayValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtgui.base.TaurusBaseComponent.displayValue()</span></code></a>
-5. See <a class="reference internal" href="api/taurus/qt/qtgui/panel/_TaurusForm.html#taurus.qt.qtgui.panel.TaurusForm.setItemFactories" title="taurus.qt.qtgui.panel.TaurusForm.setItemFactories"><code class="xref py py-meth docutils literal notranslate"><span class="pre">taurus.qt.qtgui.panel.TaurusForm.setItemFactories()</span></code></a></p>
 </div>
 </div>
 
